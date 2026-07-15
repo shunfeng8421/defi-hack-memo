@@ -1,4 +1,5 @@
 # An Empirical Study of MCP Server Security: 6 Attack Surfaces from 30+ Audits
+**DOI**: 10.5281/zenodo.21370417
 
 **Shiqiang Chen** — July 15, 2026
 
