@@ -1,0 +1,829 @@
+# DeFi Hack Memo — 完整案例索引
+
+
+总数: 824 个案例
+
+- [2017] [Parity_first_hack](cases/2017/Parity_first_hack.md) — $153,037 ETH (~
+- [2017] [Parity_kill](cases/2017/Parity_kill.md) — $N/A
+- [2018] [BEC](cases/2018/BEC.md) — $N/A
+- [2018] [SmartMesh](cases/2018/SmartMesh.md) — $140M
+- [2018] [SpankChain](cases/2018/SpankChain.md) — $155
+- [2020] [Balancer_20200628](cases/2020/Balancer_20200628.md) — $N/A
+- [2020] [Bancor](cases/2020/Bancor.md) — $N/A
+- [2020] [Cover](cases/2020/Cover.md) — $N/A
+- [2020] [HarvestFinance](cases/2020/HarvestFinance.md) — $N/A
+- [2020] [LendfMe](cases/2020/LendfMe.md) — $N/A
+- [2020] [Opyn](cases/2020/Opyn.md) — $N/A
+- [2020] [Pickle](cases/2020/Pickle.md) — $around 20 million DAI.
+- [2020] [bzx](cases/2020/bzx.md) — $// Attacker : https://etherscan.io/addre
+- [2021] [88mph](cases/2021/88mph.md) — $N/A
+- [2021] [BurgerSwap](cases/2021/BurgerSwap.md) — $N/A
+- [2021] [Cream](cases/2021/Cream.md) — $N/A
+- [2021] [Cream_2](cases/2021/Cream_2.md) — $N/A
+- [2021] [DaoMaker](cases/2021/DaoMaker.md) — $N/A
+- [2021] [Eleven](cases/2021/Eleven.md) — $N/A
+- [2021] [Grim](cases/2021/Grim.md) — $N/A
+- [2021] [IndexedFinance](cases/2021/IndexedFinance.md) — $N/A
+- [2021] [JulSwap](cases/2021/JulSwap.md) — $1.5M
+- [2021] [Levyathan](cases/2021/Levyathan.md) — $N/A
+- [2021] [Mono](cases/2021/Mono.md) — $N/A
+- [2021] [NerveBridge](cases/2021/NerveBridge.md) — $N/A
+- [2021] [Nimbus](cases/2021/Nimbus.md) — $N/A
+- [2021] [NowSwap](cases/2021/NowSwap.md) — $N/A
+- [2021] [PAID](cases/2021/PAID.md) — $N/A
+- [2021] [PancakeBunny](cases/2021/PancakeBunny.md) — $N/A
+- [2021] [PancakeHunny](cases/2021/PancakeHunny.md) — $N/A
+- [2021] [Ploutoz](cases/2021/Ploutoz.md) — $365K
+- [2021] [PolyNetwork](cases/2021/PolyNetwork.md) — $N/A
+- [2021] [Popsicle](cases/2021/Popsicle.md) — $20M USD
+- [2021] [RariCapital](cases/2021/RariCapital.md) — $N/A
+- [2021] [SafeDollar](cases/2021/SafeDollar.md) — $N/A
+- [2021] [Spartan](cases/2021/Spartan.md) — $
+- [2021] [Sushi_Badger_Digg](cases/2021/Sushi_Badger_Digg.md) — $N/A
+- [2021] [Sushimiso](cases/2021/Sushimiso.md) — $N/A
+- [2021] [Uranium](cases/2021/Uranium.md) — $
+- [2021] [ValueDefi](cases/2021/ValueDefi.md) — $N/A
+- [2021] [Visor](cases/2021/Visor.md) — $N/A
+- [2021] [WaultFinance](cases/2021/WaultFinance.md) — $N/A
+- [2021] [XSURGE](cases/2021/XSURGE.md) — $N/A
+- [2021] [Yearn_ydai](cases/2021/Yearn_ydai.md) — $~11M US
+- [2021] [ZABU](cases/2021/ZABU.md) — $N/A
+- [2021] [bEarn](cases/2021/bEarn.md) — $11M
+- [2021] [dodo_flashloan](cases/2021/dodo_flashloan.md) — $N/A
+- [2021] [xWin](cases/2021/xWin.md) — $N/A
+- [2022] [AES](cases/2022/AES.md) — $N/A
+- [2022] [ANCH](cases/2022/ANCH.md) — $N/A
+- [2022] [APC](cases/2022/APC.md) — $N/A
+- [2022] [ATK](cases/2022/ATK.md) — $~127K BUSDT
+- [2022] [AUR](cases/2022/AUR.md) — $N/A
+- [2022] [Agave](cases/2022/Agave.md) — $~1.5M US
+- [2022] [AkutarNFT](cases/2022/AkutarNFT.md) — $N/A
+- [2022] [Annex](cases/2022/Annex.md) — $N/A
+- [2022] [Anyswap](cases/2022/Anyswap.md) — $N/A
+- [2022] [Auctus](cases/2022/Auctus.md) — $N/A
+- [2022] [Audius](cases/2022/Audius.md) — $704 ETH (~ 1,080,000 US
+- [2022] [BBOX](cases/2022/BBOX.md) — $N/A
+- [2022] [BDEX](cases/2022/BDEX.md) — $N/A
+- [2022] [BEGO](cases/2022/BEGO.md) — $~12 WBNB
+- [2022] [BGLD](cases/2022/BGLD.md) — $N/A
+- [2022] [BNB48MEVBot](cases/2022/BNB48MEVBot.md) — $N/A
+- [2022] [BXH](cases/2022/BXH.md) — $40085 USDT
+- [2022] [BabySwap](cases/2022/BabySwap.md) — $N/A
+- [2022] [Bacon](cases/2022/Bacon.md) — $N/A
+- [2022] [BadGuysbyRPF](cases/2022/BadGuysbyRPF.md) — $N/A
+- [2022] [Bayc_apecoin](cases/2022/Bayc_apecoin.md) — $N/A
+- [2022] [Beanstalk](cases/2022/Beanstalk.md) — $N/A
+- [2022] [BrahTOPG](cases/2022/BrahTOPG.md) — $N/A
+- [2022] [BuildF](cases/2022/BuildF.md) — $N/A
+- [2022] [Carrot](cases/2022/Carrot.md) — $// Attacker : 0xd11a93a8db5f8d3fb03b88b4
+- [2022] [CompoundTusd](cases/2022/CompoundTusd.md) — $N/A
+- [2022] [DDC](cases/2022/DDC.md) — $N/A
+- [2022] [DFS](cases/2022/DFS.md) — $~1,450 US
+- [2022] [DFX](cases/2022/DFX.md) — $N/A
+- [2022] [DPC](cases/2022/DPC.md) — $N/A
+- [2022] [Defrost](cases/2022/Defrost.md) — $N/A
+- [2022] [Discover](cases/2022/Discover.md) — $N/A
+- [2022] [EFLeverVault](cases/2022/EFLeverVault.md) — $~750 ETH
+- [2022] [EGD_Finance](cases/2022/EGD_Finance.md) — $~36,044 US
+- [2022] [ElasticSwap](cases/2022/ElasticSwap.md) — $N/A
+- [2022] [Elephant_Money](cases/2022/Elephant_Money.md) — $N/A
+- [2022] [EtnProduct](cases/2022/EtnProduct.md) — $~3074 USD
+- [2022] [FPR](cases/2022/FPR.md) — $~
+- [2022] [Fantasm](cases/2022/Fantasm.md) — $N/A
+- [2022] [FlippazOne](cases/2022/FlippazOne.md) — $N/A
+- [2022] [FortressLoans](cases/2022/FortressLoans.md) — $1,048 ETH + 400,000 DAI (~3,000,000 US
+- [2022] [Gym_1](cases/2022/Gym_1.md) — $N/A
+- [2022] [Gym_2](cases/2022/Gym_2.md) — $N/A
+- [2022] [HEALTH](cases/2022/HEALTH.md) — $~16.64 BNB
+- [2022] [HPAY](cases/2022/HPAY.md) — $~115 BNB
+- [2022] [HackDao](cases/2022/HackDao.md) — $N/A
+- [2022] [Harmony_multisig](cases/2022/Harmony_multisig.md) — $N/A
+- [2022] [HundredFinance](cases/2022/HundredFinance.md) — $N/A
+- [2022] [INUKO](cases/2022/INUKO.md) — $N/A
+- [2022] [InverseFinance](cases/2022/InverseFinance.md) — $N/A
+- [2022] [JAY](cases/2022/JAY.md) — $~15.32 ETH
+- [2022] [Kashi](cases/2022/Kashi.md) — $N/A
+- [2022] [LPC](cases/2022/LPC.md) — $178 BNB (~ 45,715 US
+- [2022] [LiFi](cases/2022/LiFi.md) — $N/A
+- [2022] [Lodestar](cases/2022/Lodestar.md) — $N/A
+- [2022] [LuckyTiger](cases/2022/LuckyTiger.md) — $N/A
+- [2022] [MBC_ZZSH](cases/2022/MBC_ZZSH.md) — $N/A
+- [2022] [MEV_0ad8](cases/2022/MEV_0ad8.md) — $N/A
+- [2022] [MEVa47b](cases/2022/MEVa47b.md) — $~187.75 WETH
+- [2022] [MEVbadc0de](cases/2022/MEVbadc0de.md) — $N/A
+- [2022] [MEVbot_0x28d9](cases/2022/MEVbot_0x28d9.md) — $~1300
+- [2022] [MUMUG](cases/2022/MUMUG.md) — $N/A
+- [2022] [Market](cases/2022/Market.md) — $
+- [2022] [Meter](cases/2022/Meter.md) — $N/A
+- [2022] [MooCAKECTX](cases/2022/MooCAKECTX.md) — $N/A
+- [2022] [MulticallWithoutCheck](cases/2022/MulticallWithoutCheck.md) — $N/A
+- [2022] [N00d](cases/2022/N00d.md) — $N/A
+- [2022] [NUM](cases/2022/NUM.md) — $N/A
+- [2022] [NXUSD](cases/2022/NXUSD.md) — $N/A
+- [2022] [NewFreeDAO](cases/2022/NewFreeDAO.md) — $4481 BNB (~125M US
+- [2022] [Nmbplatform](cases/2022/Nmbplatform.md) — $N/A
+- [2022] [NomadBridge](cases/2022/NomadBridge.md) — $~152M US
+- [2022] [NovaExchange](cases/2022/NovaExchange.md) — $N/A
+- [2022] [Novo](cases/2022/Novo.md) — $N/A
+- [2022] [OlympusDao](cases/2022/OlympusDao.md) — $~
+- [2022] [Omni](cases/2022/Omni.md) — $N/A
+- [2022] [OneRing](cases/2022/OneRing.md) — $N/A
+- [2022] [Optimism](cases/2022/Optimism.md) — $N/A
+- [2022] [Overnight](cases/2022/Overnight.md) — $N/A
+- [2022] [PLTD](cases/2022/PLTD.md) — $N/A
+- [2022] [Paraluni](cases/2022/Paraluni.md) — $N/A
+- [2022] [Polynomial](cases/2022/Polynomial.md) — $~1.4K USD
+- [2022] [Qixi](cases/2022/Qixi.md) — $~6.8 BNB
+- [2022] [Qubit](cases/2022/Qubit.md) — $N/A
+- [2022] [Quixotic](cases/2022/Quixotic.md) — $N/A
+- [2022] [RADT](cases/2022/RADT.md) — $N/A
+- [2022] [RES](cases/2022/RES.md) — $290,671 USDT
+- [2022] [RFB](cases/2022/RFB.md) — $N/A
+- [2022] [RL](cases/2022/RL.md) — $N/A
+- [2022] [ROI](cases/2022/ROI.md) — $157.98 BNB (~44,000 US
+- [2022] [RabbyWallet_SwapRouter](cases/2022/RabbyWallet_SwapRouter.md) — $~200,000 US
+- [2022] [Rari](cases/2022/Rari.md) — $N/A
+- [2022] [ReaperFarm](cases/2022/ReaperFarm.md) — $~1.7M US
+- [2022] [RedactedCartel](cases/2022/RedactedCartel.md) — $N/A
+- [2022] [Revest](cases/2022/Revest.md) — $N/A
+- [2022] [Rikkei](cases/2022/Rikkei.md) — $N/A
+- [2022] [Ronin](cases/2022/Ronin.md) — $N/A
+- [2022] [Rubic](cases/2022/Rubic.md) — $N/A
+- [2022] [SDAO](cases/2022/SDAO.md) — $N/A
+- [2022] [SEAMAN](cases/2022/SEAMAN.md) — $N/A
+- [2022] [Saddle](cases/2022/Saddle.md) — $N/A
+- [2022] [Sandbox](cases/2022/Sandbox.md) — $N/A
+- [2022] [Shadowfi](cases/2022/Shadowfi.md) — $N/A
+- [2022] [SheepFarm](cases/2022/SheepFarm.md) — $N/A
+- [2022] [SheepFarm2](cases/2022/SheepFarm2.md) — $N/A
+- [2022] [Snood](cases/2022/Snood.md) — $N/A
+- [2022] [SpaceGodzilla](cases/2022/SpaceGodzilla.md) — $25,378 BUSD
+- [2022] [THB](cases/2022/THB.md) — $N/A
+- [2022] [TIFI](cases/2022/TIFI.md) — $N/A
+- [2022] [TeamFinance](cases/2022/TeamFinance.md) — $Multiple Tokens ~
+- [2022] [TecraSpace](cases/2022/TecraSpace.md) — $639,222
+- [2022] [Templedao](cases/2022/Templedao.md) — $
+- [2022] [TransitSwap](cases/2022/TransitSwap.md) — $over
+- [2022] [TreasureDAO](cases/2022/TreasureDAO.md) — $N/A
+- [2022] [UEarnPool](cases/2022/UEarnPool.md) — $N/A
+- [2022] [ULME](cases/2022/ULME.md) — $~250k US
+- [2022] [Uerii](cases/2022/Uerii.md) — $~2,5K USDC
+- [2022] [Umbrella](cases/2022/Umbrella.md) — $700k
+- [2022] [VTF](cases/2022/VTF.md) — $N/A
+- [2022] [Wdoge](cases/2022/Wdoge.md) — $N/A
+- [2022] [XCarnival](cases/2022/XCarnival.md) — $3087 ETH (~3,870,000 US
+- [2022] [XST](cases/2022/XST.md) — $N/A
+- [2022] [XaveFinance](cases/2022/XaveFinance.md) — $100,000,000,000,000 RNBW
+- [2022] [Yyds](cases/2022/Yyds.md) — $N/A
+- [2022] [Zeed](cases/2022/Zeed.md) — $N/A
+- [2022] [ZoomproFinance](cases/2022/ZoomproFinance.md) — $N/A
+- [2022] [cftoken](cases/2022/cftoken.md) — $N/A
+- [2022] [deus](cases/2022/deus.md) — $N/A
+- [2023] [0vix](cases/2023/0vix.md) — $~@2M US
+- [2023] [0x0DEX](cases/2023/0x0DEX.md) — $~
+- [2023] [3913](cases/2023/3913.md) — $~31,354 USD
+- [2023] [AIS](cases/2023/AIS.md) — $~
+- [2023] [APIG](cases/2023/APIG.md) — $59.5 ETH and ~72.1k USDT (~
+- [2023] [ARA](cases/2023/ARA.md) — $~125K USD
+- [2023] [Allbridge](cases/2023/Allbridge.md) — $N/A
+- [2023] [ApeDAO](cases/2023/ApeDAO.md) — $~7K USD
+- [2023] [ArcadiaFi](cases/2023/ArcadiaFi.md) — $~400K USD
+- [2023] [Astrid](cases/2023/Astrid.md) — $~228591 USD
+- [2023] [Axioma](cases/2023/Axioma.md) — $N/A
+- [2023] [AzukiDAO](cases/2023/AzukiDAO.md) — $~
+- [2023] [BCT](cases/2023/BCT.md) — $~10.2BNB
+- [2023] [BEARNDAO](cases/2023/BEARNDAO.md) — $~
+- [2023] [BEVO](cases/2023/BEVO.md) — $144 BNB
+- [2023] [BFCToken](cases/2023/BFCToken.md) — $~
+- [2023] [BH](cases/2023/BH.md) — $~
+- [2023] [BIGFI](cases/2023/BIGFI.md) — $N/A
+- [2023] [BNO](cases/2023/BNO.md) — $~
+- [2023] [BRA](cases/2023/BRA.md) — $819 BNB (~224K US
+- [2023] [BRAND](cases/2023/BRAND.md) — $~23 WBNB
+- [2023] [BTC20](cases/2023/BTC20.md) — $~18ETH
+- [2023] [BUNN](cases/2023/BUNN.md) — $N/A
+- [2023] [BabyDogeCoin](cases/2023/BabyDogeCoin.md) — $~7.5M USD
+- [2023] [BabyDogeCoin02](cases/2023/BabyDogeCoin02.md) — $~100K USD
+- [2023] [Balancer](cases/2023/Balancer.md) — $~2M
+- [2023] [Bamboo](cases/2023/Bamboo.md) — $~200BNB
+- [2023] [Bao](cases/2023/Bao.md) — $~46K USD
+- [2023] [BelugaDex](cases/2023/BelugaDex.md) — $~
+- [2023] [Biswap](cases/2023/Biswap.md) — $~72K
+- [2023] [Bitpaidio](cases/2023/Bitpaidio.md) — $~30K US
+- [2023] [Bob](cases/2023/Bob.md) — $~3BNB
+- [2023] [BonqDAO](cases/2023/BonqDAO.md) — $BEUR stablecoin and ALBT token (~88MUS
+- [2023] [Burntbubba](cases/2023/Burntbubba.md) — $~
+- [2023] [CAROLProtocol](cases/2023/CAROLProtocol.md) — $~
+- [2023] [CCV](cases/2023/CCV.md) — $~3200
+- [2023] [CEXISWAP](cases/2023/CEXISWAP.md) — $~30K USD
+- [2023] [CFC](cases/2023/CFC.md) — $~16k
+- [2023] [CIVNFT](cases/2023/CIVNFT.md) — $~180K USD
+- [2023] [CS](cases/2023/CS.md) — $N/A
+- [2023] [Carson](cases/2023/Carson.md) — $~150K USD
+- [2023] [Cellframe](cases/2023/Cellframe.md) — $~76K USD
+- [2023] [Channels](cases/2023/Channels.md) — $~
+- [2023] [ChannelsFinance](cases/2023/ChannelsFinance.md) — $~320K
+- [2023] [Civfund](cases/2023/Civfund.md) — $~165K USD
+- [2023] [CompounderFinance](cases/2023/CompounderFinance.md) — $~27,174K USD
+- [2023] [Conic](cases/2023/Conic.md) — $~3.25M USD
+- [2023] [Conic02](cases/2023/Conic02.md) — $~934K USD
+- [2023] [Contract_0x7657](cases/2023/Contract_0x7657.md) — $~1300
+- [2023] [CowSwap](cases/2023/CowSwap.md) — $N/A
+- [2023] [CurveBurner](cases/2023/CurveBurner.md) — $~
+- [2023] [DAppSocial](cases/2023/DAppSocial.md) — $~
+- [2023] [DBW](cases/2023/DBW.md) — $N/A
+- [2023] [DDCoin](cases/2023/DDCoin.md) — $~300K USD
+- [2023] [DEI](cases/2023/DEI.md) — $N/A
+- [2023] [DEPUSDT_LEVUSDC](cases/2023/DEPUSDT_LEVUSDC.md) — $~36K USD
+- [2023] [DEXRouter](cases/2023/DEXRouter.md) — $~4K USD
+- [2023] [DKP](cases/2023/DKP.md) — $N/A
+- [2023] [DYNA](cases/2023/DYNA.md) — $N/A
+- [2023] [DePayRouter](cases/2023/DePayRouter.md) — $~827 USDC
+- [2023] [Dexible](cases/2023/Dexible.md) — $N/A
+- [2023] [DominoTT](cases/2023/DominoTT.md) — $~5
+- [2023] [EAC](cases/2023/EAC.md) — $~
+- [2023] [EEE](cases/2023/EEE.md) — $~
+- [2023] [EFVault](cases/2023/EFVault.md) — $N/A
+- [2023] [EHIVE](cases/2023/EHIVE.md) — $~
+- [2023] [EHX](cases/2023/EHX.md) — $Unclear
+- [2023] [ERC20TokenBank](cases/2023/ERC20TokenBank.md) — $~111K USD
+- [2023] [EarningFram](cases/2023/EarningFram.md) — $~286K USD
+- [2023] [ElephantStatus](cases/2023/ElephantStatus.md) — $~165K USD
+- [2023] [Euler](cases/2023/Euler.md) — $N/A
+- [2023] [Exactly](cases/2023/Exactly.md) — $~
+- [2023] [FAPEN](cases/2023/FAPEN.md) — $~600 USD
+- [2023] [FDP](cases/2023/FDP.md) — $N/A
+- [2023] [FFIST](cases/2023/FFIST.md) — $~110K USD
+- [2023] [FiberRouter](cases/2023/FiberRouter.md) — $N/A
+- [2023] [FireBirdPair](cases/2023/FireBirdPair.md) — $~8536 MATIC (This tx exploit 3211 MATIC)
+- [2023] [FloorDAO](cases/2023/FloorDAO.md) — $~40 eth
+- [2023] [FloorProtocol](cases/2023/FloorProtocol.md) — $~1,6M
+- [2023] [GDS](cases/2023/GDS.md) — $N/A
+- [2023] [GPT](cases/2023/GPT.md) — $N/A
+- [2023] [GSS](cases/2023/GSS.md) — $~
+- [2023] [GYMNET](cases/2023/GYMNET.md) — $Unclear
+- [2023] [GoodCompound](cases/2023/GoodCompound.md) — $~
+- [2023] [GoodDollar](cases/2023/GoodDollar.md) — $~
+- [2023] [HCT](cases/2023/HCT.md) — $30.5BNB
+- [2023] [HNet](cases/2023/HNet.md) — $~2.4
+- [2023] [HODLCapital](cases/2023/HODLCapital.md) — $~2.3 ETH
+- [2023] [HYPR](cases/2023/HYPR.md) — $~200K USD
+- [2023] [HeavensGate](cases/2023/HeavensGate.md) — $~8ETH
+- [2023] [Hopelend](cases/2023/Hopelend.md) — $~
+- [2023] [HundredFinance_2](cases/2023/HundredFinance_2.md) — $N/A
+- [2023] [Jimbo](cases/2023/Jimbo.md) — $N/A
+- [2023] [JumpFarm](cases/2023/JumpFarm.md) — $~
+- [2023] [KEST](cases/2023/KEST.md) — $~
+- [2023] [KR](cases/2023/KR.md) — $~5
+- [2023] [Kub_Split](cases/2023/Kub_Split.md) — $~78K USD
+- [2023] [LFI](cases/2023/LFI.md) — $~36K USD
+- [2023] [LUSD](cases/2023/LUSD.md) — $~16k
+- [2023] [LW](cases/2023/LW.md) — $~50K US
+- [2023] [LaEeb](cases/2023/LaEeb.md) — $~1.8 WBNB
+- [2023] [LaunchZone](cases/2023/LaunchZone.md) — $N/A
+- [2023] [Leetswap](cases/2023/Leetswap.md) — $~630K USD
+- [2023] [Level](cases/2023/Level.md) — $N/A
+- [2023] [Libertify](cases/2023/Libertify.md) — $~452K USD
+- [2023] [LinkDao](cases/2023/LinkDao.md) — $~
+- [2023] [LocalTrader](cases/2023/LocalTrader.md) — $N/A
+- [2023] [LocalTrader2](cases/2023/LocalTrader2.md) — $N/A
+- [2023] [MAMO](cases/2023/MAMO.md) — $
+- [2023] [MEV_0x8c2d](cases/2023/MEV_0x8c2d.md) — $~
+- [2023] [MEV_0xa247](cases/2023/MEV_0xa247.md) — $~
+- [2023] [MIMSpell](cases/2023/MIMSpell.md) — $~17K USD
+- [2023] [MaestroRouter2](cases/2023/MaestroRouter2.md) — $~280 ETH
+- [2023] [MahaLend](cases/2023/MahaLend.md) — $~20K USD
+- [2023] [Melo](cases/2023/Melo.md) — $N/A
+- [2023] [MetaLend](cases/2023/MetaLend.md) — $~
+- [2023] [MetaPoint](cases/2023/MetaPoint.md) — $N/A
+- [2023] [MicDao](cases/2023/MicDao.md) — $~
+- [2023] [Midas](cases/2023/Midas.md) — $N/A
+- [2023] [MidasCapitalXYZ](cases/2023/MidasCapitalXYZ.md) — $~
+- [2023] [MintoFinance](cases/2023/MintoFinance.md) — $~9k US
+- [2023] [MultiChainCapital](cases/2023/MultiChainCapital.md) — $~10 ETH
+- [2023] [MyAi](cases/2023/MyAi.md) — $~10
+- [2023] [NFTTrader](cases/2023/NFTTrader.md) — $~3M (info from hacked.slowmist.io)
+- [2023] [NOON](cases/2023/NOON.md) — $~2K USD
+- [2023] [NST](cases/2023/NST.md) — $N/A
+- [2023] [NeutraFinance](cases/2023/NeutraFinance.md) — $N/A
+- [2023] [NeverFall](cases/2023/NeverFall.md) — $N/A
+- [2023] [NewFi](cases/2023/NewFi.md) — $~31K USD
+- [2023] [OKC](cases/2023/OKC.md) — $N/A
+- [2023] [OLIFE](cases/2023/OLIFE.md) — $N/A
+- [2023] [OmniEstate](cases/2023/OmniEstate.md) — $N/A
+- [2023] [OnyxProtocol](cases/2023/OnyxProtocol.md) — $~
+- [2023] [OpenLeverage](cases/2023/OpenLeverage.md) — $~
+- [2023] [Orion](cases/2023/Orion.md) — $N/A
+- [2023] [PHIL](cases/2023/PHIL.md) — $~2
+- [2023] [Palmswap](cases/2023/Palmswap.md) — $~
+- [2023] [Paribus](cases/2023/Paribus.md) — $N/A
+- [2023] [Pawnfi](cases/2023/Pawnfi.md) — $~
+- [2023] [Phoenix](cases/2023/Phoenix.md) — $N/A
+- [2023] [PineProtocol](cases/2023/PineProtocol.md) — $~90K (info from hacked.slowmist.io)
+- [2023] [Platypus](cases/2023/Platypus.md) — $N/A
+- [2023] [Platypus02](cases/2023/Platypus02.md) — $~51K USD
+- [2023] [Platypus03](cases/2023/Platypus03.md) — $~2M USD
+- [2023] [QTN](cases/2023/QTN.md) — $N/A
+- [2023] [QuantumWN](cases/2023/QuantumWN.md) — $~0.5 ETH
+- [2023] [RBalancer](cases/2023/RBalancer.md) — $~17  ETH
+- [2023] [Raft](cases/2023/Raft.md) — $~3.2 M USD
+- [2023] [RevertFinance](cases/2023/RevertFinance.md) — $N/A
+- [2023] [RodeoFinance](cases/2023/RodeoFinance.md) — $~472 Ether (~
+- [2023] [RoeFinance](cases/2023/RoeFinance.md) — $N/A
+- [2023] [SELLC](cases/2023/SELLC.md) — $~95K US
+- [2023] [SELLC02](cases/2023/SELLC02.md) — $unclear US
+- [2023] [SELLC03](cases/2023/SELLC03.md) — $unclear US
+- [2023] [SHIDO](cases/2023/SHIDO.md) — $~230K US
+- [2023] [SHOCO](cases/2023/SHOCO.md) — $~4 ETH
+- [2023] [SNK](cases/2023/SNK.md) — $N/A
+- [2023] [STRAC](cases/2023/STRAC.md) — $~13
+- [2023] [SUT](cases/2023/SUT.md) — $~8K USD
+- [2023] [SVT](cases/2023/SVT.md) — $N/A
+- [2023] [SellToken](cases/2023/SellToken.md) — $N/A
+- [2023] [Sentiment](cases/2023/Sentiment.md) — $N/A
+- [2023] [Sheep](cases/2023/Sheep.md) — $N/A
+- [2023] [ShibaToken](cases/2023/ShibaToken.md) — $~
+- [2023] [Starlink](cases/2023/Starlink.md) — $N/A
+- [2023] [StarsArena](cases/2023/StarsArena.md) — $~3M
+- [2023] [Sturdy](cases/2023/Sturdy.md) — $~800K USD
+- [2023] [Sushi_Router](cases/2023/Sushi_Router.md) — $N/A
+- [2023] [SwampFinance](cases/2023/SwampFinance.md) — $Unclear
+- [2023] [SwapX](cases/2023/SwapX.md) — $N/A
+- [2023] [Swapos](cases/2023/Swapos.md) — $N/A
+- [2023] [TIME](cases/2023/TIME.md) — $~84.59 ETH
+- [2023] [TINU](cases/2023/TINU.md) — $22 ETH
+- [2023] [Telcoin](cases/2023/Telcoin.md) — $~1,24M
+- [2023] [TheNFTV2](cases/2023/TheNFTV2.md) — $~19K USD
+- [2023] [TheStandard_io](cases/2023/TheStandard_io.md) — $~
+- [2023] [Themis](cases/2023/Themis.md) — $~370K USD
+- [2023] [Thena](cases/2023/Thena.md) — $N/A
+- [2023] [ThoreumFinance](cases/2023/ThoreumFinance.md) — $~2000 BNB (6 BNB in this tx)
+- [2023] [Token8633_9419](cases/2023/Token8633_9419.md) — $~
+- [2023] [TransitFinance](cases/2023/TransitFinance.md) — $N/A
+- [2023] [TrustPad](cases/2023/TrustPad.md) — $~
+- [2023] [UFDao](cases/2023/UFDao.md) — $N/A
+- [2023] [UN](cases/2023/UN.md) — $~26K USD
+- [2023] [USDTStakingContract28](cases/2023/USDTStakingContract28.md) — $~20999 USD
+- [2023] [USDs](cases/2023/USDs.md) — $N/A
+- [2023] [UniBot](cases/2023/UniBot.md) — $~83,994 USD
+- [2023] [UnverifiedContr_0x431abb](cases/2023/UnverifiedContr_0x431abb.md) — $~
+- [2023] [UnverifiedContr_9ad32](cases/2023/UnverifiedContr_9ad32.md) — $~5955  USD
+- [2023] [Upswing](cases/2023/Upswing.md) — $~22 ETH
+- [2023] [Utopia](cases/2023/Utopia.md) — $~
+- [2023] [Uwerx](cases/2023/Uwerx.md) — $~176 ETH
+- [2023] [VINU](cases/2023/VINU.md) — $~6k USD
+- [2023] [WECO](cases/2023/WECO.md) — $~
+- [2023] [WGPT](cases/2023/WGPT.md) — $~80K USD
+- [2023] [WiseLending](cases/2023/WiseLending.md) — $~260K USD
+- [2023] [XAI](cases/2023/XAI.md) — $Unclear
+- [2023] [XSDWETHpool](cases/2023/XSDWETHpool.md) — $~ 56.9 BNB
+- [2023] [YearnFinance](cases/2023/YearnFinance.md) — $N/A
+- [2023] [ZS](cases/2023/ZS.md) — $~
+- [2023] [Zunami](cases/2023/Zunami.md) — $~2M USD
+- [2023] [bZx](cases/2023/bZx.md) — $~
+- [2023] [bot](cases/2023/bot.md) — $~
+- [2023] [dForce](cases/2023/dForce.md) — $N/A
+- [2023] [grok](cases/2023/grok.md) — $~26 ETH
+- [2023] [kTAF](cases/2023/kTAF.md) — $~
+- [2023] [landNFT](cases/2023/landNFT.md) — $200 land NFT => 28,601
+- [2023] [pSeudoEth](cases/2023/pSeudoEth.md) — $~1.4 ETH
+- [2023] [paraspace](cases/2023/paraspace.md) — $N/A
+- [2023] [poolz](cases/2023/poolz.md) — $N/A
+- [2023] [safeMoon](cases/2023/safeMoon.md) — $N/A
+- [2023] [silo_finance](cases/2023/silo_finance.md) — $N/A
+- [2023] [uniclyNFT](cases/2023/uniclyNFT.md) — $1 NFT (ID: 4689)
+- [2024] [ADC](cases/2024/ADC.md) — $~20 ETH
+- [2024] [AIRBTC](cases/2024/AIRBTC.md) — $
+- [2024] [AIZPTToken](cases/2024/AIZPTToken.md) — $34.88 BNB (~
+- [2024] [ALP](cases/2024/ALP.md) — $N/A
+- [2024] [APEMAGA](cases/2024/APEMAGA.md) — $N/A
+- [2024] [ARK](cases/2024/ARK.md) — $N/A
+- [2024] [ATM](cases/2024/ATM.md) — $N/A
+- [2024] [AffineDeFi](cases/2024/AffineDeFi.md) — $33
+- [2024] [Ak1111](cases/2024/Ak1111.md) — $31.5K USD
+- [2024] [BBT](cases/2024/BBT.md) — $5.06 ETH
+- [2024] [BNBX](cases/2024/BNBX.md) — $~5
+- [2024] [BTC24H](cases/2024/BTC24H.md) — $~ 4,953 USDT + 0.76 WBTC (
+- [2024] [BUBAI](cases/2024/BUBAI.md) — $131k
+- [2024] [Babyloogn](cases/2024/Babyloogn.md) — $~2.24
+- [2024] [Bankroll](cases/2024/Bankroll.md) — $~404 WBNB
+- [2024] [BarleyFinance](cases/2024/BarleyFinance.md) — $~
+- [2024] [Bazaar](cases/2024/Bazaar.md) — $1.4M
+- [2024] [Bedrock_DeFi](cases/2024/Bedrock_DeFi.md) — $~1.7M US
+- [2024] [BigBangSwap](cases/2024/BigBangSwap.md) — $~5k
+- [2024] [Binemon](cases/2024/Binemon.md) — $~0.2
+- [2024] [Bizness](cases/2024/Bizness.md) — $15.7k USD
+- [2024] [BlueberryProtocol](cases/2024/BlueberryProtocol.md) — $~
+- [2024] [Bmizapper](cases/2024/Bmizapper.md) — $114,000 USDC
+- [2024] [Burner](cases/2024/Burner.md) — $1.7eth
+- [2024] [BurnsDefi](cases/2024/BurnsDefi.md) — $~
+- [2024] [CGT](cases/2024/CGT.md) — $~998B(cgt token)
+- [2024] [COCO](cases/2024/COCO.md) — $280BNB
+- [2024] [Caterpillar_Coin_CUT](cases/2024/Caterpillar_Coin_CUT.md) — $~1.4M USD
+- [2024] [ChaingeFinance](cases/2024/ChaingeFinance.md) — $~200K
+- [2024] [ChiSale](cases/2024/ChiSale.md) — $16.3k USD
+- [2024] [CitadelFinance](cases/2024/CitadelFinance.md) — $~
+- [2024] [CloberDEX](cases/2024/CloberDEX.md) — $~
+- [2024] [CoW](cases/2024/CoW.md) — $59K
+- [2024] [CompoundUni](cases/2024/CompoundUni.md) — $~439537 US
+- [2024] [Convergence](cases/2024/Convergence.md) — $~200k USD
+- [2024] [Crb2](cases/2024/Crb2.md) — $15k
+- [2024] [DAO_SoulMate](cases/2024/DAO_SoulMate.md) — $~
+- [2024] [DN404](cases/2024/DN404.md) — $200K
+- [2024] [DOGGO](cases/2024/DOGGO.md) — $7K USD
+- [2024] [DeFiPlaza](cases/2024/DeFiPlaza.md) — $~200k USD
+- [2024] [DeezNutz404](cases/2024/DeezNutz404.md) — $~170K USD
+- [2024] [DeltaPrime](cases/2024/DeltaPrime.md) — $
+- [2024] [DoughFina](cases/2024/DoughFina.md) — $~1.81M USD
+- [2024] [DualPools](cases/2024/DualPools.md) — $~
+- [2024] [Dyson_money](cases/2024/Dyson_money.md) — $~52 BNB
+- [2024] [EGGX](cases/2024/EGGX.md) — $~2
+- [2024] [ETHFIN](cases/2024/ETHFIN.md) — $~
+- [2024] [EXcommunity](cases/2024/EXcommunity.md) — $N/A
+- [2024] [Erc20transfer](cases/2024/Erc20transfer.md) — $
+- [2024] [FIL314](cases/2024/FIL314.md) — $~14 BNB
+- [2024] [FireToken](cases/2024/FireToken.md) — $8.45 ETH (~
+- [2024] [Freedom](cases/2024/Freedom.md) — $~74
+- [2024] [GAIN](cases/2024/GAIN.md) — $~18ETH
+- [2024] [GAX](cases/2024/GAX.md) — $~50k
+- [2024] [GFA](cases/2024/GFA.md) — $N/A
+- [2024] [GFOX](cases/2024/GFOX.md) — $330K
+- [2024] [GHT](cases/2024/GHT.md) — $~
+- [2024] [GPU](cases/2024/GPU.md) — $N/A
+- [2024] [GROKD](cases/2024/GROKD.md) — $N/A
+- [2024] [Game](cases/2024/Game.md) — $~20 ETH
+- [2024] [Gamma](cases/2024/Gamma.md) — $~
+- [2024] [HANAToken](cases/2024/HANAToken.md) — $283 USD
+- [2024] [HYDT](cases/2024/HYDT.md) — $N/A
+- [2024] [Hackathon](cases/2024/Hackathon.md) — $N/A
+- [2024] [HedgeyFinance](cases/2024/HedgeyFinance.md) — $48M USD
+- [2024] [HoppyFrogERC](cases/2024/HoppyFrogERC.md) — $~0.3 ETH
+- [2024] [INUMI](cases/2024/INUMI.md) — $11,000 USD
+- [2024] [INcufi](cases/2024/INcufi.md) — $~59643 USD
+- [2024] [IT](cases/2024/IT.md) — $N/A
+- [2024] [IvestDao](cases/2024/IvestDao.md) — $N/A
+- [2024] [JHY](cases/2024/JHY.md) — $11k USD
+- [2024] [JokInTheBox](cases/2024/JokInTheBox.md) — $N/A
+- [2024] [Juice](cases/2024/Juice.md) — $~54 ETH
+- [2024] [LABUBU](cases/2024/LABUBU.md) — $17.4 BNB (~
+- [2024] [LQDX_alert](cases/2024/LQDX_alert.md) — $N/A
+- [2024] [LW](cases/2024/LW.md) — $~7K USD
+- [2024] [LavaLending](cases/2024/LavaLending.md) — $~340K
+- [2024] [LavaLending](cases/2024/LavaLending.md) — $1 USDC, 125795.6 cUSDC, 0,0067 WBTC, 2.2
+- [2024] [Lifiprotocol](cases/2024/Lifiprotocol.md) — $~10M USD
+- [2024] [Liquiditytokens](cases/2024/Liquiditytokens.md) — $～200K
+- [2024] [MARA](cases/2024/MARA.md) — $~8.8 WBNB
+- [2024] [MARS](cases/2024/MARS.md) — $>
+- [2024] [MEVbot_0xdd7c](cases/2024/MEVbot_0xdd7c.md) — $~18K USD
+- [2024] [MFT](cases/2024/MFT.md) — $33.7k USD
+- [2024] [MIC](cases/2024/MIC.md) — $~
+- [2024] [MIMSpell2](cases/2024/MIMSpell2.md) — $~
+- [2024] [MINER_bsc](cases/2024/MINER_bsc.md) — $~3.5 WBNB
+- [2024] [MO](cases/2024/MO.md) — $N/A
+- [2024] [MRP](cases/2024/MRP.md) — $~17 BNB
+- [2024] [MainnetSettler](cases/2024/MainnetSettler.md) — $
+- [2024] [Matez](cases/2024/Matez.md) — $80k USD
+- [2024] [MetaDragon](cases/2024/MetaDragon.md) — $N/A
+- [2024] [MineSTM](cases/2024/MineSTM.md) — $
+- [2024] [Miner](cases/2024/Miner.md) — $~140
+- [2024] [Minterest](cases/2024/Minterest.md) — $~427 ETH
+- [2024] [MixedSwapRouter](cases/2024/MixedSwapRouter.md) — $Lost: =>10000 USD(WINR tokens)
+- [2024] [Moonhacker](cases/2024/Moonhacker.md) — $318.9 k
+- [2024] [MorphoBlue](cases/2024/MorphoBlue.md) — $
+- [2024] [NBLGAME](cases/2024/NBLGAME.md) — $~
+- [2024] [NCD](cases/2024/NCD.md) — $
+- [2024] [NFTG](cases/2024/NFTG.md) — $10k USD
+- [2024] [NGFS](cases/2024/NGFS.md) — $~190K
+- [2024] [NORMIE](cases/2024/NORMIE.md) — $
+- [2024] [NovaXM2E](cases/2024/NovaXM2E.md) — $~25k USD
+- [2024] [OMPxContract](cases/2024/OMPxContract.md) — $4.37 ETH (~11527 USD)
+- [2024] [OSN](cases/2024/OSN.md) — $N/A
+- [2024] [OTSeaStaking](cases/2024/OTSeaStaking.md) — $26k US
+- [2024] [OnyxDAO](cases/2024/OnyxDAO.md) — $4.1M VUSD, 7.35M XCN, 5K DAI, 0.23 WBTC,
+- [2024] [OpenLeverage2](cases/2024/OpenLeverage2.md) — $~234K
+- [2024] [OrbitChain](cases/2024/OrbitChain.md) — $~81M
+- [2024] [P719Token](cases/2024/P719Token.md) — $547.18 BNB (~
+- [2024] [PANDORA](cases/2024/PANDORA.md) — $N/A
+- [2024] [PLN](cases/2024/PLN.md) — $400k USD
+- [2024] [Paraswap](cases/2024/Paraswap.md) — $~
+- [2024] [ParticleTrade](cases/2024/ParticleTrade.md) — $~50
+- [2024] [PeapodsFinance](cases/2024/PeapodsFinance.md) — $~
+- [2024] [Penpiexyzio](cases/2024/Penpiexyzio.md) — $N/A
+- [2024] [PestoToken](cases/2024/PestoToken.md) — $1.4K USD
+- [2024] [PikeFinance](cases/2024/PikeFinance.md) — $1.4M
+- [2024] [Pledge](cases/2024/Pledge.md) — $15K
+- [2024] [PredyFinance](cases/2024/PredyFinance.md) — $
+- [2024] [Prisma](cases/2024/Prisma.md) — $~
+- [2024] [Pythia](cases/2024/Pythia.md) — $21 ETH
+- [2024] [RPP](cases/2024/RPP.md) — $~
+- [2024] [RadiantCapital](cases/2024/RadiantCapital.md) — $~
+- [2024] [RedKeysCoin](cases/2024/RedKeysCoin.md) — $
+- [2024] [Rico](cases/2024/Rico.md) — $36K
+- [2024] [RuggedArt](cases/2024/RuggedArt.md) — $~5
+- [2024] [SASHAToken](cases/2024/SASHAToken.md) — $~249 ETH (~
+- [2024] [SATURN](cases/2024/SATURN.md) — $~15 BNB
+- [2024] [SATX](cases/2024/SATX.md) — $~999M US
+- [2024] [SBT](cases/2024/SBT.md) — $~56K BUSD
+- [2024] [SCROLL](cases/2024/SCROLL.md) — $~76 ETH
+- [2024] [SMOOFSStaking](cases/2024/SMOOFSStaking.md) — $Unclear
+- [2024] [SQUID](cases/2024/SQUID.md) — $N/A
+- [2024] [SSS](cases/2024/SSS.md) — $
+- [2024] [Seneca](cases/2024/Seneca.md) — $~
+- [2024] [Shell_MEV_0xa898](cases/2024/Shell_MEV_0xa898.md) — $~1000
+- [2024] [Shezmu](cases/2024/Shezmu.md) — $4.9M USD
+- [2024] [SlurpyCoin](cases/2024/SlurpyCoin.md) — $3k USD
+- [2024] [SocketGateway](cases/2024/SocketGateway.md) — $~3.3M US
+- [2024] [Sonne](cases/2024/Sonne.md) — $~
+- [2024] [Spectra_finance](cases/2024/Spectra_finance.md) — $~73K USD
+- [2024] [SteamSwap](cases/2024/SteamSwap.md) — $~
+- [2024] [SumerMoney](cases/2024/SumerMoney.md) — $350K
+- [2024] [SwarmMarkets](cases/2024/SwarmMarkets.md) — $~7729
+- [2024] [TCH](cases/2024/TCH.md) — $~
+- [2024] [TGBS](cases/2024/TGBS.md) — $~
+- [2024] [TGC](cases/2024/TGC.md) — $N/A
+- [2024] [TSURU](cases/2024/TSURU.md) — $140K
+- [2024] [Tradeonorion](cases/2024/Tradeonorion.md) — $~645K
+- [2024] [UPS](cases/2024/UPS.md) — $N/A
+- [2024] [UnizenIO](cases/2024/UnizenIO.md) — $~2M USD
+- [2024] [UnizenIO2](cases/2024/UnizenIO2.md) — $~
+- [2024] [UnverifiedContr_0x00C409](cases/2024/UnverifiedContr_0x00C409.md) — $N/A
+- [2024] [UnverifiedContr_0x452E25](cases/2024/UnverifiedContr_0x452E25.md) — $~27 ETH
+- [2024] [UwuLend_First](cases/2024/UwuLend_First.md) — $~
+- [2024] [UwuLend_Second](cases/2024/UwuLend_Second.md) — $~
+- [2024] [VISTA](cases/2024/VISTA.md) — $N/A
+- [2024] [VOW](cases/2024/VOW.md) — $~ 1M USD
+- [2024] [VRug](cases/2024/VRug.md) — $8.4K
+- [2024] [Velocore](cases/2024/Velocore.md) — $
+- [2024] [WIFCOIN_ETH](cases/2024/WIFCOIN_ETH.md) — $N/A
+- [2024] [WSM](cases/2024/WSM.md) — $2_517_438_179_912_631_607_253_979 WSM ≈ 
+- [2024] [WXETA](cases/2024/WXETA.md) — $110,000 USD
+- [2024] [Will](cases/2024/Will.md) — $N/A
+- [2024] [WiseLending02](cases/2024/WiseLending02.md) — $~464K USD
+- [2024] [WiseLending03](cases/2024/WiseLending03.md) — $~464K USD
+- [2024] [Woofi](cases/2024/Woofi.md) — $~8M
+- [2024] [X319](cases/2024/X319.md) — $12.9k USD
+- [2024] [XBridge](cases/2024/XBridge.md) — $~
+- [2024] [XSIJ](cases/2024/XSIJ.md) — $~51K USD
+- [2024] [YIEDL](cases/2024/YIEDL.md) — $N/A
+- [2024] [YYS](cases/2024/YYS.md) — $
+- [2024] [Yield](cases/2024/Yield.md) — $181K
+- [2024] [YodlRouter](cases/2024/YodlRouter.md) — $~5k
+- [2024] [Z123](cases/2024/Z123.md) — $≈135k
+- [2024] [Zenterest](cases/2024/Zenterest.md) — $N/A
+- [2024] [ZongZi](cases/2024/ZongZi.md) — $~
+- [2024] [Zoomer](cases/2024/Zoomer.md) — $~14 ETH
+- [2024] [proxy_b7e1](cases/2024/proxy_b7e1.md) — $
+- [2024] [unverified_03f9](cases/2024/unverified_03f9.md) — $
+- [2024] [unverified_5697](cases/2024/unverified_5697.md) — $
+- [2024] [unverified_667d](cases/2024/unverified_667d.md) — $10k
+- [2024] [unverified_766a](cases/2024/unverified_766a.md) — $100 USD
+- [2024] [unverified_a89f](cases/2024/unverified_a89f.md) — $
+- [2024] [vETH](cases/2024/vETH.md) — $447k
+- [2025] [0x8d2e](cases/2025/0x8d2e.md) — $40k USDC
+- [2025] [0xf340](cases/2025/0xf340.md) — $4k USD
+- [2025] [98Token](cases/2025/98Token.md) — $N/A
+- [2025] [AAVEBoost](cases/2025/AAVEBoost.md) — $14.8K USD
+- [2025] [ABCCApp](cases/2025/ABCCApp.md) — $~ 10,062 BUSD
+- [2025] [AIRWA](cases/2025/AIRWA.md) — $~ 56.73 BNB
+- [2025] [AIXBTForcedSwap](cases/2025/AIXBTForcedSwap.md) — $13,597.36 USDC
+- [2025] [ActivePoolScrvUsdUrgentRedemption](cases/2025/ActivePoolScrvUsdUrgentRedemption.md) — $4,204.55 USD
+- [2025] [ActivePoolUrgentRedemption](cases/2025/ActivePoolUrgentRedemption.md) — $2,696.49 USD
+- [2025] [Alkimiya_io](cases/2025/Alkimiya_io.md) — $~ 95.5 K (1.14015390 WBTC)
+- [2025] [AmpKashi](cases/2025/AmpKashi.md) — $572.31 USDC
+- [2025] [AnyswapWETHPermit](cases/2025/AnyswapWETHPermit.md) — $200 WETH
+- [2025] [ArbitrumBaseSwapper](cases/2025/ArbitrumBaseSwapper.md) — $1,847.33 USD
+- [2025] [Ast](cases/2025/Ast.md) — $65K US
+- [2025] [AutoPooledTradingBot](cases/2025/AutoPooledTradingBot.md) — $0.15198 ETH
+- [2025] [AvaxBIFKNPair](cases/2025/AvaxBIFKNPair.md) — $2,422.73 USD
+- [2025] [AventaRewardClaim](cases/2025/AventaRewardClaim.md) — $16,019,528 AVENTA
+- [2025] [BBXToken](cases/2025/BBXToken.md) — $11902 BUSD
+- [2025] [BTNFT](cases/2025/BTNFT.md) — $19025.9193312786235214 BUSD
+- [2025] [BalancerV2](cases/2025/BalancerV2.md) — $120M USD
+- [2025] [BankrollNetwork](cases/2025/BankrollNetwork.md) — $24.5 WBNB
+- [2025] [BankrollStack](cases/2025/BankrollStack.md) — $5k USD
+- [2025] [BankrollStackPlus](cases/2025/BankrollStackPlus.md) — $12,234.48 USD
+- [2025] [BaseBebopSettlement](cases/2025/BaseBebopSettlement.md) — $3,875.46 USD
+- [2025] [BasePricePool](cases/2025/BasePricePool.md) — $802.57 USD
+- [2025] [Bebop_dex](cases/2025/Bebop_dex.md) — $21k USD
+- [2025] [BeefyZapRouter](cases/2025/BeefyZapRouter.md) — $6,584.95 USD
+- [2025] [BetaPresale](cases/2025/BetaPresale.md) — $1.921686798824852706 WBNB and 46.4748216
+- [2025] [BitCrown](cases/2025/BitCrown.md) — $7,939.27 USD
+- [2025] [BoJLeverageMarket](cases/2025/BoJLeverageMarket.md) — $7,227.59 USD
+- [2025] [BscInitcodeToken](cases/2025/BscInitcodeToken.md) — $700.32 USD
+- [2025] [Bybit](cases/2025/Bybit.md) — $1.5B (401346 ETH + 8000 mETH + 15000 cmE
+- [2025] [Corkprotocol](cases/2025/Corkprotocol.md) — $12M USD
+- [2025] [DCFToken](cases/2025/DCFToken.md) — $~442k
+- [2025] [DRLVaultV3](cases/2025/DRLVaultV3.md) — $100K USDT
+- [2025] [DUCKVADER](cases/2025/DUCKVADER.md) — $~ 5 ETH
+- [2025] [DogeAlliance](cases/2025/DogeAlliance.md) — $990.33 USD
+- [2025] [Dumbo](cases/2025/Dumbo.md) — $628.45 BUSD
+- [2025] [EmptySetReserve](cases/2025/EmptySetReserve.md) — $
+- [2025] [EquilibriaEPendle](cases/2025/EquilibriaEPendle.md) — $62,661.57 USD
+- [2025] [EverValueCoin](cases/2025/EverValueCoin.md) — $100k USD
+- [2025] [FPC](cases/2025/FPC.md) — $4.7M USDT
+- [2025] [FixedTokenBSwap](cases/2025/FixedTokenBSwap.md) — $2,203.63 USD
+- [2025] [FourMeme](cases/2025/FourMeme.md) — $186k (287bnb)
+- [2025] [GMT7](cases/2025/GMT7.md) — $16.75 BNB
+- [2025] [Gangsterfinance](cases/2025/Gangsterfinance.md) — $16.5k USD
+- [2025] [GoldReserve](cases/2025/GoldReserve.md) — $12.74 BNB
+- [2025] [GradientMakerPool](cases/2025/GradientMakerPool.md) — $5k USD
+- [2025] [Grizzifi](cases/2025/Grizzifi.md) — $61k USD
+- [2025] [H2O](cases/2025/H2O.md) — $22470 USD
+- [2025] [HORS](cases/2025/HORS.md) — $14.8 WBNB
+- [2025] [HegicOptions](cases/2025/HegicOptions.md) — $~104M
+- [2025] [HenloKart](cases/2025/HenloKart.md) — $0.59 ETH
+- [2025] [Hexotic](cases/2025/Hexotic.md) — $500 USD
+- [2025] [HoldSafe](cases/2025/HoldSafe.md) — $4,824.96 USD
+- [2025] [INVISTECH](cases/2025/INVISTECH.md) — $5.14 BNB
+- [2025] [IPC](cases/2025/IPC.md) — $N/A
+- [2025] [IRYSAI](cases/2025/IRYSAI.md) — $69.6K USD
+- [2025] [IdolsNFT](cases/2025/IdolsNFT.md) — $97 stETH
+- [2025] [ImpermaxV3](cases/2025/ImpermaxV3.md) — $~300k
+- [2025] [InitcodeFactoryFees](cases/2025/InitcodeFactoryFees.md) — $2,383.25 USD
+- [2025] [JPulsepot](cases/2025/JPulsepot.md) — $21.5K
+- [2025] [KRCToken_pair](cases/2025/KRCToken_pair.md) — $7k USD
+- [2025] [Kame](cases/2025/Kame.md) — $18167.880000 USD
+- [2025] [LAURAToken](cases/2025/LAURAToken.md) — $12.340357077284305206 ETH (~
+- [2025] [LPMine](cases/2025/LPMine.md) — $N/A
+- [2025] [Laundromat](cases/2025/Laundromat.md) — $1.5K USD
+- [2025] [LeverageSIR](cases/2025/LeverageSIR.md) — $~ 353.8 K (17814,86 USDC, 1,4085 WBTC, 1
+- [2025] [Lifeprotocol](cases/2025/Lifeprotocol.md) — $15114 BUSD
+- [2025] [LimitOrderProtocol](cases/2025/LimitOrderProtocol.md) — $2,800,000 BRAINS
+- [2025] [MBUToken](cases/2025/MBUToken.md) — $~2.16 M BUSD
+- [2025] [MCAI](cases/2025/MCAI.md) — $12.03 WETH
+- [2025] [MIMSpell3](cases/2025/MIMSpell3.md) — $1.7M USD
+- [2025] [MetaPool](cases/2025/MetaPool.md) — $25k USD
+- [2025] [Moonwell](cases/2025/Moonwell.md) — $1M USD
+- [2025] [Mosca](cases/2025/Mosca.md) — $19K
+- [2025] [Mosca2](cases/2025/Mosca2.md) — $37.6K
+- [2025] [MulticallWithETH](cases/2025/MulticallWithETH.md) — $~10 K usdt
+- [2025] [MulticallWithXera](cases/2025/MulticallWithXera.md) — $17k USD
+- [2025] [MyCoinMaster](cases/2025/MyCoinMaster.md) — $653.49 USD
+- [2025] [NGP](cases/2025/NGP.md) — $2M USDT
+- [2025] [Nalakuvara_LotteryTicket50](cases/2025/Nalakuvara_LotteryTicket50.md) — $105470 USDC
+- [2025] [ODOS](cases/2025/ODOS.md) — $~50k
+- [2025] [OneInchFusionV1SettlementHack.sol](cases/2025/OneInchFusionV1SettlementHacksol.md) — $4.5M
+- [2025] [PDZ](cases/2025/PDZ.md) — $3.3 BNB
+- [2025] [PTM](cases/2025/PTM.md) — $552.63 USDT
+- [2025] [ParaSwapDAIApproval](cases/2025/ParaSwapDAIApproval.md) — $2,298.68 USD
+- [2025] [Paribus](cases/2025/Paribus.md) — $~86k
+- [2025] [PeapodsFinance](cases/2025/PeapodsFinance.md) — $~
+- [2025] [PegaBall](cases/2025/PegaBall.md) — $1,512.85 USD
+- [2025] [PendleReflector](cases/2025/PendleReflector.md) — $2304.18 USD
+- [2025] [PresaleV5](cases/2025/PresaleV5.md) — $2.3157 ETH
+- [2025] [Pump](cases/2025/Pump.md) — $~ 11.29 BNB (
+- [2025] [RANTToken](cases/2025/RANTToken.md) — $~ 311.4 BNB
+- [2025] [RICE](cases/2025/RICE.md) — $~ 34.5 WETH (
+- [2025] [ResupplyFi](cases/2025/ResupplyFi.md) — $9.6M USD
+- [2025] [RnsPay](cases/2025/RnsPay.md) — $1,050 USDC
+- [2025] [Roar](cases/2025/Roar.md) — $777k USD
+- [2025] [RoulettePotV2](cases/2025/RoulettePotV2.md) — $~28K
+- [2025] [SBRToken](cases/2025/SBRToken.md) — $~ 8.495 ETH
+- [2025] [SWAPPStaking](cases/2025/SWAPPStaking.md) — $32,196.28 USD
+- [2025] [Scorch](cases/2025/Scorch.md) — $0.14 ETH
+- [2025] [SharwaFinance](cases/2025/SharwaFinance.md) — $146,000 USD
+- [2025] [SiloFinance](cases/2025/SiloFinance.md) — $500,000+ USD
+- [2025] [SinstakeZombie](cases/2025/SinstakeZombie.md) — $705.13 USD
+- [2025] [SizeCredit](cases/2025/SizeCredit.md) — $19.7k USD
+- [2025] [SizeFlashLoanLooping](cases/2025/SizeFlashLoanLooping.md) — $533.05 USD
+- [2025] [StackMarket](cases/2025/StackMarket.md) — $0.56 WETH
+- [2025] [Stead](cases/2025/Stead.md) — $14.5k USD
+- [2025] [StepHeroNFTs](cases/2025/StepHeroNFTs.md) — $137.9 BNB
+- [2025] [Stepp2p](cases/2025/Stepp2p.md) — $43k USD
+- [2025] [StrategyLlamaLendConvex](cases/2025/StrategyLlamaLendConvex.md) — $563.12 USDC
+- [2025] [SuperRare](cases/2025/SuperRare.md) — $730K USD
+- [2025] [TSAggregatorGeneric](cases/2025/TSAggregatorGeneric.md) — $1,300.00 USDT
+- [2025] [TokenFactory](cases/2025/TokenFactory.md) — $657.17 USD
+- [2025] [TokenHolder](cases/2025/TokenHolder.md) — $20 WBNB
+- [2025] [TokenVault](cases/2025/TokenVault.md) — $3,226.51 USD
+- [2025] [UNI](cases/2025/UNI.md) — $14K USD
+- [2025] [UPENGBurnSync](cases/2025/UPENGBurnSync.md) — $1.5 WBNB
+- [2025] [Unilend](cases/2025/Unilend.md) — $60 stETH
+- [2025] [Unverified670471](cases/2025/Unverified670471.md) — $
+- [2025] [Unverified6883](cases/2025/Unverified6883.md) — $
+- [2025] [Unverified_6077](cases/2025/Unverified_6077.md) — $~ (
+- [2025] [Unwarp](cases/2025/Unwarp.md) — $~9 K usdt
+- [2025] [UsualMoney](cases/2025/UsualMoney.md) — $43k USD
+- [2025] [VDS](cases/2025/VDS.md) — $13k USD
+- [2025] [Venus_ZKSync](cases/2025/Venus_ZKSync.md) — $N/A
+- [2025] [WETC_Token](cases/2025/WETC_Token.md) — $101k USD
+- [2025] [WXC_Token](cases/2025/WXC_Token.md) — $37.5 WBNB
+- [2025] [WaleCoin](cases/2025/WaleCoin.md) — $1.415367204023272901 BNB
+- [2025] [WhereIsMyDragonTreasure](cases/2025/WhereIsMyDragonTreasure.md) — $
+- [2025] [YBToken](cases/2025/YBToken.md) — $15261.68240413121964707 BUSD
+- [2025] [YDTtoken](cases/2025/YDTtoken.md) — $N/A
+- [2025] [YuliAI](cases/2025/YuliAI.md) — $78k USD
+- [2025] [YziAIToken](cases/2025/YziAIToken.md) — $~ 376 BNB
+- [2025] [ZeroExSettler](cases/2025/ZeroExSettler.md) — $3,008 USDT
+- [2025] [bitallx](cases/2025/bitallx.md) — $2,029.47 USDT
+- [2025] [bitdog](cases/2025/bitdog.md) — $2.10 BNB
+- [2025] [coinbase](cases/2025/coinbase.md) — $300k USD
+- [2025] [crosswise](cases/2025/crosswise.md) — $4.16 WBNB
+- [2025] [d3xai](cases/2025/d3xai.md) — $190 BNB
+- [2025] [flylong](cases/2025/flylong.md) — $1.73 BNB
+- [2025] [gmx](cases/2025/gmx.md) — $N/A
+- [2025] [multitransferswap](cases/2025/multitransferswap.md) — $0.34 ETH
+- [2025] [tcdp](cases/2025/tcdp.md) — $2.02 ETH
+- [2025] [unverified_0000](cases/2025/unverified_0000.md) — $5,658.46 USD
+- [2025] [unverified_35bc](cases/2025/unverified_35bc.md) — $6700 USD
+- [2025] [unverified_3f27](cases/2025/unverified_3f27.md) — $0.40 WAVAX
+- [2025] [unverified_54cd](cases/2025/unverified_54cd.md) — $285.7K USD
+- [2025] [unverified_6f7a](cases/2025/unverified_6f7a.md) — $7,630.46 USD
+- [2025] [unverified_8490](cases/2025/unverified_8490.md) — $48.3K USD
+- [2025] [unverified_8fd3](cases/2025/unverified_8fd3.md) — $502.42 USDT
+- [2025] [unverified_91a1](cases/2025/unverified_91a1.md) — $551.22 USD
+- [2025] [unverified_b5cb](cases/2025/unverified_b5cb.md) — $2M USD
+- [2025] [unverified_d132](cases/2025/unverified_d132.md) — $3,131.11 DAI
+- [2025] [unverified_d4f1](cases/2025/unverified_d4f1.md) — $15.2k USD
+- [2025] [unverified_de7c](cases/2025/unverified_de7c.md) — $980.32 USDC
+- [2025] [wKeyDAO](cases/2025/wKeyDAO.md) — $~767 US
+- [2025] [yETH](cases/2025/yETH.md) — $9M USD
+- [2026] [AIDC](cases/2026/AIDC.md) — $~220.13 WBNB
+- [2026] [AISOTHPresale](cases/2026/AISOTHPresale.md) — $30,314.76 USDT
+- [2026] [AROS](cases/2026/AROS.md) — $~
+- [2026] [ATM](cases/2026/ATM.md) — $~
+- [2026] [ATMBlindBox](cases/2026/ATMBlindBox.md) — $13,000,000 ATM (~99,000 USD)
+- [2026] [ATM_LP_Burn](cases/2026/ATM_LP_Burn.md) — $1,603.99 WBNB
+- [2026] [AaveRebalancerCreditDelegation](cases/2026/AaveRebalancerCreditDelegation.md) — $6,999.91 WAVAX
+- [2026] [AdsharesBridge](cases/2026/AdsharesBridge.md) — $~
+- [2026] [AlkemiEarn](cases/2026/AlkemiEarn.md) — $43.45 ETH
+- [2026] [AmbientCrocSwapDex](cases/2026/AmbientCrocSwapDex.md) — $~67.85 ETH after final USDC->WETH conver
+- [2026] [AztecConnect](cases/2026/AztecConnect.md) — $~
+- [2026] [AztecEscapeHatch](cases/2026/AztecEscapeHatch.md) — $~
+- [2026] [BOSS](cases/2026/BOSS.md) — $10,207.54 USDT
+- [2026] [BYToken](cases/2026/BYToken.md) — $~
+- [2026] [CookFinanceIssuance](cases/2026/CookFinanceIssuance.md) — $~
+- [2026] [Curve_LlamaLend](cases/2026/Curve_LlamaLend.md) — $~240,000 US
+- [2026] [DIP](cases/2026/DIP.md) — $111,097.59 USDC
+- [2026] [DLMC](cases/2026/DLMC.md) — $222,560.22 USDT
+- [2026] [DTXT](cases/2026/DTXT.md) — $35,041.11 USDT
+- [2026] [DxSale](cases/2026/DxSale.md) — $~
+- [2026] [EST](cases/2026/EST.md) — $150.2 WBNB
+- [2026] [Ekubo](cases/2026/Ekubo.md) — $~
+- [2026] [ElevateFi](cases/2026/ElevateFi.md) — $~16,000 USD
+- [2026] [FractalProtocol](cases/2026/FractalProtocol.md) — $~
+- [2026] [HumaCreditApprovalBypass](cases/2026/HumaCreditApprovalBypass.md) — $~101390 USDC
+- [2026] [INKFinance](cases/2026/INKFinance.md) — $~
+- [2026] [JB](cases/2026/JB.md) — $49958.06 USDT
+- [2026] [JUDAO](cases/2026/JUDAO.md) — $205,259.49 USDT + 36 BNB
+- [2026] [JoeAgent](cases/2026/JoeAgent.md) — $~
+- [2026] [JuiceboxREVLoans](cases/2026/JuiceboxREVLoans.md) — $21.77 ETH
+- [2026] [KipseliPropAMM](cases/2026/KipseliPropAMM.md) — $0.93 cbBTC
+- [2026] [LAXO_Token](cases/2026/LAXO_Token.md) — $~137K US
+- [2026] [LBP](cases/2026/LBP.md) — $610.56 BNB
+- [2026] [LegendaryMoneyMonNft](cases/2026/LegendaryMoneyMonNft.md) — $~
+- [2026] [LixirPermitDrain](cases/2026/LixirPermitDrain.md) — $2.60 ETH, 4,477.72 USDC, 3,609.95 USDT, 
+- [2026] [MAPProtocol](cases/2026/MAPProtocol.md) — $~
+- [2026] [MONA_LisaVault](cases/2026/MONA_LisaVault.md) — $N/A
+- [2026] [MTToken](cases/2026/MTToken.md) — $N/A
+- [2026] [Moonwell](cases/2026/Moonwell.md) — $~1.78M US
+- [2026] [MureDistribution](cases/2026/MureDistribution.md) — $~5.45 ETH
+- [2026] [NewMarketTrading](cases/2026/NewMarketTrading.md) — $~
+- [2026] [NovaBox](cases/2026/NovaBox.md) — $56.73 ETH
+- [2026] [OLPC](cases/2026/OLPC.md) — $1,115,903.66 USDT
+- [2026] [OceanBPoolSideStaking](cases/2026/OceanBPoolSideStaking.md) — $~127.86K mOCEAN
+- [2026] [PRXVT](cases/2026/PRXVT.md) — $32.8ETH
+- [2026] [PerpPair](cases/2026/PerpPair.md) — $165647.74 USDC
+- [2026] [RWAVault](cases/2026/RWAVault.md) — $398,655.47 USDC vault outflow
+- [2026] [Renegade](cases/2026/Renegade.md) — $~
+- [2026] [Revamp](cases/2026/Revamp.md) — $2.99 BNB
+- [2026] [RoyalRoyalties](cases/2026/RoyalRoyalties.md) — $261,162.93 USDC
+- [2026] [SEAToken](cases/2026/SEAToken.md) — $~
+- [2026] [SKP](cases/2026/SKP.md) — $~
+- [2026] [SQTokenStaking](cases/2026/SQTokenStaking.md) — $~
+- [2026] [SaturnProtocol](cases/2026/SaturnProtocol.md) — $N/A
+- [2026] [SharwaMarginTrading](cases/2026/SharwaMarginTrading.md) — $32.85K USDC
+- [2026] [SingularityDynaVault](cases/2026/SingularityDynaVault.md) — $413.13K USDC plus residual vault shares
+- [2026] [SquidMulticallAllowanceDrain](cases/2026/SquidMulticallAllowanceDrain.md) — $1 ETH
+- [2026] [SquidRouterModule](cases/2026/SquidRouterModule.md) — $0.25 WBTC + 0.29 wTAO + 0.02 WETH
+- [2026] [SubQuerySettings](cases/2026/SubQuerySettings.md) — $218.07M SQT
+- [2026] [SummerFi](cases/2026/SummerFi.md) — $6.02M DAI
+- [2026] [SynapLogic](cases/2026/SynapLogic.md) — $~27.6 ETH & ~3450 USDC
+- [2026] [TOPBPool](cases/2026/TOPBPool.md) — $944.20 WETH
+- [2026] [TesseraSwap](cases/2026/TesseraSwap.md) — $~
+- [2026] [Thetanuts](cases/2026/Thetanuts.md) — $105471.50 USDC
+- [2026] [ThetanutsFi](cases/2026/ThetanutsFi.md) — $~
+- [2026] [ThetanutsVaultShareRounding](cases/2026/ThetanutsVaultShareRounding.md) — $0.15 WBTC
+- [2026] [Truebit](cases/2026/Truebit.md) — $8540ETH
+- [2026] [TrustedVolumes](cases/2026/TrustedVolumes.md) — $~
+- [2026] [Univ3CollateralToken](cases/2026/Univ3CollateralToken.md) — $~57K USD
+- [2026] [VTSwapHook](cases/2026/VTSwapHook.md) — $4,507,034.03 vATH + 2,007,935.14 ATH
+- [2026] [Vault4626](cases/2026/Vault4626.md) — $~13.53 WETH
+- [2026] [Venus_THE](cases/2026/Venus_THE.md) — $still held as raw CAKE + WBNB at the end
+- [2026] [VerusBridge](cases/2026/VerusBridge.md) — $~
+- [2026] [WHALE](cases/2026/WHALE.md) — $3,460.41 USDT
+- [2026] [WUSD](cases/2026/WUSD.md) — $~
+- [2026] [WhalebitOracleManipulation](cases/2026/WhalebitOracleManipulation.md) — $824K USD
+- [2026] [XDKRecycle](cases/2026/XDKRecycle.md) — $6.84 WBNB
+- [2026] [XLootStaking](cases/2026/XLootStaking.md) — $6.21 ETH
+- [2026] [XocolatlLiquidator](cases/2026/XocolatlLiquidator.md) — $3.25 cbETH and 0.22 WETH
+- [2026] [YSDAO](cases/2026/YSDAO.md) — $~19.49K USDT
+- [2026] [bce](cases/2026/bce.md) — $~800,000 USDT
+- [2026] [edel-xstock](cases/2026/edel-xstock.md) — $204,215.57 USDC
+- [2026] [futureswap](cases/2026/futureswap.md) — $~394,742.852305 USDC.e (+ 67.5743 WETH d
+- [2026] [giddyvaultv3_compound_auth](cases/2026/giddyvaultv3_compound_auth.md) — $~
+- [2026] [makina](cases/2026/makina.md) — $~5.1M USDC (pool loss)
+- [2026] [unverified_1304](cases/2026/unverified_1304.md) — $85,730 USDC
+- [2026] [unverified_237d](cases/2026/unverified_237d.md) — $0.28 ETH
+- [2026] [unverified_a152](cases/2026/unverified_a152.md) — $229,030.97 USDT
+- [test] [IUNMI_db27](cases/test/IUNMI_db27.md) — $4.7K USD
