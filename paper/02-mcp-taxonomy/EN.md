@@ -1,6 +1,6 @@
 # An Empirical Study of MCP Server Security: 6 Attack Surfaces from 30+ Audits
 
-**shunfeng8421** — July 15, 2026
+**Shiqiang Chen** — July 15, 2026
 
 ---
 
@@ -37,7 +37,7 @@ Each server underwent a 4-phase audit:
 
 ### 2.3 Tools
 
-We developed mcp-scan, an open-source MCP security scanner implementing our 6 attack surface checks, and released it at github.com/shunfeng8421/mcp-scan.
+We developed mcp-scan, an open-source MCP security scanner implementing our 6 attack surface checks, and released it at github.com/Shiqiang Chen/mcp-scan.
 
 ---
 
@@ -134,15 +134,15 @@ We presented the first empirical study of MCP server security, identifying 6 att
 
 ## Tools & Data
 
-- **mcp-scan**: github.com/shunfeng8421/mcp-scan
-- **awesome-mcp-security**: github.com/shunfeng8421/awesome-mcp-security
+- **mcp-scan**: github.com/Shiqiang Chen/mcp-scan
+- **awesome-mcp-security**: github.com/Shiqiang Chen/awesome-mcp-security
 - **Audit data**: available in the publications/ directory
 
 ## References
 
 [1] Trail of Bits. "MCP Security Series." 2025.
 [2] Invariant Labs. "MCP Security Notification: Tool Poisoning Attacks." 2025.
-[3] shunfeng8421. "Prompt Injection is Not an AI Problem." 2026.
+[3] Shiqiang Chen. "Prompt Injection is Not an AI Problem." 2026.
 [4] OWASP Foundation. "OWASP Top 10." 2023.
 [5] CVE-2025-49596. MCP Inspector Remote Code Execution.
 [6] CVE-2026-23744. MCPJam Inspector Remote Code Execution.
