@@ -60,7 +60,7 @@
     },
     "pattern-15": {
       "type": "pattern",
-      "name": "MCP file_path \u2192 open() \u65e0\u9a8c\u8bc1",
+      "name": "MCP file_path → open() 无验证",
       "connects_to": [
         "CWE-22",
         "cherrystudio-cve-1",
@@ -70,7 +70,7 @@
     },
     "pattern-16": {
       "type": "pattern",
-      "name": "Auth URL \u89e3\u6790\u504f\u79fb \u2192 \u8ba4\u8bc1\u7ed5\u8fc7",
+      "name": "Auth URL 解析偏移 → 认证绕过",
       "connects_to": [
         "CWE-287",
         "apollo-cve"
@@ -79,7 +79,7 @@
     },
     "pattern-1": {
       "type": "pattern",
-      "name": "\u901a\u7528\u8def\u5f84\u904d\u5386",
+      "name": "通用路径遍历",
       "connects_to": [
         "CWE-22"
       ],
@@ -135,7 +135,7 @@
         "pattern-16",
         "CWE-287"
       ],
-      "impact": "URL parsing \u2192 auth bypass"
+      "impact": "URL parsing → auth bypass"
     },
     "kimai-cve": {
       "type": "cve",
@@ -153,7 +153,7 @@
         "CWE-22",
         "cherrystudio-cve-1"
       ],
-      "detection": "file_path \u2192 open() no validation"
+      "detection": "file_path → open() no validation"
     },
     "mcp-scan-AS2": {
       "type": "tool",
@@ -399,7 +399,7 @@
     "semgrep-P15-path": {
       "type": "rule",
       "language": "Python",
-      "name": "file_path \u2192 open() no validation",
+      "name": "file_path → open() no validation",
       "connects_to": [
         "CWE-22",
         "pattern-15"
@@ -715,7 +715,7 @@
     },
     "skill-fuzzing-l1": {
       "type": "skill",
-      "name": "Fuzzing L1 \u2014 \u6a21\u677f\u53d8\u5f02",
+      "name": "Fuzzing L1 — 模板变异",
       "connects_to": [
         "pattern-15",
         "cherrystudio-cve-1"
@@ -724,7 +724,7 @@
     },
     "skill-fuzzing-l2": {
       "type": "skill",
-      "name": "Fuzzing L2 \u2014 \u8986\u76d6\u5f15\u5bfc",
+      "name": "Fuzzing L2 — 覆盖引导",
       "connects_to": [
         "skill-fuzzing-l1",
         "CWE-22"
@@ -733,25 +733,25 @@
     },
     "skill-reverse-eng": {
       "type": "skill",
-      "name": "\u4e8c\u8fdb\u5236\u9006\u5411\u5165\u95e8",
+      "name": "二进制逆向入门",
       "connects_to": [
         "CWE-787",
         "CWE-121"
       ],
-      "desc": "Python dis \u2192 x86 objdump, strings, GDB"
+      "desc": "Python dis → x86 objdump, strings, GDB"
     },
     "skill-protocol": {
       "type": "skill",
-      "name": "\u7f51\u7edc\u534f\u8bae\u5206\u6790",
+      "name": "网络协议分析",
       "connects_to": [
         "pattern-15",
         "mcp-scan-AS1"
       ],
-      "desc": "TCP\u2192HTTP\u2192JSON-RPC\u2192MCP"
+      "desc": "TCP→HTTP→JSON-RPC→MCP"
     },
     "skill-memory-exploit": {
       "type": "skill",
-      "name": "\u5185\u5b58\u6f0f\u6d1e\u5229\u7528",
+      "name": "内存漏洞利用",
       "connects_to": [
         "CWE-787",
         "CWE-121",
@@ -761,23 +761,23 @@
     },
     "skill-prompt-inj": {
       "type": "skill",
-      "name": "Prompt Injection \u7814\u7a76",
+      "name": "Prompt Injection 研究",
       "connects_to": [
         "pattern-15",
         "cherrystudio-cve-1",
         "paper-prompt"
       ],
-      "desc": "6\u79cd\u653b\u51fb, 50%\u7ed5\u8fc7\u7387"
+      "desc": "6种攻击, 50%绕过率"
     },
     "skill-ctf": {
       "type": "skill",
-      "name": "CTF \u5b9e\u6218",
+      "name": "CTF 实战",
       "connects_to": [
         "skill-reverse-eng",
         "skill-fuzzing-l2",
         "skill-memory-exploit"
       ],
-      "desc": "strings\u2192\u9006\u5411\u2192\u6ea2\u51fa\u2192\u901a\u5173"
+      "desc": "strings→逆向→溢出→通关"
     },
     "paper-prompt": {
       "type": "paper",
@@ -808,7 +808,7 @@
     },
     "defi-flashloan-price": {
       "type": "defi",
-      "name": "\u95ea\u8d37+\u4ef7\u683c\u64cd\u7eb5",
+      "name": "闪贷+价格操纵",
       "severity": "CRITICAL",
       "connects_to": [
         "CWE-20"
@@ -817,7 +817,7 @@
     },
     "defi-reentrancy-flash": {
       "type": "defi",
-      "name": "\u91cd\u5165+\u95ea\u8d37",
+      "name": "重入+闪贷",
       "severity": "CRITICAL",
       "connects_to": [
         "CWE-841"
@@ -826,16 +826,16 @@
     },
     "defi-governance-attack": {
       "type": "defi",
-      "name": "\u6cbb\u7406\u653b\u51fb(\u95ea\u8d37\u6295\u7968)",
+      "name": "治理攻击(闪贷投票)",
       "severity": "HIGH",
       "connects_to": [
         "CWE-284"
       ],
-      "fix": "\u5feb\u7167+\u65f6\u95f4\u9501"
+      "fix": "快照+时间锁"
     },
     "defi-crosschain-sig": {
       "type": "defi",
-      "name": "\u8de8\u94fe\u7b7e\u540d\u7ed5\u8fc7",
+      "name": "跨链签名绕过",
       "severity": "CRITICAL",
       "connects_to": [
         "CWE-347"
@@ -844,7 +844,7 @@
     },
     "defi-liquidation-bypass": {
       "type": "defi",
-      "name": "\u6e05\u7b97\u64cd\u7eb5",
+      "name": "清算操纵",
       "severity": "HIGH",
       "connects_to": [
         "CWE-20"
@@ -853,7 +853,7 @@
     },
     "defi-storage-collision": {
       "type": "defi",
-      "name": "Storage\u78b0\u649e",
+      "name": "Storage碰撞",
       "severity": "CRITICAL",
       "connects_to": [
         "CWE-668"
@@ -875,6 +875,509 @@
       "connects_to": [
         "defi-flashloan-price",
         "defi-governance-attack"
+      ]
+    },
+    "defi-flashloan-oracle": {
+      "type": "pattern",
+      "name": "Flash Loan + Oracle",
+      "severity": "CRITICAL",
+      "connects_to": [
+        "defi-bzx",
+        "defi-harvest",
+        "defi-uranium",
+        "defi-sonne",
+        "defi-uwulend",
+        "defi-gamma",
+        "defi-shezmu",
+        "defi-whalebit"
+      ],
+      "fix": "TWAP oracle or Chainlink",
+      "pattern_id": 1
+    },
+    "defi-reentrancy": {
+      "type": "pattern",
+      "name": "Reentrancy (CEI)",
+      "severity": "CRITICAL",
+      "connects_to": [
+        "defi-lendfme",
+        "defi-cream",
+        "defi-joeagent",
+        "defi-xcarnival"
+      ],
+      "fix": "CEI pattern + ReentrancyGuard",
+      "pattern_id": 2
+    },
+    "defi-erc4626-inflation": {
+      "type": "pattern",
+      "name": "ERC-4626 Inflation",
+      "severity": "HIGH",
+      "connects_to": [
+        "defi-vault-core"
+      ],
+      "fix": "Dead shares or minDeposit",
+      "pattern_id": 5
+    },
+    "defi-lending-liquidation": {
+      "type": "pattern",
+      "name": "Lending Liquidation",
+      "severity": "HIGH",
+      "connects_to": [
+        "defi-euler",
+        "defi-radiant",
+        "defi-exactly",
+        "defi-prisma",
+        "defi-mimspell"
+      ],
+      "fix": "Robust oracle + grace period",
+      "pattern_id": 6
+    },
+    "defi-amm-manipulation": {
+      "type": "pattern",
+      "name": "AMM Manipulation",
+      "severity": "HIGH",
+      "connects_to": [
+        "defi-gamma",
+        "defi-velocore",
+        "defi-popsicle",
+        "defi-vtswaphook",
+        "defi-babyswap"
+      ],
+      "fix": "Validate reserve ratios",
+      "pattern_id": 7
+    },
+    "defi-governance": {
+      "type": "pattern",
+      "name": "Governance Attack",
+      "severity": "CRITICAL",
+      "connects_to": [
+        "defi-beanstalk",
+        "defi-corkprotocol",
+        "defi-templedao",
+        "defi-newfreedao"
+      ],
+      "fix": "Vote lock-up + timelock",
+      "pattern_id": 8
+    },
+    "defi-signature-replay": {
+      "type": "pattern",
+      "name": "Signature Replay",
+      "severity": "CRITICAL",
+      "connects_to": [
+        "defi-poly",
+        "defi-nomad",
+        "defi-bossbridge",
+        "defi-orbit-chain",
+        "defi-ronin",
+        "defi-verusbridge"
+      ],
+      "fix": "Include nonce + chainId",
+      "pattern_id": 27
+    },
+    "defi-cross-chain-replay": {
+      "type": "pattern",
+      "name": "Cross-Chain Replay",
+      "severity": "CRITICAL",
+      "connects_to": [
+        "defi-poly",
+        "defi-nomad",
+        "defi-wormhole",
+        "defi-socketgateway",
+        "defi-lifiprotocol"
+      ],
+      "fix": "chainId in signed message",
+      "pattern_id": 34
+    },
+    "defi-permit-frontrun": {
+      "type": "pattern",
+      "name": "Permit Frontrun",
+      "severity": "MEDIUM",
+      "connects_to": [
+        "defi-squid",
+        "defi-seneca",
+        "defi-lixir"
+      ],
+      "fix": "Include deadline parameter",
+      "pattern_id": 15
+    },
+    "defi-token-burn": {
+      "type": "pattern",
+      "name": "Token Burn Manipulation",
+      "severity": "HIGH",
+      "connects_to": [
+        "defi-babydoge",
+        "defi-aidc",
+        "defi-newfreedao"
+      ],
+      "fix": "Exclude AMM pair from burn",
+      "pattern_id": 25
+    },
+    "defi-bzx": {
+      "type": "hack",
+      "name": "bZx",
+      "year": 2020,
+      "loss": "$50M",
+      "connects_to": [
+        "defi-flashloan-oracle"
+      ]
+    },
+    "defi-harvest": {
+      "type": "hack",
+      "name": "Harvest Finance",
+      "year": 2020,
+      "loss": "$25M",
+      "connects_to": [
+        "defi-flashloan-oracle"
+      ]
+    },
+    "defi-uranium": {
+      "type": "hack",
+      "name": "Uranium",
+      "year": 2021,
+      "loss": "$50M",
+      "connects_to": [
+        "defi-flashloan-oracle"
+      ]
+    },
+    "defi-sonne": {
+      "type": "hack",
+      "name": "Sonne",
+      "year": 2024,
+      "loss": "$20M",
+      "connects_to": [
+        "defi-flashloan-oracle"
+      ]
+    },
+    "defi-uwulend": {
+      "type": "hack",
+      "name": "UwuLend",
+      "year": 2024,
+      "loss": "$19.3M",
+      "connects_to": [
+        "defi-flashloan-oracle"
+      ]
+    },
+    "defi-shezmu": {
+      "type": "hack",
+      "name": "Shezmu",
+      "year": 2024,
+      "loss": "$4.9M",
+      "connects_to": [
+        "defi-flashloan-oracle"
+      ]
+    },
+    "defi-whalebit": {
+      "type": "hack",
+      "name": "WhalebitOracle",
+      "year": 2025,
+      "loss": "$824K",
+      "connects_to": [
+        "defi-flashloan-oracle"
+      ]
+    },
+    "defi-joeagent": {
+      "type": "hack",
+      "name": "JoeAgent",
+      "year": 2026,
+      "loss": "$45K",
+      "connects_to": [
+        "defi-reentrancy",
+        "defi-flashloan-oracle"
+      ]
+    },
+    "defi-xcarnival": {
+      "type": "hack",
+      "name": "XCarnival",
+      "year": 2022,
+      "loss": "$3.8M",
+      "connects_to": [
+        "defi-reentrancy"
+      ]
+    },
+    "defi-bossbridge": {
+      "type": "hack",
+      "name": "BossBridge",
+      "year": 2023,
+      "loss": "N/A",
+      "connects_to": [
+        "defi-signature-replay"
+      ]
+    },
+    "defi-orbit-chain": {
+      "type": "hack",
+      "name": "OrbitChain",
+      "year": 2024,
+      "loss": "$81M",
+      "connects_to": [
+        "defi-signature-replay"
+      ]
+    },
+    "defi-verusbridge": {
+      "type": "hack",
+      "name": "VerusBridge",
+      "year": 2026,
+      "loss": "$11.58M",
+      "connects_to": [
+        "defi-signature-replay"
+      ]
+    },
+    "defi-socketgateway": {
+      "type": "hack",
+      "name": "SocketGateway",
+      "year": 2024,
+      "loss": "$3.3M",
+      "connects_to": [
+        "defi-cross-chain-replay"
+      ]
+    },
+    "defi-lifiprotocol": {
+      "type": "hack",
+      "name": "Lifiprotocol",
+      "year": 2024,
+      "loss": "$10M",
+      "connects_to": [
+        "defi-cross-chain-replay"
+      ]
+    },
+    "defi-squid": {
+      "type": "hack",
+      "name": "SquidMulticall",
+      "year": 2026,
+      "loss": "$800K",
+      "connects_to": [
+        "defi-permit-frontrun"
+      ]
+    },
+    "defi-lixir": {
+      "type": "hack",
+      "name": "LixirPermit",
+      "year": 2026,
+      "loss": "$10K",
+      "connects_to": [
+        "defi-permit-frontrun"
+      ]
+    },
+    "defi-vault-core": {
+      "type": "hack",
+      "name": "VaultCore",
+      "year": 2026,
+      "loss": "N/A",
+      "connects_to": [
+        "defi-erc4626-inflation"
+      ]
+    },
+    "defi-velocore": {
+      "type": "hack",
+      "name": "Velocore",
+      "year": 2024,
+      "loss": "$6.88M",
+      "connects_to": [
+        "defi-amm-manipulation"
+      ]
+    },
+    "defi-popsicle": {
+      "type": "hack",
+      "name": "Popsicle",
+      "year": 2021,
+      "loss": "$20M",
+      "connects_to": [
+        "defi-amm-manipulation"
+      ]
+    },
+    "defi-vtswaphook": {
+      "type": "hack",
+      "name": "VTSwapHook",
+      "year": 2026,
+      "loss": "$4.5M",
+      "connects_to": [
+        "defi-amm-manipulation"
+      ]
+    },
+    "defi-babyswap": {
+      "type": "hack",
+      "name": "BabySwap",
+      "year": 2022,
+      "loss": "N/A",
+      "connects_to": [
+        "defi-amm-manipulation",
+        "defi-token-burn"
+      ]
+    },
+    "defi-corkprotocol": {
+      "type": "hack",
+      "name": "CorkProtocol",
+      "year": 2025,
+      "loss": "$12M",
+      "connects_to": [
+        "defi-governance",
+        "defi-flashloan-oracle"
+      ]
+    },
+    "defi-templedao": {
+      "type": "hack",
+      "name": "TempleDAO",
+      "year": 2022,
+      "loss": "$2.3M",
+      "connects_to": [
+        "defi-governance"
+      ]
+    },
+    "defi-newfreedao": {
+      "type": "hack",
+      "name": "NewFreeDAO",
+      "year": 2022,
+      "loss": "$125M",
+      "connects_to": [
+        "defi-governance",
+        "defi-token-burn"
+      ]
+    },
+    "defi-radiant": {
+      "type": "hack",
+      "name": "RadiantCapital",
+      "year": 2024,
+      "loss": "$4.5M",
+      "connects_to": [
+        "defi-lending-liquidation"
+      ]
+    },
+    "defi-exactly": {
+      "type": "hack",
+      "name": "Exactly",
+      "year": 2023,
+      "loss": "$7M",
+      "connects_to": [
+        "defi-lending-liquidation"
+      ]
+    },
+    "defi-prisma": {
+      "type": "hack",
+      "name": "Prisma",
+      "year": 2024,
+      "loss": "$11M",
+      "connects_to": [
+        "defi-lending-liquidation"
+      ]
+    },
+    "defi-mimspell": {
+      "type": "hack",
+      "name": "MIMSpell2",
+      "year": 2024,
+      "loss": "$6.5M",
+      "connects_to": [
+        "defi-lending-liquidation"
+      ]
+    },
+    "defi-babydoge": {
+      "type": "hack",
+      "name": "BabyDogeCoin",
+      "year": 2023,
+      "loss": "$7.5M",
+      "connects_to": [
+        "defi-token-burn"
+      ]
+    },
+    "defi-aidc": {
+      "type": "hack",
+      "name": "AIDC",
+      "year": 2026,
+      "loss": "~220 BNB",
+      "connects_to": [
+        "defi-token-burn"
+      ]
+    },
+    "tool-defi-scanner": {
+      "type": "tool",
+      "name": "DeFi Scanner",
+      "connects_to": [
+        "skill-audit"
+      ],
+      "description": "26-rule automated DeFi scanner"
+    },
+    "tool-slither-15": {
+      "type": "tool",
+      "name": "Slither 15 Detectors",
+      "connects_to": [
+        "skill-audit"
+      ],
+      "description": "Custom Slither detectors covering 14 DeFi patterns"
+    },
+    "tool-exercises": {
+      "type": "tool",
+      "name": "Solidity Exercises",
+      "connects_to": [
+        "skill-audit"
+      ],
+      "description": "5 vulnerability exercise contracts"
+    },
+    "skill-blockchain-audit": {
+      "type": "skill",
+      "name": "Blockchain Audit",
+      "connects_to": [
+        "tool-slither-15",
+        "tool-defi-scanner",
+        "tool-exercises"
+      ],
+      "description": "End-to-end DeFi smart contract audit capability"
+    },
+    "knowledge-824-database": {
+      "type": "knowledge",
+      "name": "824 Case Database",
+      "connects_to": [
+        "skill-blockchain-audit",
+        "defi-flashloan-oracle",
+        "defi-reentrancy"
+      ],
+      "description": "Complete DeFi hack incident database 2017-2026"
+    },
+    "knowledge-olympus-finding": {
+      "type": "knowledge",
+      "name": "Olympus Oracle Bug",
+      "connects_to": [
+        "defi-flashloan-oracle"
+      ],
+      "description": "BondingCalculator uses spot Uniswap V2 price"
+    },
+    "knowledge-battlechain": {
+      "type": "knowledge",
+      "name": "BattleChain Findings",
+      "connects_to": [
+        "skill-blockchain-audit"
+      ],
+      "description": "4 audit findings submitted to CodeHawks"
+    },
+    "knowledge-bybit-1b5": {
+      "type": "knowledge",
+      "name": "Bybit $1.5B",
+      "connects_to": [
+        "skill-blockchain-audit"
+      ],
+      "description": "Largest DeFi hack — social engineering of multisig"
+    },
+    "knowledge-ronin-600m": {
+      "type": "knowledge",
+      "name": "Ronin $600M",
+      "connects_to": [
+        "defi-signature-replay",
+        "skill-blockchain-audit"
+      ],
+      "description": "5/9 validator keys compromised"
+    },
+    "defi-bybit": {
+      "type": "hack",
+      "name": "Bybit",
+      "year": 2025,
+      "loss": ".5B",
+      "connects_to": [
+        "defi-signature-replay"
+      ]
+    },
+    "defi-seneca": {
+      "type": "hack",
+      "name": "Seneca",
+      "year": 2024,
+      "loss": "M",
+      "connects_to": [
+        "defi-permit-frontrun"
       ]
     }
   },
