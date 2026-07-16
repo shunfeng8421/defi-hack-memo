@@ -233,10 +233,42 @@ PATTERNS = {
     26: {
         "name": "Fee-on-Transfer Token",
         "severity": "MEDIUM",
-        "regex": [r'safeTransferFrom.*amount\b(?!.*balanceDiff)'],
-        "keyword": ["safeTransferFrom", "balanceOf", "received"],
+        "regex": [],
+        "keyword": ["safeTransferFrom","balanceOf","received"],
         "description": "Does not verify actual received amount for fee tokens",
         "fix": "Use balance-diff: before/after balanceOf to get actual received"
+    },
+    27: {
+        "name": "EIP-712 Type Mismatch",
+        "severity": "HIGH",
+        "regex": [r'TYPEHASH.*uint256\[\]', r'TYPEHASH.*address\[\]'],
+        "keyword": ["TYPEHASH","EIP712","typedDataV4"],
+        "description": "TYPEHASH argument type doesn't match actual parameter type",
+        "fix": "Ensure TYPEHASH string matches function parameter types exactly"
+    },
+    28: {
+        "name": "Unprotected Initializer",
+        "severity": "HIGH",
+        "regex": [r'function\s+initialize.*public\b(?!.*initializer)'],
+        "keyword": ["initialize","init(","initializer"],
+        "description": "initialize() can be called by anyone without modifier",
+        "fix": "Use OpenZeppelin initializer modifier"
+    },
+    29: {
+        "name": "Multicall Authorization Trap",
+        "severity": "HIGH",
+        "regex": [r'multicall.*delegatecall|multicall.*\.call\{'],
+        "keyword": ["multicall","batchCall","executeBatch"],
+        "description": "Multicall can execute transferFrom if victim approved",
+        "fix": "Validate target addresses in multicall; never approve multicall contracts"
+    },
+    30: {
+        "name": "CREATE2 Front-Running",
+        "severity": "MEDIUM",
+        "regex": [r'CREATE2.*salt\b(?!.*msg\.sender)|create2.*\bsalt\b(?!.*msg\.sender)'],
+        "keyword": ["create2","CREATE2","new.*salt","deploy.*salt"],
+        "description": "CREATE2 salt without msg.sender allows front-running",
+        "fix": "Include msg.sender in salt to prevent front-running"
     },
 }
 
