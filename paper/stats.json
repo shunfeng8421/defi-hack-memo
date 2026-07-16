@@ -1,0 +1,122 @@
+{
+  "total_records": 823,
+  "records_with_loss": 461,
+  "total_loss_b": 1002.01,
+  "year_range": "2017-2026",
+  "num_categories": 14,
+  "yearly": {
+    "2017": {
+      "attacks": 2,
+      "loss_m": 459.1
+    },
+    "2018": {
+      "attacks": 3,
+      "loss_m": 140.0
+    },
+    "2020": {
+      "attacks": 8,
+      "loss_m": 20.0
+    },
+    "2021": {
+      "attacks": 35,
+      "loss_m": 43.9
+    },
+    "2022": {
+      "attacks": 128,
+      "loss_m": 177.3
+    },
+    "2023": {
+      "attacks": 213,
+      "loss_m": 208.5
+    },
+    "2024": {
+      "attacks": 187,
+      "loss_m": 999180.1
+    },
+    "2025": {
+      "attacks": 159,
+      "loss_m": 1502.1
+    },
+    "2026": {
+      "attacks": 88,
+      "loss_m": 282.7
+    }
+  },
+  "categories": {
+    "闪贷+价格操纵": {
+      "count": 246,
+      "pct": 29.9,
+      "loss_m": 404.8
+    },
+    "重入": {
+      "count": 178,
+      "pct": 21.6,
+      "loss_m": 41.5
+    },
+    "授权漏洞": {
+      "count": 115,
+      "pct": 14.0,
+      "loss_m": 1042.8
+    },
+    "AMM 操纵": {
+      "count": 112,
+      "pct": 13.6,
+      "loss_m": 324.1
+    },
+    "借贷清算": {
+      "count": 43,
+      "pct": 5.2,
+      "loss_m": 16.7
+    },
+    "代币漏洞": {
+      "count": 43,
+      "pct": 5.2,
+      "loss_m": 2.8
+    },
+    "签名绕过": {
+      "count": 28,
+      "pct": 3.4,
+      "loss_m": 1204.7
+    },
+    "代理/升级": {
+      "count": 20,
+      "pct": 2.4,
+      "loss_m": 128.7
+    },
+    "治理攻击": {
+      "count": 16,
+      "pct": 1.9,
+      "loss_m": 998015.1
+    },
+    "跨链/桥": {
+      "count": 8,
+      "pct": 1.0,
+      "loss_m": 233.0
+    },
+    "整数溢出/精度": {
+      "count": 6,
+      "pct": 0.7,
+      "loss_m": 140.1
+    },
+    "权限漏洞": {
+      "count": 3,
+      "pct": 0.4,
+      "loss_m": 459.1
+    },
+    "MEV/抢跑": {
+      "count": 3,
+      "pct": 0.4,
+      "loss_m": 0.1
+    },
+    "闪贷+重入": {
+      "count": 2,
+      "pct": 0.2,
+      "loss_m": 0.0
+    }
+  },
+  "chi_square": 1273.2,
+  "chi_df": 13,
+  "top3_pct": 65.5,
+  "top1": "闪贷+价格操纵",
+  "top1_pct": 29.9
+}

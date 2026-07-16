@@ -1,0 +1,1 @@
+{"package": "@penpot/mcp", "version": "2.15.4", "findings": 1, "details": [{"rule": "D.hermes.skills.security-researcher.rules.dynamic-code-execution-ts", "file": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\npm-mcp-penpot-mcp-ed46oyjj\\package\\packages\\plugin\\src\\task-handlers\\ExecuteCodeTaskHandler.ts", "line": 226, "language": "typescript"}]}

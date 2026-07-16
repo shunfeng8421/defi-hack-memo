@@ -1,0 +1,92 @@
+rules:
+  # ═══════════════════════════════════════════
+  # TypeScript/JavaScript 安全规则
+  # ═══════════════════════════════════════════
+
+  # T1: eval() / Function() 动态执行
+  - id: dynamic-code-execution-ts
+    message: "Dynamic code execution — possible code injection"
+    severity: ERROR
+    languages: [javascript, typescript]
+    patterns:
+      - pattern-either:
+          - pattern: eval($X)
+          - pattern: new Function($X)
+          - pattern: |
+              new Function($X, $Y)
+
+  # T2: 不安全的反序列化
+  - id: unsafe-deserialization-ts
+    message: "Unvalidated deserialization — possible RCE"
+    severity: ERROR
+    languages: [javascript, typescript]
+    pattern: |
+      $FUNC($X, { safe: false })
+
+  # T3: 原型污染
+  - id: prototype-pollution-ts
+    message: "Object spread from user input — possible prototype pollution"
+    severity: WARNING
+    languages: [javascript, typescript]
+    patterns:
+      - pattern-either:
+          - pattern: |
+              {...req.body}
+          - pattern: |
+              Object.assign($TARGET, req.body)
+          - pattern: |
+              _.merge($TARGET, req.body)
+
+  # T4: 硬编码密钥
+  - id: hardcoded-secret-ts
+    message: "Hardcoded credential in source code"
+    severity: ERROR
+    languages: [javascript, typescript]
+    pattern-regex: "(?i)(const|let|var)\\s+(secret|password|api_key|apikey|token)\\s*=\\s*['\"][a-zA-Z0-9_-]{8,}['\"]"
+    paths:
+      exclude:
+        - "*.test.*"
+        - "*.spec.*"
+        - "node_modules/*"
+
+  # T5: NoSQL 注入 (MongoDB)
+  - id: nosql-injection-ts
+    message: "User input directly in MongoDB query — possible NoSQL injection"
+    severity: ERROR
+    languages: [javascript, typescript]
+    patterns:
+      - pattern-either:
+          - pattern: |
+              $COLLECTION.findOne({$KEY: req.body.$KEY})
+          - pattern: |
+              $COLLECTION.find({$KEY: req.$FIELD})
+          - pattern: |
+              $COLLECTION.findOne({$KEY: req.query.$KEY})
+
+  # T6: 路径穿越 — 文件读写
+  - id: path-traversal-ts
+    message: "File path from request without validation"
+    severity: ERROR
+    languages: [javascript, typescript]
+    patterns:
+      - pattern-either:
+          - pattern: |
+              fs.readFileSync(req.body.$FIELD)
+          - pattern: |
+              fs.readFile(req.params.$FIELD, ...)
+          - pattern: |
+              fs.writeFileSync(req.query.$FIELD, ...)
+
+  # T7: CORS 全部开放
+  - id: cors-all-origins-ts
+    message: "CORS allow all origins — any domain can make authenticated requests"
+    severity: WARNING
+    languages: [javascript, typescript]
+    patterns:
+      - pattern-either:
+          - pattern: |
+              cors({origin: "*"})
+          - pattern: |
+              origin: "*"
+          - pattern: |
+              allow_origins=["*"]

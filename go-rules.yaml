@@ -1,0 +1,95 @@
+rules:
+  # ============================================
+  # Go 安全规则 — 覆盖 crypto/web/sql 常见漏洞
+  # ============================================
+
+  # G1: 弱随机数用于安全上下文
+  - id: weak-random-crypto
+    message: "math/rand used in security context — use crypto/rand"
+    severity: WARNING
+    languages: [go]
+    patterns:
+      - pattern-either:
+          - pattern: |
+              import "math/rand"
+              ...
+              rand.Seed(...)
+          - pattern: |
+              import (
+                ...
+                "math/rand"
+                ...
+              )
+              ...
+              rand.Intn(...)
+          - pattern: |
+              rand.Read($X)
+
+  # G2: 硬编码密钥/密码
+  - id: hardcoded-secret-go
+    message: "Hardcoded credential detected"
+    severity: ERROR
+    languages: [go]
+    patterns:
+      - pattern-either:
+          - pattern: |
+              const $X = "..."
+          - pattern: |
+              var $X = "..."
+    pattern-regex: "(?i)(password|secret|token|api_key|apikey|private_key|jwt_secret)"
+    paths:
+      exclude:
+        - "*_test.go"
+        - "vendor/*"
+
+  # G3: SQL 拼接 (非参数化查询)
+  - id: sql-concatenation-go
+    message: "SQL query built with string concatenation — use parameterized queries"
+    severity: ERROR
+    languages: [go]
+    patterns:
+      - pattern-either:
+          - pattern: |
+              db.Query("SELECT ..." + $... + ...)
+          - pattern: |
+              db.Exec("SELECT ..." + $... + ...)
+          - pattern: |
+              db.Query(fmt.Sprintf(...))
+          - pattern: |
+              db.Exec(fmt.Sprintf(...))
+
+  # G4: SSRF — 用户控制 URL
+  - id: ssrf-go
+    message: "HTTP request to user-controlled URL — possible SSRF"
+    severity: WARNING
+    languages: [go]
+    patterns:
+      - pattern: |
+          http.Get($REQ.URL)
+      - pattern: |
+          http.NewRequest("GET", $REQ.URL, nil)
+      - pattern: |
+          http.Post($REQ.URL, ...)
+
+  # G5: TLS verification disabled
+  - id: insecure-tls-go
+    message: "TLS certificate verification disabled"
+    severity: ERROR
+    languages: [go]
+    pattern: |
+      &tls.Config{InsecureSkipVerify: true}
+
+  # G6: 文件路径穿越
+  - id: path-traversal-go
+    message: "File path from user input without validation"
+    severity: ERROR
+    languages: [go]
+    patterns:
+      - pattern: |
+          os.Open($PATH)
+      - pattern: |
+          os.ReadFile($PATH)
+      - pattern: |
+          ioutil.ReadFile($PATH)
+    pattern-not: |
+      filepath.Clean(...)

@@ -1,0 +1,1153 @@
+{
+  "nodes": {
+    "CWE-22": {
+      "type": "weakness",
+      "name": "Path Traversal",
+      "severity": "HIGH",
+      "connects_to": [
+        "pattern-15",
+        "pattern-1",
+        "cherrystudio-cve-1"
+      ],
+      "fix": "validate_safe_path() + os.path.realpath()"
+    },
+    "CWE-306": {
+      "type": "weakness",
+      "name": "Missing Authentication",
+      "severity": "HIGH",
+      "connects_to": [
+        "memoryos-cve",
+        "pattern-auth-1"
+      ],
+      "fix": "Add auth middleware"
+    },
+    "CWE-918": {
+      "type": "weakness",
+      "name": "SSRF",
+      "severity": "HIGH",
+      "connects_to": [
+        "cherrystudio-cve-2",
+        "pattern-ssrf"
+      ],
+      "fix": "URL allowlist"
+    },
+    "CWE-798": {
+      "type": "weakness",
+      "name": "Hardcoded Credentials",
+      "severity": "HIGH",
+      "connects_to": [
+        "kimai-cve",
+        "semgrep-rule-P5"
+      ],
+      "fix": "os.environ.get()"
+    },
+    "CWE-287": {
+      "type": "weakness",
+      "name": "Authentication Bypass",
+      "severity": "HIGH",
+      "connects_to": [
+        "pattern-16",
+        "apollo-cve"
+      ]
+    },
+    "CWE-200": {
+      "type": "weakness",
+      "name": "Information Exposure",
+      "severity": "MEDIUM",
+      "connects_to": [
+        "mcp-scan-AS2"
+      ]
+    },
+    "pattern-15": {
+      "type": "pattern",
+      "name": "MCP file_path \u2192 open() \u65e0\u9a8c\u8bc1",
+      "connects_to": [
+        "CWE-22",
+        "cherrystudio-cve-1",
+        "mcp-scan-AS1"
+      ],
+      "category": "MCP"
+    },
+    "pattern-16": {
+      "type": "pattern",
+      "name": "Auth URL \u89e3\u6790\u504f\u79fb \u2192 \u8ba4\u8bc1\u7ed5\u8fc7",
+      "connects_to": [
+        "CWE-287",
+        "apollo-cve"
+      ],
+      "category": "Web"
+    },
+    "pattern-1": {
+      "type": "pattern",
+      "name": "\u901a\u7528\u8def\u5f84\u904d\u5386",
+      "connects_to": [
+        "CWE-22"
+      ],
+      "category": "Web"
+    },
+    "pattern-auth-1": {
+      "type": "pattern",
+      "name": "Missing auth on API",
+      "connects_to": [
+        "CWE-306"
+      ],
+      "category": "Web"
+    },
+    "pattern-ssrf": {
+      "type": "pattern",
+      "name": "SSRF via user URL",
+      "connects_to": [
+        "CWE-918"
+      ],
+      "category": "Web"
+    },
+    "cherrystudio-cve-1": {
+      "type": "cve",
+      "id": "cherrystudio #1",
+      "connects_to": [
+        "CWE-22",
+        "pattern-15",
+        "mcp-scan-AS1"
+      ],
+      "impact": "Arbitrary file read",
+      "fix": "validate_safe_path()"
+    },
+    "cherrystudio-cve-2": {
+      "type": "cve",
+      "id": "cherrystudio #2",
+      "connects_to": [
+        "CWE-918"
+      ],
+      "impact": "SSRF via recognize_image"
+    },
+    "memoryos-cve": {
+      "type": "cve",
+      "id": "memoryos #1",
+      "connects_to": [
+        "CWE-306"
+      ],
+      "impact": "9 endpoints no auth"
+    },
+    "apollo-cve": {
+      "type": "cve",
+      "id": "Apollo ConfigService",
+      "connects_to": [
+        "pattern-16",
+        "CWE-287"
+      ],
+      "impact": "URL parsing \u2192 auth bypass"
+    },
+    "kimai-cve": {
+      "type": "cve",
+      "id": "Kimai APP_SECRET",
+      "connects_to": [
+        "CWE-798"
+      ],
+      "impact": "Default secret in Docker"
+    },
+    "mcp-scan-AS1": {
+      "type": "tool",
+      "tool": "mcp-scan",
+      "connects_to": [
+        "pattern-15",
+        "CWE-22",
+        "cherrystudio-cve-1"
+      ],
+      "detection": "file_path \u2192 open() no validation"
+    },
+    "mcp-scan-AS2": {
+      "type": "tool",
+      "tool": "mcp-scan",
+      "connects_to": [
+        "CWE-200"
+      ],
+      "detection": "0.0.0.0 without auth"
+    },
+    "semgrep-rule-P5": {
+      "type": "tool",
+      "tool": "semgrep",
+      "connects_to": [
+        "CWE-798"
+      ],
+      "detection": "Hardcoded secret check"
+    },
+    "daily-scan": {
+      "type": "tool",
+      "tool": "daily-scan.py",
+      "connects_to": [
+        "exploit-db",
+        "nvd"
+      ],
+      "schedule": "0 9 * * *"
+    },
+    "nvd": {
+      "type": "source",
+      "name": "NVD CVE Database",
+      "connects_to": [
+        "daily-scan"
+      ]
+    },
+    "exploit-db": {
+      "type": "source",
+      "name": "Exploit-DB RSS",
+      "connects_to": [
+        "daily-scan"
+      ]
+    },
+    "exploit-redis": {
+      "type": "exploit",
+      "name": "Redis Lua Sandbox Escape",
+      "cve": "CVE-2022-0543",
+      "connects_to": [
+        "CWE-693"
+      ]
+    },
+    "exploit-kong": {
+      "type": "exploit",
+      "name": "Kong Admin API RCE",
+      "cve": "CVE-2020-11710",
+      "connects_to": [
+        "CWE-306"
+      ]
+    },
+    "exploit-splunk": {
+      "type": "exploit",
+      "name": "Splunk File Write RCE",
+      "cve": "CVE-2026-20253",
+      "connects_to": [
+        "CWE-22"
+      ]
+    },
+    "exploit-nextjs": {
+      "type": "exploit",
+      "name": "Next.js Middleware Bypass",
+      "cve": "CVE-2025-29927",
+      "connects_to": [
+        "CWE-287"
+      ]
+    },
+    "exploit-mcp-inspector": {
+      "type": "exploit",
+      "name": "MCP Inspector RCE",
+      "cve": "CVE-2025-49596",
+      "connects_to": [
+        "CWE-306"
+      ]
+    },
+    "exploit-postgres": {
+      "type": "exploit",
+      "name": "PostgreSQL COPY RCE",
+      "cve": "CVE-2019-9193",
+      "connects_to": [
+        "CWE-20"
+      ]
+    },
+    "exploit-gitea": {
+      "type": "exploit",
+      "name": "Gitea Reverse Proxy Bypass",
+      "cve": "CVE-2026-20896",
+      "connects_to": [
+        "CWE-287"
+      ]
+    },
+    "exploit-n8n": {
+      "type": "exploit",
+      "name": "n8n Sandbox Escape",
+      "cve": "CVE-2026-1470",
+      "connects_to": [
+        "CWE-693"
+      ]
+    },
+    "exploit-litellm": {
+      "type": "exploit",
+      "name": "LiteLLM Pre-Auth SQLi",
+      "cve": "CVE-2026-42208",
+      "connects_to": [
+        "CWE-89"
+      ]
+    },
+    "exploit-mitmproxy": {
+      "type": "exploit",
+      "name": "mitmproxy SSRF",
+      "cve": "CVE-2025-23217",
+      "connects_to": [
+        "CWE-918"
+      ]
+    },
+    "exploit-simplehelp": {
+      "type": "exploit",
+      "name": "SimpleHelp OIDC Bypass",
+      "cve": "CVE-2026-48558",
+      "connects_to": [
+        "CWE-287"
+      ]
+    },
+    "exploit-ingress": {
+      "type": "exploit",
+      "name": "IngressNightmare RCE",
+      "cve": "CVE-2025-1974",
+      "connects_to": [
+        "CWE-20"
+      ]
+    },
+    "exploit-roundcube": {
+      "type": "exploit",
+      "name": "Roundcube Deserialization",
+      "cve": "CVE-2025-49113",
+      "connects_to": [
+        "CWE-502"
+      ]
+    },
+    "exploit-freepbx": {
+      "type": "exploit",
+      "name": "FreePBX SQL Injection",
+      "cve": "CVE-2025-57819",
+      "connects_to": [
+        "CWE-89"
+      ]
+    },
+    "exploit-craftcms": {
+      "type": "exploit",
+      "name": "Craft CMS Object Injection",
+      "cve": "CVE-2025-32432",
+      "connects_to": [
+        "CWE-502"
+      ]
+    },
+    "CWE-693": {
+      "type": "weakness",
+      "name": "Protection Mechanism Failure",
+      "severity": "HIGH",
+      "connects_to": [
+        "exploit-redis",
+        "exploit-n8n"
+      ]
+    },
+    "CWE-20": {
+      "type": "weakness",
+      "name": "Improper Input Validation",
+      "severity": "HIGH",
+      "connects_to": [
+        "exploit-postgres",
+        "exploit-ingress"
+      ]
+    },
+    "CWE-89": {
+      "type": "weakness",
+      "name": "SQL Injection",
+      "severity": "HIGH",
+      "connects_to": [
+        "exploit-litellm",
+        "exploit-freepbx"
+      ]
+    },
+    "CWE-502": {
+      "type": "weakness",
+      "name": "Deserialization of Untrusted Data",
+      "severity": "HIGH",
+      "connects_to": [
+        "exploit-roundcube",
+        "exploit-craftcms"
+      ]
+    },
+    "exploit-library": {
+      "type": "tool",
+      "tool": "exploit-library",
+      "connects_to": [
+        "exploit-redis",
+        "exploit-kong",
+        "exploit-splunk",
+        "exploit-nextjs",
+        "exploit-mcp-inspector",
+        "exploit-postgres",
+        "exploit-gitea",
+        "exploit-n8n",
+        "exploit-litellm",
+        "exploit-mitmproxy",
+        "exploit-simplehelp",
+        "exploit-ingress",
+        "exploit-roundcube",
+        "exploit-freepbx",
+        "exploit-craftcms"
+      ],
+      "url": "github.com/shunfeng8421/exploit-library"
+    },
+    "semgrep-P1-exec": {
+      "type": "rule",
+      "language": "Python",
+      "name": "exec without sandbox",
+      "connects_to": [
+        "CWE-94"
+      ]
+    },
+    "semgrep-P5-secret": {
+      "type": "rule",
+      "language": "Python",
+      "name": "Hardcoded secret",
+      "connects_to": [
+        "CWE-798"
+      ]
+    },
+    "semgrep-P7-sql": {
+      "type": "rule",
+      "language": "Python",
+      "name": "SQL f-string injection",
+      "connects_to": [
+        "CWE-89"
+      ]
+    },
+    "semgrep-P15-path": {
+      "type": "rule",
+      "language": "Python",
+      "name": "file_path \u2192 open() no validation",
+      "connects_to": [
+        "CWE-22",
+        "pattern-15"
+      ]
+    },
+    "semgrep-G1-rand": {
+      "type": "rule",
+      "language": "Go",
+      "name": "Weak random for crypto",
+      "connects_to": [
+        "CWE-338"
+      ]
+    },
+    "semgrep-G2-secret": {
+      "type": "rule",
+      "language": "Go",
+      "name": "Hardcoded secret",
+      "connects_to": [
+        "CWE-798"
+      ]
+    },
+    "semgrep-G3-sql": {
+      "type": "rule",
+      "language": "Go",
+      "name": "SQL concatenation",
+      "connects_to": [
+        "CWE-89"
+      ]
+    },
+    "semgrep-G4-ssrf": {
+      "type": "rule",
+      "language": "Go",
+      "name": "User-controlled HTTP URL",
+      "connects_to": [
+        "CWE-918"
+      ]
+    },
+    "semgrep-G5-tls": {
+      "type": "rule",
+      "language": "Go",
+      "name": "TLS verification disabled",
+      "connects_to": [
+        "CWE-295"
+      ]
+    },
+    "semgrep-G6-path": {
+      "type": "rule",
+      "language": "Go",
+      "name": "File path without validation",
+      "connects_to": [
+        "CWE-22"
+      ]
+    },
+    "semgrep-T1-eval": {
+      "type": "rule",
+      "language": "TypeScript",
+      "name": "eval() with user input",
+      "connects_to": [
+        "CWE-94"
+      ]
+    },
+    "semgrep-T2-deser": {
+      "type": "rule",
+      "language": "TypeScript",
+      "name": "Unsafe deserialization",
+      "connects_to": [
+        "CWE-502"
+      ]
+    },
+    "semgrep-T3-proto": {
+      "type": "rule",
+      "language": "TypeScript",
+      "name": "Prototype pollution",
+      "connects_to": [
+        "CWE-1321"
+      ]
+    },
+    "semgrep-T4-secret": {
+      "type": "rule",
+      "language": "TypeScript",
+      "name": "Hardcoded secret",
+      "connects_to": [
+        "CWE-798"
+      ]
+    },
+    "semgrep-T5-nosql": {
+      "type": "rule",
+      "language": "TypeScript",
+      "name": "NoSQL injection",
+      "connects_to": [
+        "CWE-943"
+      ]
+    },
+    "semgrep-T6-path": {
+      "type": "rule",
+      "language": "TypeScript",
+      "name": "Path traversal",
+      "connects_to": [
+        "CWE-22"
+      ]
+    },
+    "semgrep-T7-cors": {
+      "type": "rule",
+      "language": "TypeScript",
+      "name": "CORS allow all origins",
+      "connects_to": [
+        "CWE-942"
+      ]
+    },
+    "semgrep-R1-unsafe": {
+      "type": "rule",
+      "language": "Rust",
+      "name": "Unsafe block",
+      "connects_to": [
+        "CWE-242"
+      ]
+    },
+    "semgrep-R2-file": {
+      "type": "rule",
+      "language": "Rust",
+      "name": "File path no canonicalization",
+      "connects_to": [
+        "CWE-22"
+      ]
+    },
+    "semgrep-R3-cmd": {
+      "type": "rule",
+      "language": "Rust",
+      "name": "Command injection",
+      "connects_to": [
+        "CWE-78"
+      ]
+    },
+    "semgrep-R4-deser": {
+      "type": "rule",
+      "language": "Rust",
+      "name": "Unsafe deserialization",
+      "connects_to": [
+        "CWE-502"
+      ]
+    },
+    "semgrep-R5-secret": {
+      "type": "rule",
+      "language": "Rust",
+      "name": "Hardcoded secret",
+      "connects_to": [
+        "CWE-798"
+      ]
+    },
+    "semgrep-R6-ssrf": {
+      "type": "rule",
+      "language": "Rust",
+      "name": "User URL in reqwest",
+      "connects_to": [
+        "CWE-918"
+      ]
+    },
+    "semgrep-W1-reentrancy": {
+      "type": "rule",
+      "language": "Solidity",
+      "name": "Reentrancy",
+      "connects_to": [
+        "CWE-841"
+      ]
+    },
+    "semgrep-W2-overflow": {
+      "type": "rule",
+      "language": "Solidity",
+      "name": "Integer overflow",
+      "connects_to": [
+        "CWE-682"
+      ]
+    },
+    "semgrep-W3-selfdestruct": {
+      "type": "rule",
+      "language": "Solidity",
+      "name": "Unprotected SELFDESTRUCT",
+      "connects_to": [
+        "CWE-284"
+      ]
+    },
+    "semgrep-W4-access": {
+      "type": "rule",
+      "language": "Solidity",
+      "name": "Missing access control",
+      "connects_to": [
+        "CWE-284"
+      ]
+    },
+    "CWE-94": {
+      "type": "weakness",
+      "name": "Code Injection",
+      "severity": "HIGH",
+      "connects_to": [
+        "semgrep-P1-exec",
+        "semgrep-T1-eval"
+      ]
+    },
+    "CWE-338": {
+      "type": "weakness",
+      "name": "Weak PRNG",
+      "severity": "MEDIUM",
+      "connects_to": [
+        "semgrep-G1-rand"
+      ]
+    },
+    "CWE-295": {
+      "type": "weakness",
+      "name": "Improper Certificate Validation",
+      "severity": "MEDIUM",
+      "connects_to": [
+        "semgrep-G5-tls"
+      ]
+    },
+    "CWE-1321": {
+      "type": "weakness",
+      "name": "Prototype Pollution",
+      "severity": "HIGH",
+      "connects_to": [
+        "semgrep-T3-proto"
+      ]
+    },
+    "CWE-943": {
+      "type": "weakness",
+      "name": "NoSQL Injection",
+      "severity": "HIGH",
+      "connects_to": [
+        "semgrep-T5-nosql"
+      ]
+    },
+    "CWE-942": {
+      "type": "weakness",
+      "name": "Permissive Cross-domain Policy",
+      "severity": "MEDIUM",
+      "connects_to": [
+        "semgrep-T7-cors"
+      ]
+    },
+    "CWE-242": {
+      "type": "weakness",
+      "name": "Use of Unsafe Function",
+      "severity": "HIGH",
+      "connects_to": [
+        "semgrep-R1-unsafe"
+      ]
+    },
+    "CWE-78": {
+      "type": "weakness",
+      "name": "OS Command Injection",
+      "severity": "HIGH",
+      "connects_to": [
+        "semgrep-R3-cmd"
+      ]
+    },
+    "CWE-841": {
+      "type": "weakness",
+      "name": "Improper Enforcement of Behavioral Workflow",
+      "severity": "HIGH",
+      "connects_to": [
+        "semgrep-W1-reentrancy"
+      ]
+    },
+    "CWE-682": {
+      "type": "weakness",
+      "name": "Incorrect Calculation",
+      "severity": "HIGH",
+      "connects_to": [
+        "semgrep-W2-overflow"
+      ]
+    },
+    "CWE-284": {
+      "type": "weakness",
+      "name": "Improper Access Control",
+      "severity": "HIGH",
+      "connects_to": [
+        "semgrep-W3-selfdestruct",
+        "semgrep-W4-access"
+      ]
+    },
+    "semgrep-rules-collection": {
+      "type": "tool",
+      "tool": "semgrep-rules",
+      "connects_to": [
+        "semgrep-P1-exec",
+        "semgrep-P5-secret",
+        "semgrep-P7-sql",
+        "semgrep-P15-path",
+        "semgrep-G1-rand",
+        "semgrep-G2-secret",
+        "semgrep-G3-sql",
+        "semgrep-G4-ssrf",
+        "semgrep-G5-tls",
+        "semgrep-G6-path",
+        "semgrep-T1-eval",
+        "semgrep-T2-deser",
+        "semgrep-T3-proto",
+        "semgrep-T4-secret",
+        "semgrep-T5-nosql",
+        "semgrep-T6-path",
+        "semgrep-T7-cors",
+        "semgrep-R1-unsafe",
+        "semgrep-R2-file",
+        "semgrep-R3-cmd",
+        "semgrep-R4-deser",
+        "semgrep-R5-secret",
+        "semgrep-R6-ssrf",
+        "semgrep-W1-reentrancy",
+        "semgrep-W2-overflow",
+        "semgrep-W3-selfdestruct",
+        "semgrep-W4-access"
+      ],
+      "url": "awesome-mcp-security/rules/"
+    },
+    "skill-fuzzing-l1": {
+      "type": "skill",
+      "name": "Fuzzing L1 \u2014 \u6a21\u677f\u53d8\u5f02",
+      "connects_to": [
+        "pattern-15",
+        "cherrystudio-cve-1"
+      ],
+      "desc": "52 path variants, 4 bypass techniques"
+    },
+    "skill-fuzzing-l2": {
+      "type": "skill",
+      "name": "Fuzzing L2 \u2014 \u8986\u76d6\u5f15\u5bfc",
+      "connects_to": [
+        "skill-fuzzing-l1",
+        "CWE-22"
+      ],
+      "desc": "8/8 bugs found in 500 iterations"
+    },
+    "skill-reverse-eng": {
+      "type": "skill",
+      "name": "\u4e8c\u8fdb\u5236\u9006\u5411\u5165\u95e8",
+      "connects_to": [
+        "CWE-787",
+        "CWE-121"
+      ],
+      "desc": "Python dis \u2192 x86 objdump, strings, GDB"
+    },
+    "skill-protocol": {
+      "type": "skill",
+      "name": "\u7f51\u7edc\u534f\u8bae\u5206\u6790",
+      "connects_to": [
+        "pattern-15",
+        "mcp-scan-AS1"
+      ],
+      "desc": "TCP\u2192HTTP\u2192JSON-RPC\u2192MCP"
+    },
+    "skill-memory-exploit": {
+      "type": "skill",
+      "name": "\u5185\u5b58\u6f0f\u6d1e\u5229\u7528",
+      "connects_to": [
+        "CWE-787",
+        "CWE-121",
+        "skill-reverse-eng"
+      ],
+      "desc": "Buffer overflow, stack smashing"
+    },
+    "skill-prompt-inj": {
+      "type": "skill",
+      "name": "Prompt Injection \u7814\u7a76",
+      "connects_to": [
+        "pattern-15",
+        "cherrystudio-cve-1",
+        "paper-prompt"
+      ],
+      "desc": "6\u79cd\u653b\u51fb, 50%\u7ed5\u8fc7\u7387"
+    },
+    "skill-ctf": {
+      "type": "skill",
+      "name": "CTF \u5b9e\u6218",
+      "connects_to": [
+        "skill-reverse-eng",
+        "skill-fuzzing-l2",
+        "skill-memory-exploit"
+      ],
+      "desc": "strings\u2192\u9006\u5411\u2192\u6ea2\u51fa\u2192\u901a\u5173"
+    },
+    "paper-prompt": {
+      "type": "paper",
+      "name": "Prompt Injection is Not an AI Problem",
+      "connects_to": [
+        "skill-prompt-inj",
+        "cherrystudio-cve-1"
+      ],
+      "url": "awesome-mcp-security/publications/"
+    },
+    "paper-taxonomy": {
+      "type": "paper",
+      "name": "An Empirical Study of MCP Server Security",
+      "connects_to": [
+        "mcp-scan-AS1",
+        "cherrystudio-cve-1",
+        "npm-scan-result"
+      ],
+      "url": "awesome-mcp-security/publications/"
+    },
+    "npm-scan-result": {
+      "type": "metric",
+      "name": "npm MCP 460+ packages scanned, 0 holes",
+      "connects_to": [
+        "mcp-scan-AS1"
+      ],
+      "desc": "MCP ecosystem verified secure by empirical audit"
+    },
+    "defi-flashloan-price": {
+      "type": "defi",
+      "name": "\u95ea\u8d37+\u4ef7\u683c\u64cd\u7eb5",
+      "severity": "CRITICAL",
+      "connects_to": [
+        "CWE-20"
+      ],
+      "fix": "TWAP oracle"
+    },
+    "defi-reentrancy-flash": {
+      "type": "defi",
+      "name": "\u91cd\u5165+\u95ea\u8d37",
+      "severity": "CRITICAL",
+      "connects_to": [
+        "CWE-841"
+      ],
+      "fix": "checks-effects-interactions"
+    },
+    "defi-governance-attack": {
+      "type": "defi",
+      "name": "\u6cbb\u7406\u653b\u51fb(\u95ea\u8d37\u6295\u7968)",
+      "severity": "HIGH",
+      "connects_to": [
+        "CWE-284"
+      ],
+      "fix": "\u5feb\u7167+\u65f6\u95f4\u9501"
+    },
+    "defi-crosschain-sig": {
+      "type": "defi",
+      "name": "\u8de8\u94fe\u7b7e\u540d\u7ed5\u8fc7",
+      "severity": "CRITICAL",
+      "connects_to": [
+        "CWE-347"
+      ],
+      "fix": "chainID+nonce"
+    },
+    "defi-liquidation-bypass": {
+      "type": "defi",
+      "name": "\u6e05\u7b97\u64cd\u7eb5",
+      "severity": "HIGH",
+      "connects_to": [
+        "CWE-20"
+      ],
+      "fix": "TWAP"
+    },
+    "defi-storage-collision": {
+      "type": "defi",
+      "name": "Storage\u78b0\u649e",
+      "severity": "CRITICAL",
+      "connects_to": [
+        "CWE-668"
+      ],
+      "fix": "EIP-1967"
+    },
+    "slither-custom": {
+      "type": "tool",
+      "tool": "slither-detectors",
+      "connects_to": [
+        "defi-flashloan-price",
+        "defi-reentrancy-flash"
+      ],
+      "lang": "Python"
+    },
+    "solidity-33-patterns": {
+      "type": "metric",
+      "name": "Solidity 18->33 patterns",
+      "connects_to": [
+        "defi-flashloan-price",
+        "defi-governance-attack"
+      ]
+    }
+  },
+  "edges": [
+    {
+      "from": "CWE-22",
+      "to": "pattern-15",
+      "relation": "detected_by"
+    },
+    {
+      "from": "pattern-15",
+      "to": "cherrystudio-cve-1",
+      "relation": "found_in"
+    },
+    {
+      "from": "mcp-scan-AS1",
+      "to": "pattern-15",
+      "relation": "detects"
+    },
+    {
+      "from": "cherrystudio-cve-1",
+      "to": "mcp-scan-AS1",
+      "relation": "verified_by"
+    },
+    {
+      "from": "CWE-306",
+      "to": "memoryos-cve",
+      "relation": "classified_as"
+    },
+    {
+      "from": "CWE-918",
+      "to": "cherrystudio-cve-2",
+      "relation": "classified_as"
+    },
+    {
+      "from": "daily-scan",
+      "to": "nvd",
+      "relation": "ingests"
+    },
+    {
+      "from": "daily-scan",
+      "to": "exploit-db",
+      "relation": "ingests"
+    },
+    {
+      "from": "exploit-redis",
+      "to": "exploit-library",
+      "relation": "part_of"
+    },
+    {
+      "from": "exploit-kong",
+      "to": "exploit-library",
+      "relation": "part_of"
+    },
+    {
+      "from": "exploit-splunk",
+      "to": "exploit-library",
+      "relation": "part_of"
+    },
+    {
+      "from": "exploit-nextjs",
+      "to": "exploit-library",
+      "relation": "part_of"
+    },
+    {
+      "from": "exploit-mcp-inspector",
+      "to": "exploit-library",
+      "relation": "part_of"
+    },
+    {
+      "from": "exploit-postgres",
+      "to": "exploit-library",
+      "relation": "part_of"
+    },
+    {
+      "from": "exploit-gitea",
+      "to": "exploit-library",
+      "relation": "part_of"
+    },
+    {
+      "from": "exploit-n8n",
+      "to": "exploit-library",
+      "relation": "part_of"
+    },
+    {
+      "from": "exploit-litellm",
+      "to": "exploit-library",
+      "relation": "part_of"
+    },
+    {
+      "from": "exploit-mitmproxy",
+      "to": "exploit-library",
+      "relation": "part_of"
+    },
+    {
+      "from": "exploit-simplehelp",
+      "to": "exploit-library",
+      "relation": "part_of"
+    },
+    {
+      "from": "exploit-ingress",
+      "to": "exploit-library",
+      "relation": "part_of"
+    },
+    {
+      "from": "exploit-roundcube",
+      "to": "exploit-library",
+      "relation": "part_of"
+    },
+    {
+      "from": "exploit-freepbx",
+      "to": "exploit-library",
+      "relation": "part_of"
+    },
+    {
+      "from": "exploit-craftcms",
+      "to": "exploit-library",
+      "relation": "part_of"
+    },
+    {
+      "from": "semgrep-P1-exec",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-P5-secret",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-P7-sql",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-P15-path",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-G1-rand",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-G2-secret",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-G3-sql",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-G4-ssrf",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-G5-tls",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-G6-path",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-T1-eval",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-T2-deser",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-T3-proto",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-T4-secret",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-T5-nosql",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-T6-path",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-T7-cors",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-R1-unsafe",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-R2-file",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-R3-cmd",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-R4-deser",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-R5-secret",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-R6-ssrf",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-W1-reentrancy",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-W2-overflow",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-W3-selfdestruct",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "semgrep-W4-access",
+      "to": "semgrep-rules-collection",
+      "relation": "belongs_to"
+    },
+    {
+      "from": "skill-prompt-inj",
+      "to": "paper-prompt",
+      "relation": "supports"
+    },
+    {
+      "from": "paper-taxonomy",
+      "to": "npm-scan-result",
+      "relation": "documents"
+    },
+    {
+      "from": "defi-flashloan-price",
+      "to": "slither-custom",
+      "relation": "detected_by"
+    },
+    {
+      "from": "solidity-33-patterns",
+      "to": "defi-flashloan-price",
+      "relation": "covers"
+    }
+  ]
+}

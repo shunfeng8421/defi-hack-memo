@@ -1,0 +1,86 @@
+rules:
+  # P7: SQL f-string注入
+  - id: sql-fstring-injection
+    patterns:
+      - pattern-either:
+          - pattern: |
+              $CURSOR.execute(f"...")
+          - pattern: |
+              $CONN.execute(f"...")
+      - metavariable-regex:
+          metavariable: $CURSOR
+          regex: (cursor|conn|db|execute)
+    message: |
+      f-string SQL拼接导致注入。修复: 使用参数化查询
+    severity: ERROR
+    languages: [python]
+
+  # P15: MCP file_path 服务器端 open()
+  - id: mcp-filepath-open-no-validation
+    pattern: open($FP, ...)
+    message: |
+      检查file_path是否来自MCP工具参数且缺少validate_safe_path()
+    severity: WARNING
+    languages: [python]
+    paths:
+      include:
+        - "*mcp*"
+        - "*tool*"
+        - "*server*"
+        - "*upload*"
+        - "*file*"
+
+  # P8: SSRF — web handler中的requests.get
+  - id: ssrf-in-web-handler
+    patterns:
+      - pattern: requests.$METHOD(...)
+      - pattern-inside: |
+          def $HANDLER(...):
+              ...
+    message: |
+      检查URL参数是否来自用户输入，缺少SSRF过滤
+    severity: WARNING
+    languages: [python]
+    paths:
+      include:
+        - "*route*"
+        - "*api*"
+        - "*view*"
+        - "*handler*"
+
+  # P12: Shell命令注入
+  - id: shell-injection
+    pattern-either:
+      - pattern: |
+          os.system(...)
+      - pattern: |
+          subprocess.$FUNC(..., shell=True)
+    message: |
+      shell=True可导致命令注入。修复: 使用列表参数避免shell
+    severity: ERROR
+    languages: [python]
+
+  # P5: 硬编码密钥 (非从环境变量读取)
+  - id: weak-default-secret
+    patterns:
+      - pattern-either:
+          - pattern: |
+              $KEY = "$VALUE"
+          - pattern: |
+              $KEY = '$VALUE'
+    pattern-regex: "(?i)(secret|password|api_key|apikey|token|private_key).*=.*[\"'][a-zA-Z0-9_-]{6,}[\"']"
+    message: |
+      硬编码密钥 — 应从环境变量读取
+    severity: ERROR
+    languages: [python]
+    metadata:
+      cwe: "CWE-798"
+      fix: "使用 os.environ.get() 或 secret manager"
+
+  # P1: exec 无沙箱
+  - id: exec-without-sandbox
+    pattern: exec(...)
+    message: |
+      exec()执行用户代码，需AST验证+沙箱
+    severity: WARNING
+    languages: [python]

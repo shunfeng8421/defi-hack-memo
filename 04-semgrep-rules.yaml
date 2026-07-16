@@ -1,0 +1,95 @@
+rules:
+  # ============================================
+  # Level 4 — 安全研究员进阶规则集
+  # 从15个手工模式 → Semgrep自动扫描
+  # ============================================
+
+  # P1: exec() 无沙箱 — AI Agent 代码执行
+  - id: exec-without-sandbox
+    pattern-either:
+      - pattern: exec($CODE, ...)
+      - pattern: exec($CODE)
+    message: |
+      exec() 在无AST验证/沙箱环境中执行用户代码。
+      修复: 使用 ast.parse() 验证 + 受限 __builtins__
+    severity: ERROR
+    languages: [python]
+    paths:
+      include:
+        - "*tool*"
+        - "*agent*"
+        - "*executor*"
+        - "*server*"
+
+  # P7: SQL f-string注入
+  - id: sql-fstring-injection
+    pattern-either:
+      - pattern: |
+          $CURSOR.execute(f"...{$VAR}...")
+      - pattern: |
+          $CURSOR.execute(f"...{%s}...")
+    message: |
+      f-string SQL拼接导致注入。修复: 使用参数化查询 ? 或 %s 占位符
+    severity: ERROR
+    languages: [python]
+
+  # P5: 弱默认密钥
+  - id: weak-default-secret
+    pattern-either:
+      - pattern: |
+          $SECRET = os.getenv("...", "$DEFAULT")
+    metavariable-regex:
+      metavariable: $DEFAULT
+      regex: ^(secret|changeme|admin|password|test|123456|dev).*$
+    message: |
+      默认密钥太弱，可被攻击者猜测。修复: 使用强随机值或无默认值
+    severity: WARNING
+    languages: [python]
+
+  # P8: SSRF — requests.get(user_url) 无过滤
+  - id: ssrf-no-filter
+    pattern: |
+      requests.$METHOD($URL, ...)
+    message: |
+      直接使用用户URL发起请求可能导致SSRF。
+      修复: 检查IP是否为内网/loopback地址
+    severity: WARNING
+    languages: [python]
+    paths:
+      include:
+        - "*route*"
+        - "*api*"
+        - "*server*"
+        - "*view*"
+
+  # P12: Shell命令注入
+  - id: shell-command-injection
+    pattern-either:
+      - pattern: |
+          os.system($CMD)
+      - pattern: |
+          subprocess.$FUNC($CMD, ..., shell=True)
+    message: |
+      用户输入拼接到shell命令中，可导致命令注入。
+      修复: 使用 subprocess.run([cmd, arg1, arg2]) 避免shell=True
+    severity: ERROR
+    languages: [python]
+    paths:
+      include:
+        - "*route*"
+        - "*api*"
+        - "*tool*"
+
+  # P15: MCP file_path 服务器端解析
+  - id: mcp-filepath-no-validation
+    pattern: |
+      open($FILE_PATH, ...)
+    message: |
+      MCP工具参数file_path在服务器端直接open()，无路径验证。
+      修复: 一行 validate_safe_path(file_path) before open()
+    severity: ERROR
+    languages: [python]
+    paths:
+      include:
+        - "*mcp*"
+        - "*tool*"

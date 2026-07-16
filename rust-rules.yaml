@@ -1,0 +1,62 @@
+rules:
+  # ═══════════════════════════════════════════
+  # Rust 安全规则 — 内存安全语言的边界情况
+  # ═══════════════════════════════════════════
+
+  # R1: unsafe 块导致内存漏洞
+  - id: unsafe-block-rust
+    message: "unsafe block bypasses Rust memory safety guarantees"
+    severity: WARNING
+    languages: [rust]
+    pattern: "unsafe { ... }"
+
+  # R2: 不安全的文件操作
+  - id: unsafe-file-operation-rust
+    message: "File path used without canonicalization — possible path traversal"
+    severity: ERROR
+    languages: [rust]
+    patterns:
+      - pattern-either:
+          - pattern: |
+              std::fs::read_to_string($PATH)
+          - pattern: |
+              std::fs::File::open($PATH)
+          - pattern: |
+              std::fs::write($PATH, ...)
+
+  # R3: 命令注入
+  - id: command-injection-rust
+    message: "Command built from user input — possible command injection"
+    severity: ERROR
+    languages: [rust]
+    patterns:
+      - pattern-either:
+          - pattern: |
+              Command::new("sh").arg("-c").arg($USER_INPUT)
+          - pattern: |
+              Command::new("cmd").arg("/C").arg($USER_INPUT)
+          - pattern: |
+              std::process::Command::new($USER_INPUT)
+
+  # R4: 不安全的反序列化
+  - id: unsafe-deserialization-rust
+    message: "Unsafe deserialization — possible RCE"
+    severity: ERROR
+    languages: [rust]
+    pattern: |
+      serde_json::from_str::<$TYPE>($UNTRUSTED)
+
+  # R5: 硬编码密钥
+  - id: hardcoded-secret-rust
+    message: "Hardcoded secret found"
+    severity: ERROR
+    languages: [rust]
+    pattern-regex: '(?i)(let|const)\s+(secret|password|api_key|token)\s*=\s*"[a-zA-Z0-9_-]{8,}"'
+
+  # R6: SSRF
+  - id: ssrf-rust
+    message: "HTTP request to user-supplied URL — possible SSRF"
+    severity: WARNING
+    languages: [rust]
+    pattern: |
+      reqwest::get($USER_URL)

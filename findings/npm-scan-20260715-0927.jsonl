@@ -1,0 +1,1 @@
+{"package": "mcp-proxy", "version": "6.5.2", "findings": 1, "details": [{"rule": "D.hermes.skills.security-researcher.rules.cors-all-origins-ts", "file": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\npm-mcp-mcp-proxy-fx67ydta\\package\\src\\startHTTPServer.ts", "line": 226, "language": "typescript"}]}

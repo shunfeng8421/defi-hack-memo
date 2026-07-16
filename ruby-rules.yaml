@@ -1,0 +1,33 @@
+rules:
+  # Ruby 安全规则 — 基于 NVD July 2026
+  - id: unsafe-deserialization-ruby
+    message: "Unsafe deserialization — Marshal/YAML/Oj"
+    severity: ERROR
+    languages: [ruby]
+    patterns:
+      - pattern-either:
+          - pattern: |
+              Marshal.load($UNTRUSTED)
+          - pattern: |
+              YAML.load($UNTRUSTED)
+
+  - id: dynamic-execution-ruby
+    message: "Dynamic code execution — eval/system/popen"
+    severity: ERROR
+    languages: [ruby]
+    patterns:
+      - pattern-either:
+          - pattern: eval($X)
+          - pattern: |
+              IO.popen($X)
+
+  - id: path-traversal-ruby
+    message: "File.read from params without validation"
+    severity: ERROR
+    languages: [ruby]
+    patterns:
+      - pattern-either:
+          - pattern: |
+              File.read(params[$FIELD])
+          - pattern: |
+              File.open(params[$FIELD])

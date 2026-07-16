@@ -1,0 +1,1 @@
+{"package": "@growthbook/mcp", "version": "1.8.1", "findings": 1, "details": [{"rule": "D.hermes.skills.security-researcher.rules.hardcoded-secret-ts", "file": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\npm-mcp-growthbook-mcp-rjk48l7p\\package\\server\\utils.js", "line": 216, "language": "typescript"}]}

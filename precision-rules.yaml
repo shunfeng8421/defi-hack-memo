@@ -1,0 +1,97 @@
+rules:
+  # ═══════════════════════════════════════════
+  # 精准规则 — 从真实漏洞样本回写
+  # 命中率远高于文档驱动规则
+  # ═══════════════════════════════════════════
+
+  # R1: 来自 cherrystudio CWE-22 — file_path → open() 无路径验证
+  - id: cherrystudio-path-traversal
+    message: "MCP tool file_path → open() without validate_safe_path()"
+    severity: ERROR
+    languages: [python]
+    patterns:
+      - pattern: |
+          def $TOOL($PARAMS):
+            ...
+            $FILE = $PARAMS["$KEY"]
+            ...
+            open($FILE, ...)
+    pattern-regex: '(?s)def \w+\(.*\).*?\[.file_path\|filename\|path\].*?open\(.*?\[.file_path\|filename\|path\].*?\)'
+    metadata:
+      cwe: "CWE-22"
+      sample: "cherrystudio-qq-mcp"
+      impact: "Unauthenticated arbitrary file read"
+      fix: "Use validate_safe_path() + os.path.realpath() before open()"
+
+  # R2: 来自 cherrystudio CWE-918 — 用户URL → requests.get() 无验证
+  - id: cherrystudio-ssrf
+    message: "User-controlled URL passed to requests.get() without allowlist"
+    severity: ERROR
+    languages: [python]
+    patterns:
+      - pattern: |
+          def $TOOL($PARAMS):
+            ...
+            $URL = $PARAMS["$KEY"]
+            ...
+            requests.$METHOD($URL, ...)
+    pattern-regex: '(?s)def \w+\(.*\).*?\[.url\|image_url\|target\|address\].*?requests\.(?:get|post|request)\(.*?\1'
+    metadata:
+      cwe: "CWE-918"
+      sample: "cherrystudio-qq-mcp"
+      impact: "SSRF, internal network scanning"
+      fix: "URL allowlist + dns rebinding protection"
+
+  # R3: 来自 memoryos CWE-306 — FastAPI router 无 Depends(auth)
+  - id: memoryos-missing-auth
+    message: "API router without authentication middleware"
+    severity: ERROR
+    languages: [python]
+    patterns:
+      - pattern: |
+          @router.$METHOD("$PATH")
+          async def $FUNC(...):
+            ...
+    pattern-not: |
+      @router.$METHOD(...)
+      async def $FUNC(depends=Depends(...), ...):
+        ...
+    metadata:
+      cwe: "CWE-306"
+      sample: "memoryos"
+      impact: "All API endpoints accessible without authentication"
+      fix: "Add Depends(auth_middleware) to router"
+
+  # R4: 来自 npm 扫描 — hardcoded API key (含真实样本)
+  - id: npm-hardcoded-api-key
+    message: "Hardcoded API key — discovered in npm ecosystem audit"
+    severity: ERROR
+    languages: [typescript, javascript]
+    patterns:
+      - pattern: |
+          const $KEY = "$VALUE"
+    pattern-regex: '(?i)(?:API_KEY|APPLICATION_ID|SECRET)\s*=\s*"[a-zA-Z0-9_-]{15,}"'
+    metadata:
+      cwe: "CWE-798"
+      sample: "@growthbook/mcp"
+      impact: "Hardcoded Algolia search credentials"
+      fix: "Use process.env.API_KEY + dotenv"
+
+  # R5: 高级 — 参数来自MCP tool但无类型校验
+  - id: mcp-untyped-param
+    message: "MCP tool parameter without type/property validation"
+    severity: WARNING
+    languages: [typescript, javascript]
+    patterns:
+      - pattern: |
+          server.tool($NAME, async ($PARAMS) => {
+            ...
+          })
+    pattern-not: |
+      server.tool($NAME, zodSchema, async ($PARAMS) => {
+        ...
+      })
+    metadata:
+      cwe: "CWE-20"
+      impact: "Tool parameter not validated — type confusion possible"
+      fix: "Add Zod schema validation to tool definition"

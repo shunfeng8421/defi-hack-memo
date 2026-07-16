@@ -1,0 +1,74 @@
+rules:
+  # ============================================
+  # Web3 / Solidity 合约审计规则集
+  # ============================================
+
+  # SWC-107: 重入攻击
+  - id: reentrancy-vulnerability
+    pattern: |
+      $CALL(...);
+      ...
+      $STATE = ...;
+    message: |
+      外部调用后修改状态变量 — 可能重入攻击。
+      修复: 先修改状态，再调用外部合约；或用 ReentrancyGuard
+    severity: ERROR
+    languages: [solidity]
+
+  # SWC-101: 整数溢出
+  - id: integer-overflow
+    pattern-either:
+      - pattern: $X + $Y
+      - pattern: $X - $Y
+      - pattern: $X * $Y
+    message: |
+      检查是否使用 unchecked 块或缺少 SafeMath。
+      Solidity 0.8+ 默认安全，但 unchecked 块内部危险。
+    severity: WARNING
+    languages: [solidity]
+
+  # SWC-105: 未受保护的 SELFDESTRUCT
+  - id: unprotected-selfdestruct
+    pattern: selfdestruct(...)
+    message: |
+      selfdestruct 必须是 onlyOwner 或有时锁。
+    severity: ERROR
+    languages: [solidity]
+
+  # SWC-106: 未受保护的函数
+  - id: missing-access-control
+    pattern: |
+      function $FUNC(...) external {
+          ...
+      }
+    message: |
+      外部函数必须检查是否有访问控制修饰符（onlyOwner/onlyRole）。
+    severity: WARNING
+    languages: [solidity]
+
+  # SWC-114: tx.origin 认证
+  - id: tx-origin-auth
+    pattern: require(tx.origin == ...)
+    message: |
+      tx.origin 用于认证极易被钓鱼攻击。
+      修复: 使用 msg.sender
+    severity: ERROR
+    languages: [solidity]
+
+  # SWC-103: 浮点精度
+  - id: division-before-multiplication
+    pattern: |
+      $X / $Y * $Z
+    message: |
+      除法在乘法之前会导致精度丢失。
+      修复: 先乘后除
+    severity: WARNING
+    languages: [solidity]
+
+  # SWC-108: 变量存储顺序
+  - id: delegatecall-danger
+    pattern: delegatecall(...)
+    message: |
+      delegatecall 保留调用者上下文 — 必须严格控制目标地址。
+    severity: ERROR
+    languages: [solidity]

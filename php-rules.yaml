@@ -1,0 +1,44 @@
+rules:
+  # PHP 安全规则
+  - id: file-inclusion-php
+    message: "User-controlled include — LFI/RFI"
+    severity: ERROR
+    languages: [php]
+    patterns:
+      - pattern-either:
+          - pattern: |
+              include($_GET[$KEY])
+          - pattern: |
+              require($_REQUEST[$KEY])
+
+  - id: command-injection-php
+    message: "Shell command with user input — RCE"
+    severity: ERROR
+    languages: [php]
+    patterns:
+      - pattern-either:
+          - pattern: |
+              shell_exec($_GET[$KEY])
+          - pattern: |
+              exec($_POST[$KEY])
+
+  - id: sql-injection-php
+    message: "SQL with string concat — SQL injection"
+    severity: ERROR
+    languages: [php]
+    pattern: |
+      mysql_query("...".$_GET[$KEY])
+
+  - id: deserialization-php
+    message: "unserialize from user input"
+    severity: ERROR
+    languages: [php]
+    pattern: |
+      unserialize($_GET[$KEY])
+
+  - id: eval-php
+    message: "eval with user input — RCE"
+    severity: ERROR
+    languages: [php]
+    pattern: |
+      eval($_GET[$KEY])
