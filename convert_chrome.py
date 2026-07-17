@@ -273,6 +273,11 @@ PAPERS = [
         "pdf": r"D:\ll\knowledge-base\10-security\paper\05-flash-loan-evolution\EN.pdf",
         "title": "Flash Loan Attacks: A Decade of Evolution",
     },
+    {
+        "md": r"D:\ll\knowledge-base\10-security\paper\05-flash-loan-evolution\CN.md",
+        "pdf": r"D:\ll\knowledge-base\10-security\paper\05-flash-loan-evolution\CN.pdf",
+        "title": "Flash Loan Attacks: Decade Evolution (CN)",
+    },
 ]
 
 if __name__ == "__main__":
