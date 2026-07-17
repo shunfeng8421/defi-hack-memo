@@ -33,3 +33,4 @@
 | 08 | PermitFrontrun | #15 许可前置 | ⭐⭐ |
 | 09 | BurnToken | #25 代币燃烧 | ⭐⭐⭐ |
 | 10 | UpgradeCollision | #13 升级碰撞 | ⭐⭐⭐ |
+// test trigger for GitHub Action
