@@ -1379,6 +1379,170 @@
       "connects_to": [
         "defi-permit-frontrun"
       ]
+    },
+    "defi-pancakebunny": {
+      "type": "hack",
+      "name": "PancakeBunny",
+      "year": 2021,
+      "loss": "$120M",
+      "connects_to": [
+        "defi-flashloan-oracle",
+        "defi-token-burn"
+      ]
+    },
+    "defi-beanstalk": {
+      "type": "hack",
+      "name": "Beanstalk",
+      "year": 2022,
+      "loss": "$182M",
+      "connects_to": [
+        "defi-governance",
+        "defi-flashloan-oracle"
+      ]
+    },
+    "defi-wormhole-detail": {
+      "type": "hack",
+      "name": "Wormhole (detail)",
+      "year": 2022,
+      "loss": "$320M",
+      "connects_to": [
+        "defi-cross-chain-replay",
+        "defi-signature-replay"
+      ]
+    },
+    "defi-bybit-detail": {
+      "type": "hack",
+      "name": "Bybit (detail)",
+      "year": 2025,
+      "loss": "$1.5B",
+      "connects_to": [
+        "knowledge-bybit-1b5",
+        "defi-signature-replay"
+      ]
+    },
+    "tool-slither-50": {
+      "type": "tool",
+      "name": "Slither 50 Detectors",
+      "connects_to": [
+        "skill-blockchain-audit"
+      ],
+      "description": "50 custom Slither detectors covering 42 DeFi patterns"
+    },
+    "paper-decade-analysis": {
+      "type": "knowledge",
+      "name": "Decade Analysis Paper",
+      "connects_to": [
+        "skill-blockchain-audit",
+        "knowledge-824-database"
+      ],
+      "description": "4th paper: A Decade of DeFi Attacks 2017-2026"
+    },
+    "trend-2026-precision": {
+      "type": "knowledge",
+      "name": "2026 Precision Trend",
+      "connects_to": [
+        "paper-decade-analysis"
+      ],
+      "description": "Precision + backdoor + accounting bugs dominate 2026"
+    },
+    "trend-2026-backdoor": {
+      "type": "knowledge",
+      "name": "2026 Backdoor Trend",
+      "connects_to": [
+        "paper-decade-analysis"
+      ],
+      "description": "Intentional backdoors in DeFi contracts rising"
+    },
+    "platform-sherlock": {
+      "type": "tool",
+      "name": "Sherlock Platform",
+      "connects_to": [
+        "skill-blockchain-audit"
+      ],
+      "description": "Audit contest platform — Metric $150K active"
+    },
+    "platform-codehawks": {
+      "type": "tool",
+      "name": "CodeHawks Platform",
+      "connects_to": [
+        "knowledge-battlechain"
+      ],
+      "description": "First contest submitted (BattleChain, 4 findings)"
+    },
+    "tool-exercise-system": {
+      "type": "tool",
+      "name": "Solidity Exercise System",
+      "connects_to": [
+        "skill-blockchain-audit",
+        "tool-slither-50"
+      ],
+      "description": "50 vulnerability exercises with contracts + exploits + fixes"
+    },
+    "concept-hardening-gradient": {
+      "type": "knowledge",
+      "name": "Hardening Gradient",
+      "connects_to": [
+        "paper-decade-analysis"
+      ],
+      "description": ">$1B TVL protocols rarely have new vulns; <$1M still vulnerable"
+    },
+    "concept-design-vs-impl": {
+      "type": "knowledge",
+      "name": "Design vs Implementation Bugs",
+      "connects_to": [
+        "paper-decade-analysis"
+      ],
+      "description": "Post-2023: design bugs overtake code bugs as dominant attack vector"
+    },
+    "concept-attack-fragmentation": {
+      "type": "knowledge",
+      "name": "Attack Surface Fragmentation",
+      "connects_to": [
+        "paper-decade-analysis"
+      ],
+      "description": "Large protocols harden; attack surface shifts to smaller protocols"
+    },
+    "vuln-erc777-reentrancy": {
+      "type": "knowledge",
+      "name": "ERC777 Reentrancy",
+      "connects_to": [
+        "defi-reentrancy"
+      ],
+      "description": "tokensReceived callback enables reentrancy where ERC20 is safe"
+    },
+    "vuln-eip712-typo": {
+      "type": "knowledge",
+      "name": "EIP-712 Typo",
+      "connects_to": [
+        "defi-signature-replay"
+      ],
+      "description": "TYPEHASH mismatch between declaration and parameters"
+    },
+    "vuln-create2-frontrun": {
+      "type": "knowledge",
+      "name": "CREATE2 Front-run",
+      "connects_to": [
+        "defi-signature-replay"
+      ],
+      "description": "Same salt across chains allows contract hijacking"
+    },
+    "pattern-mev": {
+      "type": "pattern",
+      "name": "MEV Sandwich",
+      "severity": "MEDIUM",
+      "connects_to": [
+        "defi-flashloan-oracle"
+      ],
+      "pattern_id": 11
+    },
+    "pattern-accounting": {
+      "type": "pattern",
+      "name": "Accounting Inconsistency",
+      "severity": "HIGH",
+      "connects_to": [
+        "defi-erc4626-inflation"
+      ],
+      "pattern_id": 47
     }
   },
   "edges": [
