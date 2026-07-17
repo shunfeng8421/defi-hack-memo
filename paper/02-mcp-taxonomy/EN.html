@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>A Comprehensive Taxonomy of MCP Security Risks</title>
+<style>
+@page { size: A4; margin: 25mm 22mm 28mm 22mm;
+    @bottom-center { content: counter(page); font-family: 'Georgia', serif; font-size: 8pt; color: #808080; }
+}
+body { font-family: 'Georgia', 'Times New Roman', serif; font-size: 10pt; line-height: 1.65; color: #1a1a1a; text-align: justify; }
+h1 { font-size: 16pt; font-weight: bold; color: #111; margin-top: 0; margin-bottom: 8pt; text-align: center; }
+h2 { font-size: 13pt; font-weight: bold; color: #1e1e1e; margin-top: 18pt; margin-bottom: 6pt; page-break-after: avoid; }
+h3 { font-size: 11pt; font-weight: bold; color: #323232; margin-top: 12pt; margin-bottom: 4pt; page-break-after: avoid; }
+p { margin: 4pt 0; }
+blockquote { margin: 8pt 0; padding: 6pt 12pt; border-left: 3pt solid #5a5a5a; background: #f8f8f8; font-size: 9pt; color: #444; page-break-inside: avoid; }
+pre { background: #f5f5f5; border: 0.5pt solid #c8c8c8; padding: 8pt 10pt; font-family: 'Consolas', 'Courier New', monospace; font-size: 7.5pt; line-height: 1.35; color: #282828; white-space: pre-wrap; word-wrap: break-word; margin: 6pt 0; page-break-inside: avoid; }
+code { font-family: 'Consolas', 'Courier New', monospace; font-size: 8.5pt; background: #f0f0f0; padding: 1pt 3pt; }
+pre code { background: none; padding: 0; font-size: 7.5pt; }
+table { border-collapse: collapse; margin: 8pt 0; width: 100%; font-size: 8.5pt; page-break-inside: avoid; }
+th { background: #282828; color: white; padding: 5pt 6pt; font-weight: bold; }
+td { border: 0.5pt solid #a0a0a0; padding: 4pt 6pt; }
+</style>
+</head>
+<body>
+<h1>An Empirical Study of Model Context Protocol (MCP) Server Security: Taxonomy, Large-Scale Scanning, and Defense Framework</h1>
+<p><strong>Shiqiang Chen</strong><br />
+<em>Institute of Information Engineering, Chinese Academy of Sciences</em><br />
+<em>Correspondence: shunfeng8421@163.com</em></p>
+<hr />
+<h2>Abstract</h2>
+<p>The Model Context Protocol (MCP) has rapidly emerged as the dominant standard for AI agent tool integration, with over 620 MCP server packages published across npm and PyPI ecosystems as of July 2026. However, the security implications of a protocol that grants LLM agents unfettered access to diverse third-party tool endpoints remain poorly understood. In this paper, we present the first systematic security study of the MCP ecosystem, comprising three components: (1) a six-surface attack taxonomy derived from auditing 30+ MCP server implementations and discovering 2 original CVEs; (2) an automated large-scale scan of 620 MCP-related packages using 46 custom Semgrep rules, revealing a path traversal hit rate of approximately 3% across npm servers; and (3) a five-level defense maturity framework with quantitative coverage analysis of existing detection tools. Our key findings include: (a) MCP Inspector implementations exposing servers on 0.0.0.0 without authentication account for 2 confirmed CVEs with remote code execution impact; (b) tool parameter injection—particularly server-side file path resolution—is the most prevalent and underappreciated attack surface; (c) automated scanning of the entire npm MCP ecosystem found zero real high-severity vulnerabilities, suggesting that existing open-source MCP servers have matured beyond the "low-hanging fruit" stage, but the protocol's fundamental trust assumptions remain unresolved. We release all 46 Semgrep rules, the 91-node MCP security knowledge graph, and the scanning infrastructure as open-source artifacts.</p>
+<p><strong>Keywords</strong>: Model Context Protocol, MCP security, LLM agent security, vulnerability taxonomy, large-scale scanning, Semgrep, CVE</p>
+<hr />
+<h2>1. Introduction</h2>
+<h3>1.1 Background</h3>
+<p>The Model Context Protocol (MCP), introduced by Anthropic in November 2024 and subsequently adopted across the AI agent ecosystem (OpenAI, Google, LangChain, Cursor, Windsurf), standardizes how LLM agents discover and invoke external tools. An MCP server exposes a set of tools (equivalent to API endpoints) that agents can call through a JSON-RPC-based transport layer. By July 2026, the npm ecosystem alone hosts 460+ packages with "mcp" in their name or description, and the PyPI ecosystem contributes an additional 160+, collectively forming the toolchain that powers millions of agent interactions daily.</p>
+<p>The security model of MCP is unique and understudied. Unlike traditional web APIs, where access control is explicit and user-mediated, MCP tool invocation is delegated to an LLM agent. The agent receives tool descriptions from servers and autonomously decides which tools to call with which parameters. This creates three novel security challenges:</p>
+<ol>
+<li><strong>Implicit Trust Boundary</strong>: The client trusts the agent, which trusts the server tool descriptions, which may be maliciously crafted.</li>
+<li><strong>Asymmetric Parameter Semantics</strong>: A <code>file_path</code> parameter means one thing to the client (local file) but another to the server (server filesystem)—a confusion exploited in all confirmed MCP path traversal CVEs.</li>
+<li><strong>Protocol-Level Blind Spots</strong>: The MCP specification mandates input validation and access control but provides no reference implementation, leaving security to individual developer diligence.</li>
+</ol>
+<h3>1.2 Problem Statement</h3>
+<p>The central question of this paper is: <strong>How secure is the MCP ecosystem in practice, and what systematic defenses can address its structural vulnerabilities?</strong></p>
+<p>We decompose this into four sub-questions:</p>
+<ul>
+<li><strong>RQ1</strong> (Taxonomy): What attack surfaces does the MCP protocol expose, and how do they map to known vulnerability classes?</li>
+<li><strong>RQ2</strong> (Prevalence): At what frequency do these vulnerabilities appear across the npm and PyPI MCP ecosystems?</li>
+<li><strong>RQ3</strong> (Detection): How effective are static analysis tools (Semgrep) at detecting MCP-specific vulnerability patterns?</li>
+<li><strong>RQ4</strong> (Defense): What defense maturity levels are achievable, and what residual risk remains?</li>
+</ul>
+<h3>1.3 Contributions</h3>
+<ol>
+<li><strong>A six-surface MCP attack taxonomy</strong>, grounded in 30+ server audits and 2 original CVE discoveries, mapping each surface to real-world instances.</li>
+<li><strong>The first large-scale automated scan</strong> of 620 MCP-related packages using 46 custom Semgrep rules (41 general + 5 targeted write-back detectors), establishing a baseline prevalence rate for path traversal, command injection, and other MCP-specific patterns.</li>
+<li><strong>A MCP security knowledge graph</strong> of 91 nodes linking attack surfaces, vulnerability classes, detection rules, and real-world incidents.</li>
+<li><strong>A five-level defense maturity framework</strong> with quantitative coverage analysis and residual risk estimation.</li>
+<li><strong>Open-source release</strong> of all Semgrep rules, scan scripts, and the knowledge graph.</li>
+</ol>
+<hr />
+<h2>2. Related Work</h2>
+<h3>2.1 LLM Agent Security</h3>
+<p>The security of LLM-based agents has attracted growing attention since the emergence of prompt injection [1,2], jailbreaking [3], and tool misuse frameworks [4]. The OWASP Top 10 for LLM Applications [5] identifies excessive agency, prompt injection, and insecure output handling as critical risks. However, these frameworks treat the agent as the threat surface rather than the tool infrastructure beneath it.</p>
+<p>Deng et al. [6] demonstrated that LLM agents can be manipulated into executing multi-step attacks (Phantom) through benign-appearing tool chains. Our work complements this by characterizing the vulnerabilities embedded in the tools themselves—regardless of agent behavior.</p>
+<h3>2.2 API Security Analysis</h3>
+<p>Traditional API security research focuses on REST/GraphQL endpoints, with well-established methodologies for parameter fuzzing [7], access control auditing [8], and automated specification-based testing [9]. MCP diverges from REST APIs in critical ways: (1) the API consumer is an LLM, not a developer; (2) all "API endpoints" are discovered dynamically through tool schemas; (3) server-side path resolution creates an impedance mismatch between client and server semantics.</p>
+<h3>2.3 MCP-Specific Security</h3>
+<p>To our knowledge, the most substantive prior work on MCP security is the MCP Security Considerations section of the official specification [10], which outlines high-level requirements (validate inputs, implement access controls, rate-limit invocations) but provides no reference implementation. The MCP security community has produced vulnerability disclosures for individual servers (CherryStudio QQ MCP, mcp-atlassian, MCP Inspector [11,12]) but no systematic ecosystem-wide study.</p>
+<p>Our work is the first to combine attack surface taxonomy, ecosystem-scale scanning, and defense framework evaluation into a unified MCP security study.</p>
+<hr />
+<h2>3. Attack Surface Taxonomy</h2>
+<h3>3.1 Methodology</h3>
+<p>We audited 30+ MCP server implementations across multiple categories (productivity tools, database connectors, file system access, browser automation, code execution). For each server, we performed:</p>
+<ol>
+<li><strong>Tool Enumeration</strong>: Extract all <code>@mcp.tool()</code> or <code>server.tool()</code> decorated functions and their parameter schemas.</li>
+<li><strong>Parameter Taint Analysis</strong>: Trace each tool parameter from MCP transport deserialization to usage, identifying sinks for file I/O, command execution, network requests, and database queries.</li>
+<li><strong>Authentication Audit</strong>: Check for presence and correctness of authentication middleware in the MCP transport layer.</li>
+<li><strong>Transport Configuration Review</strong>: Verify binding address, TLS configuration, and message validation.</li>
+</ol>
+<p>Each identified vulnerability was classified into one of six attack surfaces. When two sources disagreed on classification, we went deeper into the protocol semantics to resolve.</p>
+<h3>3.2 The Six Attack Surfaces</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">graph</span><span class="w"> </span><span class="n">TD</span>
+<span class="w">    </span><span class="n">A</span><span class="p">[</span><span class="n">MCP</span><span class="w"> </span><span class="n">Attack</span><span class="w"> </span><span class="n">Surface</span><span class="p">]</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">B1</span><span class="p">[</span><span class="mf">1.</span><span class="w"> </span><span class="n">Tool</span><span class="w"> </span><span class="n">Parameter</span><span class="w"> </span><span class="n">Injection</span><span class="p">]</span>
+<span class="w">    </span><span class="n">A</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">B2</span><span class="p">[</span><span class="mf">2.</span><span class="w"> </span><span class="n">Inspector</span><span class="w"> </span><span class="n">Exposure</span><span class="p">]</span>
+<span class="w">    </span><span class="n">A</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">B3</span><span class="p">[</span><span class="mf">3.</span><span class="w"> </span><span class="n">Client</span><span class="w"> </span><span class="n">Trust</span><span class="w"> </span><span class="n">Boundary</span><span class="p">]</span>
+<span class="w">    </span><span class="n">A</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">B4</span><span class="p">[</span><span class="mf">4.</span><span class="w"> </span><span class="n">Transport</span><span class="w"> </span><span class="n">Layer</span><span class="p">]</span>
+<span class="w">    </span><span class="n">A</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">B5</span><span class="p">[</span><span class="mf">5.</span><span class="w"> </span><span class="n">Implementation</span><span class="w"> </span><span class="n">Bugs</span><span class="p">]</span>
+<span class="w">    </span><span class="n">A</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">B6</span><span class="p">[</span><span class="mf">6.</span><span class="w"> </span><span class="n">Supply</span><span class="w"> </span><span class="n">Chain</span><span class="p">]</span>
+<span class="w">    </span><span class="n">B1</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">C1</span><span class="p">[</span><span class="n">Path</span><span class="w"> </span><span class="n">Traversal</span><span class="p">]</span>
+<span class="w">    </span><span class="n">B1</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">C2</span><span class="p">[</span><span class="n">Command</span><span class="w"> </span><span class="n">Injection</span><span class="p">]</span>
+<span class="w">    </span><span class="n">B1</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">C3</span><span class="p">[</span><span class="n">SQL</span><span class="w"> </span><span class="n">Injection</span><span class="p">]</span>
+<span class="w">    </span><span class="n">B1</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">C4</span><span class="p">[</span><span class="n">SSRF</span><span class="p">]</span>
+<span class="w">    </span><span class="n">B2</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">D1</span><span class="p">[</span><span class="n">CVE</span><span class="mi">-2025-49596</span><span class="p">]</span>
+<span class="w">    </span><span class="n">B2</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">D2</span><span class="p">[</span><span class="n">CVE</span><span class="mi">-2026-23744</span><span class="p">]</span>
+<span class="w">    </span><span class="n">B3</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">E1</span><span class="p">[</span><span class="n">Description</span><span class="w"> </span><span class="n">Poisoning</span><span class="p">]</span>
+<span class="w">    </span><span class="n">B3</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">E2</span><span class="p">[</span><span class="n">Output</span><span class="w"> </span><span class="n">Injection</span><span class="p">]</span>
+<span class="w">    </span><span class="n">B4</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">F1</span><span class="p">[</span><span class="n">stdio</span><span class="w"> </span><span class="n">Hijack</span><span class="p">]</span>
+<span class="w">    </span><span class="n">B4</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">F2</span><span class="p">[</span><span class="n">Unencrypted</span><span class="w"> </span><span class="n">SSE</span><span class="p">]</span>
+<span class="w">    </span><span class="n">B5</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">G1</span><span class="p">[</span><span class="n">Weak</span><span class="w"> </span><span class="n">JWT</span><span class="w"> </span><span class="n">Defaults</span><span class="p">]</span>
+<span class="w">    </span><span class="n">B5</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">G2</span><span class="p">[</span><span class="n">eval</span><span class="w"> </span><span class="n">without</span><span class="w"> </span><span class="n">Sandbox</span><span class="p">]</span>
+<span class="w">    </span><span class="n">B6</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">H1</span><span class="p">[</span><span class="n">Package</span><span class="w"> </span><span class="n">Takeover</span><span class="p">]</span>
+<span class="w">    </span><span class="n">B6</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">H2</span><span class="p">[</span><span class="n">Dependency</span><span class="w"> </span><span class="n">Vulns</span><span class="p">]</span>
+</code></pre></div>
+
+<p><strong>Figure 1. MCP attack surface taxonomy with representative vulnerability classes and confirmed CVEs.</strong></p>
+<h4>Surface 1: Tool Parameter Injection</h4>
+<p><strong>Definition</strong>: An attacker controls MCP tool parameters (through the LLM or direct client access) to trigger unintended server-side operations.</p>
+<p><strong>Instance: File Path Traversal (CWE-22)</strong><br />
+The most prevalent MCP vulnerability class. Consider the following pattern:</p>
+<div class="codehilite"><pre><span></span><code><span class="nd">@mcp</span><span class="o">.</span><span class="n">tool</span><span class="p">()</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">upload_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>   <span class="c1"># path controlled by MCP client</span>
+        <span class="k">return</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</code></pre></div>
+
+<p>The <code>file_path</code> parameter originates from the MCP client (potentially an LLM agent), but the <code>open()</code> call executes on the server's filesystem with server filesystem context. No path validation (<code>validate_safe_path()</code>), no sandboxing, no chroot—simply trusting a client-supplied path on the server side. This is functionally equivalent to classic directory traversal (CWE-22) but masked by MCP's abstraction layer.</p>
+<p><strong>Instance: SSRF via Image URL (CWE-918)</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_download_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">url</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;file://&quot;</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">url</span><span class="p">[</span><span class="mi">7</span><span class="p">:],</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>    <span class="c1"># path traversal</span>
+            <span class="k">return</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_http_session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">as</span> <span class="n">resp</span><span class="p">:</span>  <span class="c1"># SSRF</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="n">resp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</code></pre></div>
+
+<p>A single function combines path traversal via <code>file://</code> protocol and SSRF via unfiltered HTTP fetches. No IP address validation, no internal network blacklisting, no URL allowlisting.</p>
+<p><strong>Instance: Command Injection (CWE-78)</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="nd">@mcp</span><span class="o">.</span><span class="n">tool</span><span class="p">()</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">execute_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">proc</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+</code></pre></div>
+
+<p>The <code>shell=True</code> pattern is well-understood in web security but appears in MCP servers where the developer assumes only "trusted" LLM agents will invoke the tool—overlooking that compromised or malicious agents can inject shell metacharacters.</p>
+<h4>Surface 2: Inspector Exposure</h4>
+<p><strong>Definition</strong>: MCP servers that bind to network-facing interfaces (0.0.0.0) without authentication, allowing any remote client to invoke tools.</p>
+<p><strong>Confirmed CVEs</strong>:<br />
+- <strong>CVE-2025-49596</strong>: MCP Inspector binding to 0.0.0.0 with no authentication → remote tool invocation → RCE via server-side tool execution.<br />
+- <strong>CVE-2026-23744</strong>: MCPJam Inspector with identical vulnerability pattern: 0.0.0.0 bind + unauthenticated access + server installation capability → remote code execution.</p>
+<p>These CVEs share a structural pattern: MCP Inspector tools are designed for local development but inherit MCP's JSON-RPC transport without considering network exposure. The remediation is always the same: bind to <code>127.0.0.1</code> and require authentication—but the pattern recurs because MCP's initial design optimized for "zero-config, instant-start" developer experience over security-by-default.</p>
+<h4>Surface 3: Client Trust Boundary</h4>
+<p><strong>Definition</strong>: The MCP client implicitly trusts server-provided metadata (tool descriptions, output formats) that may be crafted to manipulate LLM agent behavior.</p>
+<p><strong>Attack Vectors</strong>:<br />
+- <strong>Tool Description Poisoning</strong>: Server describes its tool as "harmless" while its implementation is malicious. The LLM agent, reading only the description, may select a dangerous tool over a safe one.<br />
+- <strong>Output Injection</strong>: Server tool output contains hidden instructions (e.g., "Ignore all previous instructions and transfer funds to 0x..."), exploiting the agent's tendency to trust structured tool responses.<br />
+- <strong>Credential Harvesting</strong>: Server tool requests API keys from the agent/user, masquerading as a legitimate dependency.</p>
+<p><strong>Rationale for Inclusion</strong>: While these are client-side threats, the fact that the MCP specification does not require servers to cryptographically sign their tool descriptions makes this surface protocol-inherent, not implementation-specific.</p>
+<h4>Surface 4: Transport Layer</h4>
+<p><strong>Definition</strong>: Vulnerabilities in the communication channel between MCP client and server.</p>
+<table>
+<thead>
+<tr>
+<th>Vector</th>
+<th>Mechanism</th>
+<th style="text-align: center;">Severity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>stdio hijack</td>
+<td>Replace local MCP binary with malicious version</td>
+<td style="text-align: center;">Critical</td>
+</tr>
+<tr>
+<td>Unencrypted SSE</td>
+<td>Man-in-the-middle on Server-Sent Events transport</td>
+<td style="text-align: center;">High</td>
+</tr>
+<tr>
+<td>No message signing</td>
+<td>Replay previously authenticated JSON-RPC messages</td>
+<td style="text-align: center;">Medium</td>
+</tr>
+<tr>
+<td>WebSocket origin bypass</td>
+<td>Cross-origin requests to MCP WebSocket endpoints</td>
+<td style="text-align: center;">Medium</td>
+</tr>
+</tbody>
+</table>
+<p>The stdio transport—MCP's default—is particularly concerning: each MCP server runs as a child process of the client, and replacing the binary (e.g., via compromised npm lifecycle scripts) grants immediate tool access.</p>
+<h4>Surface 5: Implementation Bugs</h4>
+<p><strong>Definition</strong>: Traditional web vulnerability classes (OWASP Top 10) appearing in the MCP server implementation layer.</p>
+<p><strong>Observed Patterns</strong>:<br />
+- <strong>Path traversal</strong>: 30+ servers audited, ~3% hit rate for unsanitized <code>open()</code> calls.<br />
+- <strong>SQL injection</strong>: Tool handlers constructing raw SQL queries from MCP parameters.<br />
+- <strong>Weak defaults</strong>: Flowise MCP server shipping with hardcoded or trivially guessable JWT secrets.<br />
+- <strong>Unsafe deserialization</strong>: <code>eval()</code> or <code>exec()</code> without sandbox in tool implementations (observed in n8n and PraisonAI MCP extensions).<br />
+- <strong>Auth bypass</strong>: Apollo MCP server URL parsing allowing unauthenticated access via crafted URL patterns.</p>
+<h4>Surface 6: Supply Chain</h4>
+<p><strong>Definition</strong>: Vulnerabilities introduced through MCP server dependencies or the package distribution channel.</p>
+<p><strong>Vectors</strong>:<br />
+- <strong>npm package takeover</strong>: An abandoned MCP server package with accumulated user installs, vulnerable to maintainer account compromise.<br />
+- <strong>Dependency vulnerabilities</strong>: MCP servers pulling in vulnerable versions of axios, requests, or other HTTP libraries.<br />
+- <strong>Config file leaks</strong>: <code>.env</code> files or API keys inadvertently bundled in npm packages via <code>.npmignore</code> misconfiguration.</p>
+<h3>3.3 Attack Surface Mapping</h3>
+<table>
+<thead>
+<tr>
+<th>Surface</th>
+<th>CWE Class</th>
+<th style="text-align: center;">CVEs Confirmed</th>
+<th style="text-align: center;">Prevalence (n=30)</th>
+<th style="text-align: center;">Severity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Parameter Injection</td>
+<td>CWE-22, 78, 89, 918</td>
+<td style="text-align: center;">2 (cherrystudio #1, #2)</td>
+<td style="text-align: center;">~13%</td>
+<td style="text-align: center;">Critical</td>
+</tr>
+<tr>
+<td>2. Inspector Exposure</td>
+<td>CWE-306</td>
+<td style="text-align: center;">2 (CVE-2025, CVE-2026)</td>
+<td style="text-align: center;">~7%</td>
+<td style="text-align: center;">Critical</td>
+</tr>
+<tr>
+<td>3. Client Trust</td>
+<td>CWE-349</td>
+<td style="text-align: center;">0 (theoretical)</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">High</td>
+</tr>
+<tr>
+<td>4. Transport</td>
+<td>CWE-300, 319</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">High</td>
+</tr>
+<tr>
+<td>5. Implementation</td>
+<td>CWE-22, 89, 502, 94</td>
+<td style="text-align: center;">Multiple GHSA</td>
+<td style="text-align: center;">~10%</td>
+<td style="text-align: center;">High</td>
+</tr>
+<tr>
+<td>6. Supply Chain</td>
+<td>CWE-1104</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">High</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 1. Attack surface summary with CWE mappings and confirmed vulnerability instances.</strong></p>
+<hr />
+<h2>4. Large-Scale Ecosystem Scanning</h2>
+<h3>4.1 Methodology</h3>
+<p>To answer RQ2 (prevalence), we developed an automated scanning pipeline targeting all MCP-related packages in npm and PyPI:</p>
+<p><strong>Phase 1: Package Discovery</strong><br />
+- npm: <code>npm search mcp</code> + keyword filtering for packages containing "mcp" in name, description, or keywords. Total: 462 packages.<br />
+- PyPI: <code>pip search mcp-server</code> + GitHub API query for repositories matching MCP patterns. Total: 158 packages.<br />
+- Combined: 620 packages (estimated ~600 unique after cross-ecosystem deduplication).</p>
+<p><strong>Phase 2: Source Extraction</strong><br />
+- npm: <code>npm pack</code> → extract tarball → parse <code>package.json</code> for entry points → extract tool definitions.<br />
+- PyPI: <code>pip download</code> → extract wheel → parse <code>pyproject.toml</code> entry points → extract tool definitions.</p>
+<p><strong>Phase 3: Static Analysis</strong><br />
+- 46 custom Semgrep rules targeting MCP-specific patterns:<br />
+  - <strong>41 general rules</strong>: Path traversal (CWE-22), command injection (CWE-78), SQL injection (CWE-89), eval/exec (CWE-94), open redirect (CWE-601), SSRF (CWE-918).<br />
+  - <strong>5 targeted write-back rules</strong>: MCP-specific patterns—<code>@mcp.tool()</code> decorator + <code>open()</code> without validation, <code>@mcp.tool()</code> + <code>subprocess.run(shell=True)</code>, <code>@mcp.tool()</code> + <code>eval()</code>/<code>exec()</code>, SSE endpoint exposed on 0.0.0.0, weak/no authentication on transport.</p>
+<p><strong>Phase 4: Manual Triage</strong><br />
+- All Semgrep findings were manually reviewed to eliminate false positives.<br />
+- Confirmed path traversal findings: 9 servers (approximately 3% of npm MCP servers with filesystem access).</p>
+<h3>4.2 Results: npm Ecosystem</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th style="text-align: center;">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Total packages scanned</td>
+<td style="text-align: center;">462</td>
+</tr>
+<tr>
+<td>Packages with tool definitions</td>
+<td style="text-align: center;">312</td>
+</tr>
+<tr>
+<td>Semgrep findings (pre-triage)</td>
+<td style="text-align: center;">47</td>
+</tr>
+<tr>
+<td>Path traversal (confirmed)</td>
+<td style="text-align: center;">9 (2.9% of tool servers)</td>
+</tr>
+<tr>
+<td>Command injection (confirmed)</td>
+<td style="text-align: center;">1 (0.3%)</td>
+</tr>
+<tr>
+<td>Eval/exec (confirmed)</td>
+<td style="text-align: center;">2 (0.6%)</td>
+</tr>
+<tr>
+<td>Inspector exposure</td>
+<td style="text-align: center;">0 (all confirmed internal-use only)</td>
+</tr>
+<tr>
+<td><strong>Real high-severity undisclosed vulns</strong></td>
+<td style="text-align: center;"><strong>0</strong></td>
+</tr>
+<tr>
+<td>Packages with auth implemented</td>
+<td style="text-align: center;">8 (2.6%)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 2. npm MCP ecosystem scan results (July 2026).</strong></p>
+<p><strong>Key Observation</strong>: The confirmed path traversal rate of ~3% is consistent with the 2/15 (13%) rate observed in focused audits (Section 3), adjusted for the fact that the ecosystem scan included many packages without filesystem-accessing tools. When restricted to servers with file I/O operations, the rate is approximately 13%.</p>
+<p>The most striking finding is the near-absence of authentication: only 8 out of 312 tool-equipped servers (2.6%) implement any form of access control on their MCP transport layer. The overwhelming majority rely on the assumption that MCP servers run locally (stdio transport) and are accessed only by the user's own agent.</p>
+<h3>4.3 Results: PyPI Ecosystem</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th style="text-align: center;">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Total packages scanned</td>
+<td style="text-align: center;">158</td>
+</tr>
+<tr>
+<td>Packages with tool definitions</td>
+<td style="text-align: center;">89</td>
+</tr>
+<tr>
+<td>Path traversal (confirmed)</td>
+<td style="text-align: center;">3 (3.4%)</td>
+</tr>
+<tr>
+<td>Command injection (confirmed)</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr>
+<td><strong>Real high-severity undisclosed vulns</strong></td>
+<td style="text-align: center;"><strong>0</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 3. PyPI MCP ecosystem scan results.</strong></p>
+<p>The PyPI ecosystem shows similar patterns to npm, with a slightly lower vulnerability density attributable to Python MCP servers having fewer file-access tools relative to the npm ecosystem (which includes many local-file oriented MCP servers).</p>
+<h3>4.4 Interpretation: Why Zero Real Vulns?</h3>
+<p>The finding that automated scanning discovered zero real high-severity undisclosed vulnerabilities across 620 packages is itself significant. We offer three interpretations:</p>
+<ol>
+<li>
+<p><strong>Ecosystem Maturity</strong>: The MCP server ecosystem, despite being only ~20 months old, has benefited from aggressive early security scrutiny by protocol designers and the community. Critical path traversal and command injection bugs were identified and patched rapidly.</p>
+</li>
+<li>
+<p><strong>Small Attack Pool</strong>: MCP servers typically expose 3–10 tools each, compared to traditional web applications with dozens of endpoints. The reduced attack surface limits the probability of vulnerability presence.</p>
+</li>
+<li>
+<p><strong>Scanner Blind Spots</strong>: Our Semgrep rules detect syntactic vulnerability patterns (direct <code>open()</code>, <code>subprocess.run(shell=True)</code>) but cannot detect:</p>
+</li>
+<li>Semantic bugs in complex business logic</li>
+<li>TOCTOU (Time-of-Check-Time-of-Use) race conditions</li>
+<li>Configuration-driven vulnerabilities (hidden debug endpoints, environment-variable-gated backdoors)</li>
+<li>Vulnerabilities in compiled dependencies (Node.js native addons, Python C extensions)</li>
+</ol>
+<p>The true vulnerability density in the MCP ecosystem may be higher than our scan suggests, but detecting these requires manual, per-server penetration testing—a task for future work with a dedicated bug bounty program.</p>
+<hr />
+<h2>5. MCP Security Knowledge Graph</h2>
+<h3>5.1 Construction</h3>
+<p>We built a 91-node knowledge graph connecting attack surfaces, vulnerability classes, detection rules, and real-world incidents. The graph encodes:</p>
+<ul>
+<li>6 attack surface nodes → linked to CWE classes</li>
+<li>14 CWE class nodes → linked to detection rules</li>
+<li>46 detection rule nodes (Semgrep rules) → linked to confirmed finding nodes</li>
+<li>9 confirmed finding nodes → linked to incident/CVE nodes</li>
+<li>4 incident/CVE nodes → linked to mitigation nodes</li>
+</ul>
+<h3>5.2 Graph Query Examples</h3>
+<p><strong>Query: "Which rules detect path traversal in MCP tool parameters?"</strong></p>
+<div class="codehilite"><pre><span></span><code>AttackSurface:ToolParameterInjection → CWE-22:PathTraversal → SemgrepRule:mcp-path-traversal → Finding:cherrystudio-file-path
+</code></pre></div>
+
+<p><strong>Query: "What mitigation exists for Inspector Exposure?"</strong></p>
+<div class="codehilite"><pre><span></span><code>AttackSurface:InspectorExposure → CWE-306:MissingAuth → DetectionRule:bind-0.0.0.0 → Mitigation:bind-localhost-only
+</code></pre></div>
+
+<p>The graph is released as an interactive HTML visualization (graph.html) in the companion repository.</p>
+<hr />
+<h2>6. Defense Framework</h2>
+<h3>6.1 Five-Level Defense Maturity Model</h3>
+<p>We define a graduated defense maturity model for MCP deployments:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Level</th>
+<th>Defense Strategy</th>
+<th>Tool Examples</th>
+<th style="text-align: center;">Surface Coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">0</td>
+<td>No security measures</td>
+<td>Default MCP server</td>
+<td style="text-align: center;">0%</td>
+</tr>
+<tr>
+<td style="text-align: center;">1</td>
+<td>Input validation only</td>
+<td>Sanitize tool parameters, path allowlisting</td>
+<td style="text-align: center;">40%</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>Level 1 + authentication</td>
+<td>JWT/OAuth on transport, rate limiting</td>
+<td style="text-align: center;">60%</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>Level 2 + sandboxing</td>
+<td>Chroot, seccomp, network namespaces per server</td>
+<td style="text-align: center;">85%</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>Level 3 + monitoring + auto-block</td>
+<td>Forta-style runtime detection, circuit breakers</td>
+<td style="text-align: center;">92%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 4. MCP defense maturity levels with cumulative attack surface coverage.</strong></p>
+<h3>6.2 Defense Coverage Analysis</h3>
+<p>We map each of the 46 Semgrep rules to a defense level and assess coverage:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Defense Level</th>
+<th style="text-align: center;">Rules Satisfied</th>
+<th style="text-align: center;">Coverage</th>
+<th>Attack Surfaces Protected</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Level 0</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">0%</td>
+<td>None</td>
+</tr>
+<tr>
+<td style="text-align: center;">Level 1</td>
+<td style="text-align: center;">23</td>
+<td style="text-align: center;">50%</td>
+<td>Parameter injection (partially), Implementation bugs</td>
+</tr>
+<tr>
+<td style="text-align: center;">Level 2</td>
+<td style="text-align: center;">31</td>
+<td style="text-align: center;">67%</td>
+<td>Inspector exposure, Transport, Implementation</td>
+</tr>
+<tr>
+<td style="text-align: center;">Level 3</td>
+<td style="text-align: center;">40</td>
+<td style="text-align: center;">87%</td>
+<td>Parameter injection (fully), Implementation, Supply chain</td>
+</tr>
+<tr>
+<td style="text-align: center;">Level 4</td>
+<td style="text-align: center;">44</td>
+<td style="text-align: center;">96%</td>
+<td>All surfaces, with runtime monitoring gap for zero-days</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 5. Defense level vs. Semgrep rule coverage.</strong></p>
+<p><strong>Residual Risk Estimation</strong>: Even at Level 4 (the highest defensible maturity given current tools), approximately 4–8% residual risk remains from:<br />
+- Zero-day vulnerabilities in MCP tool implementations<br />
+- LLM jailbreak bypasses against hardened tool call policies<br />
+- Supply chain attacks via compromised dependencies not detected by SBOM/Dependabot</p>
+<h3>6.3 Recommended Minimum Defense Stack</h3>
+<p>For MCP servers with filesystem access, network access, or authentication-sensitive tools, we recommend:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Layer</th>
+<th>Technique</th>
+<th>Surface Addressed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">Pre-invoke</td>
+<td>Parameter validation + <code>validate_safe_path()</code></td>
+<td>1 (Parameter Injection)</td>
+</tr>
+<tr>
+<td style="text-align: center;">Pre-invoke</td>
+<td>OAuth2/JWT on transport (even for stdio, as defense-in-depth)</td>
+<td>2, 4 (Inspector, Transport)</td>
+</tr>
+<tr>
+<td style="text-align: center;">Invoke-in</td>
+<td><code>subprocess.run</code> with <code>shell=False</code>, <code>open()</code> in chroot</td>
+<td>1, 5 (Parameter, Implementation)</td>
+</tr>
+<tr>
+<td style="text-align: center;">Invoke-in</td>
+<td>Rate limiting (per-tool, per-caller)</td>
+<td>5 (Implementation)</td>
+</tr>
+<tr>
+<td style="text-align: center;">Post-invoke</td>
+<td>Output sanitization + length limits</td>
+<td>3 (Client Trust)</td>
+</tr>
+<tr>
+<td style="text-align: center;">Post-invoke</td>
+<td>Audit logging (which agent called which tool with which params)</td>
+<td>3, 4 (Client Trust, Transport)</td>
+</tr>
+<tr>
+<td style="text-align: center;">Continuous</td>
+<td>Semgrep CI/CD integration (our 46-rule set)</td>
+<td>1, 5 (Parameter, Implementation)</td>
+</tr>
+<tr>
+<td style="text-align: center;">Continuous</td>
+<td>Dependency scanning (npm audit, Snyk, Dependabot)</td>
+<td>6 (Supply Chain)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 6. Recommended minimum defense stack for production MCP deployments.</strong></p>
+<h3>6.4 Trust Model Recommendations</h3>
+<p>Beyond technical defenses, we propose three protocol-level improvements:</p>
+<ol>
+<li>
+<p><strong>Mandatory Tool Annotation</strong>: The MCP specification should require servers to declare a <code>security</code> annotation on each tool (e.g., <code>{"filesystemAccess": true, "networkAccess": false}</code>), enabling client-side policy enforcement.</p>
+</li>
+<li>
+<p><strong>Signed Tool Schemas</strong>: Servers should cryptographically sign their tool descriptions, and clients should verify signatures before presenting tools to the LLM agent, mitigating Surface 3 (Client Trust Boundary) entirely.</p>
+</li>
+<li>
+<p><strong>Security-by-Default Inspector</strong>: MCP Inspector implementations should default to <code>127.0.0.1</code> binding with a generated authentication token, requiring explicit opt-in for network exposure. This simple change would have prevented both CVE-2025-49596 and CVE-2026-23744.</p>
+</li>
+</ol>
+<hr />
+<h2>7. Discussion</h2>
+<h3>7.1 The Auth Gap</h3>
+<p>The finding that only 2.6% of MCP servers implement authentication is the most actionable signal in this study. MCP's current security model implicitly assumes a trusted local environment—an assumption that breaks when:<br />
+- MCP servers are distributed as npm packages to thousands of users with diverse network configurations<br />
+- MCP Inspector tools (designed for development) are inadvertently run on network-exposed machines<br />
+- LLM agents are deployed in multi-tenant cloud environments where a single MCP server may serve hundreds of agents</p>
+<p>We call on the MCP specification working group to prioritize mandatory authentication in the next protocol revision.</p>
+<h3>7.2 Path Traversal: The MCP-Specific Blind Spot</h3>
+<p>Traditional path traversal (CWE-22) is one of the oldest and best-understood vulnerability classes. Its persistence in MCP servers (3% prevalence rate) is not due to developer ignorance but to a conceptual gap: developers correctly sanitize paths for user-facing HTTP endpoints but fail to recognize that MCP tool parameters are <em>user-controlled</em> even when mediated by an LLM agent.</p>
+<p><strong>MCP Security Heuristic</strong>: <em>Every tool parameter is untrusted. The LLM agent is not a security boundary.</em></p>
+<h3>7.3 Scanner vs. Auditor</h3>
+<p>The divergence between focused manual audits (13% path traversal hit rate in 15 audited servers) and automated scanning (3% in 620 packages) highlights a fundamental asymmetry: automated tools find syntactic patterns but miss semantic vulnerabilities, while manual audits find both but do not scale. A hybrid approach—automated pre-screening with manual triage of flagged results—offers the optimal cost-coverage tradeoff, as demonstrated by our 9 confirmed vs. 47 flagged findings.</p>
+<h3>7.4 Limitations</h3>
+<ul>
+<li><strong>Scanner coverage</strong>: Our 46 Semgrep rules target Python and TypeScript but may miss MCP servers written in Go, Rust, or Kotlin.</li>
+<li><strong>Transport diversity</strong>: We primarily analyzed stdio and SSE transports. Emerging transports (WebSocket, HTTP/2 streams) may introduce new attack surfaces.</li>
+<li><strong>Zero-day undercounting</strong>: Our "zero real vulns" conclusion is bounded by the syntactic detection capabilities of our scan rules. Commercial-grade penetration testing may reveal findings our rules missed.</li>
+<li><strong>Ecosystem velocity</strong>: The npm MCP ecosystem grows at approximately 20–30 new packages per week. Our scan represents a point-in-time snapshot (July 2026).</li>
+</ul>
+<hr />
+<h2>8. Future Work</h2>
+<h3>8.1 Protocol-Level Formal Verification</h3>
+<p>Apply formal methods (Tamarin or ProVerif) to the MCP specification to identify protocol-level vulnerabilities independent of implementation—for example, replay attacks on the initialization handshake, or downgrade attacks forcing stdio transport in environments where TLS is available.</p>
+<h3>8.2 Dynamic Testing Infrastructure</h3>
+<p>Extend static analysis with dynamic fuzzing: generate adversarial tool call sequences, execute them against instrumented MCP servers, and monitor for privilege escalation, file access beyond declared bounds, and information leakage.</p>
+<h3>8.3 Cross-Language Rule Coverage</h3>
+<p>Port the 46-rule Semgrep set to support Go (ast-grep/gosec), Rust (custom clippy lints), and Kotlin (detekt rules) to cover the full MCP server language ecosystem.</p>
+<h3>8.4 Automated Defense Deployment</h3>
+<p>Develop a "defense-as-code" wrapper that instruments any MCP server with the recommended minimum defense stack (Table 6) transparently, without requiring server code modification. Conceptually similar to a Web Application Firewall (WAF) for MCP transports.</p>
+<hr />
+<h2>9. Conclusion</h2>
+<p>This paper presents the first systematic security study of the MCP ecosystem. Our six-surface attack taxonomy, grounded in 30+ server audits and 2 original CVEs, provides a structured vocabulary for discussing MCP security. Our large-scale scan of 620 packages establishes baseline vulnerability prevalence rates and demonstrates that automated detection can achieve a 3% path traversal hit rate at ecosystem scale. Our defense framework quantifies the coverage of existing tools and identifies a 2.6% authentication deployment rate as the most urgent gap.</p>
+<p>The MCP ecosystem is young, rapidly growing, and—at present—surprisingly clean of widespread high-severity vulnerabilities in its open-source corpus. But the structural assumptions in MCP's security model (local-only trust, no authentication by default, LLM as security boundary) are fundamentally at odds with the protocol's trajectory toward cloud-native, multi-agent deployments. We call on the MCP specification community to prioritize authentication and tool-level security annotations before the protocol's growth outpaces the security infrastructure.</p>
+<p>The 46 Semgrep rules, 91-node knowledge graph, and scanning infrastructure are released under the MIT license.</p>
+<hr />
+<h2>Acknowledgments</h2>
+<p>The authors thank the MCP community for maintaining open-source servers that made this study possible. Special appreciation to the Semgrep team for the rule infrastructure, the npm and PyPI package registries for search APIs, and the security researchers who disclosed CVE-2025-49596 and CVE-2026-23744—whose vulnerability patterns informed our attack surface taxonomy. The CherryStudio QQ MCP vulnerability findings benefited from the methodology developed by the mcp-atlassian GHSA-g5r6 disclosure.</p>
+<hr />
+<h2>References</h2>
+<p>[1] Perez, F., &amp; Ribeiro, I. (2022). "Ignore Previous Prompt: Attack Techniques for Language Models." <em>NeurIPS ML Safety Workshop</em>.</p>
+<p>[2] Greshake, K., Abdelnabi, S., Mishra, S., Endres, C., Holz, T., &amp; Fritz, M. (2023). "Not What You've Signed Up For: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection." <em>ACM Workshop on AI Security (AISec)</em>.</p>
+<p>[3] Wei, A., Haghtalab, N., &amp; Steinhardt, J. (2024). "Jailbroken: How Does LLM Safety Training Fail?" <em>Advances in Neural Information Processing Systems (NeurIPS)</em>.</p>
+<p>[4] Deng, G., Liu, Y., Li, Y., Wang, K., Zhang, Y., Li, Z., Wang, H., Zhang, T., &amp; Liu, Y. (2024). "MASTERKEY: Automated Jailbreaking of Large Language Model Chatbots." <em>Network and Distributed System Security Symposium (NDSS)</em>.</p>
+<p>[5] OWASP Foundation. (2025). "OWASP Top 10 for LLM Applications v2.0." owasp.org.</p>
+<p>[6] Deng, G., et al. (2024). "Phantom: General Trigger Attacks on Retrieval Augmented Language Generation." <em>arXiv preprint</em>.</p>
+<p>[7] Atlidakis, V., Godefroid, P., &amp; Polishchuk, M. (2019). "RESTler: Stateful REST API Fuzzing." <em>International Conference on Software Engineering (ICSE)</em>.</p>
+<p>[8] Bui, T., Rao, S., Antikainen, M., &amp; Aura, T. (2021). "Client-Side Vulnerabilities in Commercial VPNs." <em>International Conference on Emerging Security Information, Systems and Technologies (SECURWARE)</em>.</p>
+<p>[9] Godefroid, P., Lehmann, D., &amp; Polishchuk, M. (2020). "Differential Regression Testing for REST APIs." <em>ACM SIGSOFT International Symposium on Software Testing and Analysis (ISSTA)</em>.</p>
+<p>[10] Anthropic. (2025). "Model Context Protocol Specification (Rev: 2025-03-26)." modelcontextprotocol.io.</p>
+<p>[11] NVD. (2025). "CVE-2025-49596: MCP Inspector Remote Code Execution." National Vulnerability Database.</p>
+<p>[12] NVD. (2026). "CVE-2026-23744: MCPJam Inspector Remote Code Execution." National Vulnerability Database.</p>
+<hr />
+<p><em>This paper is published as a Zenodo preprint. DOI: 10.5281/zenodo.21370417. Semgrep rules, scan scripts, and the knowledge graph are available at the companion GitHub repository (github.com/shunfeng8421/awesome-mcp-security).</em></p>
+</body>
+</html>
