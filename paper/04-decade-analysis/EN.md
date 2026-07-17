@@ -429,4 +429,4 @@ The authors thank the DeFiHackLabs (SunWeb3Sec) community for maintaining the Po
 
 ---
 
-*Dataset and replication materials available at: 10.5281/zenodo.21382653. Repository: github.com/shunfeng8421/defi-hack-memo.*
+*Dataset and replication materials available at: 10.5281/zenodo.21382653. Paper DOI: [10.5281/zenodo.21403779](https://doi.org/10.5281/zenodo.21403779). Repository: github.com/shunfeng8421/defi-hack-memo.*

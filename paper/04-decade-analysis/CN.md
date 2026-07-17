@@ -375,4 +375,4 @@ DeFi 生态面临结构性挑战：顶层安全改善掩盖了长尾的持续脆
 
 ---
 
-*数据集和复现材料: 10.5281/zenodo.21382653。代码仓库: github.com/shunfeng8421/defi-hack-memo。*
+*数据集和复现材料: 10.5281/zenodo.21382653。论文 DOI: [10.5281/zenodo.21403779](https://doi.org/10.5281/zenodo.21403779)。代码仓库: github.com/shunfeng8421/defi-hack-memo。*
