@@ -1,3 +1,7 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+import "forge-std/Test.sol";
+
 // PoC 5: SnowmanAirdrop — EIP-712 Spelling Error
 contract SnowmanAirdropPoC is Test {
     // Bug: "addres" instead of "address"
