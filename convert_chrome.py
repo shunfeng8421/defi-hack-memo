@@ -278,6 +278,11 @@ PAPERS = [
         "pdf": r"D:\ll\knowledge-base\10-security\paper\05-flash-loan-evolution\CN.pdf",
         "title": "Flash Loan Attacks: Decade Evolution (CN)",
     },
+    {
+        "md": r"D:\ll\knowledge-base\10-security\paper\06-taxonomy\EN.md",
+        "pdf": r"D:\ll\knowledge-base\10-security\paper\06-taxonomy\EN.pdf",
+        "title": "Comprehensive Taxonomy of DeFi Attack Patterns",
+    },
 ]
 
 if __name__ == "__main__":

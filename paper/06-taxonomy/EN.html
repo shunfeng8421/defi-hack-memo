@@ -1,0 +1,1759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Comprehensive Taxonomy of DeFi Attack Patterns</title>
+<style>
+@page {
+    size: A4;
+    margin: 25mm 22mm 28mm 22mm;
+    @bottom-center {
+        content: counter(page);
+        font-family: 'DengXian', 'Microsoft YaHei', sans-serif;
+        font-size: 8pt;
+        color: #808080;
+    }
+}
+@page :first {
+    @top-center {
+        content: none;
+    }
+}
+
+body {
+    font-family: 'DengXian', 'Microsoft YaHei', 'SimSun', serif;
+    font-size: 10pt;
+    line-height: 1.65;
+    color: #1a1a1a;
+    text-align: justify;
+}
+
+h1 {
+    font-size: 16pt;
+    font-weight: bold;
+    color: #111;
+    margin-top: 0;
+    margin-bottom: 8pt;
+    text-align: center;
+}
+
+h2 {
+    font-size: 13pt;
+    font-weight: bold;
+    color: #1e1e1e;
+    margin-top: 18pt;
+    margin-bottom: 6pt;
+    page-break-after: avoid;
+}
+
+h3 {
+    font-size: 11pt;
+    font-weight: bold;
+    color: #323232;
+    margin-top: 12pt;
+    margin-bottom: 4pt;
+    page-break-after: avoid;
+}
+
+p {
+    margin: 4pt 0;
+}
+
+blockquote {
+    margin: 8pt 0;
+    padding: 6pt 12pt;
+    border-left: 3pt solid #5a5a5a;
+    background: #f8f8f8;
+    font-size: 9pt;
+    color: #444;
+    page-break-inside: avoid;
+}
+blockquote p {
+    margin: 2pt 0;
+}
+
+hr {
+    border: none;
+    border-top: 1pt solid #ccc;
+    margin: 14pt 0;
+}
+
+pre {
+    background: #f5f5f5;
+    border: 0.5pt solid #c8c8c8;
+    padding: 8pt 10pt;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 7.5pt;
+    line-height: 1.35;
+    color: #282828;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    margin: 6pt 0;
+    page-break-inside: avoid;
+}
+
+code {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 8.5pt;
+    background: #f0f0f0;
+    padding: 1pt 3pt;
+}
+pre code {
+    background: none;
+    padding: 0;
+    font-size: 7.5pt;
+}
+
+table {
+    border-collapse: collapse;
+    margin: 8pt 0;
+    width: 100%;
+    font-size: 8.5pt;
+    page-break-inside: avoid;
+}
+th {
+    background: #282828;
+    color: white;
+    padding: 4pt 6pt;
+    text-align: left;
+    font-weight: bold;
+}
+td {
+    padding: 3pt 6pt;
+    border: 0.5pt solid #ccc;
+}
+tr:nth-child(even) td {
+    background: #fafafa;
+}
+
+ul, ol {
+    margin: 4pt 0;
+    padding-left: 22pt;
+}
+li {
+    margin: 2pt 0;
+}
+
+strong {
+    color: #111;
+}
+
+a {
+    color: #2a5db0;
+    text-decoration: none;
+}
+
+/* Don't break headings from their content */
+h2, h3 {
+    page-break-after: avoid;
+}
+h2 + p, h3 + p, h2 + ul, h3 + ul, h2 + ol, h3 + ol,
+h2 + pre, h3 + pre, h2 + table, h3 + table {
+    page-break-before: avoid;
+}
+</style>
+</head>
+<body>
+<h1>A Comprehensive Taxonomy of DeFi Attack Patterns: 50 Vectors from 824 Incidents (2017–2026)</h1>
+<p><strong>Shiqiang Chen</strong><br />
+<em>Institute of Information Engineering, Chinese Academy of Sciences</em><br />
+<em>Corresponding author: shunfeng8421@163.com</em></p>
+<hr />
+<h2>Abstract</h2>
+<p>Existing DeFi security taxonomies capture 8–12 attack patterns (Atzei et al., 2017; Werner et al., 2023), achieving at best 58% coverage against a comprehensive incident corpus. We present the first empirically derived taxonomy of 50 distinct DeFi attack vectors, validated against all 824 confirmed incidents spanning July 2017 through June 2026. Our classification achieves 97.6% coverage (804/824 cases categorized), compared to 58% for the best prior taxonomy. Each pattern includes a canonical real-world example with loss figures, a mechanistic exploit description, detection methodology, and where applicable, a Slither detection rule. We find that 8 patterns account for 76% of all losses, with flash loan + oracle manipulation alone responsible for 24% of cases and 60% of total losses exceeding $6 billion. The taxonomy reveals critical gaps in existing automated detection: 12 patterns (24%) lack Slither rules entirely, and 18 patterns (36%) require business-logic understanding beyond what static analysis can provide. We release the complete taxonomy, 50 detection rules, and an open-source 50-rule DeFi scanner for community use.</p>
+<p><strong>Keywords</strong>: DeFi security, attack taxonomy, flash loan, oracle manipulation, reentrancy, access control, static analysis, Slither, empirical validation</p>
+<hr />
+<h2>1. Introduction</h2>
+<h3>1.1 The Taxonomy Gap in DeFi Security</h3>
+<p>The DeFi ecosystem has sustained over $10 billion in cumulative losses across 824 confirmed security incidents as of mid-2026. This staggering figure — exceeding the GDP of over 30 sovereign nations — underscores a fundamental asymmetry: DeFi protocols manage hundreds of billions in total value locked (TVL) while relying on security practices that lag behind both traditional finance and mature software engineering.</p>
+<p>A foundational component of any security discipline is a comprehensive attack taxonomy — a structured classification that enables practitioners to identify patterns, prioritize defenses, and train detection tools. Yet the DeFi security community lacks such a taxonomy. Existing classifications capture at most 12 patterns, leaving approximately 42% of incidents unclassifiable within their frameworks.</p>
+<p>Atzei et al. (2016) surveyed the pre-DeFi Ethereum landscape, proposing 12 vulnerability classes focused on smart contract-level concerns such as reentrancy, timestamp dependence, and transaction-ordering dependence. While foundational, this work predates the explosion of DeFi-specific primitives — automated market makers, lending pools, yield aggregators, governance tokens — and the rich attack surface they introduced. Werner et al. (2023) analyzed 43 DeFi incidents and proposed 8 attack patterns, achieving 58% coverage but omitting entire categories such as token economic attacks and precision exploitation. Zhou et al. (2023) covered 77 incidents with a 10-category DEFIER system, improving coverage but still falling short of completeness.</p>
+<p>Each prior taxonomy improved coverage incrementally, but none approaches the breadth necessary for two critical use cases: (1) training automated audit tools that must recognize the full spectrum of possible attack vectors, and (2) educating security researchers who must develop intuition across diverse exploit categories.</p>
+<h3>1.2 Why 50 Patterns?</h3>
+<p>We derive 50 patterns from 824 incidents — a four-fold increase in pattern count and a ten-fold increase in incident coverage relative to the best prior work. This expansion is not merely taxonomic inflation; it reflects the genuine diversity of exploit mechanisms that have emerged as DeFi has matured. A lending protocol with a price oracle faces fundamentally different threats than an NFT marketplace with a royalty system, yet both must be covered by a comprehensive security framework.</p>
+<p>The 50-pattern taxonomy captures attack vectors spanning:<br />
+- <strong>Flash loan amplification</strong> (Patterns 1–8): capital-agnostic exploit enablers<br />
+- <strong>Access control failures</strong> (Patterns 9–16): authentication and authorization flaws<br />
+- <strong>Authorization traps</strong> (Patterns 17–24): signature, permit, and cross-chain replay vectors<br />
+- <strong>Economic manipulation</strong> (Patterns 25–32): tokenomics-level exploit patterns<br />
+- <strong>Precision and arithmetic</strong> (Patterns 33–39): numerical vulnerability classes<br />
+- <strong>Oracle and external data</strong> (Patterns 40–45): price feed and off-chain data risks<br />
+- <strong>Protocol logic</strong> (Patterns 46–50): business-logic-level vulnerabilities</p>
+<h3>1.3 Contributions</h3>
+<p>We make the following contributions:</p>
+<ol>
+<li>
+<p><strong>50-pattern taxonomy</strong> — the most comprehensive DeFi attack classification to date, covering 7 categories and 50 distinct vectors, each validated against at least 2 confirmed real-world incidents.</p>
+</li>
+<li>
+<p><strong>Empirical validation</strong> — each pattern is backed by the 824-incident DeFiHackLabs dataset, the largest systematically collected corpus of DeFi exploits. We report per-pattern frequency, cumulative loss, and temporal trends.</p>
+</li>
+<li>
+<p><strong>Coverage analysis</strong> — we achieve 97.6% dataset coverage (804/824 incidents) compared to 58% for Werner et al. (2023). We analyze the 20 unclassified incidents and categorize them as novel emerging patterns, infrastructure attacks, or social engineering.</p>
+</li>
+<li>
+<p><strong>Detection rules</strong> — for each of the 50 patterns, we provide a detection methodology and, where applicable, a Slither detection rule. We identify 12 patterns with no existing Slither rule and propose new detection approaches.</p>
+</li>
+<li>
+<p><strong>Temporal analysis</strong> — we track pattern evolution across the full 2017–2026 decade, identifying emergence, peak, and decline phases for each pattern class, revealing the co-evolutionary dynamics between attackers and defenders.</p>
+</li>
+<li>
+<p><strong>Open-source tooling</strong> — we release the complete taxonomy as machine-readable YAML, 50 detection rules, and a 50-rule DeFi scanner for integration into CI/CD pipelines.</p>
+</li>
+</ol>
+<h3>1.4 Paper Organization</h3>
+<p>Section 2 provides background on DeFi architecture and the attack surface it creates. Section 3 details our methodology, including data sources, classification process, and pattern definition criteria. Section 4 presents the complete 50-pattern taxonomy with detailed descriptions for each pattern. Section 5 provides statistical analysis of pattern distribution and loss contribution. Section 6 traces temporal evolution across the decade. Section 7 discusses detection coverage and tooling gaps. Section 8 reviews related work. Section 9 discusses implications for practitioners and researchers. Section 10 addresses limitations. Section 11 outlines future work. Section 12 concludes.</p>
+<hr />
+<h2>2. Background: DeFi Architecture and the Attack Surface</h2>
+<h3>2.1 The DeFi Stack</h3>
+<p>DeFi protocols operate across a multi-layer architecture, with each layer introducing distinct attack surfaces:</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Components</th>
+<th>Attack Surface</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Settlement</strong></td>
+<td>Ethereum, L2s, sidechains</td>
+<td>Block reorgs, MEV, sequencer downtime</td>
+</tr>
+<tr>
+<td><strong>Asset</strong></td>
+<td>ERC-20, ERC-721, ERC-4626</td>
+<td>Token callback hooks, fee-on-transfer, rebasing</td>
+</tr>
+<tr>
+<td><strong>Protocol</strong></td>
+<td>AMMs, lending pools, vaults</td>
+<td>Oracle dependency, liquidation logic, mint/burn asymmetry</td>
+</tr>
+<tr>
+<td><strong>Application</strong></td>
+<td>Aggregators, wallets, governance</td>
+<td>Multicall traps, signature replay, governance manipulation</td>
+</tr>
+<tr>
+<td><strong>Infrastructure</strong></td>
+<td>Bridges, oracles, relayers</td>
+<td>Validator compromise, message forgery, stale data</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 1. The DeFi stack and associated attack surfaces.</strong></p>
+<h3>2.2 Why DeFi Attacks Are Uniquely Complex</h3>
+<p>DeFi attacks differ from traditional software exploits in three critical dimensions:</p>
+<ol>
+<li>
+<p><strong>Financial composability</strong>: A vulnerability in protocol A can be exploited using liquidity from protocol B, collateral from protocol C, and an oracle from protocol D — all within a single atomic transaction. This cross-protocol composability means that a security audit of protocol A in isolation may miss vectors that only emerge when A is composed with B.</p>
+</li>
+<li>
+<p><strong>Economic exploit surface</strong>: Beyond code-level bugs, DeFi protocols are vulnerable to economic attacks — manipulation of incentives, game-theoretic exploitation of mechanism design, and parameter-level attacks that exploit economically correct but poorly calibrated systems.</p>
+</li>
+<li>
+<p><strong>Permissionless adversaries</strong>: Anyone with an internet connection and basic Solidity knowledge can attempt to exploit a DeFi protocol. There is no authentication boundary, no rate limiting, and no server to patch. Once deployed, a vulnerable smart contract is permanently exposed.</p>
+</li>
+</ol>
+<h3>2.3 The Attack Lifecycle</h3>
+<p>A typical DeFi attack follows a lifecycle that spans preparation, execution, and monetization:</p>
+<ol>
+<li><strong>Reconnaissance</strong>: Attacker identifies a protocol and studies its smart contract code (typically open-source on Etherscan), documentation, and audit reports.</li>
+<li><strong>Exploit Development</strong>: Attacker crafts a malicious contract that composes with the target protocol, often involving multiple DeFi primitives.</li>
+<li><strong>Capital Acquisition</strong>: If the exploit requires capital (e.g., for oracle manipulation), the attacker sources it via flash loans, owned capital, or protocol-owned liquidity.</li>
+<li><strong>Execution</strong>: The exploit is executed in a single transaction (for flash loan-based attacks) or across multiple transactions (for governance or multi-block attacks).</li>
+<li><strong>Monetization</strong>: Stolen assets are swapped to native tokens (ETH), bridged to other chains, or deposited into privacy mixers (Tornado Cash, Railgun) to obfuscate the trail.</li>
+</ol>
+<p>Understanding this lifecycle is essential for effective detection — different detection approaches (static analysis, dynamic analysis, mempool monitoring) target different lifecycle stages.</p>
+<hr />
+<h2>3. Methodology</h2>
+<h3>3.1 Data Sources</h3>
+<p>Our incident corpus is drawn from four primary sources:</p>
+<ul>
+<li>
+<p><strong>DeFiHackLabs</strong> (824 exploit PoC contracts): The primary dataset, maintained by the SunWeb3Sec community. Each entry includes a proof-of-concept exploit contract, attack transaction hash, and loss estimate. This is the largest systematically collected DeFi exploit dataset publicly available.</p>
+</li>
+<li>
+<p><strong>Rekt News</strong> (rekt.news): Investigative post-mortems providing detailed attack narratives, root cause analysis, and verified loss figures. Used for pattern validation and cross-referencing.</p>
+</li>
+<li>
+<p><strong>SlowMist Hacked Archive</strong> (hacked.slowmist.io): Blockchain security firm's incident database with categorized attack vectors and timeline data.</p>
+</li>
+<li>
+<p><strong>CertiK Alert</strong> (alert.certik.com): Real-time exploit alerts with preliminary root cause classification and loss estimates.</p>
+</li>
+</ul>
+<p>The temporal range spans July 2017 (Parity multisig wallet self-destruct) through June 2026 (Aztec ZK bridge exploit), covering the entire observable history of DeFi attacks.</p>
+<h3>3.2 Classification Process</h3>
+<p>Each of the 824 incidents was classified through a two-stage process:</p>
+<p><strong>Stage 1: Automated Classification.</strong> Our 50-rule DeFi scanner processed each incident's exploit contract and transaction trace, applying pattern-matching rules to assign one or more preliminary labels. The scanner uses a combination of:<br />
+- Static analysis patterns (e.g., <code>delegatecall</code> in fallback function → potential proxy vulnerability)<br />
+- Transaction graph features (e.g., flash loan borrow → swap → liquidate → repay pattern)<br />
+- Opcode-level signatures (e.g., <code>BALANCE</code> check before <code>SELFDESTRUCT</code>)</p>
+<p><strong>Stage 2: Manual Verification.</strong> A subset of 50 high-impact incidents (representing 82% of total losses) underwent manual deep-dive analysis. For each, we:<br />
+1. Read the protocol's smart contract source code<br />
+2. Traced the exploit transaction on Etherscan/Tenderly<br />
+3. Read the post-mortem from Rekt News, SlowMist, or CertiK<br />
+4. Assigned a primary pattern and recorded any secondary patterns<br />
+5. Documented the exploit mechanism and defense recommendation</p>
+<p>Inter-pattern overlap was resolved by primary root cause: the pattern that, if fixed, would have prevented the exploit. For example, the Beanstalk Farms attack involved a flash loan, but the root cause was governance capture — fixing the oracle would not have prevented the attack; fixing governance vote locking would have.</p>
+<h3>3.3 Pattern Definition Criteria</h3>
+<p>A candidate "pattern" must satisfy three criteria to be included in the taxonomy:</p>
+<ol>
+<li>
+<p><strong>Recurrence</strong>: At least 2 confirmed real-world incidents demonstrating the same mechanistic exploit path. Single-occurrence exploits are noted as "emerging patterns" but not assigned a formal taxonomy number.</p>
+</li>
+<li>
+<p><strong>Mechanistic Distinction</strong>: The exploit path must differ substantively from all other patterns in the taxonomy. For instance, "flash loan + spot price oracle" (Pattern 1) and "short TWAP manipulation" (Pattern 4) are mechanistically distinct: one exploits instantaneous AMM state, the other exploits time-windowed cumulative state.</p>
+</li>
+<li>
+<p><strong>Detectability</strong>: The pattern must be identifiable through at least one of: static analysis (code patterns), dynamic analysis (transaction traces), or manual review (business logic inspection). Patterns that cannot be detected by any method are excluded as "undetectable."</p>
+</li>
+</ol>
+<p>The 20 unclassified incidents (2.4%) fall into three categories:<br />
+- <strong>Novel emerging patterns</strong> (11 incidents): Mechanistically unique exploits that have not yet recurred.<br />
+- <strong>Infrastructure attacks</strong> (6 incidents): DNS hijacking, front-end compromise, private key theft — outside the scope of smart contract security.<br />
+- <strong>Social engineering</strong> (3 incidents): Phishing, insider attacks, impersonation — human-factor vectors.</p>
+<h3>3.4 Loss Normalization</h3>
+<p>Reported losses reflect the USD value of stolen assets at the time of the attack. We do not adjust for subsequent asset recovery (e.g., Poly Network's $610M was largely returned), negotiated white-hat bounties, or post-attack token price changes. This choice preserves comparability with prior work but may overstate permanent losses for some incidents.</p>
+<hr />
+<h2>4. The 50-Pattern Taxonomy</h2>
+<h3>Category A: Flash Loan Based (Patterns 1–8)</h3>
+<p>Flash loans are the single most impactful attack enabler in DeFi, involved in 24% of all incidents and 60% of all losses. By providing unlimited, uncollateralized, atomic capital, flash loans democratize market manipulation — lowering the capital barrier from "only whales" to "anyone who can write a Solidity contract."</p>
+<h4>Pattern #1: Flash Loan + Spot Price Oracle Manipulation</h4>
+<p><strong>Mechanism</strong>: The attacker flash-loans a large quantity of token A, swaps it for token B on an AMM pair, creating an extreme temporary price deviation. A dependent protocol that reads this pair's <code>getReserves()</code> as a price oracle sees the manipulated price and executes a harmful operation — minting underpriced tokens, approving an undercollateralized loan, or triggering a false liquidation. The attacker then reverses the swap, repays the flash loan, and exits with profit.</p>
+<p><strong>Solidity Vulnerability Pattern</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">// VULNERABLE: Direct AMM spot price as oracle</span>
+<span class="kt">function</span><span class="w"> </span><span class="nv">getPrice</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span>view<span class="w"> </span><span class="kt">returns</span><span class="w"> </span><span class="p">(</span><span class="kt">uint256</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="p">(</span><span class="kt">uint256</span><span class="w"> </span><span class="nv">r0</span><span class="p">,</span><span class="w"> </span><span class="kt">uint256</span><span class="w"> </span><span class="nv">r1</span><span class="p">,)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>pair<span class="p">.</span>getReserves<span class="p">();</span>
+<span class="w">    </span><span class="kt">return</span><span class="w"> </span>r1<span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="err">1</span>e18<span class="w"> </span><span class="o">/</span><span class="w"> </span>r0<span class="p">;</span><span class="w"> </span><span class="c1">// manipulable in single tx</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><strong>Canonical Incidents</strong>:<br />
+- <strong>bZx #1</strong> (Feb 2020, $350K): First documented flash loan attack. Attacker borrowed 10,000 ETH from dYdX, manipulated WBTC/ETH Uniswap pair, exploited bZx's margin trading oracle.<br />
+- <strong>Harvest Finance</strong> (Oct 2020, $34M): Flash loan manipulated Curve Y pool, causing Harvest's vault to misprice fUSDC/fUSDT, enabling profitable arbitrage across 17 transactions.<br />
+- <strong>Cream Finance</strong> (Oct 2021, $130M): Flash loan manipulated yUSD price via Curve + Yearn integration, exploited Cream's Iron Bank lending oracle.<br />
+- <strong>PancakeBunny</strong> (May 2021, $120M): Flash loan exploited Bunny's minting function which used pool reserves as price input, enabling massive BUNNY minting and dumping.</p>
+<p><strong>Detection</strong>: Any call to <code>getReserves()</code> or <code>balanceOf()</code> used directly in price calculations within non-view functions.</p>
+<p><strong>Slither Detector</strong>: <code>instant-price-oracle</code> (built-in). Flags functions where AMM pool reserves are used without time-weighting or deviation checks.</p>
+<p><strong>Defense</strong>: Replace <code>getReserves()</code> with 30-minute (minimum) TWAP oracle. Add Chainlink as secondary price source with deviation bounds (typically 2–5%).</p>
+<h4>Pattern #2: Reentrancy (Checks-Effects-Interactions Violation)</h4>
+<p><strong>Mechanism</strong>: A contract makes an external call (token transfer, ETH send) before updating its internal state. The receiving contract's callback function re-enters the vulnerable contract, which still sees the pre-transfer state, enabling repeated withdrawal of the same funds.</p>
+<p><strong>Classic Vulnerable Pattern</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">// VULNERABLE: External call before state update</span>
+<span class="kt">function</span><span class="w"> </span><span class="nv">withdraw</span><span class="p">(</span><span class="kt">uint256</span><span class="w"> </span><span class="nv">amount</span><span class="p">)</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">require</span><span class="p">(</span>balances<span class="p">[</span><span class="k">msg.sender</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span>amount<span class="p">);</span>
+<span class="w">    </span><span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="nv">success</span><span class="p">,)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">msg.sender</span><span class="p">.</span>call<span class="p">{</span>value<span class="o">:</span><span class="w"> </span>amount<span class="p">}(</span><span class="s2">&quot;&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">require</span><span class="p">(</span>success<span class="p">);</span>
+<span class="w">    </span>balances<span class="p">[</span><span class="k">msg.sender</span><span class="p">]</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span>amount<span class="p">;</span><span class="w"> </span><span class="c1">// state updated AFTER external call</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><strong>Canonical Incidents</strong>:<br />
+- <strong>The DAO</strong> (Jun 2016, $60M): The original reentrancy attack. <code>splitDAO()</code> made external calls before deducting balances, enabling recursive withdrawal.<br />
+- <strong>Lendf.Me</strong> (Apr 2020, $25M): ERC-777 token callback triggered reentrancy in dForce lending protocol.<br />
+- <strong>JoeAgent</strong> (2025, $45K): AI agent contract violated CEI, enabling flash loan + reentrancy combo by a competing agent.</p>
+<p><strong>Detection</strong>: External calls (<code>.call()</code>, <code>.transfer()</code>, <code>.send()</code>, token transfers) occurring before state variable writes.</p>
+<p><strong>Slither Detector</strong>: <code>reentrancy-eth</code>, <code>reentrancy-no-eth</code>, <code>reentrancy-unlimited-gas</code> (built-in). Multiple variants exist for ETH transfers, token transfers, and unlimited gas scenarios.</p>
+<p><strong>Defense</strong>: Apply the Checks-Effects-Interactions (CEI) pattern: validate inputs → update internal state → make external calls. Add OpenZeppelin's <code>ReentrancyGuard</code> as a belt-and-suspenders measure.</p>
+<h4>Pattern #3: Flash Loan + Reentrancy Combination</h4>
+<p><strong>Mechanism</strong>: The flash loan callback function itself becomes a reentrancy vector. When a protocol's <code>executeOperation()</code> callback (AAVE) or <code>uniswapV3FlashCallback()</code> makes an external call without reentrancy protection, the receiver can re-enter through the flash loan provider's callback chain.</p>
+<p><strong>Canonical Incident</strong>: Cream Finance (2021) combined flash loan oracle manipulation with a reentrancy path through the borrow function — the flash loan inflated the collateral value, and the callback re-entered to borrow more against the inflated collateral before the state was updated.</p>
+<p><strong>Detection</strong>: Flash loan callback functions (<code>onFlashLoan</code>, <code>executeOperation</code>, <code>uniswapV3FlashCallback</code>) that make external calls without a reentrancy guard.</p>
+<p><strong>Defense</strong>: Apply <code>nonReentrant</code> modifier to the flash loan callback, or use a lock flag set before the callback and checked during it.</p>
+<h4>Pattern #4: Short TWAP Manipulation (Multi-Block)</h4>
+<p><strong>Mechanism</strong>: When a protocol uses a TWAP oracle with a short observation window (e.g., 5 minutes instead of 30), an attacker can manipulate the TWAP by executing trades across 2–5 consecutive blocks. While more expensive than single-block manipulation (requiring multi-block gas fees and exposure to arbitrageurs), it remains economically viable for protocols with thin liquidity or short TWAP windows.</p>
+<p><strong>Canonical Incident</strong>: Gamma Strategies (Jan 2024, $6.3M). Attacker manipulated the short TWAP oracle used by Gamma's vault rebalancing logic across multiple blocks, triggering mispriced deposit/withdraw operations.</p>
+<p><strong>Defense</strong>: Use 30-minute minimum TWAP window. For high-value protocols, combine TWAP with Chainlink and deviation bounds.</p>
+<h4>Pattern #5: ERC-4626 Inflation Attack</h4>
+<p><strong>Mechanism</strong>: The first depositor into an ERC-4626 vault can manipulate the share-to-asset ratio. By depositing 1 wei of the underlying asset, receiving 1 share, then directly transferring a large amount of the asset to the vault (bypassing the <code>deposit</code> function), the attacker inflates <code>totalAssets()</code> while keeping <code>totalSupply()</code> = 1. Subsequent depositors receive 0 shares (due to rounding) and lose their entire deposit.</p>
+<p><strong>Exploit Sequence</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="n">Attacker</span><span class="p">:</span><span class="w"> </span><span class="n">deposit</span><span class="p">(</span><span class="mf">1</span><span class="w"> </span><span class="n">wei</span><span class="p">)</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">receives</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="n">share</span>
+<span class="mf">2.</span><span class="w"> </span><span class="n">Attacker</span><span class="p">:</span><span class="w"> </span><span class="n">transfer</span><span class="p">(</span><span class="mf">1000</span><span class="w"> </span><span class="n">ETH</span><span class="p">)</span><span class="w"> </span><span class="kr">to</span><span class="w"> </span><span class="n">vault</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="n">directly</span>
+<span class="mf">3.</span><span class="w"> </span><span class="kr">to</span><span class="n">talAssets</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1000</span><span class="w"> </span><span class="n">ETH</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="n">wei</span><span class="p">,</span><span class="w"> </span><span class="kr">to</span><span class="n">talSupply</span><span class="p">()</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1</span>
+<span class="mf">4.</span><span class="w"> </span><span class="n">Victim</span><span class="p">:</span><span class="w"> </span><span class="n">deposit</span><span class="p">(</span><span class="mf">10</span><span class="w"> </span><span class="n">ETH</span><span class="p">)</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">convertToShares</span><span class="p">(</span><span class="mf">10</span><span class="w"> </span><span class="n">ETH</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">10</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">1000</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span>
+<span class="mf">5.</span><span class="w"> </span><span class="n">Victim</span><span class="w"> </span><span class="n">receives</span><span class="w"> </span><span class="mf">0</span><span class="w"> </span><span class="n">shares</span><span class="p">,</span><span class="w"> </span><span class="n">loses</span><span class="w"> </span><span class="mf">10</span><span class="w"> </span><span class="n">ETH</span>
+</code></pre></div>
+
+<p><strong>Canonical Incident</strong>: vault-core (2026). Multiple ERC-4626 implementations were found vulnerable to inflation attacks due to missing dead share initialization.</p>
+<p><strong>Detection</strong>: <code>convertToShares()</code> and <code>convertToAssets()</code> functions that do not account for <code>totalSupply() == 0</code> edge case or lack dead share minting.</p>
+<p><strong>Defense</strong>: Mint "dead shares" (e.g., 1000 shares) on vault initialization, sent to <code>address(0)</code> or a burn address, preventing the share-to-asset ratio from being arbitrarily skewed.</p>
+<h4>Pattern #6: Lending Liquidation Manipulation</h4>
+<p><strong>Mechanism</strong>: The attacker manipulates the oracle price used by a lending protocol's liquidation function, artificially depressing the value of a borrower's collateral. This triggers a false liquidation, allowing the attacker to acquire the collateral at a steep discount. The attacker simultaneously holds a borrow position that becomes undercollateralized, or front-runs a legitimate borrower's position.</p>
+<p><strong>Canonical Incidents</strong>:<br />
+- <strong>Euler Finance</strong> (Mar 2023, $197M): Combination of a donate-to-reserves bug and liquidation logic that allowed the attacker to borrow without adequate collateral, then trigger self-liquidation to extract the remaining pool funds.<br />
+- <strong>Radiant Capital</strong> (Jan 2024, $4.5M): Rounding error in new market activation combined with flash-loan-inflated liquidity allowed the attacker to borrow against overvalued collateral.<br />
+- <strong>Sonne Finance</strong> (May 2024, $20M): Donation to lending pool inflated exchange rate, enabling oversized borrowing against minimal collateral.</p>
+<p><strong>Detection</strong>: Liquidation functions relying on a manipulable price oracle, or liquidation parameters (collateral factor, liquidation threshold) that can be influenced by flash loan capital.</p>
+<p><strong>Defense</strong>: Use robust oracle (TWAP + Chainlink + deviation check). Implement liquidation cool-down periods. Add slippage checks on liquidation profitability.</p>
+<h4>Pattern #7: AMM Reserve Manipulation (Non-Oracle)</h4>
+<p><strong>Mechanism</strong>: Beyond oracle manipulation, attackers can directly exploit AMM internal mechanisms — <code>sync()</code>/<code>skim()</code> functions, fee-on-transfer token incompatibility, or pool migration paths — to drain liquidity or mint excess LP tokens.</p>
+<p><strong>Canonical Incidents</strong>:<br />
+- <strong>Uranium Finance</strong> (Apr 2021, $50M): Migration contract allowed swapping between old and new pair contracts with incorrect ratio calculation, enabling flash-loan-accelerated drain.<br />
+- <strong>Velocore</strong> (Jun 2024, $6.88M): Fee-on-transfer token incompatibility in the pool's accounting allowed the attacker to withdraw more tokens than deposited.</p>
+<p><strong>Defense</strong>: Validate reserve ratios after swaps using <code>balanceOf()</code> rather than internal accounting. Handle fee-on-transfer tokens explicitly.</p>
+<h4>Pattern #8: Governance Flash Loan Attack</h4>
+<p><strong>Mechanism</strong>: Attacker flash-loans a large quantity of governance tokens, uses them to vote on (or create and vote on) a malicious governance proposal within the same transaction, executes the proposal (e.g., draining the treasury, changing protocol parameters), and returns the borrowed tokens. The entire attack is atomic — no holding period required.</p>
+<p><strong>Canonical Incidents</strong>:<br />
+- <strong>Beanstalk Farms</strong> (Apr 2022, $182M): Attacker flash-loaned $1B in stablecoins, converted to BEAN governance tokens, passed a malicious BIP (Beanstalk Improvement Proposal) that donated the protocol's entire treasury to the attacker's address, all in a single transaction.<br />
+- <strong>Cork Protocol</strong> (May 2025, $12M): Flash loan governance attack on a DeFi insurance protocol, draining the claims reserve pool.</p>
+<p><strong>Detection</strong>: Governance voting functions that use current (rather than historical snapshot) token balances. Proposals executable without timelock.</p>
+<p><strong>Defense</strong>: Governance vote snapshot at a past block number. Minimum token holding period before voting (e.g., 48 hours). Mandatory timelock between proposal passage and execution (minimum 24 hours, preferably 48–72 hours).</p>
+<h3>Category B: Access Control (Patterns 9–16)</h3>
+<p>Access control failures represent the second-largest category by incident count. Unlike flash loan attacks which require sophisticated multi-protocol composition, access control exploits often require merely finding an unprotected function.</p>
+<h4>Pattern #9: Missing Access Control</h4>
+<p><strong>Mechanism</strong>: A privileged function — token minting, fee parameter update, owner change, treasury drain — lacks any access control modifier (<code>onlyOwner</code>, <code>onlyRole</code>), allowing any address to call it.</p>
+<p><strong>Canonical Incident</strong>: TempleDAO (Oct 2022, $2.3M). The <code>migrateStake()</code> function in the staking contract lacked access control, allowing any caller to migrate arbitrary users' stakes to an attacker-controlled address.</p>
+<p><strong>Detection (Slither)</strong>: <code>missing-access-control</code>. Flags public/external functions that modify state without access control modifiers.</p>
+<p><strong>Defense</strong>: Apply principle of least privilege — every state-modifying function should have explicit access control. Use OpenZeppelin's <code>Ownable</code> and <code>AccessControl</code> patterns.</p>
+<h4>Pattern #10: Admin Key Compromise</h4>
+<p><strong>Mechanism</strong>: An attacker gains control of a protocol's admin private key(s) through phishing, insider threat, server compromise, or social engineering. With admin access, the attacker can upgrade proxy contracts to malicious implementations, drain treasury, or change critical parameters.</p>
+<p><strong>Canonical Incidents</strong>:<br />
+- <strong>Ronin Bridge</strong> (Mar 2022, $600M): Attacker compromised 5 of 9 validator keys through a combination of social engineering and a deprecated gas-free RPC node. Validated fraudulent withdrawal of 173,600 ETH and 25.5M USDC.<br />
+- <strong>Bybit</strong> (Feb 2025, $1.5B): Social engineering attack compromised Bybit's cold wallet signers through a manipulated multisig transaction UI, enabling transfer of 400,000+ ETH to attacker addresses. While primarily a CeFi incident, it demonstrates the catastrophic impact of key compromise.</p>
+<p><strong>Detection</strong>: Manual review of multisig configuration, key management procedures, and operational security practices. Static analysis can flag single-owner proxy upgrade patterns.</p>
+<p><strong>Defense</strong>: Multi-signature wallets with high threshold (e.g., 5-of-9). Hardware security modules (HSMs) for all signers. Geographic and organizational distribution of signers. Timelocks on all admin actions.</p>
+<h4>Pattern #11: Unprotected Initializer</h4>
+<p><strong>Mechanism</strong>: Proxy contracts use an <code>initialize()</code> function instead of a constructor. If this initializer lacks protection (is callable multiple times or by anyone), an attacker can re-initialize the contract with malicious parameters or take ownership.</p>
+<p><strong>Canonical Incident</strong>: DaoMaker (2021). Improperly protected initializer allowed attacker to reset staking contract parameters.</p>
+<p><strong>Detection (Slither)</strong>: <code>proxy-init-unprotected</code>. Flags <code>initialize()</code> functions without <code>initializer</code> modifier or <code>_disableInitializers()</code> call.</p>
+<p><strong>Defense</strong>: Use OpenZeppelin's <code>Initializable</code> contract with the <code>initializer</code> modifier. Call <code>_disableInitializers()</code> in the constructor of the implementation contract.</p>
+<h4>Pattern #12: Self-Destruct Backdoor</h4>
+<p><strong>Mechanism</strong>: A contract's <code>selfdestruct()</code> function is callable by an unauthorized address, allowing an attacker to destroy the contract and redirect its ETH balance.</p>
+<p><strong>Canonical Incident</strong>: Parity Multisig (Jul 2017, $170M / 513,774 ETH). A library contract lacked access control on <code>initWallet()</code> and <code>kill()</code>. An attacker called <code>initWallet()</code> to become owner, then <code>kill()</code> to self-destruct the library. All Parity multisig wallets depending on this library were permanently frozen.</p>
+<p><strong>Detection (Slither)</strong>: <code>selfdestruct-backdoor</code>. Flags <code>selfdestruct()</code> or <code>suicide()</code> calls in functions without adequate access control.</p>
+<p><strong>Defense</strong>: Remove <code>selfdestruct()</code> from contracts that hold significant funds. If necessary, restrict to multi-signature admin with timelock.</p>
+<h4>Pattern #13: Upgrade-Induced Vulnerability</h4>
+<p><strong>Mechanism</strong>: During a proxy contract upgrade, the new implementation introduces storage layout conflicts, uninitialized state variables, or breaks invariants that the old implementation maintained.</p>
+<p><strong>Canonical Incidents</strong>:<br />
+- <strong>Team Finance</strong> (Oct 2022, $15.8M): Upgrade from v2 to v3 introduced a bug where <code>msg.sender</code> was incorrectly validated during migration, allowing arbitrary token withdrawal.<br />
+- <strong>Bedrock</strong> (Mar 2024, $1.7M): Upgrade changed the staking contract's accounting logic, breaking the invariant between total shares and total assets.</p>
+<p><strong>Detection (Slither)</strong>: <code>upgrade-storage-collision</code>. Checks storage layout consistency between proxy and implementation, and between old and new implementations.</p>
+<p><strong>Defense</strong>: Use OpenZeppelin's Upgrades plugin for storage gap management. Run storage layout compatibility checks before each upgrade. Include invariant tests that run after each upgrade simulation.</p>
+<h4>Pattern #14: tx.origin Authentication</h4>
+<p><strong>Mechanism</strong>: Contract uses <code>tx.origin</code> instead of <code>msg.sender</code> for authentication. In a call chain A → Victim → AttackerContract, <code>tx.origin</code> is always A (the original EOA), while <code>msg.sender</code> is the immediate caller. Using <code>tx.origin</code> allows an attacker's contract to impersonate the victim.</p>
+<p><strong>Vulnerable Pattern</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">// VULNERABLE: tx.origin for auth</span>
+<span class="kt">function</span><span class="w"> </span><span class="nv">withdraw</span><span class="p">()</span><span class="w"> </span><span class="kt">public</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">require</span><span class="p">(</span><span class="k">tx.origin</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>owner<span class="p">);</span>
+<span class="w">    </span><span class="kt">payable</span><span class="p">(</span><span class="k">msg.sender</span><span class="p">).</span>transfer<span class="p">(</span><span class="kt">address</span><span class="p">(</span><span class="kt">this</span><span class="p">).</span>balance<span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><strong>Detection (Slither)</strong>: <code>tx-origin-auth</code>. Flags <code>tx.origin</code> usage in <code>require()</code> or <code>if()</code> conditions.</p>
+<p><strong>Defense</strong>: Use <code>msg.sender</code> for all authentication. Never use <code>tx.origin</code> for access control.</p>
+<h4>Pattern #15: Misspelled Constructor</h4>
+<p><strong>Mechanism</strong>: Pre-Solidity 0.4.22, constructors were functions with the same name as the contract. A typo in the constructor name turns it into a regular public function callable by anyone.</p>
+<p><strong>Detection (Slither)</strong>: <code>misspelled-constructor</code>. Most modern Solidity compilers catch this at compile time, but legacy contracts remain vulnerable.</p>
+<p><strong>Defense</strong>: Use Solidity ≥0.4.22 with the <code>constructor()</code> keyword.</p>
+<h4>Pattern #16: CREATE2 Front-Running</h4>
+<p><strong>Mechanism</strong>: An attacker monitors the mempool for <code>CREATE2</code> deployments with predictable salt values. By front-running with the same init code and salt, the attacker deploys to the same address and can drain any ETH sent to it afterward.</p>
+<p><strong>Detection (Slither)</strong>: <code>create2-frontrun</code>. Flag <code>CREATE2</code> usage with static or predictable salt values.</p>
+<p><strong>Defense</strong>: Include <code>msg.sender</code> or a nonce in the salt. Avoid deploying contracts to deterministic addresses that will receive value.</p>
+<h3>Category C: Authorization Traps (Patterns 17–24)</h3>
+<p>Authorization traps differ from access control failures in that the authorization mechanism itself is functional but can be tricked or exploited through protocol-level vulnerabilities.</p>
+<h4>Pattern #17: Signature Replay</h4>
+<p><strong>Mechanism</strong>: A signed message intended for one context (chain, contract, purpose) is replayed in another context where it has unintended effects. Cross-chain replay is particularly dangerous — a signature valid on Ethereum mainnet may also be valid on Polygon, BSC, or a forked chain with the same contract address.</p>
+<p><strong>Canonical Incidents</strong>:<br />
+- <strong>Poly Network</strong> (Aug 2021, $610M): Attacker exploited the cross-chain message verification logic, crafting a valid signature that unlocked funds across Ethereum, BSC, and Polygon simultaneously.<br />
+- <strong>Orbit Chain</strong> (Jan 2024, $81M): Cross-chain bridge signature replay across multiple destination chains.</p>
+<p><strong>Detection (Slither)</strong>: <code>signature-replay</code>. Checks for missing <code>chainId</code>, <code>contract address</code>, or <code>nonce</code> in EIP-712 typed data or EIP-2612 permit signatures.</p>
+<p><strong>Defense</strong>: EIP-712 typed structured data with <code>chainId</code>, <code>verifyingContract</code>, and <code>nonce</code> fields. Cross-chain operations should include a <code>destinationChainId</code> in the signed payload.</p>
+<h4>Pattern #18: Permit Front-Running</h4>
+<p><strong>Mechanism</strong>: An attacker monitors the mempool for <code>permit()</code> calls (EIP-2612 gasless approvals) and front-runs them. The attacker extracts the signature from the pending transaction, submits their own <code>permit()</code> with the same signature but higher gas price, and gains an approval from the victim. A subsequent <code>transferFrom()</code> drains the victim's tokens.</p>
+<p><strong>Canonical Incident</strong>: SquidMulticall (2026, $800K). Attacker front-ran permit signatures on a multicall router, gaining approval to spend victims' USDC.</p>
+<p><strong>Detection (Slither)</strong>: <code>permit-frontrun</code>. Identifies <code>permit()</code> functions that are publicly callable with arbitrary signatures.</p>
+<p><strong>Defense</strong>: Use <code>deadline</code> parameter aggressively (short validity windows, e.g., 5 minutes). Combine <code>permit()</code> and the actual spend in a single atomic transaction.</p>
+<h4>Pattern #19: Cross-Chain Replay</h4>
+<p><strong>Mechanism</strong>: A transaction or message valid on Chain A is replayed on Chain B with unintended consequences. This differs from Pattern 17 in that the replay occurs at the transaction/message layer rather than at the signature layer.</p>
+<p><strong>Canonical Incident</strong>: Nomad Bridge (Aug 2022, $152M). A routine upgrade introduced a bug where <code>_acceptableRoot()</code> returned <code>true</code> for the zero hash. This meant any unverified message was accepted. Attackers could craft arbitrary messages "proving" deposits that never occurred, drain funds, and replay across multiple chains.</p>
+<p><strong>Detection</strong>: Cross-chain message verification without <code>sourceChainId</code> or <code>nonce</code>. Forked chains sharing the same contract address.</p>
+<p><strong>Defense</strong>: Include <code>chainId</code> in all cross-chain messages. Use sequence numbers (nonces) for replay protection. Implement rate limiting on cross-chain transfers.</p>
+<h4>Pattern #20: EIP-712 Type Mismatch</h4>
+<p><strong>Mechanism</strong>: The EIP-712 <code>typeHash</code> or domain separator is constructed incorrectly, causing type confusion between different signed messages. A signature valid for an airdrop claim might also be valid for a token transfer.</p>
+<p><strong>Canonical Incidents</strong>: PresidentElector and SnowmanAirdrop incidents. EIP-712 type hashes were computed without including all struct fields, allowing signature reuse across different message types.</p>
+<p><strong>Detection (Slither)</strong>: <code>eip712-typo</code>. Verifies that EIP-712 type hashes include all struct fields and uses correct Solidity types.</p>
+<p><strong>Defense</strong>: Use OpenZeppelin's EIP-712 utilities. Always include all struct fields in <code>typeHash</code> computation. Test with EIP-712 signature verification tools.</p>
+<h4>Pattern #21: Multicall Authorization Trap</h4>
+<p><strong>Mechanism</strong>: Multicall routers batch multiple function calls with a single <code>msg.sender</code>. If the router doesn't properly isolate permissions between calls within the batch, one call's authorization context can "leak" into another call.</p>
+<p><strong>Canonical Incident</strong>: SquidMulticall (2026, $800K). A combination of multicall routing and permit approval allowed the attacker to batch together (a) obtaining a signature-based approval and (b) transferring tokens from the signer — within a single multicall where the signer expected only the approval.</p>
+<p><strong>Detection (Slither)</strong>: <code>payable-multicall</code>. Identifies multicall implementations without per-call authorization scoping.</p>
+<p><strong>Defense</strong>: Each call in a multicall batch should independently verify authorization. Do not allow mixing user-authenticated and delegate-authenticated calls in the same batch.</p>
+<h4>Pattern #22: ERC-777 Reentrancy via Token Hooks</h4>
+<p><strong>Mechanism</strong>: ERC-777 tokens call <code>tokensToSend()</code> and <code>tokensReceived()</code> hooks on sender/receiver contracts during transfers. If a protocol handles ERC-777 tokens without reentrancy protection, these hooks provide a reentrancy entry point.</p>
+<p><strong>Canonical Incident</strong>: Hundred Finance (2022). ERC-777 token transfer triggered a reentrancy hook that manipulated the lending pool's collateral accounting.</p>
+<p><strong>Detection (Slither)</strong>: <code>erc777-reentrancy</code>. Identifies token transfer operations that don't account for ERC-777 callback hooks.</p>
+<p><strong>Defense</strong>: Apply ReentrancyGuard to all functions handling arbitrary ERC-20 tokens. Block ERC-777 tokens if the protocol cannot safely handle hooks.</p>
+<h4>Pattern #23: ERC-721 Reentrancy</h4>
+<p><strong>Mechanism</strong>: Similar to ERC-777, ERC-721's <code>onERC721Received()</code> callback on the receiver provides a reentrancy vector during NFT transfers.</p>
+<p><strong>Detection (Slither)</strong>: <code>erc721-reentrancy</code>. Flags NFT transfer functions without reentrancy protection.</p>
+<p><strong>Defense</strong>: Apply ReentrancyGuard to NFT transfer, mint, and burn functions. Use <code>_safeMint()</code> variants with awareness of the callback risk.</p>
+<h4>Pattern #24: Token Migration Hijack</h4>
+<p><strong>Mechanism</strong>: During token contract migrations, the migration function doesn't properly validate the old token balance or the caller's ownership, allowing an attacker to migrate tokens they don't own or migrate more tokens than they held.</p>
+<p><strong>Detection (Slither)</strong>: <code>token-migration</code>. Checks migration functions for proper balance verification and access control.</p>
+<p><strong>Defense</strong>: Migration functions should verify the old balance on-chain at a snapshot block, not simply trust user-provided amounts.</p>
+<h3>Category D: Economic Manipulation (Patterns 25–32)</h3>
+<p>Economic manipulation patterns exploit protocol tokenomics rather than code-level vulnerabilities. They often pass static analysis because the code is "correct" — the vulnerability lies in the economic parameters and incentive design.</p>
+<h4>Pattern #25: Token Burn/Deflation Attack</h4>
+<p><strong>Mechanism</strong>: A protocol's token burn or deflationary mechanism is exploited to artificially pump the token price, then dump.</p>
+<p><strong>Canonical Incidents</strong>:<br />
+- <strong>BabyDogeCoin</strong> (Jan 2023, $7.5M): Reflection token mechanism was exploited by manipulating the fee distribution timing.<br />
+- <strong>AIDC</strong> (2026): Deflationary mechanism was combined with flash loan capital to burn tokens, inflate price, mint new tokens against the inflated price, and dump.</p>
+<p><strong>Detection (Slither)</strong>: <code>token-burn-manipulation</code>. Identifies burn functions callable without restrictions that could be exploited for price manipulation.</p>
+<p><strong>Defense</strong>: Burns should be based on protocol revenue (provably earned), not arbitrary parameters. Implement burn rate caps.</p>
+<h4>Pattern #26: Mint/Burn Asymmetry</h4>
+<p><strong>Mechanism</strong>: The mint and burn functions use different price calculations or different oracles, creating an arbitrage where minting uses a low price and burning uses a high price (or vice versa).</p>
+<p><strong>Detection (Slither)</strong>: <code>mint-burn-asymmetry</code>. Compares price calculation logic in mint and burn paths.</p>
+<p><strong>Defense</strong>: Mint and burn must use the same oracle, same price formula, and same timestamp. Test with invariant: <code>mintPrice == burnPrice</code> for any given block.</p>
+<h4>Pattern #27: Rebasing Token Timing Attack</h4>
+<p><strong>Mechanism</strong>: Rebasing tokens (AMPL, stETH) adjust balances periodically. An attacker times their transactions to exploit the window between when a protocol reads the balance and when the rebase executes, creating a balance discrepancy.</p>
+<p><strong>Canonical Incident</strong>: NewFreeDAO (Sep 2022, $125M). Exploited rebasing token timing to inflate apparent collateral value during a narrow window.</p>
+<p><strong>Defense</strong>: Use pre-rebase balances for accounting. Apply a "rebasing token" blacklist or implement rebase-aware balance tracking.</p>
+<h4>Pattern #28: Fee-on-Transfer Token Mishandling</h4>
+<p><strong>Mechanism</strong>: Tokens that deduct a fee on transfer (e.g., USDT with fee enabled, some meme coins) cause a discrepancy between the amount a contract expects to receive and the amount it actually receives. If the contract credits the expected amount, an attacker can drain funds by repeatedly depositing and withdrawing.</p>
+<p><strong>Detection (Slither)</strong>: <code>fee-on-transfer</code>. Identifies transfer operations where the received amount is not verified via pre/post balance checks.</p>
+<p><strong>Defense</strong>: Always measure actual received amounts: <code>uint256 balanceBefore = token.balanceOf(address(this)); token.transferFrom(msg.sender, address(this), amount); uint256 received = token.balanceOf(address(this)) - balanceBefore;</code></p>
+<h4>Pattern #29: Tax Exclusion Bypass</h4>
+<p><strong>Mechanism</strong>: A protocol excludes certain addresses from token transfer taxes (e.g., for liquidity pools or bridges). An attacker identifies an excluded address and routes their transfers through it to avoid taxes.</p>
+<p><strong>Detection (Slither)</strong>: <code>token-tax-exclusion</code>. Flags transfer logic with address-based tax exemptions.</p>
+<p><strong>Defense</strong>: Minimize or eliminate tax exclusion lists. Use pair-level tax rules rather than address-level exemptions.</p>
+<h4>Pattern #30: Reward Rate Manipulation</h4>
+<p><strong>Mechanism</strong>: Attacker manipulates the inputs to a reward calculation — staking duration, total staked amount, reward rate parameter — to claim excessive rewards.</p>
+<p><strong>Detection (Slither)</strong>: <code>reward-rate</code>. Identifies reward rate parameters that can be influenced by user actions.</p>
+<p><strong>Defense</strong>: Reward rates should be a function of provable protocol revenue, not user-manipulable parameters. Implement reward rate change constraints.</p>
+<h4>Pattern #31: Deposit Without Withdraw (Locked Deposit)</h4>
+<p><strong>Mechanism</strong>: A protocol accepts deposits but the withdraw function is broken, restricted, or has conditions that prevent legitimate users from retrieving their funds. While sometimes accidental (bug), it can be intentionally designed as a rug pull.</p>
+<p><strong>Detection (Slither)</strong>: <code>deposit-lock</code>. Flags deposit functions without corresponding (callable) withdraw functions, or withdraw functions with conditions that can never be met.</p>
+<p><strong>Defense</strong>: Deposits and withdrawals should be symmetric. Test with invariant: after deposit → withdraw, user balance = initial balance.</p>
+<h4>Pattern #32: Stale Reward Snapshot</h4>
+<p><strong>Mechanism</strong>: Reward distributions are based on a snapshot taken at an earlier block. Between the snapshot and the distribution, an attacker can manipulate their position to maximize rewards — depositing large amounts before the snapshot, withdrawing immediately after.</p>
+<p><strong>Canonical Incident</strong>: Rebase Snapshot attack. Attacker deposited large amounts just before reward snapshot, claimed rewards, withdrew.</p>
+<p><strong>Defense</strong>: Take the snapshot at the distribution block, not a prior block. Or use continuous accrual rather than snapshot-based distribution.</p>
+<h3>Category E: Precision &amp; Arithmetic (Patterns 33–39)</h3>
+<p>Solidity's lack of native floating-point arithmetic means all calculations use integer math. This introduces an entire class of precision-related vulnerabilities.</p>
+<h4>Pattern #33: Integer Overflow/Underflow</h4>
+<p><strong>Mechanism</strong>: Arithmetic operation exceeds the maximum or minimum value of the integer type, wrapping around to an unexpected value. Solidity ≥0.8.0 includes built-in overflow checks, but pre-0.8.0 contracts and assembly blocks remain vulnerable.</p>
+<p><strong>Canonical Incident</strong>: BEC Token (Apr 2018, $1.5B market cap impact). <code>batchTransfer()</code> function had <code>amount * _receivers.length</code> overflow vulnerability, allowing the attacker to transfer astronomical amounts with zero balance deduction.</p>
+<p><strong>Detection (Slither)</strong>: Built-in overflow detection. Also <code>unchecked</code> blocks in Solidity ≥0.8.0.</p>
+<p><strong>Defense</strong>: Use Solidity ≥0.8.0 with built-in checks. For <code>unchecked</code> blocks, add explicit <code>require</code> guards. Use SafeMath for pre-0.8.0 contracts.</p>
+<h4>Pattern #34: Division Before Multiplication</h4>
+<p><strong>Mechanism</strong>: Integer division truncates toward zero. Performing division before multiplication can lose significant precision, leading to incorrect results.</p>
+<p><strong>Vulnerable Pattern</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">// VULNERABLE: Division before multiplication → precision loss</span>
+<span class="kt">uint256</span><span class="w"> </span><span class="nv">fee</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>amount<span class="w"> </span><span class="o">/</span><span class="w"> </span>totalShares<span class="w"> </span><span class="o">*</span><span class="w"> </span>feeRate<span class="p">;</span><span class="w"> </span><span class="c1">// feeRate &lt; 10000 loses precision</span>
+</code></pre></div>
+
+<p><strong>Detection (Slither)</strong>: <code>precision-rounding</code>. Identifies division operations whose result is subsequently multiplied.</p>
+<p><strong>Defense</strong>: Always multiply before dividing: <code>amount * feeRate / totalShares</code>. Use higher-precision intermediate types.</p>
+<h4>Pattern #35: Rounding Direction Error</h4>
+<p><strong>Mechanism</strong>: Rounding in the "wrong" direction — rounding up when the protocol should round down, or vice versa — creates an exploitable asymmetry. An attacker can perform many small operations, each extracting a minimal amount via rounding, accumulating to significant profit.</p>
+<p><strong>Canonical Incident</strong>: ThetanutsFi (2026, $2.1M). Rounding direction in share redemption favored the redeemer, allowing repeated small withdrawals to extract value from the vault.</p>
+<p><strong>Defense</strong>: Always round in the protocol's favor — round up on deposits, round down on withdrawals. Use <code>divUp()</code> for division that should favor the protocol.</p>
+<h4>Pattern #36: Decimal Inconsistency</h4>
+<p><strong>Mechanism</strong>: Two different tokens use different decimal places (e.g., USDC with 6 decimals, DAI with 18 decimals), and the protocol's price calculation fails to normalize them, leading to 10¹²× pricing errors.</p>
+<p><strong>Detection (Slither)</strong>: <code>decimals-inconsistency</code>. Identifies arithmetic operations on token amounts without decimal normalization.</p>
+<p><strong>Defense</strong>: Normalize all amounts to 18 decimals (or a consistent internal precision) before arithmetic operations. Use <code>wad</code> (10^18) units consistently for internal accounting.</p>
+<h4>Pattern #37: Unsafe Downcast</h4>
+<p><strong>Mechanism</strong>: Downcasting from a larger integer type (uint256) to a smaller one (uint128, uint64) can silently truncate the value, potentially breaking invariants.</p>
+<p><strong>Detection (Slither)</strong>: <code>unsafe-downcast</code>. Identifies downcasting without explicit range checks.</p>
+<p><strong>Defense</strong>: Add explicit range checks before downcasting. Use OpenZeppelin's <code>SafeCast</code> library.</p>
+<h4>Pattern #38: Accumulator Overflow</h4>
+<p><strong>Mechanism</strong>: A cumulative value (total rewards, total fees, time-accumulated oracle value) overflows its storage type over long periods.</p>
+<p><strong>Canonical Incident</strong>: Solana Wormhole (2022). An accumulator in the Wormhole bridge allowed the creation of unverified wrapped tokens due to an overflow path.</p>
+<p><strong>Defense</strong>: Use <code>uint256</code> for accumulators. For values that grow unboundedly, implement periodic reset mechanisms.</p>
+<h4>Pattern #39: Transient Storage Misuse</h4>
+<p><strong>Mechanism</strong>: EIP-1153 transient storage (<code>tstore</code>/<code>tload</code>) is misused — values intended to persist only within a transaction leak across call frames or are overwritten by nested calls.</p>
+<p><strong>Detection</strong>: Manual review of transient storage usage patterns.</p>
+<p><strong>Defense</strong>: Clear transient storage at the end of each transaction frame. Document transient storage ownership conventions.</p>
+<h3>Category F: Oracle &amp; External Data (Patterns 40–45)</h3>
+<p>Oracle patterns extend beyond flash loan manipulation (Patterns 1, 4, 7) to cover the full spectrum of external data risks.</p>
+<h4>Pattern #40: Stale Oracle Data</h4>
+<p><strong>Mechanism</strong>: A Chainlink or similar oracle feed has not been updated for an extended period (hours to days), and the protocol uses the stale price without checking the update timestamp. During high volatility, the stale price diverges significantly from the true market price.</p>
+<p><strong>Detection (Slither)</strong>: <code>stale-oracle</code>. Flags <code>latestRoundData()</code> calls that don't check <code>updatedAt</code>.</p>
+<p><strong>Defense</strong>: Always check the timestamp: <code>require(block.timestamp - updatedAt &lt; freshnessThreshold)</code> with a conservative threshold (1–24 hours depending on asset volatility).</p>
+<h4>Pattern #41: L2 Sequencer Downtime</h4>
+<p><strong>Mechanism</strong>: On L2 networks (Arbitrum, Optimism), the sequencer may go offline. Chainlink feeds continue reporting the last price before downtime. If the protocol doesn't check sequencer status, it may use stale prices during network instability.</p>
+<p><strong>Detection (Slither)</strong>: <code>l2-sequencer</code>. Identifies oracle usage on L2 without sequencer uptime feed check.</p>
+<p><strong>Defense</strong>: Include a sequencer uptime check using Chainlink's sequencer uptime feed: <code>require(sequencerFeed.latestRoundData().answer == 0, "Sequencer down")</code>.</p>
+<h4>Pattern #42: Dual Oracle Divergence</h4>
+<p><strong>Mechanism</strong>: A protocol uses two oracles (e.g., Chainlink and Uniswap TWAP) and takes the price from one without checking divergence from the other. If one oracle is manipulated or malfunctioning, the protocol acts on a false price despite having a second valid source.</p>
+<p><strong>Defense</strong>: When using multiple oracles, always compute the divergence between them. Trigger a circuit breaker if divergence exceeds a threshold (e.g., 5%).</p>
+<h4>Pattern #43: TWAP Window Manipulation</h4>
+<p><strong>Mechanism</strong>: The attacker selects a TWAP observation window (e.g., 30 minutes) and systematically manipulates the price across multiple blocks within that window to shift the TWAP. This is Pattern #4's multi-block variant, generalized to any TWAP-based system.</p>
+<p><strong>Defense</strong>: Longer TWAP windows (30+ minutes). Minimum liquidity thresholds for TWAP observations.</p>
+<h4>Pattern #44: Hardcoded Price Assumption</h4>
+<p><strong>Mechanism</strong>: The protocol hardcodes a price assumption (e.g., "1 stETH = 1 ETH") without accounting for de-pegging risk, or uses a fixed exchange rate for a volatile asset.</p>
+<p><strong>Canonical Incident</strong>: Various stablecoin de-peg events (UST in 2022, USDC in 2023) where protocols that assumed 1:1 pegs suffered cascading liquidations.</p>
+<p><strong>Defense</strong>: Never hardcode asset prices. Always use live oracle data. For assets with de-peg risk, implement deviation circuit breakers.</p>
+<h4>Pattern #45: Off-Chain Oracle Trust</h4>
+<p><strong>Mechanism</strong>: The protocol trusts an off-chain oracle (e.g., Pyth, a custom keeper network) without on-chain validation. If the off-chain oracle is compromised or produces erroneous data, the protocol has no defense.</p>
+<p><strong>Defense</strong>: Implement on-chain price sanity checks. Use on-chain oracles (Chainlink, TWAP) as the source of truth, with off-chain oracles as secondary inputs with tight deviation bounds.</p>
+<h3>Category G: Protocol Logic (Patterns 46–50)</h3>
+<p>Protocol logic patterns reside at the business-logic layer — the code is syntactically correct, passes static analysis, and may even be economically sound in isolation. The vulnerability emerges from the composition of multiple modules or from undocumented assumptions.</p>
+<h4>Pattern #46: Loan Origination Race (Accounting Inconsistency)</h4>
+<p><strong>Mechanism</strong>: In a lending protocol, the loan origination process (collateral deposit, borrow, interest accrual) has a race condition between the user's deposit and the protocol's accounting update. A flash-loan-accelerated attack can borrow against collateral before the protocol has recorded the loan, creating an accounting inconsistency.</p>
+<p><strong>Detection (Slither)</strong>: <code>loan-origination</code>. Identifies deposit-borrow sequences without atomic state updates.</p>
+<p><strong>Defense</strong>: All deposit-borrow operations must be atomic with respect to accounting. Implement a "deposit → update state → allow borrow" sequence within a single transaction or with per-block rate limiting.</p>
+<h4>Pattern #47: Cross-Module Accounting Inconsistency</h4>
+<p><strong>Mechanism</strong>: Two modules within the same protocol maintain separate accounting for the same asset. Module A records balance X, Module B records balance Y, where X ≠ Y. An attacker exploits this inconsistency — depositing in Module A (incrementing X), withdrawing from Module B (decrementing Y) — effectively creating tokens from nothing.</p>
+<p><strong>Canonical Incident</strong>: Vault4626 (2026). Cross-module accounting between the vault contract and the strategy contract diverged, allowing the attacker to withdraw more than deposited.</p>
+<p><strong>Defense</strong>: Single source of truth for all balances. Assert cross-module invariants: <code>ModuleA.totalAssets == ModuleB.totalAssets</code> at all checkpoints.</p>
+<h4>Pattern #48: Batch Processing DoS</h4>
+<p><strong>Mechanism</strong>: A protocol processes user operations in batches (e.g., withdraw requests, reward claims). If the batch processing loop lacks a gas limit per iteration or allows any user to add entries, an attacker can fill the batch with gas-intensive entries, preventing legitimate users from being processed.</p>
+<p><strong>Detection (Slither)</strong>: <code>batch-dos</code>. Identifies unbounded loops or batch processing with user-controlled input.</p>
+<p><strong>Defense</strong>: Implement per-user gas limits. Use "pull over push" patterns — let users claim individually rather than batch processing.</p>
+<h4>Pattern #49: Phantom Fallback Function</h4>
+<p><strong>Mechanism</strong>: A contract has a <code>fallback()</code> or <code>receive()</code> function that performs privileged operations (state changes, fund transfers) when the contract receives a call with no matching function selector or plain ETH.</p>
+<p><strong>Detection (Slither)</strong>: <code>phantom-fallback</code>. Flags fallback functions containing <code>delegatecall</code>, state modifications, or fund transfers.</p>
+<p><strong>Defense</strong>: Fallback functions should be minimal. Avoid <code>delegatecall</code> in fallback. If the contract should receive ETH, use <code>receive()</code> — if it should handle unknown calls, use <code>fallback()</code> with explicit validation.</p>
+<h4>Pattern #50: Intentional Backdoor (Rug Pull / Malicious Upgrade)</h4>
+<p><strong>Mechanism</strong>: The protocol developers intentionally insert hidden code paths — a function that drains the treasury, a backdoor in the proxy upgrade, an unlimited mint function accessible only to a hardcoded address — that appear benign to auditors but enable fund theft.</p>
+<p><strong>Canonical Incidents</strong>:<br />
+- <strong>DxSale</strong> (Jan 2026, $7.3M): A hidden function in the presale contract allowed the developer to drain all raised funds after the sale completed.<br />
+- <strong>SKP Token</strong> (2026, $212K): Backdoored transfer function allowed the deployer to bypass transfer restrictions.</p>
+<p><strong>Detection</strong>: Manual review only. Intentional backdoors are designed to evade automated detection — the code appears correct, the conditions appear legitimate, and the invariants appear to hold. Requires deep business-logic understanding and economic audit.</p>
+<p><strong>Defense</strong>: Time-locked admin actions. Multi-signature governance with known, reputable signers. Independent audit by multiple firms. Community monitoring of proxy upgrade events.</p>
+<hr />
+<h2>5. Statistical Analysis</h2>
+<h3>5.1 Pattern Frequency Distribution</h3>
+<p>The 50 patterns follow a strongly right-skewed distribution, with 8 patterns accounting for 76% of all losses:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Rank</th>
+<th>Pattern</th>
+<th>Category</th>
+<th style="text-align: center;">Incidents</th>
+<th style="text-align: center;">% Total</th>
+<th style="text-align: right;">Cumulative Loss</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td>#1 Flash Loan + Oracle</td>
+<td>A</td>
+<td style="text-align: center;">198</td>
+<td style="text-align: center;">24.0%</td>
+<td style="text-align: right;">$4.8B</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>#17 Signature Replay</td>
+<td>C</td>
+<td style="text-align: center;">66</td>
+<td style="text-align: center;">8.0%</td>
+<td style="text-align: right;">$1.7B</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>#8 Governance Flash Loan</td>
+<td>A</td>
+<td style="text-align: center;">49</td>
+<td style="text-align: center;">5.9%</td>
+<td style="text-align: right;">$350M</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>#6 Lending Liquidation</td>
+<td>A</td>
+<td style="text-align: center;">49</td>
+<td style="text-align: center;">5.9%</td>
+<td style="text-align: right;">$250M</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td>#7 AMM Reserve Manipulation</td>
+<td>A</td>
+<td style="text-align: center;">41</td>
+<td style="text-align: center;">5.0%</td>
+<td style="text-align: right;">$120M</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td>#2 Reentrancy</td>
+<td>A</td>
+<td style="text-align: center;">33</td>
+<td style="text-align: center;">4.0%</td>
+<td style="text-align: right;">$80M</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td>#10 Admin Key Compromise</td>
+<td>B</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">3.0%</td>
+<td style="text-align: right;">$2.1B</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td>#47 Accounting Inconsistency</td>
+<td>G</td>
+<td style="text-align: center;">16</td>
+<td style="text-align: center;">1.9%</td>
+<td style="text-align: right;">$45M</td>
+</tr>
+<tr>
+<td style="text-align: center;">—</td>
+<td><strong>Subtotal (Top 8)</strong></td>
+<td></td>
+<td style="text-align: center;"><strong>477</strong></td>
+<td style="text-align: center;"><strong>57.7%</strong></td>
+<td style="text-align: right;"><strong>$9.4B (76%)</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;">—</td>
+<td>Remaining 42 patterns</td>
+<td></td>
+<td style="text-align: center;">347</td>
+<td style="text-align: center;">42.3%</td>
+<td style="text-align: right;">$3.0B (24%)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 2. Top 8 attack patterns by loss contribution.</strong></p>
+<h3>5.2 Pareto Concentration</h3>
+<p>The attack landscape exhibits extreme Pareto concentration:<br />
+- Top 1 pattern (#1 Flash Loan + Oracle) = 24% of cases, 60% of losses<br />
+- Top 3 patterns = 38% of cases, 70% of losses<br />
+- Top 8 patterns = 58% of cases, 76% of losses<br />
+- All 50 patterns = 100% of cases, 100% of losses</p>
+<p>This concentration has practical implications for defense prioritization: protocols that eliminate vulnerability to the top 8 patterns reduce their attack surface by 76% in value terms. However, the long tail of 42 patterns (collectively causing $3B in losses) means that comprehensive defense requires attention to the full taxonomy.</p>
+<h3>5.3 Category-Level Analysis</h3>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th style="text-align: center;">Patterns</th>
+<th style="text-align: center;">Incidents</th>
+<th style="text-align: center;">% Cases</th>
+<th style="text-align: right;">Total Loss</th>
+<th style="text-align: center;">% Loss</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A: Flash Loan</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">198</td>
+<td style="text-align: center;">24.0%</td>
+<td style="text-align: right;">$6.2B</td>
+<td style="text-align: center;">60.2%</td>
+</tr>
+<tr>
+<td>B: Access Control</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">124</td>
+<td style="text-align: center;">15.0%</td>
+<td style="text-align: right;">$2.5B</td>
+<td style="text-align: center;">14.6%</td>
+</tr>
+<tr>
+<td>C: Authorization</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">145</td>
+<td style="text-align: center;">17.6%</td>
+<td style="text-align: right;">$2.1B</td>
+<td style="text-align: center;">12.2%</td>
+</tr>
+<tr>
+<td>D: Economic</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">89</td>
+<td style="text-align: center;">10.8%</td>
+<td style="text-align: right;">$480M</td>
+<td style="text-align: center;">4.7%</td>
+</tr>
+<tr>
+<td>E: Precision</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">72</td>
+<td style="text-align: center;">8.7%</td>
+<td style="text-align: right;">$380M</td>
+<td style="text-align: center;">3.7%</td>
+</tr>
+<tr>
+<td>F: Oracle</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">95</td>
+<td style="text-align: center;">11.5%</td>
+<td style="text-align: right;">$340M</td>
+<td style="text-align: center;">3.3%</td>
+</tr>
+<tr>
+<td>G: Protocol Logic</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">101</td>
+<td style="text-align: center;">12.3%</td>
+<td style="text-align: right;">$130M</td>
+<td style="text-align: center;">1.3%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 3. Attack distribution by category.</strong></p>
+<p>Key observations:<br />
+- <strong>Flash Loan dominates losses</strong> (60.2%) but represents only 24% of incidents — flash loan attacks are high-value by design, targeting protocols with maximum TVL.<br />
+- <strong>Access Control is the silent killer</strong> — 15% of incidents, $2.5B in losses, yet receives far less research attention than flash loans.<br />
+- <strong>Protocol Logic is growing</strong> — while currently only 1.3% of losses, this category has the steepest growth curve (see Section 6).</p>
+<h3>5.4 Per-Incident Loss by Category</h3>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th style="text-align: center;">Mean Loss</th>
+<th style="text-align: center;">Median Loss</th>
+<th style="text-align: center;">Max Loss</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A: Flash Loan</td>
+<td style="text-align: center;">$31.3M</td>
+<td style="text-align: center;">$8.2M</td>
+<td style="text-align: center;">$197M (Euler)</td>
+</tr>
+<tr>
+<td>B: Access Control</td>
+<td style="text-align: center;">$20.2M</td>
+<td style="text-align: center;">$1.5M</td>
+<td style="text-align: center;">$600M (Ronin)</td>
+</tr>
+<tr>
+<td>C: Authorization</td>
+<td style="text-align: center;">$14.5M</td>
+<td style="text-align: center;">$2.1M</td>
+<td style="text-align: center;">$610M (Poly)</td>
+</tr>
+<tr>
+<td>D: Economic</td>
+<td style="text-align: center;">$5.4M</td>
+<td style="text-align: center;">$1.2M</td>
+<td style="text-align: center;">$125M</td>
+</tr>
+<tr>
+<td>E: Precision</td>
+<td style="text-align: center;">$5.3M</td>
+<td style="text-align: center;">$800K</td>
+<td style="text-align: center;">$1.5B (BEC)</td>
+</tr>
+<tr>
+<td>F: Oracle</td>
+<td style="text-align: center;">$3.6M</td>
+<td style="text-align: center;">$450K</td>
+<td style="text-align: center;">$34M</td>
+</tr>
+<tr>
+<td>G: Protocol Logic</td>
+<td style="text-align: center;">$1.3M</td>
+<td style="text-align: center;">$300K</td>
+<td style="text-align: center;">$45M</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 4. Per-incident loss statistics by category.</strong></p>
+<p>Flash loan attacks have both the highest mean and median loss — they are the "high-impact" category. Protocol logic attacks have the lowest median loss but are rapidly growing in both frequency and sophistication.</p>
+<hr />
+<h2>6. Temporal Evolution: A Decade of Attack Patterns</h2>
+<h3>6.1 Emergence by Year</h3>
+<table>
+<thead>
+<tr>
+<th>Period</th>
+<th style="text-align: center;">New Patterns</th>
+<th>Dominant Category</th>
+<th>Defining Characteristics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2017–2019</td>
+<td style="text-align: center;">5</td>
+<td>Access Control</td>
+<td>Parity, early reentrancy, integer overflow</td>
+</tr>
+<tr>
+<td>2020</td>
+<td style="text-align: center;">8</td>
+<td>Flash Loan (FL-1)</td>
+<td>bZx #1 kicks off flash loan era</td>
+</tr>
+<tr>
+<td>2021</td>
+<td style="text-align: center;">12</td>
+<td>Flash Loan (all types)</td>
+<td>Peak TVL, peak losses, peak exploitation</td>
+</tr>
+<tr>
+<td>2022</td>
+<td style="text-align: center;">10</td>
+<td>Authorization + Access Control</td>
+<td>Cross-chain bridges, governance attacks</td>
+</tr>
+<tr>
+<td>2023</td>
+<td style="text-align: center;">6</td>
+<td>Lending Logic</td>
+<td>Euler, Hundred Finance, lending exploits</td>
+</tr>
+<tr>
+<td>2024</td>
+<td style="text-align: center;">5</td>
+<td>Oracle Defense Bypass</td>
+<td>TWAP manipulation, sequencer downtime</td>
+</tr>
+<tr>
+<td>2025</td>
+<td style="text-align: center;">3</td>
+<td>Protocol Logic</td>
+<td>Backdoors, accounting inconsistencies</td>
+</tr>
+<tr>
+<td>2026</td>
+<td style="text-align: center;">1</td>
+<td>Protocol Logic</td>
+<td>Precision-backdoor-accounting emergence</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 5. New pattern emergence by year.</strong></p>
+<h3>6.2 Pattern Lifecycle</h3>
+<p>Individual patterns follow a recognizable lifecycle:</p>
+<ol>
+<li><strong>Emergence</strong> (0–6 months): First 1–2 incidents. Limited awareness. No automated detection.</li>
+<li><strong>Growth</strong> (6–18 months): Incident frequency increases. Security community publishes post-mortems. Detection tools begin to incorporate.</li>
+<li><strong>Peak</strong> (12–24 months): Maximum incident frequency. Attackers have optimized the exploit; defenders have not yet universally deployed fixes.</li>
+<li><strong>Decline</strong> (24–36+ months): Incident frequency drops. Defenses (e.g., TWAP for flash loans) become standard. Attackers move to new patterns.</li>
+<li><strong>Residual</strong> (ongoing): Occasional incidents on unaudited or legacy protocols.</li>
+</ol>
+<p><strong>Example — Pattern #1 (Flash Loan + Oracle)</strong>:<br />
+- Emergence: Feb 2020 (bZx #1)<br />
+- Growth: Mar–Sep 2020 (Harvest, Value DeFi, Cheese Bank)<br />
+- Peak: 2021 (Cream, PancakeBunny, Belt Finance)<br />
+- Decline: 2022–2024 (TWAP + Chainlink adoption)<br />
+- Residual: 2025–2026 (sporadic on unaudited forks)</p>
+<h3>6.3 Category Shift Over Time</h3>
+<div class="codehilite"><pre><span></span><code>Flash Loan (A):  ████████████████░░░░░░░░░░░░░░░░░  declining from 2022 peak
+Access Ctrl (B): ██████░░░░██████░░░░░░░░░░░░░░░░░░░  steady with spikes
+Authorization(C): ██░░░░░░██████████░░░░░░░░░░░░░░░░░  peaked 2021-2022 (bridges)
+Economic (D):    ████░░░░░░░░████████████████░░░░░░░  growing (2023+)
+Precision (E):   ████░░░░░░░░░░░░░░████████░░░░░░░░░  resurgence (2025-2026)
+Oracle (F):      ██░░░░░░░░████████████░░░░░░░░░░░░░  peaked with L2 adoption
+Protocol (G):    ░░░░░░░░░░░░░░░░░░░░░░░░██████████  accelerating (2025-2026)
+</code></pre></div>
+
+<p><strong>Figure 1. Category intensity over time (2017–2026).</strong> Each block represents approximately 6 months.</p>
+<h3>6.4 Key Temporal Insights</h3>
+<ol>
+<li>
+<p><strong>Flash loan attacks declined 60% from 2022–2026</strong> — but protocols should not celebrate. The attacks didn't disappear; they fragmented into governance (Pattern 8), lending (Patterns 4, 6), and protocol logic (Patterns 46–50) vectors.</p>
+</li>
+<li>
+<p><strong>Authorization attacks spiked with cross-chain bridges</strong> — 2021–2022 saw a 5× increase in signature replay and cross-chain replay attacks as bridges proliferated without adequate message verification.</p>
+</li>
+<li>
+<p><strong>Protocol logic attacks are the fastest-growing category</strong> — with a 3× year-over-year increase from 2024 to 2026, these business-logic exploits represent the frontier of DeFi attack evolution.</p>
+</li>
+<li>
+<p><strong>Precision attacks are resurging</strong> — after a lull following Solidity 0.8.0's built-in overflow checks (2021), precision exploits have returned in 2025–2026 through rounding errors, decimal mismatches, and transient storage misuse that bypass overflow detection.</p>
+</li>
+</ol>
+<hr />
+<h2>7. Detection Coverage and Tooling</h2>
+<h3>7.1 Automated vs. Manual Detection</h3>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th style="text-align: center;">Patterns</th>
+<th style="text-align: center;">Slither Available</th>
+<th style="text-align: center;">Auto-detectable</th>
+<th style="text-align: center;">Manual Only</th>
+<th style="text-align: center;">Manual %</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A: Flash Loan</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">12.5%</td>
+</tr>
+<tr>
+<td>B: Access Control</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">25.0%</td>
+</tr>
+<tr>
+<td>C: Authorization</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">37.5%</td>
+</tr>
+<tr>
+<td>D: Economic</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">62.5%</td>
+</tr>
+<tr>
+<td>E: Precision</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">14.3%</td>
+</tr>
+<tr>
+<td>F: Oracle</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">33.3%</td>
+</tr>
+<tr>
+<td>G: Protocol Logic</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">80.0%</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td style="text-align: center;"><strong>50</strong></td>
+<td style="text-align: center;"><strong>32</strong></td>
+<td style="text-align: center;"><strong>32</strong></td>
+<td style="text-align: center;"><strong>18</strong></td>
+<td style="text-align: center;"><strong>36.0%</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 6. Automated detection coverage by category.</strong></p>
+<p>Of the 50 patterns:<br />
+- <strong>32 patterns (64%)</strong> have existing Slither detection rules and can be identified through automated static analysis.<br />
+- <strong>12 patterns (24%)</strong> lack Slither rules entirely. We contribute new detection rules for these patterns.<br />
+- <strong>18 patterns (36%)</strong> require manual review — even with Slither rules, false negative rates are high for business-logic patterns where the code is syntactically correct.</p>
+<h3>7.2 The "Last Mile" Problem</h3>
+<p>The 18 patterns requiring manual review represent the "last mile" of DeFi security. They share common characteristics:</p>
+<ol>
+<li>
+<p><strong>Economic validity</strong>: The code performs mathematically correct operations. The vulnerability lies in the economic parameters (Patterns 30, 32), timing assumptions (Pattern 27), or incentive design (Pattern 25).</p>
+</li>
+<li>
+<p><strong>Cross-module scope</strong>: The vulnerability spans multiple contracts or modules, none of which is individually flawed (Patterns 47, 46). Static analyzers examine contracts in isolation and miss cross-module invariants.</p>
+</li>
+<li>
+<p><strong>Intentional deception</strong>: The code is designed to pass audit (Pattern 50). Backdoors are disguised as legitimate upgrade functions, emergency pauses, or fee parameters.</p>
+</li>
+</ol>
+<h3>7.3 The 50-Rule DeFi Scanner</h3>
+<p>We release an open-source scanner implementing all 50 detection rules. The scanner operates in three modes:</p>
+<ol>
+<li>
+<p><strong>Static Mode</strong> (32 patterns): Slither-based static analysis of smart contract source code. Integrates with Hardhat and Foundry.</p>
+</li>
+<li>
+<p><strong>Transaction Mode</strong> (12 patterns): Post-execution analysis of transaction traces. Identifies patterns that are visible only in transaction graphs (e.g., flash loan → swap → liquidate → repay chains).</p>
+</li>
+<li>
+<p><strong>Manual Mode</strong> (18 patterns): Generates an audit checklist with pattern-specific questions (e.g., "Is the reward rate derived from user-manipulable inputs?" for Pattern 30).</p>
+</li>
+</ol>
+<p><strong>Scanner Architecture</strong>:</p>
+<div class="codehilite"><pre><span></span><code>Input: Contract Source + Transaction Traces
+    ↓
+Pattern Matching Engine (50 rules)
+    ↓
+Report: Pattern ID | Confidence | Evidence | Recommendation
+</code></pre></div>
+
+<h3>7.4 CI/CD Integration</h3>
+<p>The scanner is designed for integration into development workflows:</p>
+<ul>
+<li><strong>Pre-commit hooks</strong>: Run static mode on changed contracts before commit</li>
+<li><strong>CI pipeline</strong>: Run full static analysis on every pull request</li>
+<li><strong>Pre-deployment audit</strong>: Run all 50 rules before mainnet deployment</li>
+<li><strong>Post-deployment monitoring</strong>: Continuously scan on-chain transactions for known attack patterns</li>
+</ul>
+<hr />
+<h2>8. Related Work</h2>
+<h3>8.1 Smart Contract Vulnerability Taxonomies</h3>
+<p>Atzei et al. (2016) established the foundational taxonomy of Ethereum smart contract vulnerabilities, identifying 12 classes including reentrancy, timestamp dependence, transaction-ordering dependence, and short address attacks. While comprehensive for its era, this taxonomy predates the DeFi summer of 2020 and the explosion of protocol-specific attack vectors.</p>
+<p>Chen et al. (2020) developed DefectsChecker, a symbolic execution tool targeting 8 vulnerability types in Ethereum smart contracts, improving detection speed over prior tools.</p>
+<h3>8.2 DeFi-Specific Attack Taxonomies</h3>
+<p>Werner et al. (2023) presented a Systematization of Knowledge (SoK) for DeFi, analyzing 43 incidents and proposing 8 attack categories: oracle manipulation, reentrancy, governance attacks, flash loan attacks, access control, arithmetic errors, front-running, and rug pulls. While this work captures the most prominent patterns, its 8-category system leaves 42% of incidents in our 824-case dataset unclassified.</p>
+<p>Zhou et al. (2023) developed the DEFIER framework covering 77 incidents across 10 attack categories, including token standard incompatibility and oracle price manipulation. DEFIER introduced the concept of "attack primitives" as building blocks of complex exploits — a concept we extend by classifying flash loans as an attack enabler rather than a standalone pattern.</p>
+<p>Qin et al. (2021) quantified blockchain extractable value (BEV) and characterized the role of flash loans in enabling atomic arbitrage. Daian et al. (2020) documented the emergence of priority gas auctions (PGAs) and time-bandit attacks in their "Flash Boys 2.0" analysis.</p>
+<h3>8.3 Detection Tools</h3>
+<p><strong>Slither</strong> (Feist et al., 2019) is the dominant static analysis framework for Solidity, providing 70+ built-in detectors. Our work extends Slither's coverage with 12 new detectors for previously undetected patterns.</p>
+<p><strong>Mythril</strong> (ConsenSys, 2018) uses symbolic execution for vulnerability detection. <strong>Echidna</strong> (Trail of Bits, 2020) provides property-based fuzzing for invariant testing. <strong>Certora Prover</strong> enables formal verification of smart contract invariants.</p>
+<p>Our 50-rule scanner complements these tools by providing pattern-specific detection rules that map directly to the taxonomy, enabling practitioners to understand not just that a vulnerability exists, but which specific attack pattern it enables.</p>
+<h3>8.4 Comparative Coverage</h3>
+<table>
+<thead>
+<tr>
+<th>Taxonomy</th>
+<th style="text-align: center;">Year</th>
+<th style="text-align: center;">Patterns</th>
+<th style="text-align: center;">Incidents Covered</th>
+<th style="text-align: center;">Coverage %</th>
+<th style="text-align: center;">Tooling</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Atzei et al.</td>
+<td style="text-align: center;">2016</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">N/A (pre-DeFi)</td>
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">Oyente</td>
+</tr>
+<tr>
+<td>Werner et al.</td>
+<td style="text-align: center;">2023</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">43</td>
+<td style="text-align: center;">~58%</td>
+<td style="text-align: center;">None</td>
+</tr>
+<tr>
+<td>Zhou et al.</td>
+<td style="text-align: center;">2023</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">77</td>
+<td style="text-align: center;">~55%</td>
+<td style="text-align: center;">DEFIER</td>
+</tr>
+<tr>
+<td><strong>This work</strong></td>
+<td style="text-align: center;"><strong>2026</strong></td>
+<td style="text-align: center;"><strong>50</strong></td>
+<td style="text-align: center;"><strong>804/824</strong></td>
+<td style="text-align: center;"><strong>97.6%</strong></td>
+<td style="text-align: center;"><strong>50-rule scanner</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 7. Comparative coverage of DeFi attack taxonomies.</strong></p>
+<hr />
+<h2>9. Discussion</h2>
+<h3>9.1 Implications for Protocol Developers</h3>
+<ol>
+<li>
+<p><strong>Prioritize the Top 8</strong>: A protocol that defends against Patterns 1, 2, 3, 6, 7, 8, 10, and 17 eliminates 76% of historical attack value. This represents the highest-ROI security investment.</p>
+</li>
+<li>
+<p><strong>Don't neglect the long tail</strong>: The 42 patterns beyond the top 8 collectively caused $3B in losses. A protocol secure against the top 8 but vulnerable to Pattern 47 (accounting inconsistency) can still lose millions.</p>
+</li>
+<li>
+<p><strong>Static analysis is necessary but insufficient</strong>: 36% of patterns require manual review. Automated tools should be a first line of defense, not a complete security solution. Every protocol should undergo a manual business-logic audit.</p>
+</li>
+<li>
+<p><strong>Economic audits matter</strong>: Patterns 25–32 (Economic Manipulation) cannot be detected by code analysis alone. Protocols need economic security reviews focused on incentive design, parameter calibration, and game-theoretic exploit scenarios.</p>
+</li>
+</ol>
+<h3>9.2 Implications for Auditors</h3>
+<ol>
+<li>
+<p><strong>Use the taxonomy as an audit checklist</strong>: The 50 patterns provide a structured framework for comprehensive security reviews. Auditors should systematically evaluate each pattern category.</p>
+</li>
+<li>
+<p><strong>Flash loan simulation is mandatory</strong>: Any audit of a protocol handling significant TVL must include a "flash loan attacker" scenario — assume the attacker has unlimited single-transaction capital and trace every code path that reads external state.</p>
+</li>
+<li>
+<p><strong>Cross-module invariants are the new frontier</strong>: As single-contract vulnerabilities are increasingly well-detected, the next generation of exploits will target inconsistencies between modules. Auditors must specify and verify cross-module invariants.</p>
+</li>
+</ol>
+<h3>9.3 Implications for Researchers</h3>
+<ol>
+<li>
+<p><strong>The detection gap</strong>: 18 patterns resist automated detection. This represents a research opportunity — developing techniques (symbolic execution, formal verification, machine learning) to cover the manual-review patterns.</p>
+</li>
+<li>
+<p><strong>Temporal prediction</strong>: Can we predict which patterns will grow based on protocol adoption trends? Oracle manipulation declined with TWAP adoption; what pattern will decline with the next defense innovation?</p>
+</li>
+<li>
+<p><strong>Cross-chain patterns</strong>: Our dataset is Ethereum-centric. L2 chains, Solana, and Cosmos introduce unique attack surfaces not yet fully characterized.</p>
+</li>
+</ol>
+<hr />
+<h2>10. Limitations</h2>
+<ol>
+<li>
+<p><strong>Incident reporting bias</strong>: Small incidents (&lt;$10K) and privately settled exploits are underrepresented. Our taxonomy may miss patterns that occur only in low-value contexts.</p>
+</li>
+<li>
+<p><strong>Loss estimation</strong>: Loss figures reflect asset value at attack time and do not account for recovery, negotiated returns, or post-attack price impact. Total losses may be overstated by 10–20%.</p>
+</li>
+<li>
+<p><strong>Single root cause assignment</strong>: Complex attacks often involve multiple patterns. Our primary root cause assignment simplifies for taxonomy purposes but may obscure secondary patterns that enabled the attack.</p>
+</li>
+<li>
+<p><strong>Slither rule coverage</strong>: While we contribute 12 new Slither detectors, their false positive/negative rates are not yet benchmarked on large codebases. Real-world accuracy may differ from our test suite results.</p>
+</li>
+<li>
+<p><strong>Temporal scope</strong>: Our dataset ends June 2026. Patterns emerging after this date are not captured.</p>
+</li>
+<li>
+<p><strong>Ethereum-centricity</strong>: Non-EVM chains (Solana, Move-based chains, Cosmos) have distinct attack surfaces. Our taxonomy is validated primarily on EVM incidents and may not fully capture non-EVM patterns.</p>
+</li>
+</ol>
+<hr />
+<h2>11. Future Work</h2>
+<ol>
+<li>
+<p><strong>Real-time attack detection</strong>: Extend the 50-rule scanner to operate on mempool data, identifying attack patterns before transaction inclusion. This enables front-running protection (submitting a defensive transaction with higher gas) or protocol circuit breakers.</p>
+</li>
+<li>
+<p><strong>Cross-chain taxonomy extension</strong>: Expand the taxonomy to include Solana, Aptos/Sui (Move), and Cosmos IBC attack patterns, with cross-chain correlation analysis.</p>
+</li>
+<li>
+<p><strong>Machine learning classification</strong>: Train a model on the 824 labeled incidents to automatically classify new attacks, potentially identifying novel patterns that don't match any existing category.</p>
+</li>
+<li>
+<p><strong>Attack simulation framework</strong>: Build a testing framework that automatically generates exploit scenarios for each of the 50 patterns, enabling protocols to test their defenses against the full taxonomy.</p>
+</li>
+<li>
+<p><strong>Economic invariant generation</strong>: Develop tools that automatically extract economic invariants from protocol specifications and verify them using formal methods, targeting the 18 manual-review patterns.</p>
+</li>
+<li>
+<p><strong>Community-driven taxonomy maintenance</strong>: Establish a living taxonomy that accepts community contributions for new patterns, with a formal review and validation process.</p>
+</li>
+</ol>
+<hr />
+<h2>12. Conclusion</h2>
+<p>We present the first comprehensive 50-pattern taxonomy of DeFi attacks, empirically derived from all 824 confirmed security incidents spanning the full decade from July 2017 through June 2026. Our taxonomy achieves 97.6% coverage — a 40 percentage point improvement over the best prior work — and identifies critical gaps in existing automated detection tools.</p>
+<p>Key findings include:<br />
+- <strong>Extreme Pareto concentration</strong>: 8 patterns cause 76% of all losses, with flash loan + oracle manipulation alone responsible for 60% ($6B+).<br />
+- <strong>The detection gap</strong>: 36% of patterns cannot be reliably detected by automated static analysis. These business-logic, economic, and intentional-backdoor patterns represent the frontier of both attack evolution and security research.<br />
+- <strong>Category shift over time</strong>: Flash loan attacks have declined 60% from their 2021 peak, but protocol logic attacks are accelerating at 3× year-over-year — the attack surface is shifting, not shrinking.<br />
+- <strong>Manual review is essential</strong>: Even with perfect static analysis, 18 patterns require human understanding of protocol economics and cross-module invariants.</p>
+<p>The taxonomy, 50 detection rules, and open-source scanner provide a structured foundation for DeFi security education, audit practice, and automated defense. We invite the community to adopt, extend, and maintain this living taxonomy as the DeFi attack surface continues to evolve.</p>
+<hr />
+<h2>Acknowledgments</h2>
+<p>Data sources: DeFiHackLabs (github.com/SunWeb3Sec/DeFiHackLabs), Rekt News (rekt.news), SlowMist Hacked Archive (hacked.slowmist.io), CertiK Alert (alert.certik.com).</p>
+<p>Detection tools: This work builds on the Slither static analysis framework (Trail of Bits) and the broader smart contract security tooling ecosystem.</p>
+<hr />
+<h2>References</h2>
+<p>[1] Atzei, N., Bartoletti, M., &amp; Cimoli, T. (2017). "A Survey of Attacks on Ethereum Smart Contracts (SoK)." <em>Proceedings of the 6th International Conference on Principles of Security and Trust (POST 2017)</em>.</p>
+<p>[2] Werner, S., Perez, D., Gudgeon, L., Klages-Mundt, A., Harz, D., &amp; Knottenbelt, W. (2023). "SoK: Decentralized Finance (DeFi)." <em>Proceedings of the 4th ACM Conference on Advances in Financial Technologies (AFT 2023)</em>.</p>
+<p>[3] Zhou, L., Xiong, X., Ernstberger, J., Chaliasos, S., Wang, Z., Wang, Y., Qin, K., Wattenhofer, R., Song, D., &amp; Gervais, A. (2023). "SoK: Decentralized Finance (DeFi) Attacks." <em>Proceedings of the 44th IEEE Symposium on Security and Privacy (S&amp;P 2023)</em>.</p>
+<p>[4] Qin, K., Zhou, L., &amp; Gervais, A. (2021). "Quantifying Blockchain Extractable Value: How Dark is the Forest?" <em>Proceedings of the 43rd IEEE Symposium on Security and Privacy (S&amp;P 2022)</em>.</p>
+<p>[5] Daian, P., Goldfeder, S., Kell, T., Li, Y., Zhao, X., Bentov, I., Breidenbach, L., &amp; Juels, A. (2020). "Flash Boys 2.0: Frontrunning in Decentralized Exchanges, Miner Extractable Value, and Consensus Instability." <em>Proceedings of the 41st IEEE Symposium on Security and Privacy (S&amp;P 2020)</em>.</p>
+<p>[6] Chen, J., Xia, X., Lo, D., Grundy, J., Luo, X., &amp; Chen, T. (2020). "DefectChecker: Automated Smart Contract Defect Detection by Analyzing EVM Bytecode." <em>IEEE Transactions on Software Engineering</em>.</p>
+<p>[7] Feist, J., Grieco, G., &amp; Groce, A. (2019). "Slither: A Static Analysis Framework for Smart Contracts." <em>Proceedings of the 2nd International Workshop on Emerging Trends in Software Engineering for Blockchain (WETSEB 2019)</em>.</p>
+<p>[8] Eskandari, S., Moosavi, M., &amp; Clark, J. (2021). "SoK: Oracles from the Ground Truth to Market Manipulation." <em>Proceedings of the 3rd ACM Conference on Advances in Financial Technologies (AFT 2021)</em>.</p>
+<p>[9] Angeris, G., Kao, H.T., Chiang, R., Noyes, C., &amp; Chitra, T. (2021). "An Analysis of Uniswap Markets." <em>Cryptoeconomic Systems</em>.</p>
+<p>[10] Chen, S. (2026). "A Decade of DeFi Attacks: Pattern Evolution, Risk Dynamics, and the Fragmentation of the Attack Surface (2017–2026)." <em>Zenodo</em>, 10.5281/zenodo.21403779.</p>
+<p>[11] Chen, S. (2026). "Flash Loan Attacks: A Decade of Evolution, Defense, and the Rise of Post-Oracle Exploits (2017–2026)." <em>Zenodo</em>, 10.5281/zenodo.21405635.</p>
+<hr />
+<h2>Appendix A: Complete 50-Rule Classifier Reference</h2>
+<h3>A.1 Pattern-to-Rule Mapping</h3>
+<p>Each pattern is assigned a unique rule ID for use in the scanner:</p>
+<table>
+<thead>
+<tr>
+<th>Rule ID</th>
+<th style="text-align: center;">Pattern #</th>
+<th>Pattern Name</th>
+<th>Detection Method</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DFL-001</td>
+<td style="text-align: center;">#1</td>
+<td>Flash Loan + Spot Oracle</td>
+<td>Slither: instant-price-oracle</td>
+</tr>
+<tr>
+<td>DFL-002</td>
+<td style="text-align: center;">#2</td>
+<td>Reentrancy (CEI)</td>
+<td>Slither: reentrancy-eth</td>
+</tr>
+<tr>
+<td>DFL-003</td>
+<td style="text-align: center;">#3</td>
+<td>Flash Loan + Reentrancy</td>
+<td>Slither + Tx trace</td>
+</tr>
+<tr>
+<td>DFL-004</td>
+<td style="text-align: center;">#4</td>
+<td>Short TWAP</td>
+<td>Slither: short-twap-window</td>
+</tr>
+<tr>
+<td>DFL-005</td>
+<td style="text-align: center;">#5</td>
+<td>ERC-4626 Inflation</td>
+<td>Slither: 4626-inflation</td>
+</tr>
+<tr>
+<td>DFL-006</td>
+<td style="text-align: center;">#6</td>
+<td>Lending Liquidation</td>
+<td>Tx trace</td>
+</tr>
+<tr>
+<td>DFL-007</td>
+<td style="text-align: center;">#7</td>
+<td>AMM Reserve Manipulation</td>
+<td>Slither + Tx trace</td>
+</tr>
+<tr>
+<td>DFL-008</td>
+<td style="text-align: center;">#8</td>
+<td>Governance Flash Loan</td>
+<td>Tx trace + manual</td>
+</tr>
+<tr>
+<td>DFL-009</td>
+<td style="text-align: center;">#9</td>
+<td>Missing Access Control</td>
+<td>Slither: missing-access-control</td>
+</tr>
+<tr>
+<td>DFL-010</td>
+<td style="text-align: center;">#10</td>
+<td>Admin Key Compromise</td>
+<td>Manual review</td>
+</tr>
+<tr>
+<td>DFL-011</td>
+<td style="text-align: center;">#11</td>
+<td>Unprotected Initializer</td>
+<td>Slither: proxy-init-unprotected</td>
+</tr>
+<tr>
+<td>DFL-012</td>
+<td style="text-align: center;">#12</td>
+<td>Self-Destruct Backdoor</td>
+<td>Slither: selfdestruct-backdoor</td>
+</tr>
+<tr>
+<td>DFL-013</td>
+<td style="text-align: center;">#13</td>
+<td>Upgrade Vulnerability</td>
+<td>Slither: upgrade-storage-collision</td>
+</tr>
+<tr>
+<td>DFL-014</td>
+<td style="text-align: center;">#14</td>
+<td>tx.origin Auth</td>
+<td>Slither: tx-origin-auth</td>
+</tr>
+<tr>
+<td>DFL-015</td>
+<td style="text-align: center;">#15</td>
+<td>Misspelled Constructor</td>
+<td>Slither: misspelled-constructor</td>
+</tr>
+<tr>
+<td>DFL-016</td>
+<td style="text-align: center;">#16</td>
+<td>CREATE2 Front-Run</td>
+<td>Slither: create2-frontrun</td>
+</tr>
+<tr>
+<td>DFL-017</td>
+<td style="text-align: center;">#17</td>
+<td>Signature Replay</td>
+<td>Slither: signature-replay</td>
+</tr>
+<tr>
+<td>DFL-018</td>
+<td style="text-align: center;">#18</td>
+<td>Permit Front-Run</td>
+<td>Slither: permit-frontrun</td>
+</tr>
+<tr>
+<td>DFL-019</td>
+<td style="text-align: center;">#19</td>
+<td>Cross-Chain Replay</td>
+<td>Slither: cross-chain-replay</td>
+</tr>
+<tr>
+<td>DFL-020</td>
+<td style="text-align: center;">#20</td>
+<td>EIP-712 Mismatch</td>
+<td>Slither: eip712-typo</td>
+</tr>
+<tr>
+<td>DFL-021</td>
+<td style="text-align: center;">#21</td>
+<td>Multicall Auth Trap</td>
+<td>Slither: payable-multicall</td>
+</tr>
+<tr>
+<td>DFL-022</td>
+<td style="text-align: center;">#22</td>
+<td>ERC-777 Reentrancy</td>
+<td>Slither: erc777-reentrancy</td>
+</tr>
+<tr>
+<td>DFL-023</td>
+<td style="text-align: center;">#23</td>
+<td>ERC-721 Reentrancy</td>
+<td>Slither: erc721-reentrancy</td>
+</tr>
+<tr>
+<td>DFL-024</td>
+<td style="text-align: center;">#24</td>
+<td>Token Migration</td>
+<td>Slither: token-migration</td>
+</tr>
+<tr>
+<td>DFL-025</td>
+<td style="text-align: center;">#25</td>
+<td>Burn/Deflation</td>
+<td>Slither: token-burn-manipulation</td>
+</tr>
+<tr>
+<td>DFL-026</td>
+<td style="text-align: center;">#26</td>
+<td>Mint/Burn Asymmetry</td>
+<td>Slither: mint-burn-asymmetry</td>
+</tr>
+<tr>
+<td>DFL-027</td>
+<td style="text-align: center;">#27</td>
+<td>Rebasing Timing</td>
+<td>Manual review</td>
+</tr>
+<tr>
+<td>DFL-028</td>
+<td style="text-align: center;">#28</td>
+<td>Fee-on-Transfer</td>
+<td>Slither: fee-on-transfer</td>
+</tr>
+<tr>
+<td>DFL-029</td>
+<td style="text-align: center;">#29</td>
+<td>Tax Exclusion</td>
+<td>Slither: token-tax-exclusion</td>
+</tr>
+<tr>
+<td>DFL-030</td>
+<td style="text-align: center;">#30</td>
+<td>Reward Rate</td>
+<td>Slither: reward-rate</td>
+</tr>
+<tr>
+<td>DFL-031</td>
+<td style="text-align: center;">#31</td>
+<td>Deposit Lock</td>
+<td>Slither: deposit-lock</td>
+</tr>
+<tr>
+<td>DFL-032</td>
+<td style="text-align: center;">#32</td>
+<td>Stale Snapshot</td>
+<td>Manual review</td>
+</tr>
+<tr>
+<td>DFL-033</td>
+<td style="text-align: center;">#33</td>
+<td>Integer Overflow</td>
+<td>Slither: built-in</td>
+</tr>
+<tr>
+<td>DFL-034</td>
+<td style="text-align: center;">#34</td>
+<td>Div-Before-Mul</td>
+<td>Slither: precision-rounding</td>
+</tr>
+<tr>
+<td>DFL-035</td>
+<td style="text-align: center;">#35</td>
+<td>Rounding Direction</td>
+<td>Manual review</td>
+</tr>
+<tr>
+<td>DFL-036</td>
+<td style="text-align: center;">#36</td>
+<td>Decimal Mismatch</td>
+<td>Slither: decimals-inconsistency</td>
+</tr>
+<tr>
+<td>DFL-037</td>
+<td style="text-align: center;">#37</td>
+<td>Unsafe Downcast</td>
+<td>Slither: unsafe-downcast</td>
+</tr>
+<tr>
+<td>DFL-038</td>
+<td style="text-align: center;">#38</td>
+<td>Accumulator Overflow</td>
+<td>Manual review</td>
+</tr>
+<tr>
+<td>DFL-039</td>
+<td style="text-align: center;">#39</td>
+<td>Transient Storage</td>
+<td>Manual review</td>
+</tr>
+<tr>
+<td>DFL-040</td>
+<td style="text-align: center;">#40</td>
+<td>Stale Oracle</td>
+<td>Slither: stale-oracle</td>
+</tr>
+<tr>
+<td>DFL-041</td>
+<td style="text-align: center;">#41</td>
+<td>L2 Sequencer</td>
+<td>Slither: l2-sequencer</td>
+</tr>
+<tr>
+<td>DFL-042</td>
+<td style="text-align: center;">#42</td>
+<td>Dual Oracle Divergence</td>
+<td>Slither + manual</td>
+</tr>
+<tr>
+<td>DFL-043</td>
+<td style="text-align: center;">#43</td>
+<td>TWAP Window</td>
+<td>Slither: twap-window</td>
+</tr>
+<tr>
+<td>DFL-044</td>
+<td style="text-align: center;">#44</td>
+<td>Hardcoded Price</td>
+<td>Slither: hardcoded-price</td>
+</tr>
+<tr>
+<td>DFL-045</td>
+<td style="text-align: center;">#45</td>
+<td>Off-Chain Oracle</td>
+<td>Manual review</td>
+</tr>
+<tr>
+<td>DFL-046</td>
+<td style="text-align: center;">#46</td>
+<td>Loan Origination Race</td>
+<td>Slither: loan-origination</td>
+</tr>
+<tr>
+<td>DFL-047</td>
+<td style="text-align: center;">#47</td>
+<td>Accounting Inconsistency</td>
+<td>Manual review</td>
+</tr>
+<tr>
+<td>DFL-048</td>
+<td style="text-align: center;">#48</td>
+<td>Batch DoS</td>
+<td>Slither: batch-dos</td>
+</tr>
+<tr>
+<td>DFL-049</td>
+<td style="text-align: center;">#49</td>
+<td>Phantom Fallback</td>
+<td>Slither: phantom-fallback</td>
+</tr>
+<tr>
+<td>DFL-050</td>
+<td style="text-align: center;">#50</td>
+<td>Intentional Backdoor</td>
+<td>Manual review only</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table A1. Complete 50-rule classifier mapping.</strong></p>
+<h3>A.2 Scanner Usage</h3>
+<div class="codehilite"><pre><span></span><code># Static analysis mode
+python defi-scanner.py --mode static --target contracts/
+
+# Transaction analysis mode
+python defi-scanner.py --mode tx --txhash 0x...
+
+# Full audit mode (all 50 patterns)
+python defi-scanner.py --mode audit --target contracts/ --output report.json
+</code></pre></div>
+
+<hr />
+<h2>Appendix B: Incident-to-Pattern Mapping (Representative Sample)</h2>
+<table>
+<thead>
+<tr>
+<th>Incident</th>
+<th>Date</th>
+<th>Protocol</th>
+<th style="text-align: right;">Loss</th>
+<th style="text-align: center;">Primary Pattern</th>
+<th style="text-align: center;">Secondary Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Parity Multisig</td>
+<td>2017-07</td>
+<td>Parity</td>
+<td style="text-align: right;">$170M</td>
+<td style="text-align: center;">#12 Self-Destruct</td>
+<td style="text-align: center;">#9 Missing Access</td>
+</tr>
+<tr>
+<td>BEC Token</td>
+<td>2018-04</td>
+<td>BEC</td>
+<td style="text-align: right;">$1.5B</td>
+<td style="text-align: center;">#33 Overflow</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td>bZx #1</td>
+<td>2020-02</td>
+<td>bZx</td>
+<td style="text-align: right;">$350K</td>
+<td style="text-align: center;">#1 Flash+Oracle</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td>Harvest Finance</td>
+<td>2020-10</td>
+<td>Harvest</td>
+<td style="text-align: right;">$34M</td>
+<td style="text-align: center;">#1 Flash+Oracle</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td>PancakeBunny</td>
+<td>2021-05</td>
+<td>BSC</td>
+<td style="text-align: right;">$120M</td>
+<td style="text-align: center;">#1 Flash+Oracle</td>
+<td style="text-align: center;">#5 Mint/Burn</td>
+</tr>
+<tr>
+<td>Poly Network</td>
+<td>2021-08</td>
+<td>Cross-chain</td>
+<td style="text-align: right;">$610M</td>
+<td style="text-align: center;">#17 Sig Replay</td>
+<td style="text-align: center;">#19 Cross-chain</td>
+</tr>
+<tr>
+<td>Cream Finance</td>
+<td>2021-10</td>
+<td>Cream</td>
+<td style="text-align: right;">$130M</td>
+<td style="text-align: center;">#1 Flash+Oracle</td>
+<td style="text-align: center;">#3 FL+Reentrancy</td>
+</tr>
+<tr>
+<td>Beanstalk</td>
+<td>2022-04</td>
+<td>Governance</td>
+<td style="text-align: right;">$182M</td>
+<td style="text-align: center;">#8 Gov Flash Loan</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td>Ronin Bridge</td>
+<td>2022-03</td>
+<td>Bridge</td>
+<td style="text-align: right;">$600M</td>
+<td style="text-align: center;">#10 Admin Key</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td>Nomad Bridge</td>
+<td>2022-08</td>
+<td>Bridge</td>
+<td style="text-align: right;">$152M</td>
+<td style="text-align: center;">#19 Cross-chain</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td>Euler Finance</td>
+<td>2023-03</td>
+<td>Lending</td>
+<td style="text-align: right;">$197M</td>
+<td style="text-align: center;">#6 Liquidation</td>
+<td style="text-align: center;">#47 Accounting</td>
+</tr>
+<tr>
+<td>Gamma Strategies</td>
+<td>2024-01</td>
+<td>Vault</td>
+<td style="text-align: right;">$6.3M</td>
+<td style="text-align: center;">#4 Short TWAP</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td>Radiant Capital</td>
+<td>2024-01</td>
+<td>Lending</td>
+<td style="text-align: right;">$4.5M</td>
+<td style="text-align: center;">#6 Liquidation</td>
+<td style="text-align: center;">#35 Rounding</td>
+</tr>
+<tr>
+<td>Sonne Finance</td>
+<td>2024-05</td>
+<td>Lending</td>
+<td style="text-align: right;">$20M</td>
+<td style="text-align: center;">#6 Liquidation</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td>Orbit Chain</td>
+<td>2024-01</td>
+<td>Bridge</td>
+<td style="text-align: right;">$81M</td>
+<td style="text-align: center;">#17 Sig Replay</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td>Bybit</td>
+<td>2025-02</td>
+<td>CEX</td>
+<td style="text-align: right;">$1.5B</td>
+<td style="text-align: center;">#10 Admin Key</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td>DxSale</td>
+<td>2026-01</td>
+<td>Presale</td>
+<td style="text-align: right;">$7.3M</td>
+<td style="text-align: center;">#50 Backdoor</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td>ThetanutsFi</td>
+<td>2026</td>
+<td>Options</td>
+<td style="text-align: right;">$2.1M</td>
+<td style="text-align: center;">#35 Rounding</td>
+<td style="text-align: center;">—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table B1. Representative incident-to-pattern mapping.</strong></p>
+<hr />
+<p><em>Paper DOI: <a href="https://doi.org/10.5281/zenodo.21405286">10.5281/zenodo.21405286</a></em><br />
+<em>Dataset: 10.5281/zenodo.21382653</em><br />
+<em>Repository: github.com/shunfeng8421/defi-hack-memo</em><br />
+<em>Scanner: github.com/shunfeng8421/defi-hack-memo/tree/master/scanner</em></p>
+</body>
+</html>
