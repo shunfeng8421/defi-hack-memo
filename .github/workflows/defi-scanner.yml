@@ -25,7 +25,9 @@ jobs:
           python-version: '3.12'
       
       - name: Install Dependencies
-        run: pip install fpdf2 PyYAML
+        run: |
+          pip install --quiet fpdf2 2>/dev/null || echo "fpdf2 skipped (PDF generation only)"
+          echo "Python: $(python --version)"
       
       - name: Run DeFi Scanner
         id: scan
