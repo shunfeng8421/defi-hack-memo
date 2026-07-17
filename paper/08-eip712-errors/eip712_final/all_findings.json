@@ -1,0 +1,5347 @@
+[
+  {
+    "repo": "sky-ecosystem/dss",
+    "path": "src/dai.sol",
+    "typehash_name": "PERMIT_TYPEHASH",
+    "typehash_value": "Permit(address holder,address spender,uint256 nonce,uint256 expiry,bool allowed)",
+    "line_no": 60,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Permit\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "d-xo/weird-erc20",
+    "path": "src/DaiPermit.sol",
+    "typehash_name": "PERMIT_TYPEHASH",
+    "typehash_value": "0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb",
+    "line_no": 22,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "dapphub/chai",
+    "path": "src/chai.sol",
+    "typehash_name": "PERMIT_TYPEHASH",
+    "typehash_value": "0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb",
+    "line_no": 89,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "dapp-org/dappsys-v2",
+    "path": "src/token.sol",
+    "typehash_name": "PERMIT_TYPEHASH",
+    "typehash_value": "Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)",
+    "line_no": 20,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Permit\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "dapp-org/dappsys-v2",
+    "path": "src/token.sol",
+    "typehash_name": "domainTypehash",
+    "typehash_value": "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)",
+    "line_no": 97,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "connext/chaindata",
+    "path": "AnyswapV5ERC20.sol",
+    "typehash_name": "PERMIT_TYPEHASH",
+    "typehash_value": "Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)",
+    "line_no": 123,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Permit\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "connext/chaindata",
+    "path": "AnyswapV5ERC20.sol",
+    "typehash_name": "TRANSFER_TYPEHASH",
+    "typehash_value": "Transfer(address owner,address to,uint256 value,uint256 nonce,uint256 deadline)",
+    "line_no": 124,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Transfer\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "ricobank/gemfab",
+    "path": "src/gem.sol",
+    "typehash_name": "PERMIT_TYPEHASH",
+    "typehash_value": "Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)'\n    );\n    function DOMAIN_SEPARATOR() external view returns (bytes32) {\n        return keccak256(abi.encode( DOMAIN_SUBHASH,\n            keccak256(",
+    "line_no": 34,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Permit\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "limitbreakinc/PermitC",
+    "path": "src/Constants.sol",
+    "typehash_name": "UPDATE_APPROVAL_TYPEHASH",
+    "typehash_value": "UpdateApprovalBySignature(uint256 tokenType,address token,uint256 id,uint256 amount,uint256 nonce,address operator,uint256 approvalExpiration,uint256 sigDeadline,uint256 masterNonce)",
+    "line_no": 30,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"UpdateApprovalBySignature\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "limitbreakinc/PermitC",
+    "path": "src/Constants.sol",
+    "typehash_name": "SINGLE_USE_PERMIT_TYPEHASH",
+    "typehash_value": "PermitTransferFrom(uint256 tokenType,address token,uint256 id,uint256 amount,uint256 nonce,address operator,uint256 expiration,uint256 masterNonce)",
+    "line_no": 34,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"PermitTransferFrom\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "thisisarchimedes/Archimedes_Finance",
+    "path": "zap.sol",
+    "typehash_name": "typeHash",
+    "typehash_value": "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)",
+    "line_no": 4476,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "thisisarchimedes/Archimedes_Finance",
+    "path": "zap.sol",
+    "typehash_name": "_PERMIT_TYPEHASH",
+    "typehash_value": "Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)",
+    "line_no": 4554,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Permit\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "thisisarchimedes/Archimedes_Finance",
+    "path": "zap.sol",
+    "typehash_name": "_DELEGATION_TYPEHASH",
+    "typehash_value": "Delegation(address delegatee,uint256 nonce,uint256 expiry)",
+    "line_no": 5861,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Delegation\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Morning-Star213/ERC20-Presale-Smart-Contract",
+    "path": "contracts/ECT.sol",
+    "typehash_name": "_TYPE_HASH",
+    "typehash_value": "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)",
+    "line_no": 19,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Morning-Star213/ERC20-Presale-Smart-Contract",
+    "path": "contracts/ECT.sol",
+    "typehash_name": "_PERMIT_TYPEHASH",
+    "typehash_value": "Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)",
+    "line_no": 20,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Permit\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "nectra-xyz/nectra-core",
+    "path": "src/lib/ERC20.sol",
+    "typehash_name": "_DOMAIN_TYPEHASH",
+    "typehash_value": "0x8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f",
+    "line_no": 108,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "nectra-xyz/nectra-core",
+    "path": "src/lib/ERC20.sol",
+    "typehash_name": "_PERMIT_TYPEHASH",
+    "typehash_value": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
+    "line_no": 115,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "ladder-lab/ladder-contracts",
+    "path": "LadderV1ERC20.sol",
+    "typehash_name": "PERMIT_TYPEHASH",
+    "typehash_value": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
+    "line_no": 20,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "wagyuswapapp/wagyu-swap-core",
+    "path": "core.sol",
+    "typehash_name": "PERMIT_TYPEHASH",
+    "typehash_value": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
+    "line_no": 68,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Vectorized/solady",
+    "path": "src/utils/EIP712.sol",
+    "typehash_name": "_DOMAIN_TYPEHASH",
+    "typehash_value": "0x8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f",
+    "line_no": 21,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Vectorized/solady",
+    "path": "src/utils/EIP712.sol",
+    "typehash_name": "_DOMAIN_TYPEHASH_SANS_CHAIN_ID",
+    "typehash_value": "0x91ab3d17e3a50a9d89e63fd30b92be7f5336b03b287bb946787a83a9d62a2766",
+    "line_no": 26,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Vectorized/solady",
+    "path": "src/utils/EIP712.sol",
+    "typehash_name": "_DOMAIN_TYPEHASH_SANS_CHAIN_ID_AND_VERIFYING_CONTRACT",
+    "typehash_value": "0xb03948446334eb9b2196d5eb166f69b9d49403eb4a12f36de8d3f9f3cb8e15c3",
+    "line_no": 31,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Vectorized/solady",
+    "path": "src/utils/EIP712.sol",
+    "typehash_name": "_DOMAIN_TYPEHASH_SANS_VERIFYING_CONTRACT",
+    "typehash_value": "0xc2f8787176b8ac6bf7215b4adcc1e069bf4ab82d9ab1df05a57a91d425935b6e",
+    "line_no": 36,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Snowfork/snowbridge",
+    "path": "contracts/src/TokenLib.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)",
+    "line_no": 12,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Snowfork/snowbridge",
+    "path": "contracts/src/TokenLib.sol",
+    "typehash_name": "PERMIT_TYPEHASH",
+    "typehash_value": "Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)",
+    "line_no": 17,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Permit\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "perpetual-protocol/perpetual-protocol",
+    "path": "src/MetaTxGateway.sol",
+    "typehash_name": "EIP712_DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)",
+    "line_no": 43,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "perpetual-protocol/perpetual-protocol",
+    "path": "src/MetaTxGateway.sol",
+    "typehash_name": "META_TRANSACTION_TYPEHASH",
+    "typehash_value": "MetaTransaction(uint256 nonce,address from,address to,bytes functionSignature)",
+    "line_no": 46,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"MetaTransaction\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "maticnetwork/pos-portal",
+    "path": "flat/DummyERC20.sol",
+    "typehash_name": "EIP712_DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,string version,address verifyingContract,bytes32 salt)",
+    "line_no": 753,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "maticnetwork/pos-portal",
+    "path": "flat/DummyERC20.sol",
+    "typehash_name": "META_TRANSACTION_TYPEHASH",
+    "typehash_value": "MetaTransaction(uint256 nonce,address from,bytes functionSignature)",
+    "line_no": 823,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"MetaTransaction\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "keep3r-network/keep3r.network",
+    "path": "contracts/Keep3r.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,uint chainId,address verifyingContract)",
+    "line_no": 564,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "keep3r-network/keep3r.network",
+    "path": "contracts/Keep3r.sol",
+    "typehash_name": "DELEGATION_TYPEHASH",
+    "typehash_value": "Delegation(address delegatee,uint nonce,uint expiry)",
+    "line_no": 568,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Delegation\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "keep3r-network/keep3r.network",
+    "path": "contracts/Keep3r.sol",
+    "typehash_name": "PERMIT_TYPEHASH",
+    "typehash_value": "Permit(address owner,address spender,uint value,uint nonce,uint deadline)",
+    "line_no": 571,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Permit\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Fankouzu/my-sushiswap",
+    "path": "contracts/SushiToken.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,uint256 chainId,address verifyingContract)",
+    "line_no": 47,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Fankouzu/my-sushiswap",
+    "path": "contracts/SushiToken.sol",
+    "typehash_name": "DELEGATION_TYPEHASH",
+    "typehash_value": "Delegation(address delegatee,uint256 nonce,uint256 expiry)",
+    "line_no": 51,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Delegation\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "ithacaxyz/account",
+    "path": "src/IthacaAccount.sol",
+    "typehash_name": "EXECUTE_TYPEHASH",
+    "typehash_value": "Execute(bool multichain,Call[] calls,uint256 nonce)Call(address to,uint256 value,bytes data)",
+    "line_no": 187,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Execute\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "ithacaxyz/account",
+    "path": "src/IthacaAccount.sol",
+    "typehash_name": "CALL_TYPEHASH",
+    "typehash_value": "Call(address to,uint256 value,bytes data)",
+    "line_no": 192,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Call\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "ithacaxyz/account",
+    "path": "src/IthacaAccount.sol",
+    "typehash_name": "SIGN_TYPEHASH",
+    "typehash_value": "ERC1271Sign(bytes32 digest)",
+    "line_no": 198,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"ERC1271Sign\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "gitcoinco/governance",
+    "path": "contracts/GTC.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,uint256 chainId,address verifyingContract)",
+    "line_no": 56,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "gitcoinco/governance",
+    "path": "contracts/GTC.sol",
+    "typehash_name": "DELEGATION_TYPEHASH",
+    "typehash_value": "Delegation(address delegatee,uint256 nonce,uint256 expiry)",
+    "line_no": 59,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Delegation\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "gitcoinco/governance",
+    "path": "contracts/GTC.sol",
+    "typehash_name": "PERMIT_TYPEHASH",
+    "typehash_value": "Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)",
+    "line_no": 62,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Permit\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "goosedefi/goose-contracts",
+    "path": "contracts/EggToken.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,uint256 chainId,address verifyingContract)",
+    "line_no": 35,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "goosedefi/goose-contracts",
+    "path": "contracts/EggToken.sol",
+    "typehash_name": "DELEGATION_TYPEHASH",
+    "typehash_value": "Delegation(address delegatee,uint256 nonce,uint256 expiry)",
+    "line_no": 38,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Delegation\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "meTokens/meTokens-core",
+    "path": "contracts/libs/LibMeta.sol",
+    "typehash_name": "_EIP712_DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,string version,uint256 salt,address verifyingContract)",
+    "line_no": 7,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "cultdao-developer/cultdao",
+    "path": "contracts/governance.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,uint256 chainId,address verifyingContract)",
+    "line_no": 50,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "cultdao-developer/cultdao",
+    "path": "contracts/governance.sol",
+    "typehash_name": "BALLOT_TYPEHASH",
+    "typehash_value": "Ballot(uint256 proposalId,uint8 support)",
+    "line_no": 53,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Ballot\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "lydiafinance/lydia-farm",
+    "path": "contracts/LydToken.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,uint256 chainId,address verifyingContract)",
+    "line_no": 35,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "lydiafinance/lydia-farm",
+    "path": "contracts/LydToken.sol",
+    "typehash_name": "DELEGATION_TYPEHASH",
+    "typehash_value": "Delegation(address delegatee,uint256 nonce,uint256 expiry)",
+    "line_no": 38,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Delegation\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "PaintSwap/paintswap-farm",
+    "path": "contracts/BrushToken.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,uint256 chainId,address verifyingContract)",
+    "line_no": 51,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "PaintSwap/paintswap-farm",
+    "path": "contracts/BrushToken.sol",
+    "typehash_name": "DELEGATION_TYPEHASH",
+    "typehash_value": "Delegation(address delegatee,uint256 nonce,uint256 expiry)",
+    "line_no": 54,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Delegation\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "andreykobal/opbnb-ai-nft-avatars",
+    "path": "contracts/GameItems.sol",
+    "typehash_name": "EIP712_DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,string version,address verifyingContract,bytes32 salt)",
+    "line_no": 54,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "andreykobal/opbnb-ai-nft-avatars",
+    "path": "contracts/GameItems.sol",
+    "typehash_name": "META_TRANSACTION_TYPEHASH",
+    "typehash_value": "MetaTransaction(uint256 nonce,address from,bytes functionSignature)",
+    "line_no": 116,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"MetaTransaction\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Anoncats/anoncats-contracts",
+    "path": "contracts/Anoncats.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,uint256 chainId,address verifyingContract)",
+    "line_no": 118,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Anoncats/anoncats-contracts",
+    "path": "contracts/Anoncats.sol",
+    "typehash_name": "DELEGATION_TYPEHASH",
+    "typehash_value": "Delegation(address delegatee,uint256 nonce,uint256 expiry)",
+    "line_no": 121,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Delegation\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "rogerCapone/Yield-Aggregator",
+    "path": "GSToken.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,uint256 chainId,address verifyingContract)",
+    "line_no": 25,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "rogerCapone/Yield-Aggregator",
+    "path": "GSToken.sol",
+    "typehash_name": "DELEGATION_TYPEHASH",
+    "typehash_value": "Delegation(address delegatee,uint256 nonce,uint256 expiry)",
+    "line_no": 30,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Delegation\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "solarteam/solarswap-contracts",
+    "path": "contracts/SyrupBar.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,uint256 chainId,address verifyingContract)",
+    "line_no": 64,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "solarteam/solarswap-contracts",
+    "path": "contracts/SyrupBar.sol",
+    "typehash_name": "DELEGATION_TYPEHASH",
+    "typehash_value": "Delegation(address delegatee,uint256 nonce,uint256 expiry)",
+    "line_no": 70,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Delegation\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "IXS-Finance/nft-metaverse",
+    "path": "contracts/IxsNft.sol",
+    "typehash_name": "EIP712_DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,string version,address verifyingContract,bytes32 salt)",
+    "line_no": 59,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "IXS-Finance/nft-metaverse",
+    "path": "contracts/IxsNft.sol",
+    "typehash_name": "META_TRANSACTION_TYPEHASH",
+    "typehash_value": "MetaTransaction(uint256 nonce,address from,bytes functionSignature)",
+    "line_no": 125,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"MetaTransaction\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "iavl/contracts",
+    "path": "others/GalaxyToken.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,uint256 chainId,address verifyingContract)",
+    "line_no": 917,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "iavl/contracts",
+    "path": "others/GalaxyToken.sol",
+    "typehash_name": "DELEGATION_TYPEHASH",
+    "typehash_value": "Delegation(address delegatee,uint256 nonce,uint256 expiry)",
+    "line_no": 920,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Delegation\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "sablier-labs/evm-monorepo",
+    "path": "airdrops/src/libraries/SignatureHash.sol",
+    "typehash_name": "CLAIM_TYPEHASH",
+    "typehash_value": "Claim(uint256 index,address recipient,address to,uint128 amount,uint40 validFrom)",
+    "line_no": 8,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Claim\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "sablier-labs/evm-monorepo",
+    "path": "airdrops/src/libraries/SignatureHash.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,uint256 chainId,address verifyingContract)",
+    "line_no": 12,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "sablier-labs/evm-monorepo",
+    "path": "airdrops/src/libraries/SignatureHash.sol",
+    "typehash_name": "IDENTITY_TYPEHASH",
+    "typehash_value": "Identity(address recipient,uint40 expireAt)",
+    "line_no": 16,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Identity\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "zeta-chain/app-contracts",
+    "path": "packages/zevm-app-contracts/contracts/instant-rewards/InstantRewards.sol",
+    "typehash_name": "CLAIM_TYPEHASH",
+    "typehash_value": "Claim(address to,uint256 sigExpiration,bytes32 taskId,uint256 amount)",
+    "line_no": 11,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Claim\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "gitcoinco/governance",
+    "path": "contracts/TokenDistributor.sol",
+    "typehash_name": "EIP712DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)",
+    "line_no": 47,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "gitcoinco/governance",
+    "path": "contracts/TokenDistributor.sol",
+    "typehash_name": "GTC_TOKEN_CLAIM_TYPEHASH",
+    "typehash_value": "Claim(uint32 user_id,address user_address,uint256 user_amount,address delegate_address,bytes32 leaf)",
+    "line_no": 52,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Claim\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "rsksmart/tokenbridge",
+    "path": "bridge/flatten/Bridge.sol",
+    "typehash_name": "CLAIM_TYPEHASH",
+    "typehash_value": "0xaf3ac34fea9cc1b1def33a9bdc482d988feb61b5015ae4a55e2a62bb3600d54c",
+    "line_no": 3283,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "cyberconnecthq/cybercontracts",
+    "path": "src/libraries/Constants.sol",
+    "typehash_name": "_PERMIT_TYPEHASH",
+    "typehash_value": "permit(address spender,uint256 tokenId,uint256 nonce,uint256 deadline)",
+    "line_no": 12,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"permit\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "cyberconnecthq/cybercontracts",
+    "path": "src/libraries/Constants.sol",
+    "typehash_name": "_CREATE_PROFILE_TYPEHASH",
+    "typehash_value": "createProfile(address to,string handle,string avatar,string metadata,address operator,uint256 nonce,uint256 deadline)",
+    "line_no": 16,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"createProfile\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "cyberconnecthq/cybercontracts",
+    "path": "src/libraries/Constants.sol",
+    "typehash_name": "_CREATE_PROFILE_ORACLE_TYPEHASH",
+    "typehash_value": "createProfileOracle(address to,string handle,string avatar,string metadata,address operator,uint256 nonce,uint256 deadline,uint80 roundId)",
+    "line_no": 20,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"createProfileOracle\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "cyberconnecthq/cybercontracts",
+    "path": "src/libraries/Constants.sol",
+    "typehash_name": "_SUBSCRIBE_TYPEHASH",
+    "typehash_value": "subscribeWithSig(uint256[] profileIds,bytes[] preDatas,bytes[] postDatas,uint256 nonce,uint256 deadline)",
+    "line_no": 24,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"subscribeWithSig\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "cyberconnecthq/cybercontracts",
+    "path": "src/libraries/Constants.sol",
+    "typehash_name": "_COLLECT_TYPEHASH",
+    "typehash_value": "collectWithSig(address collector,uint256 profileId,uint256 essenceId,bytes data,bytes postDatas,uint256 nonce,uint256 deadline)",
+    "line_no": 28,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"collectWithSig\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "cyberconnecthq/cybercontracts",
+    "path": "src/libraries/Constants.sol",
+    "typehash_name": "_REGISTER_ESSENCE_TYPEHASH",
+    "typehash_value": "registerEssenceWithSig(uint256 profileId,string name,string symbol,string essenceTokenURI,address essenceMw,bool transferable,bytes initData,uint256 nonce,uint256 deadline)",
+    "line_no": 32,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"registerEssenceWithSig\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "cyberconnecthq/cybercontracts",
+    "path": "src/libraries/Constants.sol",
+    "typehash_name": "_SET_METADATA_TYPEHASH",
+    "typehash_value": "setMetadataWithSig(uint256 profileId,string metadata,uint256 nonce,uint256 deadline)",
+    "line_no": 36,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"setMetadataWithSig\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "cyberconnecthq/cybercontracts",
+    "path": "src/libraries/Constants.sol",
+    "typehash_name": "_SET_OPERATOR_APPROVAL_TYPEHASH",
+    "typehash_value": "setOperatorApprovalWithSig(uint256 profileId,address operator,bool approved,uint256 nonce,uint256 deadline)",
+    "line_no": 40,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"setOperatorApprovalWithSig\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "cyberconnecthq/cybercontracts",
+    "path": "src/libraries/Constants.sol",
+    "typehash_name": "_SET_SUBSCRIBE_DATA_TYPEHASH",
+    "typehash_value": "setSubscribeDataWithSig(uint256 profileId,string tokenURI,address mw,bytes data,uint256 nonce,uint256 deadline)",
+    "line_no": 44,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"setSubscribeDataWithSig\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "cyberconnecthq/cybercontracts",
+    "path": "src/libraries/Constants.sol",
+    "typehash_name": "_SET_ESSENCE_DATA_TYPEHASH",
+    "typehash_value": "setEssenceDataWithSig(uint256 profileId,uint256 essenceId,string tokenURI,address mw,bytes data,uint256 nonce,uint256 deadline)",
+    "line_no": 48,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"setEssenceDataWithSig\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "cyberconnecthq/cybercontracts",
+    "path": "src/libraries/Constants.sol",
+    "typehash_name": "_SET_AVATAR_TYPEHASH",
+    "typehash_value": "setAvatarWithSig(uint256 profileId,string avatar,uint256 nonce,uint256 deadline)",
+    "line_no": 52,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"setAvatarWithSig\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "cyberconnecthq/cybercontracts",
+    "path": "src/libraries/Constants.sol",
+    "typehash_name": "_SET_PRIMARY_PROFILE_TYPEHASH",
+    "typehash_value": "setPrimaryProfileWithSig(uint256 profileId,uint256 nonce,uint256 deadline)",
+    "line_no": 56,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"setPrimaryProfileWithSig\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "cyberconnecthq/cybercontracts",
+    "path": "src/libraries/Constants.sol",
+    "typehash_name": "_CLAIM_BOX_TYPEHASH",
+    "typehash_value": "claimBox(address to,uint256 nonce,uint256 deadline)",
+    "line_no": 60,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"claimBox\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "cyberconnecthq/cybercontracts",
+    "path": "src/libraries/Constants.sol",
+    "typehash_name": "_CLAIM_GRAND_TYPEHASH",
+    "typehash_value": "claimGrand(address to,uint256 nonce,uint256 deadline)",
+    "line_no": 62,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"claimGrand\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "cyberconnecthq/cybercontracts",
+    "path": "src/libraries/Constants.sol",
+    "typehash_name": "_CLAIM_TYPEHASH",
+    "typehash_value": "claim(string profileId,address to,address currency,uint256 amount,uint256 nonce,uint256 deadline)",
+    "line_no": 64,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"claim\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "cyberconnecthq/cybercontracts",
+    "path": "src/libraries/Constants.sol",
+    "typehash_name": "_CLAIM721_TYPEHASH",
+    "typehash_value": "claim(string profileId,address to,address currency,uint256 tokenId,uint256 nonce,uint256 deadline)",
+    "line_no": 68,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"claim\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "cyberconnecthq/cybercontracts",
+    "path": "src/libraries/Constants.sol",
+    "typehash_name": "_CLAIM1155_TYPEHASH",
+    "typehash_value": "claim(string profileId,address to,address currency,uint256 tokenId,uint256 amount,uint256 nonce,uint256 deadline)",
+    "line_no": 72,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"claim\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "cyberconnecthq/cybercontracts",
+    "path": "src/libraries/Constants.sol",
+    "typehash_name": "_CLAIM_PROFILE_TYPEHASH",
+    "typehash_value": "claimProfile(address to,string handle,string avatar,string metadata,address operator,uint256 nonce,uint256 deadline)",
+    "line_no": 76,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"claimProfile\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "smartbugs/smartbugs-wild",
+    "path": "contracts/0x06df142f76ae6efb9025779f58f1e109dce402f0.sol",
+    "typehash_name": "CLAIM_TYPEHASH",
+    "typehash_value": "Claim(string lottery,uint256 round,uint256 ticket,uint256 playerHash)",
+    "line_no": 88,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Claim\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "smartbugs/smartbugs-wild",
+    "path": "contracts/0x06df142f76ae6efb9025779f58f1e109dce402f0.sol",
+    "typehash_name": "EIP712DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)",
+    "line_no": 89,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Anish-MutliTalent/Essentialis",
+    "path": "contracts/DocToken.sol",
+    "typehash_name": "CLAIM_TYPEHASH",
+    "typehash_value": "Claim(address recipient,uint256 amount,uint256 nonce,uint256 deadline)",
+    "line_no": 27,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Claim\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "ourzora/zora-token",
+    "path": "src/claim/ZoraTokenCommunityClaim.sol",
+    "typehash_name": "CLAIM_TYPEHASH",
+    "typehash_value": "ClaimWithSignature(address user,address claimTo,uint256 deadline)",
+    "line_no": 22,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"ClaimWithSignature\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "ourzora/zora-token",
+    "path": "src/claim/ZoraTokenCommunityClaim.sol",
+    "typehash_name": "SET_ALLOCATIONS_TYPEHASH",
+    "typehash_value": "SetAllocations(bytes32[] packedData,bytes32 nonce)",
+    "line_no": 23,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"SetAllocations\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "tintinweb/smart-contract-sanctuary-polygon",
+    "path": "contracts/mumbai/f3/F3a2B781B9381295742B71034edEd3D7DEc8197a_Vault.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,uint256 chainId,address verifyingContract)');\n\n    bytes32 public constant CLAIM_TYPEHASH = keccak256('Claim(address account,uint256 amount,uint256 deadline,uint256 nonce)');\n\n    constructor (address tokenAddress_) {\n        controller = msg.sender;\n        tokenAddress = tokenAddress_;\n        uint256 _chainId;\n        assembly {\n            _chainId := chainid()\n        }\n        chainId = _chainId;\n    }\n\n    function approveMigration() public override _controller_ _valid_ {\n        require(migrationTimestamp != 0 && block.timestamp >= migrationTimestamp, 'Vault.approveMigration: migrationTimestamp not met yet');\n        IERC20(tokenAddress).approve(migrationDestination, type(uint256).max);\n        isMigrated = true;\n        emit ApproveMigration(migrationTimestamp, address(this), migrationDestination);\n    }\n\n    function executeMigration(address source) public override _controller_ _valid_ {\n        uint256 _migrationTimestamp = IVault(source).migrationTimestamp();\n        address _migrationDestination = IVault(source).migrationDestination();\n        require(_migrationTimestamp != 0 && block.timestamp >= _migrationTimestamp, 'Vault.executeMigration: migrationTimestamp not met yet');\n        require(_migrationDestination == address(this), 'Vault.executeMigration: not destination address');\n        IERC20(tokenAddress).transferFrom(source, address(this), IERC20(tokenAddress).balanceOf(source));\n        emit ExecuteMigration(_migrationTimestamp, source, address(this));\n    }\n\n    function claim(address account, uint256 amount, uint256 deadline, uint256 nonce, uint8 v, bytes32 r, bytes32 s) public _valid_ {\n        require(block.timestamp <= deadline, 'Vault.claim: signature expired');\n\n        bytes32 domainSeparator = keccak256(abi.encode(DOMAIN_TYPEHASH, keccak256(bytes(name)), chainId, address(this)));\n        bytes32 structHash = keccak256(abi.encode(CLAIM_TYPEHASH, account, amount, deadline, nonce));\n        require(!usedHash[structHash], 'Vault.claim: replay');\n        usedHash[structHash] = true;\n\n        bytes32 digest = keccak256(abi.encodePacked('\\x19\\x01', domainSeparator, structHash));\n        address signatory = ecrecover(digest, v, r, s);\n        require(signatory == controller, 'Vault.claim: unauthorized');\n\n        IERC20(tokenAddress).transfer(account, amount);\n\n        emit Claim(account, amount, deadline, nonce);\n    }\n\n}\n\ninterface IERC20 {\n    function balanceOf(address account) external view returns (uint256);\n    function approve(address account, uint256 amount) external returns (bool);\n    function transfer(address to, uint256 amount) external returns (bool);\n    function transferFrom(address from, address to, uint256 amount) external returns (bool);\n}\n\ninterface IVault {\n    function migrationTimestamp() external view returns (uint256);\n    function migrationDestination() external view returns (address);\n}\n\n// SPDX-License-Identifier: MIT\n\npragma solidity >=0.8.0 <0.9.0;\n\nabstract contract Migratable {\n\n    event PrepareMigration(uint256 migrationTimestamp, address source, address destination);\n\n    event ApproveMigration(uint256 migrationTimestamp, address source, address destination);\n\n    event ExecuteMigration(uint256 migrationTimestamp, address source, address destination);\n\n    address public controller;\n\n    uint256 public migrationTimestamp;\n\n    address public migrationDestination;\n\n    bool public isMigrated;\n\n    modifier _controller_() {\n        require(msg.sender == controller, 'Migratable._controller_: can only called by controller');\n        _;\n    }\n\n    modifier _valid_() {\n        require(!isMigrated, 'Migratable._valid_: cannot proceed, this contract has been migrated');\n        _;\n    }\n\n    function setController(address newController) public _controller_ _valid_ {\n        require(newController != address(0), 'Migratable.setController: to 0 address');\n        controller = newController;\n    }\n\n    function prepareMigration(address destination, uint256 graceDays) public _controller_ _valid_ {\n        require(destination != address(0), 'Migratable.prepareMigration: to 0 address');\n        require(graceDays >= 3 && graceDays <= 365, 'Migratable.prepareMigration: graceDays must be 3-365 days",
+    "line_no": 19,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "quilt/utxo-relayer",
+    "path": "contracts/Utxo.sol",
+    "typehash_name": "CLAIM_TYPEHASH",
+    "typehash_value": "Claim(uint256 input,uint256 gasprice,uint256[] deposits)",
+    "line_no": 62,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Claim\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "quilt/utxo-relayer",
+    "path": "contracts/Utxo.sol",
+    "typehash_name": "TRANSFER_TYPEHASH",
+    "typehash_value": "Transfer(uint256 input0,uint256 input1,address destination,address change,uint256 amount,uint256 gasprice)",
+    "line_no": 63,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Transfer\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "quilt/utxo-relayer",
+    "path": "contracts/Utxo.sol",
+    "typehash_name": "WITHDRAW_TYPEHASH",
+    "typehash_value": "Withdraw(uint256 input,uint256 gasprice)",
+    "line_no": 64,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Withdraw\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "NodleCode/rollup",
+    "path": "src/envelope/EnvelopeLinks.sol",
+    "typehash_name": "CLAIM_TYPEHASH",
+    "typehash_value": "Claim(uint256 index,address recipient,bytes32 mode)",
+    "line_no": 118,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Claim\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "NodleCode/rollup",
+    "path": "src/envelope/EnvelopeLinks.sol",
+    "typehash_name": "MFA_APPROVAL_TYPEHASH",
+    "typehash_value": "MfaApproval(uint256 index,address recipient,uint256 deadline)",
+    "line_no": 120,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"MfaApproval\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "NodleCode/rollup",
+    "path": "src/envelope/EnvelopeLinks.sol",
+    "typehash_name": "FEE_AUTHORIZATION_TYPEHASH",
+    "typehash_value": "FeeAuthorization(address feePayer,address tokenAddress,uint8 contractType,uint256 amount,uint256 tokenId,address claimKey,address onBehalfOf,bool withMFA,address recipient,uint40 reclaimableAfter,uint256 serviceFee,uint256 gaslessFee,bool gaslessSponsored,uint256 deadline)",
+    "line_no": 123,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"FeeAuthorization\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "uni-due-syssec/efcf-framework",
+    "path": "data/smartbugs-top-1000-balance/0xaeb12b5ab62a49c14e72fb3ad2c0e809a9b446b3.sol",
+    "typehash_name": "CLAIM_TYPEHASH",
+    "typehash_value": "Claim(string lottery,uint256 round,uint256 ticket,uint256 playerHash)",
+    "line_no": 89,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Claim\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "uni-due-syssec/efcf-framework",
+    "path": "data/smartbugs-top-1000-balance/0xaeb12b5ab62a49c14e72fb3ad2c0e809a9b446b3.sol",
+    "typehash_name": "EIP712DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)",
+    "line_no": 90,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "drinkcoffee/representative-usage",
+    "path": "src/hunters-on-chain/Claim.sol",
+    "typehash_name": "EIP712_CLAIM_TYPEHASH",
+    "typehash_value": "EIP712Claim(uint256 amount,address wallet,uint48 gameId,uint256 nonce)",
+    "line_no": 21,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Claim\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "ibraziz21/MiniMiles",
+    "path": "packages/hardhat/contracts/DailyQuestClaimer.sol",
+    "typehash_name": "QUEST_CLAIM_TYPEHASH",
+    "typehash_value": "QuestClaim(address user,uint256 amount,uint256 dayNonce,uint256 deadline)",
+    "line_no": 34,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"QuestClaim\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "DeCleanup-Network/decleanup-main-celo",
+    "path": "contracts/contracts/ClaimVault.sol",
+    "typehash_name": "CLAIM_TYPEHASH",
+    "typehash_value": "Claim(address recipient,uint256 amount,uint8 category,uint256 nonce,uint256 expiry)",
+    "line_no": 29,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Claim\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "1inch/fusion-protocol",
+    "path": "contracts/KycNFT.sol",
+    "typehash_name": "MINT_TYPEHASH",
+    "typehash_value": "Mint(address to,uint256 nonce,uint256 tokenId,uint256 deadline)",
+    "line_no": 23,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Mint\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "1inch/fusion-protocol",
+    "path": "contracts/KycNFT.sol",
+    "typehash_name": "TRANSFER_FROM_TYPEHASH",
+    "typehash_value": "TransferFrom(address to,uint256 nonce,uint256 tokenId,uint256 deadline)",
+    "line_no": 24,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"TransferFrom\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "flashbots/suapp-examples",
+    "path": "examples/crosschain-NFT-mint/L1/src/NFTEE.sol",
+    "typehash_name": "MINT_TYPEHASH",
+    "typehash_value": "0x686aa0ee2a8dd75ace6f66b3a5e79d3dfd8e25e05a5e494bb85e72214ab37880",
+    "line_no": 18,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "thesandboxgame/sandbox-smart-contracts",
+    "path": "packages/asset/contracts/AssetCreate.sol",
+    "typehash_name": "MINT_TYPEHASH",
+    "typehash_value": "Mint(address creator,uint16 nonce,uint8 tier,uint256 amount,bool revealed,string metadataHash)",
+    "line_no": 75,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Mint\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "thesandboxgame/sandbox-smart-contracts",
+    "path": "packages/asset/contracts/AssetCreate.sol",
+    "typehash_name": "MINT_BATCH_TYPEHASH",
+    "typehash_value": "MintBatch(address creator,uint16 nonce,uint8[] tiers,uint256[] amounts,bool[] revealed,string[] metadataHashes)",
+    "line_no": 78,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"MintBatch\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "thesandboxgame/sandbox-smart-contracts",
+    "path": "packages/asset/contracts/AssetCreate.sol",
+    "typehash_name": "LAZY_MINT_TYPEHASH",
+    "typehash_value": "LazyMint(address caller,address creator,uint16 nonce,uint8 tier,uint256 amount,uint256 unitPrice,address paymentToken,string metadataHash,uint256 maxSupply,uint256 expirationTime)",
+    "line_no": 83,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"LazyMint\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "thesandboxgame/sandbox-smart-contracts",
+    "path": "packages/asset/contracts/AssetCreate.sol",
+    "typehash_name": "LAZY_MINT_BATCH_TYPEHASH",
+    "typehash_value": "LazyMintBatch(address caller,address[] creators,uint16 nonce,uint8[] tiers,uint256[] amounts,uint256[] unitPrices,address[] paymentTokens,string[] metadataHashes,uint256[] maxSupplies,uint256 expirationTime)",
+    "line_no": 88,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"LazyMintBatch\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "horsefacts/base-mint-with-warps",
+    "path": "contracts/zora-minter/src/ZoraMinter.sol",
+    "typehash_name": "MINT_TYPEHASH",
+    "typehash_value": "Mint(address to,uint256 tokenId,uint256 fid)",
+    "line_no": 34,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Mint\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "multibit-repo/multibit",
+    "path": "src/BRC20Factory.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)",
+    "line_no": 11,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "multibit-repo/multibit",
+    "path": "src/BRC20Factory.sol",
+    "typehash_name": "MINT_TYPEHASH",
+    "typehash_value": "Mint(address token,address to,uint256 amount,string txid)",
+    "line_no": 12,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Mint\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Ensoul-Labs/ensoul-sbt-contract",
+    "path": "contracts/v1/Ensoul.sol",
+    "typehash_name": "MINT_TO_BATCH_ADDRESS_TYPEHASH",
+    "typehash_value": "mintToBatchAddressBySignature(address[] toList,uint256 tokenId,uint256 amount,uint256 expiration)",
+    "line_no": 24,
+    "is_hex": false,
+    "validation": {
+      "is_valid": false,
+      "errors": [
+        {
+          "type": "PARAM_COUNT",
+          "details": "TYPEHASH=4 params, Func=7 params"
+        }
+      ],
+      "func_name": "mintToBatchAddressBySignature",
+      "func_params": [
+        {
+          "name": "toList",
+          "type": "address[]"
+        },
+        {
+          "name": "tokenId",
+          "type": "uint256"
+        },
+        {
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "name": "expiration",
+          "type": "uint256"
+        },
+        {
+          "name": "v",
+          "type": "uint8"
+        },
+        {
+          "name": "r",
+          "type": "bytes32"
+        },
+        {
+          "name": "s",
+          "type": "bytes32"
+        }
+      ],
+      "th_params": [
+        "address[]",
+        "uint256",
+        "uint256",
+        "uint256"
+      ]
+    }
+  },
+  {
+    "repo": "Ensoul-Labs/ensoul-sbt-contract",
+    "path": "contracts/v1/Ensoul.sol",
+    "typehash_name": "MINT_TYPEHASH",
+    "typehash_value": "mintBySignature(address to,uint256 tokenId,uint256 amount,uint256 expiration)",
+    "line_no": 27,
+    "is_hex": false,
+    "validation": {
+      "is_valid": false,
+      "errors": [
+        {
+          "type": "PARAM_COUNT",
+          "details": "TYPEHASH=4 params, Func=7 params"
+        }
+      ],
+      "func_name": "mintBySignature",
+      "func_params": [
+        {
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "name": "tokenId",
+          "type": "uint256"
+        },
+        {
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "name": "expiration",
+          "type": "uint256"
+        },
+        {
+          "name": "v",
+          "type": "uint8"
+        },
+        {
+          "name": "r",
+          "type": "bytes32"
+        },
+        {
+          "name": "s",
+          "type": "bytes32"
+        }
+      ],
+      "th_params": [
+        "address",
+        "uint256",
+        "uint256",
+        "uint256"
+      ]
+    }
+  },
+  {
+    "repo": "NethermindEth/yayois-garden",
+    "path": "contracts/src/YayoiCollection.sol",
+    "typehash_name": "MINT_TYPEHASH",
+    "typehash_value": "Mint(address to,string uri)",
+    "line_no": 34,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Mint\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "zeroXbrock/chatNFT",
+    "path": "src/contracts/src/ethL1/NFTEE2.sol",
+    "typehash_name": "MINT_TYPEHASH",
+    "typehash_value": "0x686aa0ee2a8dd75ace6f66b3a5e79d3dfd8e25e05a5e494bb85e72214ab37880",
+    "line_no": 27,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Virentanti/nftmarketplace",
+    "path": "contracts/Collection721.sol",
+    "typehash_name": "MINT_TYPEHASH",
+    "typehash_value": "mint(address to,uint256 tokenId)",
+    "line_no": 27,
+    "is_hex": false,
+    "validation": {
+      "is_valid": false,
+      "errors": [
+        {
+          "type": "PARAM_COUNT",
+          "details": "TYPEHASH=2 params, Func=3 params"
+        }
+      ],
+      "func_name": "mint",
+      "func_params": [
+        {
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "name": "tokenId",
+          "type": "uint256"
+        },
+        {
+          "name": "signature",
+          "type": "bytes"
+        }
+      ],
+      "th_params": [
+        "address",
+        "uint256"
+      ]
+    }
+  },
+  {
+    "repo": "Virentanti/nftmarketplace",
+    "path": "contracts/Collection721.sol",
+    "typehash_name": "BATCHMINT_TYPEHASH",
+    "typehash_value": "batchMint(address[] to,uint256[] tokenIds)",
+    "line_no": 29,
+    "is_hex": false,
+    "validation": {
+      "is_valid": false,
+      "errors": [
+        {
+          "type": "PARAM_COUNT",
+          "details": "TYPEHASH=2 params, Func=3 params"
+        }
+      ],
+      "func_name": "batchMint",
+      "func_params": [
+        {
+          "name": "to",
+          "type": "address[]"
+        },
+        {
+          "name": "tokenIds",
+          "type": "uint256[]"
+        },
+        {
+          "name": "signature",
+          "type": "bytes"
+        }
+      ],
+      "th_params": [
+        "address[]",
+        "uint256[]"
+      ]
+    }
+  },
+  {
+    "repo": "Virentanti/nftmarketplace",
+    "path": "contracts/Collection721.sol",
+    "typehash_name": "DISABLEMINT_TYPEHASH",
+    "typehash_value": "disableMint()",
+    "line_no": 31,
+    "is_hex": false,
+    "validation": {
+      "is_valid": false,
+      "errors": [
+        {
+          "type": "PARAM_COUNT",
+          "details": "TYPEHASH=0 params, Func=1 params"
+        }
+      ],
+      "func_name": "disableMint",
+      "func_params": [
+        {
+          "name": "signature",
+          "type": "bytes"
+        }
+      ],
+      "th_params": []
+    }
+  },
+  {
+    "repo": "coinvise/contracts",
+    "path": "contracts/tokens/contracts/tokens/erc721/ERC721Token.sol",
+    "typehash_name": "_MINT_TYPEHASH",
+    "typehash_value": "Mint(address to)",
+    "line_no": 40,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Mint\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "ZaK3939/Frameworks-Frouge",
+    "path": "contracts/src/FrougeNFT.sol",
+    "typehash_name": "MINT_TYPEHASH",
+    "typehash_value": "Mint(address to,uint256 tokenId,uint256 fid,uint256 score)",
+    "line_no": 44,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Mint\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "sofa-org/sofa-protocol",
+    "path": "contracts/vaults/RCHDualVault.sol",
+    "typehash_name": "EIP712DOMAIN_TYPEHASH",
+    "typehash_value": "0x8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f",
+    "line_no": 44,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "sofa-org/sofa-protocol",
+    "path": "contracts/vaults/RCHDualVault.sol",
+    "typehash_name": "MINT_TYPEHASH",
+    "typehash_value": "0xadc8ab1b9b31223fe0b8ae794dc96fe3ad50967c62e34e24108ef68cfa512ec2",
+    "line_no": 48,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "tintinweb/smart-contract-sanctuary-polygon",
+    "path": "contracts/mumbai/2b/2bB84e4dB53B46B1c7f4F8a64217e62cc41351B0_Gen2Trainer.sol",
+    "typehash_name": "typeHash",
+    "typehash_value": "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)",
+    "line_no": 56,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "codinghistorian/EIP712_batchMetatransaction",
+    "path": "contracts/4_ReceiverV8.sol",
+    "typehash_name": "EIP712DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)",
+    "line_no": 34,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "codinghistorian/EIP712_batchMetatransaction",
+    "path": "contracts/4_ReceiverV8.sol",
+    "typehash_name": "MINT_TYPEHASH",
+    "typehash_value": "Mint(uint256 amount,address target,uint256 nonce)",
+    "line_no": 38,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Mint\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Jiashuo-Zhang/CryptoScan",
+    "path": "Dataset/SourceCode/ProjectKaito_0x31a7d612788277457c03e34ecd4efe4d6e6a8e39.sol",
+    "typehash_name": "WHITELIST_MINT_TYPEHASH",
+    "typehash_value": "WhitelistMint(address user,uint256 quantity,uint256 deadline)",
+    "line_no": 33,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"WhitelistMint\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Jiashuo-Zhang/CryptoScan",
+    "path": "Dataset/SourceCode/ProjectKaito_0x31a7d612788277457c03e34ecd4efe4d6e6a8e39.sol",
+    "typehash_name": "TEAM_MINT_TYPEHASH",
+    "typehash_value": "TeamMint(address user,uint256 quantity,uint256 deadline)",
+    "line_no": 37,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"TeamMint\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "ZhangZhuoSJTU/Web3Bugs",
+    "path": "contracts/59/src/contracts/ERC20Permit.sol",
+    "typehash_name": "PERMIT_TYPEHASH",
+    "typehash_value": "Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)",
+    "line_no": 16,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Permit\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "ZhangZhuoSJTU/Web3Bugs",
+    "path": "contracts/59/src/contracts/ERC20Permit.sol",
+    "typehash_name": "TRANSFER_TYPEHASH",
+    "typehash_value": "Transfer(address owner,address to,uint256 value,uint256 nonce,uint256 deadline)",
+    "line_no": 17,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Transfer\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "farcasterxyz/contracts",
+    "path": "src/IdRegistry.sol",
+    "typehash_name": "TRANSFER_TYPEHASH",
+    "typehash_value": "Transfer(uint256 fid,address to,uint256 nonce,uint256 deadline)",
+    "line_no": 37,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Transfer\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "farcasterxyz/contracts",
+    "path": "src/IdRegistry.sol",
+    "typehash_name": "TRANSFER_AND_CHANGE_RECOVERY_TYPEHASH",
+    "typehash_value": "TransferAndChangeRecovery(uint256 fid,address to,address recovery,uint256 nonce,uint256 deadline)",
+    "line_no": 43,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"TransferAndChangeRecovery\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "farcasterxyz/contracts",
+    "path": "src/IdRegistry.sol",
+    "typehash_name": "CHANGE_RECOVERY_ADDRESS_TYPEHASH",
+    "typehash_value": "ChangeRecoveryAddress(uint256 fid,address from,address to,uint256 nonce,uint256 deadline)",
+    "line_no": 49,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"ChangeRecoveryAddress\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "rarible/protocol-contracts",
+    "path": "projects/lazy-mint/contracts/erc-1155/LibERC1155LazyMint.sol",
+    "typehash_name": "MINT_AND_TRANSFER_TYPEHASH",
+    "typehash_value": "Mint1155(uint256 tokenId,uint256 supply,string tokenURI,Part[] creators,Part[] royalties)Part(address account,uint96 value)",
+    "line_no": 20,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Mint1155\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "solidproof/Projects",
+    "path": "Mida/Contracts/MidaBep20.sol",
+    "typehash_name": "PERMIT_TYPEHASH",
+    "typehash_value": "Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)",
+    "line_no": 160,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Permit\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "solidproof/Projects",
+    "path": "Mida/Contracts/MidaBep20.sol",
+    "typehash_name": "TRANSFER_TYPEHASH",
+    "typehash_value": "Transfer(address owner,address to,uint256 value,uint256 nonce,uint256 deadline)",
+    "line_no": 161,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Transfer\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "connext/chaindata",
+    "path": "AnyswapV4ERC20.sol",
+    "typehash_name": "PERMIT_TYPEHASH",
+    "typehash_value": "Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)",
+    "line_no": 123,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Permit\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "connext/chaindata",
+    "path": "AnyswapV4ERC20.sol",
+    "typehash_name": "TRANSFER_TYPEHASH",
+    "typehash_value": "Transfer(address owner,address to,uint256 value,uint256 nonce,uint256 deadline)",
+    "line_no": 124,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Transfer\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "w3hc/eip7702-playground",
+    "path": "src/Sponsor.sol",
+    "typehash_name": "SPONSORED_TRANSFER_TYPEHASH",
+    "typehash_value": "SponsoredTransfer(address sender,address recipient,uint256 amount,uint256 nonce)",
+    "line_no": 55,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"SponsoredTransfer\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "smartbugs/smartbugs-wild",
+    "path": "contracts/0xb106f18df9c547da65c7576d613246ff45bed516.sol",
+    "typehash_name": "EIP712DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)",
+    "line_no": 50,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "smartbugs/smartbugs-wild",
+    "path": "contracts/0xb106f18df9c547da65c7576d613246ff45bed516.sol",
+    "typehash_name": "ORDER_TYPEHASH",
+    "typehash_value": "Order(address fromToken,uint256 fromAmount,address toToken,uint256 toAmount,uint256 autoWithdraw,uint256 expires,uint256 nonce)",
+    "line_no": 51,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Order\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "smartbugs/smartbugs-wild",
+    "path": "contracts/0xb106f18df9c547da65c7576d613246ff45bed516.sol",
+    "typehash_name": "ORDER_WITH_TIPS_TYPEHASH",
+    "typehash_value": "OrderWithTips(address fromToken,uint256 fromAmount,address toToken,uint256 toAmount,uint256 autoWithdraw,uint256 expires,uint256 nonce,uint256 makerTips,uint256 takerTips)",
+    "line_no": 52,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"OrderWithTips\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "smartbugs/smartbugs-wild",
+    "path": "contracts/0xb106f18df9c547da65c7576d613246ff45bed516.sol",
+    "typehash_name": "ORDER_PAYMENT_TYPEHASH",
+    "typehash_value": "OrderPayment(address spendToken,uint256 spendAmount,address merchantReceiveToken,uint256 merchantReceiveAmount,address merchant,uint256 expires,uint256 nonce)",
+    "line_no": 53,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"OrderPayment\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "smartbugs/smartbugs-wild",
+    "path": "contracts/0xb106f18df9c547da65c7576d613246ff45bed516.sol",
+    "typehash_name": "WITHDRAWAL_TYPEHASH",
+    "typehash_value": "Withdrawal(address withdrawToken,uint256 amount,uint256 nonce)",
+    "line_no": 54,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Withdrawal\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "smartbugs/smartbugs-wild",
+    "path": "contracts/0xb106f18df9c547da65c7576d613246ff45bed516.sol",
+    "typehash_name": "TIPS_TYPEHASH",
+    "typehash_value": "Tips(address tipsToken,uint256 amount,uint256 nonce)",
+    "line_no": 55,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Tips\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "smartbugs/smartbugs-wild",
+    "path": "contracts/0xb106f18df9c547da65c7576d613246ff45bed516.sol",
+    "typehash_name": "TRANSFER_TYPEHASH",
+    "typehash_value": "Transfer(address transferToken,address to,uint256 amount,uint256 nonce)",
+    "line_no": 56,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Transfer\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "UniverseXYZ/Universe-Marketplace",
+    "path": "contracts/lib/LibERC721LazyMint.sol",
+    "typehash_name": "MINT_AND_TRANSFER_TYPEHASH",
+    "typehash_value": "Mint721(string tokenURI,Part[] royalties)Part(address account,uint96 value)",
+    "line_no": 15,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Mint721\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "kyscott18/ilrta",
+    "path": "src/Permit3.sol",
+    "typehash_name": "TRANSFER_DETAILS_TYPEHASH",
+    "typehash_value": "TransferDetails(address token,uint8 tokenType,uint32 functionSelector,bytes transferDetails)",
+    "line_no": 86,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"TransferDetails\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "kyscott18/ilrta",
+    "path": "src/Permit3.sol",
+    "typehash_name": "TRANSFER_DETAILS_ERC20_TYPEHASH",
+    "typehash_value": "TransferDetails(address token,uint256 amount)",
+    "line_no": 89,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"TransferDetails\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "kyscott18/ilrta",
+    "path": "src/Permit3.sol",
+    "typehash_name": "TRANSFER_TYPEHASH",
+    "typehash_value": "Transfer(TransferDetails transferDetails,address spender,uint256 nonce,uint256 deadline)TransferDetails(address token,uint8 tokenType,uint32 functionSelector,bytes transferDetails)",
+    "line_no": 92,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Transfer\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "kyscott18/ilrta",
+    "path": "src/Permit3.sol",
+    "typehash_name": "TRANSFER_ERC20_TYPEHASH",
+    "typehash_value": "Transfer(TransferDetails transferDetails,address spender,uint256 nonce,uint256 deadline)TransferDetails(address token,uint256 amount)",
+    "line_no": 96,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Transfer\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "kyscott18/ilrta",
+    "path": "src/Permit3.sol",
+    "typehash_name": "TRANSFER_BATCH_TYPEHASH",
+    "typehash_value": "Transfer(TransferDetails[] transferDetails,address spender,uint256 nonce,uint256 deadline)TransferDetails(address token,uint8 tokenType,uint32 functionSelector,bytes transferDetails)",
+    "line_no": 100,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Transfer\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "kyscott18/ilrta",
+    "path": "src/Permit3.sol",
+    "typehash_name": "TRANSFER_BATCH_ERC20_TYPEHASH",
+    "typehash_value": "Transfer(TransferDetails[] transferDetails,address spender,uint256 nonce,uint256 deadline)TransferDetails(address token,uint256 amount)",
+    "line_no": 104,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Transfer\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "sturdyfi/sturdy-contracts",
+    "path": "contracts/mocks/tokens/MockWBTCForFTM.sol",
+    "typehash_name": "PERMIT_TYPEHASH",
+    "typehash_value": "Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)');\n  bytes32 private constant TRANSFER_TYPEHASH =\n    keccak256('Transfer(address owner,address to,uint256 value,uint256 nonce,uint256 deadline)');\n  bytes32 public immutable DOMAIN_SEPARATOR;\n\n  /// @dev Records amount of WERC10 token owned by account.\n  mapping(address => uint256) public override balanceOf;\n  uint256 private _totalSupply;\n\n  address private _oldOwner;\n  address private _newOwner;\n  uint256 private _newOwnerEffectiveTime;\n\n  modifier onlyOwner() {\n    require(msg.sender == owner(), 'only owner');\n    _;\n  }\n\n  function owner() public view returns (address) {\n    if (block.timestamp >= _newOwnerEffectiveTime) {\n      return _newOwner;\n    }\n    return _oldOwner;\n  }\n\n  function changeDCRMOwner(address newOwner) public onlyOwner returns (bool) {\n    require(newOwner != address(0), 'new owner is the zero address');\n    _oldOwner = owner();\n    _newOwner = newOwner;\n    _newOwnerEffectiveTime = block.timestamp + 2 * 24 * 3600;\n    emit LogChangeDCRMOwner(_oldOwner, _newOwner, _newOwnerEffectiveTime);\n    return true;\n  }\n\n  function Swapin(\n    bytes32 txhash,\n    address account,\n    uint256 amount\n  ) public onlyOwner returns (bool) {\n    _mint(account, amount);\n    emit LogSwapin(txhash, account, amount);\n    return true;\n  }\n\n  function Swapout(uint256 amount, address bindaddr) public returns (bool) {\n    require(bindaddr != address(0), 'bind address is the zero address');\n    _burn(msg.sender, amount);\n    emit LogSwapout(msg.sender, bindaddr, amount);\n    return true;\n  }\n\n  /// @dev Records current ERC2612 nonce for account. This value must be included whenever signature is generated for {permit}.\n  /// Every successful call to {permit} increases account's nonce by one. This prevents signature from being used multiple times.\n  mapping(address => uint256) public override nonces;\n\n  /// @dev Records number of WERC10 token that account (second) will be allowed to spend on behalf of another account (first) through {transferFrom}.\n  mapping(address => mapping(address => uint256)) public override allowance;\n\n  event LogChangeDCRMOwner(\n    address indexed oldOwner,\n    address indexed newOwner,\n    uint256 indexed effectiveTime\n  );\n  event LogSwapin(bytes32 indexed txhash, address indexed account, uint256 amount);\n  event LogSwapout(address indexed account, address indexed bindaddr, uint256 amount);\n\n  constructor(\n    string memory _name,\n    string memory _symbol,\n    uint8 _decimals,\n    address _owner\n  ) {\n    name = _name;\n    symbol = _symbol;\n    decimals = _decimals;\n\n    _newOwner = _owner;\n    _newOwnerEffectiveTime = block.timestamp;\n\n    uint256 chainId;\n    assembly {\n      chainId := chainid()\n    }\n    DOMAIN_SEPARATOR = keccak256(\n      abi.encode(\n        keccak256(\n          'EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)'\n        ),\n        keccak256(bytes(name)),\n        keccak256(bytes('1')),\n        chainId,\n        address(this)\n      )\n    );\n  }\n\n  /// @dev Returns the total supply of WERC10 token as the ETH held in this contract.\n  function totalSupply() external view override returns (uint256) {\n    return _totalSupply;\n  }\n\n  /** @dev Creates `amount` tokens and assigns them to `account`, increasing\n   * the total supply.\n   *\n   * Emits a {Transfer} event with `from` set to the zero address.\n   *\n   * Requirements\n   *\n   * - `to` cannot be the zero address.\n   */\n  function _mint(address account, uint256 amount) internal {\n    require(account != address(0), 'ERC20: mint to the zero address');\n\n    _totalSupply += amount;\n    balanceOf[account] += amount;\n    emit Transfer(address(0), account, amount);\n  }\n\n  /**\n   * @dev Destroys `amount` tokens from `account`, reducing the\n   * total supply.\n   *\n   * Emits a {Transfer} event with `to` set to the zero address.\n   *\n   * Requirements\n   *\n   * - `account` cannot be the zero address.\n   * - `account` must have at least `amount` tokens.\n   */\n  function _burn(address account, uint256 amount) internal {\n    require(account != address(0), 'ERC20: burn from the zero address');\n\n    balanceOf[account] -= amount;\n    _totalSupply -= amount;\n    emit Transfer(account, address(0), amount);\n  }\n\n  /// @dev Sets `value` as allowance of `spender` account over caller account's WERC10 token.\n  /// Emits {Approval} event.\n  /// Returns boolean value indicating whether operation succeeded.\n  function approve(address spender, uint256 value) external override returns (bool) {\n    // _approve(msg.sender, spender, value);\n    allowance[msg.sender][spender] = value;\n    emit Approval(msg.sender, spender, value);\n\n    return true;\n  }\n\n  /// @dev Sets `value` as allowance of `spender` account over caller account's WERC10 token,\n  /// after which a call is executed to an ERC677-compliant contract with the `data` parameter.\n  /// Emits {Approval} event.\n  /// Returns boolean value indicating whether operation succeeded.\n  /// For more information on approveAndCall format, see https://github.com/ethereum/EIPs/issues/677.\n  function approveAndCall(\n    address spender,\n    uint256 value,\n    bytes calldata data\n  ) external override returns (bool) {\n    // _approve(msg.sender, spender, value);\n    allowance[msg.sender][spender] = value;\n    emit Approval(msg.sender, spender, value);\n\n    return IApprovalReceiver(spender).onTokenApproval(msg.sender, value, data);\n  }\n\n  /// @dev Sets `value` as allowance of `spender` account over `owner` account's WERC10 token, given `owner` account's signed approval.\n  /// Emits {Approval} event.\n  /// Requirements:\n  ///   - `deadline` must be timestamp in future.\n  ///   - `v`, `r` and `s` must be valid `secp256k1` signature from `owner` account over EIP712-formatted function arguments.\n  ///   - the signature must use `owner` account's current nonce (see {nonces}).\n  ///   - the signer cannot be zero address and must be `owner` account.\n  /// For more information on signature format, see https://eips.ethereum.org/EIPS/eip-2612#specification[relevant EIP section].\n  /// WERC10 token implementation adapted from https://github.com/albertocuestacanada/ERC20Permit/blob/master/contracts/ERC20Permit.sol.\n  function permit(\n    address target,\n    address spender,\n    uint256 value,\n    uint256 deadline,\n    uint8 v,\n    bytes32 r,\n    bytes32 s\n  ) external override {\n    require(block.timestamp <= deadline, 'WERC10: Expired permit');\n\n    bytes32 hashStruct = keccak256(\n      abi.encode(PERMIT_TYPEHASH, target, spender, value, nonces[target]++, deadline)\n    );\n\n    require(\n      verifyEIP712(target, hashStruct, v, r, s) || verifyPersonalSign(target, hashStruct, v, r, s)\n    );\n\n    // _approve(owner, spender, value);\n    allowance[target][spender] = value;\n    emit Approval(target, spender, value);\n  }\n\n  function transferWithPermit(\n    address target,\n    address to,\n    uint256 value,\n    uint256 deadline,\n    uint8 v,\n    bytes32 r,\n    bytes32 s\n  ) external returns (bool) {\n    require(block.timestamp <= deadline, 'WERC10: Expired permit');\n\n    bytes32 hashStruct = keccak256(\n      abi.encode(TRANSFER_TYPEHASH, target, to, value, nonces[target]++, deadline)\n    );\n\n    require(\n      verifyEIP712(target, hashStruct, v, r, s) || verifyPersonalSign(target, hashStruct, v, r, s)\n    );\n\n    require(to != address(0) || to != address(this));\n\n    uint256 balance = balanceOf[target];\n    require(balance >= value, 'WERC10: transfer amount exceeds balance');\n\n    balanceOf[target] = balance - value;\n    balanceOf[to] += value;\n    emit Transfer(target, to, value);\n\n    return true;\n  }\n\n  function verifyEIP712(\n    address target,\n    bytes32 hashStruct,\n    uint8 v,\n    bytes32 r,\n    bytes32 s\n  ) internal view returns (bool) {\n    bytes32 hash = keccak256(abi.encodePacked('\\x19\\x01', DOMAIN_SEPARATOR, hashStruct));\n    address signer = ecrecover(hash, v, r, s);\n    return (signer != address(0) && signer == target);\n  }\n\n  function verifyPersonalSign(\n    address target,\n    bytes32 hashStruct,\n    uint8 v,\n    bytes32 r,\n    bytes32 s\n  ) internal pure returns (bool) {\n    bytes32 hash = prefixed(hashStruct);\n    address signer = ecrecover(hash, v, r, s);\n    return (signer != address(0) && signer == target);\n  }\n\n  // Builds a prefixed hash to mimic the behavior of eth_sign.\n  function prefixed(bytes32 hash) internal pure returns (bytes32) {\n    return keccak256(abi.encodePacked('\\x19Ethereum Signed Message:\\n32', hash));\n  }\n\n  /// @dev Moves `value` WERC10 token from caller's account to account (`to`).\n  /// A transfer to `address(0)` triggers an ETH withdraw matching the sent WERC10 token in favor of caller.\n  /// Emits {Transfer} event.\n  /// Returns boolean value indicating whether operation succeeded.\n  /// Requirements:\n  ///   - caller account must have at least `value` WERC10 token.\n  function transfer(address to, uint256 value) external override returns (bool) {\n    require(to != address(0) || to != address(this));\n    uint256 balance = balanceOf[msg.sender];\n    require(balance >= value, 'WERC10: transfer amount exceeds balance');\n\n    balanceOf[msg.sender] = balance - value;\n    balanceOf[to] += value;\n    emit Transfer(msg.sender, to, value);\n\n    return true;\n  }\n\n  /// @dev Moves `value` WERC10 token from account (`from`) to account (`to`) using allowance mechanism.\n  /// `value` is then deducted from caller account's allowance, unless set to `type(uint256).max`.\n  /// A transfer to `address(0)` triggers an ETH withdraw matching the sent WERC10 token in favor of caller.\n  /// Emits {Approval} event to reflect reduced allowance `value` for caller account to spend from account (`from`),\n  /// unless allowance is set to `type(uint256).max`\n  /// Emits {Transfer} event.\n  /// Returns boolean value indicating whether operation succeeded.\n  /// Requirements:\n  ///   - `from` account must have at least `value` balance of WERC10 token.\n  ///   - `from` account must have approved caller to spend at least `value` of WERC10 token, unless `from` and caller are the same account.\n  function transferFrom(\n    address from,\n    address to,\n    uint256 value\n  ) external override returns (bool) {\n    require(to != address(0) || to != address(this));\n    if (from != msg.sender) {\n      // _decreaseAllowance(from, msg.sender, value);\n      uint256 allowed = allowance[from][msg.sender];\n      if (allowed < type(uint256).max) {\n        require(allowed >= value, 'WERC10: request exceeds allowance');\n        uint256 reduced = allowed - value;\n        allowance[from][msg.sender] = reduced;\n        emit Approval(from, msg.sender, reduced);\n      }\n    }\n\n    uint256 balance = balanceOf[from];\n    require(balance >= value, 'WERC10: transfer amount exceeds balance');\n\n    balanceOf[from] = balance - value;\n    balanceOf[to] += value;\n    emit Transfer(from, to, value);\n\n    return true;\n  }\n\n  /// @dev Moves `value` WERC10 token from caller's account to account (`to`),\n  /// after which a call is executed to an ERC677-compliant contract with the `data` parameter.\n  /// A transfer to `address(0)` triggers an ETH withdraw matching the sent WERC10 token in favor of caller.\n  /// Emits {Transfer} event.\n  /// Returns boolean value indicating whether operation succeeded.\n  /// Requirements:\n  ///   - caller account must have at least `value` WERC10 token.\n  /// For more information on transferAndCall format, see https://github.com/ethereum/EIPs/issues/677.\n  function transferAndCall(\n    address to,\n    uint256 value,\n    bytes calldata data\n  ) external override returns (bool) {\n    require(to != address(0) || to != address(this));\n\n    uint256 balance = balanceOf[msg.sender];\n    require(balance >= value, 'WERC10: transfer amount exceeds balance",
+    "line_no": 253,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Permit\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "AmbireTech/code4rena",
+    "path": "contracts/wallet/QuickAccManager.sol",
+    "typehash_name": "TRANSFER_TYPEHASH",
+    "typehash_value": "Transfer(address tokenAddr,address to,uint256 value,uint256 fee,uint256 nonce)');\n\tstruct Transfer { address token; address to; uint amount; uint fee; }\n\t// WARNING: if the signature of this is changed, we have to change IdentityFactory\n\tfunction sendTransfer(Identity identity, QuickAccount calldata acc, bytes calldata sigOne, bytes calldata sigTwo, Transfer calldata t) external {\n\t\trequire(identity.privileges(address(this)) == keccak256(abi.encode(acc)), 'WRONG_ACC_OR_NO_PRIV');\n\n\t\tbytes32 hash = keccak256(abi.encodePacked(\n\t\t\t'\\x19\\x01',\n\t\t\tDOMAIN_SEPARATOR,\n\t\t\tkeccak256(abi.encode(TRANSFER_TYPEHASH, t.token, t.to, t.amount, t.fee, nonces[address(identity)]++))\n\t\t));\n\t\trequire(acc.one == SignatureValidator.recoverAddr(hash, sigOne), 'SIG_ONE');\n\t\trequire(acc.two == SignatureValidator.recoverAddr(hash, sigTwo), 'SIG_TWO');\n\t\tIdentity.Transaction[] memory txns = new Identity.Transaction[](2);\n\t\ttxns[0].to = t.token;\n\t\ttxns[0].data = abi.encodeWithSelector(IERC20.transfer.selector, t.to, t.amount);\n\t\ttxns[1].to = t.token;\n\t\ttxns[1].data = abi.encodeWithSelector(IERC20.transfer.selector, msg.sender, t.fee);\n\t\tidentity.executeBySender(txns);\n\t}\n\n\t// Reference for arrays: https://github.com/sportx-bet/smart-contracts/blob/e36965a0c4748bf73ae15ed3cab5660c9cf722e1/contracts/impl/trading/EIP712FillHasher.sol\n\t// and https://eips.ethereum.org/EIPS/eip-712\n\t// and for signTypedData_v4: https://gist.github.com/danfinlay/750ce1e165a75e1c3387ec38cf452b71\n\tstruct Txn { string description; address to; uint value; bytes data; }\n\tbytes32 private TXNS_TYPEHASH = keccak256('Txn(string description,address to,uint256 value,bytes data)');\n\tbytes32 private BUNDLE_TYPEHASH = keccak256('Bundle(uint256 nonce,Txn[] transactions)');\n\t// WARNING: if the signature of this is changed, we have to change IdentityFactory\n\tfunction sendTxns(Identity identity, QuickAccount calldata acc, bytes calldata sigOne, bytes calldata sigTwo, Txn[] calldata txns) external {\n\t\trequire(identity.privileges(address(this)) == keccak256(abi.encode(acc)), 'WRONG_ACC_OR_NO_PRIV');\n\n\t\t// hashing + prepping args\n\t\tbytes32[] memory txnBytes = new bytes32[](txns.length);\n\t\tIdentity.Transaction[] memory identityTxns = new Identity.Transaction[](txns.length);\n\t\tfor (uint256 i = 0; i < txns.length; i++) {\n\t\t\ttxnBytes[i] = keccak256(abi.encode(TXNS_TYPEHASH, txns[i].description, txns[i].to, txns[i].value, txns[i].data));\n\t\t\tidentityTxns[i].to = txns[i].to;\n\t\t\tidentityTxns[i].value = txns[i].value;\n\t\t\tidentityTxns[i].data = txns[i].data;\n\t\t}\n\t\tbytes32 txnsHash = keccak256(abi.encodePacked(txnBytes));\n\t\tbytes32 hash = keccak256(abi.encodePacked(\n\t\t\t'\\x19\\x01',\n\t\t\tDOMAIN_SEPARATOR,\n\t\t\tkeccak256(abi.encode(BUNDLE_TYPEHASH, nonces[address(identity)]++, txnsHash))\n\t\t));\n\t\trequire(acc.one == SignatureValidator.recoverAddr(hash, sigOne), 'SIG_ONE');\n\t\trequire(acc.two == SignatureValidator.recoverAddr(hash, sigTwo), 'SIG_TWO",
+    "line_no": 128,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Transfer\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "MichaelHDesigns/smart-contracts",
+    "path": "contracts/lib/Marketplace.sol",
+    "typehash_name": "MINT_AND_TRANSFER_TYPEHASH",
+    "typehash_value": "Mint721(address collectionAddress, uint id,string tokenURI, Split[] splits) Split(address account, uint96 shares)",
+    "line_no": 32,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Mint721\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "MichaelHDesigns/smart-contracts",
+    "path": "contracts/lib/Marketplace.sol",
+    "typehash_name": "LISTING_ERC721_TYPEHASH",
+    "typehash_value": "Listing721(address collectionAddress, uint id, uint price, uint96 expTimestamp)",
+    "line_no": 52,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Listing721\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Spirit-DAO/spiritswap-contract",
+    "path": "SpiritV2/contracts/SpiritV1/Usdc.sol",
+    "typehash_name": "PERMIT_TYPEHASH",
+    "typehash_value": "Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)",
+    "line_no": 208,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Permit\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Spirit-DAO/spiritswap-contract",
+    "path": "SpiritV2/contracts/SpiritV1/Usdc.sol",
+    "typehash_name": "TRANSFER_TYPEHASH",
+    "typehash_value": "Transfer(address owner,address to,uint256 value,uint256 nonce,uint256 deadline)",
+    "line_no": 209,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Transfer\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Cyfrin/security-and-auditing-full-course-s23",
+    "path": "eip712hashing.sol",
+    "typehash_name": "EIP712DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)",
+    "line_no": 22,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Cyfrin/security-and-auditing-full-course-s23",
+    "path": "eip712hashing.sol",
+    "typehash_name": "PERSON_TYPEHASH",
+    "typehash_value": "Person(string name,address wallet)",
+    "line_no": 25,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Person\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Cyfrin/security-and-auditing-full-course-s23",
+    "path": "eip712hashing.sol",
+    "typehash_name": "MAIL_TYPEHASH",
+    "typehash_value": "Mail(Person from,Person to,string contents)Person(string name,address wallet)",
+    "line_no": 27,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Mail\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "coinbase/smart-wallet",
+    "path": "src/ERC1271.sol",
+    "typehash_name": "_MESSAGE_TYPEHASH",
+    "typehash_value": "CoinbaseSmartWalletMessage(bytes32 hash)",
+    "line_no": 23,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"CoinbaseSmartWalletMessage\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "BSN-Spartan/Meta-Transaction",
+    "path": "metaTx.sol",
+    "typehash_name": "_TYPEHASH",
+    "typehash_value": "metaTransferFrom(address from,address to,uint256 amount,uint256 nonce,uint256 deadline,uint8 v,bytes32 r,bytes32 s)",
+    "line_no": 28,
+    "is_hex": false,
+    "validation": {
+      "is_valid": true,
+      "errors": [],
+      "func_name": "metaTransferFrom",
+      "func_params": [
+        {
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "name": "nonce",
+          "type": "uint256"
+        },
+        {
+          "name": "deadline",
+          "type": "uint256"
+        },
+        {
+          "name": "v",
+          "type": "uint8"
+        },
+        {
+          "name": "r",
+          "type": "bytes32"
+        },
+        {
+          "name": "s",
+          "type": "bytes32"
+        }
+      ],
+      "th_params": [
+        "address",
+        "address",
+        "uint256",
+        "uint256",
+        "uint256",
+        "uint8",
+        "bytes32",
+        "bytes32"
+      ]
+    }
+  },
+  {
+    "repo": "Uniswap/calibur",
+    "path": "src/EIP712.sol",
+    "typehash_name": "_DOMAIN_TYPEHASH",
+    "typehash_value": "0xd87cd6ef79d4e2b95e15ce8abf732db51ec771f1ca2edccf22a46c729ac56472",
+    "line_no": 18,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "LikemDzokoto/KudiFi-Contracts",
+    "path": "src/kudifi.sol",
+    "typehash_name": "_TYPEHASH",
+    "typehash_value": "Request(address from,address to,uint256 value,uint256 gas,uint256 nonce,bytes data)",
+    "line_no": 38,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Request\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "mangrovedao/mangrove-core",
+    "path": "src/toy/ERC20.sol",
+    "typehash_name": "_PERMIT_TYPEHASH",
+    "typehash_value": "Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)",
+    "line_no": 376,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Permit\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "encorevault/EnCore",
+    "path": "ENCORE.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,uint256 chainId,address verifyingContract)",
+    "line_no": 58,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "encorevault/EnCore",
+    "path": "ENCORE.sol",
+    "typehash_name": "DELEGATION_TYPEHASH",
+    "typehash_value": "Delegation(address delegatee,uint256 nonce,uint256 expiry)",
+    "line_no": 61,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Delegation\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "eco/permit3",
+    "path": "src/Permit3.sol",
+    "typehash_name": "CHAIN_PERMITS_TYPEHASH",
+    "typehash_value": "ChainPermits(uint64 chainId,AllowanceOrTransfer[] permits)AllowanceOrTransfer(uint48 modeOrExpiration,bytes32 tokenKey,address account,uint160 amountDelta)",
+    "line_no": 27,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"ChainPermits\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "eco/permit3",
+    "path": "src/Permit3.sol",
+    "typehash_name": "SIGNED_PERMIT3_TYPEHASH",
+    "typehash_value": "Permit3(address owner,bytes32 salt,uint48 deadline,uint48 timestamp,bytes32 merkleRoot)",
+    "line_no": 35,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Permit3\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Rohannaa2m12/NurJama_AII",
+    "path": "main.sol",
+    "typehash_name": "_TYPEHASH_EIP712DOMAIN",
+    "typehash_value": "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract,bytes32 salt)",
+    "line_no": 383,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Rohannaa2m12/NurJama_AII",
+    "path": "main.sol",
+    "typehash_name": "TYPEHASH_COMMIT",
+    "typehash_value": "NJCommit(bytes32 signalId,bytes32 model,bytes32 commitHash,uint64 eta,uint64 ttl,uint256 nonce,uint64 bump,bytes32 tag)",
+    "line_no": 623,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"NJCommit\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Rohannaa2m12/NurJama_AII",
+    "path": "main.sol",
+    "typehash_name": "TYPEHASH_REVEAL",
+    "typehash_value": "NJReveal(bytes32 signalId,bytes32 leaf,bytes32 paramsHash,uint256 nonce,uint64 bump,bytes32 tag)",
+    "line_no": 625,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"NJReveal\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Rohannaa2m12/NurJama_AII",
+    "path": "main.sol",
+    "typehash_name": "TYPEHASH_QUEUE",
+    "typehash_value": "NJQueue(bytes32 runId,bytes32 signalId,address venue,address inputToken,address outputToken,uint256 inputAmount,uint256 minOutputAmount,uint64 executeAfter,uint64 deadline,uint256 nonce,uint64 bump,bytes32 tag)",
+    "line_no": 627,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"NJQueue\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "pileum-org/pileum-contracts",
+    "path": "src/Votes.sol",
+    "typehash_name": "DELEGATION_TYPEHASH",
+    "typehash_value": "Delegation(address delegatee,uint256 nonce,uint256 expiry)",
+    "line_no": 36,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Delegation\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "malik672/gas-analyzer",
+    "path": "example.t.sol",
+    "typehash_name": "TRANSACTION_PARAMS_TYPEHASH",
+    "typehash_value": "0xfd4628b53a91b366f1977138e2eda53b93c8f5cc74bda8440f108d7da1e99290",
+    "line_no": 50,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "malik672/gas-analyzer",
+    "path": "example.t.sol",
+    "typehash_name": "VALIDATION_PARAMS_TYPEHASH",
+    "typehash_value": "0x0c7f653e0f641e41fbb4ed1440c7d0b08b8d2a19e1c35cfc98de2d47519e15b1",
+    "line_no": 57,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "1poolfinance/Strategy-on-Binance-Smart-Chain",
+    "path": "1Pool.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,uint256 chainId,address verifyingContract)",
+    "line_no": 867,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "1poolfinance/Strategy-on-Binance-Smart-Chain",
+    "path": "1Pool.sol",
+    "typehash_name": "DELEGATION_TYPEHASH",
+    "typehash_value": "Delegation(address delegatee,uint256 nonce,uint256 expiry)",
+    "line_no": 870,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Delegation\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Vectorized/solady",
+    "path": "src/tokens/ERC20Votes.sol",
+    "typehash_name": "_DOMAIN_TYPEHASH",
+    "typehash_value": "0x8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f",
+    "line_no": 55,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Vectorized/solady",
+    "path": "src/tokens/ERC20Votes.sol",
+    "typehash_name": "_ERC5805_DELEGATION_TYPEHASH",
+    "typehash_value": "0xe48329057bfd03d55e49b547132e39cffd9c1820ad7b9d4c5307691425d15adf",
+    "line_no": 59,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "MetaMask/delegation-framework",
+    "path": "src/utils/Constants.sol",
+    "typehash_name": "EIP712_DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)",
+    "line_no": 8,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "MetaMask/delegation-framework",
+    "path": "src/utils/Constants.sol",
+    "typehash_name": "DELEGATION_TYPEHASH",
+    "typehash_value": "Delegation(address delegate,address delegator,bytes32 authority,Caveat[] caveats,uint256 salt)Caveat(address enforcer,bytes terms)",
+    "line_no": 12,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Delegation\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "MetaMask/delegation-framework",
+    "path": "src/utils/Constants.sol",
+    "typehash_name": "CAVEAT_TYPEHASH",
+    "typehash_value": "Caveat(address enforcer,bytes terms)",
+    "line_no": 16,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Caveat\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "VenusProtocol/venus-protocol",
+    "path": "contracts/Tokens/XVS/XVS.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,uint256 chainId,address verifyingContract)",
+    "line_no": 40,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "VenusProtocol/venus-protocol",
+    "path": "contracts/Tokens/XVS/XVS.sol",
+    "typehash_name": "DELEGATION_TYPEHASH",
+    "typehash_value": "Delegation(address delegatee,uint256 nonce,uint256 expiry)",
+    "line_no": 44,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Delegation\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "agglayer/agglayer-contracts",
+    "path": "contracts/mocks/Uni.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,uint256 chainId,address verifyingContract)",
+    "line_no": 264,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "agglayer/agglayer-contracts",
+    "path": "contracts/mocks/Uni.sol",
+    "typehash_name": "DELEGATION_TYPEHASH",
+    "typehash_value": "Delegation(address delegatee,uint256 nonce,uint256 expiry)",
+    "line_no": 270,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Delegation\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "agglayer/agglayer-contracts",
+    "path": "contracts/mocks/Uni.sol",
+    "typehash_name": "PERMIT_TYPEHASH",
+    "typehash_value": "Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)",
+    "line_no": 274,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Permit\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Wardenswap/warden-farm",
+    "path": "contracts/Tempest.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,uint256 chainId,address verifyingContract)",
+    "line_no": 70,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Wardenswap/warden-farm",
+    "path": "contracts/Tempest.sol",
+    "typehash_name": "DELEGATION_TYPEHASH",
+    "typehash_value": "Delegation(address delegatee,uint256 nonce,uint256 expiry)",
+    "line_no": 73,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Delegation\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Wardenswap/warden-farm",
+    "path": "contracts/Tempest.sol",
+    "typehash_name": "PERMIT_TYPEHASH",
+    "typehash_value": "0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9",
+    "line_no": 76,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "MuskSwap/muskswap",
+    "path": "contracts/MuskToken.sol",
+    "typehash_name": "PERMIT_TYPEHASH",
+    "typehash_value": "Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)'\n    );\n    bytes32 public DOMAIN_SEPARATOR;\n\n    constructor() public BEP20Extended('Musk Token', 'MUSK') {\n        DOMAIN_SEPARATOR = keccak256(\n            abi.encode(\n                DOMAIN_TYPEHASH,\n                keccak256(bytes(name())),\n                keccak256(bytes('1')),\n                getChainId(),\n                address(this)\n            )\n        );\n    }\n\n    /// @notice Creates `_amount` token to `_to`. Must only be called by the owner (MasterChef).\n    function mintTo(address _to, uint256 _amount) public onlyOwner {\n        _mint(_to, _amount);\n        _moveDelegates(address(0), _delegates[_to], _amount);\n    }\n\n    // Copied and modified from YAM code:\n    // https://github.com/yam-finance/yam-protocol/blob/master/contracts/token/YAMGovernanceStorage.sol\n    // https://github.com/yam-finance/yam-protocol/blob/master/contracts/token/YAMGovernance.sol\n    // Which is copied and modified from COMPOUND:\n    // https://github.com/compound-finance/compound-protocol/blob/master/contracts/Governance/Comp.sol\n\n    /// @dev A record of each accounts delegate\n    mapping (address => address) internal _delegates;\n\n    /// @notice A checkpoint for marking number of votes from a given block\n    struct Checkpoint {\n        uint32 fromBlock;\n        uint256 votes;\n    }\n\n    /// @notice A record of votes checkpoints for each account, by index\n    mapping (address => mapping (uint32 => Checkpoint)) public checkpoints;\n\n    /// @notice The number of checkpoints for each account\n    mapping (address => uint32) public numCheckpoints;\n\n    /// @notice The EIP-712 typehash for the contract's domain\n    bytes32 public constant DOMAIN_TYPEHASH = keccak256(",
+    "line_no": 11,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Permit\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "MuskSwap/muskswap",
+    "path": "contracts/MuskToken.sol",
+    "typehash_name": "DELEGATION_TYPEHASH",
+    "typehash_value": "Delegation(address delegatee,uint256 nonce,uint256 expiry)",
+    "line_no": 59,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Delegation\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Alium-Finance/alium-farm",
+    "path": "contracts/AliumToken.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,uint256 chainId,address verifyingContract)",
+    "line_no": 30,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Alium-Finance/alium-farm",
+    "path": "contracts/AliumToken.sol",
+    "typehash_name": "DELEGATION_TYPEHASH",
+    "typehash_value": "Delegation(address delegatee,uint256 nonce,uint256 expiry)",
+    "line_no": 33,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Delegation\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "kwikswap/Governance",
+    "path": "contracts/Kwik.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,uint256 chainId,address verifyingContract)",
+    "line_no": 53,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "kwikswap/Governance",
+    "path": "contracts/Kwik.sol",
+    "typehash_name": "DELEGATION_TYPEHASH",
+    "typehash_value": "Delegation(address delegatee,uint256 nonce,uint256 expiry)",
+    "line_no": 56,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Delegation\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "kwikswap/Governance",
+    "path": "contracts/Kwik.sol",
+    "typehash_name": "PERMIT_TYPEHASH",
+    "typehash_value": "Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)",
+    "line_no": 59,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Permit\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "allinxproject/allinx-stake",
+    "path": "contracts/token/Inx.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,uint256 chainId,address verifyingContract)",
+    "line_no": 230,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "allinxproject/allinx-stake",
+    "path": "contracts/token/Inx.sol",
+    "typehash_name": "DELEGATION_TYPEHASH",
+    "typehash_value": "Delegation(address delegatee,uint256 nonce,uint256 expiry)",
+    "line_no": 233,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Delegation\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "allinxproject/allinx-stake",
+    "path": "contracts/token/Inx.sol",
+    "typehash_name": "PERMIT_TYPEHASH",
+    "typehash_value": "Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)",
+    "line_no": 236,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Permit\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "cdyfng/pausable_contract",
+    "path": "KswapLiquidityPool.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,uint256 chainId,address verifyingContract)",
+    "line_no": 1302,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "cdyfng/pausable_contract",
+    "path": "KswapLiquidityPool.sol",
+    "typehash_name": "DELEGATION_TYPEHASH",
+    "typehash_value": "Delegation(address delegatee,uint256 nonce,uint256 expiry)",
+    "line_no": 1306,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Delegation\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Tivan-art/TivanToken",
+    "path": "TVT.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,uint256 chainId,address verifyingContract)",
+    "line_no": 1050,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Tivan-art/TivanToken",
+    "path": "TVT.sol",
+    "typehash_name": "DELEGATION_TYPEHASH",
+    "typehash_value": "Delegation(address delegatee,uint256 nonce,uint256 expiry)",
+    "line_no": 1053,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Delegation\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "MakiSwap-Protocol/makiswap-protocol",
+    "path": "flats/SoyBar_flat.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,uint256 chainId,address verifyingContract)",
+    "line_no": 909,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "MakiSwap-Protocol/makiswap-protocol",
+    "path": "flats/SoyBar_flat.sol",
+    "typehash_name": "DELEGATION_TYPEHASH",
+    "typehash_value": "Delegation(address delegatee,uint256 nonce,uint256 expiry)",
+    "line_no": 912,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Delegation\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "MakiSwap-Protocol/makiswap-protocol",
+    "path": "flats/SoyBar_flat.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,uint256 chainId,address verifyingContract)",
+    "line_no": 1174,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "MakiSwap-Protocol/makiswap-protocol",
+    "path": "flats/SoyBar_flat.sol",
+    "typehash_name": "DELEGATION_TYPEHASH",
+    "typehash_value": "Delegation(address delegatee,uint256 nonce,uint256 expiry)",
+    "line_no": 1180,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Delegation\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "daedboi/morpheus_contracts",
+    "path": "PILLS.sol",
+    "typehash_name": "typeHash",
+    "typehash_value": "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)",
+    "line_no": 540,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "daedboi/morpheus_contracts",
+    "path": "PILLS.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,uint256 chainId,address verifyingContract)",
+    "line_no": 856,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "daedboi/morpheus_contracts",
+    "path": "PILLS.sol",
+    "typehash_name": "DELEGATION_TYPEHASH",
+    "typehash_value": "Delegation(address delegatee,uint256 nonce,uint256 expiry)",
+    "line_no": 859,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Delegation\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Intrinsic-network/governance",
+    "path": "contracts/Int.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,uint256 chainId,address verifyingContract)",
+    "line_no": 53,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Intrinsic-network/governance",
+    "path": "contracts/Int.sol",
+    "typehash_name": "DELEGATION_TYPEHASH",
+    "typehash_value": "Delegation(address delegatee,uint256 nonce,uint256 expiry)",
+    "line_no": 56,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Delegation\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Intrinsic-network/governance",
+    "path": "contracts/Int.sol",
+    "typehash_name": "PERMIT_TYPEHASH",
+    "typehash_value": "Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)",
+    "line_no": 59,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Permit\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "offshore-ltd/contracts",
+    "path": "contracts/tokens/OFFToken.sol",
+    "typehash_name": "PERMIT_TYPEHASH",
+    "typehash_value": "Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)",
+    "line_no": 22,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Permit\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "offshore-ltd/contracts",
+    "path": "contracts/tokens/OFFToken.sol",
+    "typehash_name": "DELEGATION_TYPEHASH",
+    "typehash_value": "Delegation(address delegatee,uint256 nonce,uint256 expiry)",
+    "line_no": 27,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Delegation\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "yaxis-project/yaxis-audit",
+    "path": "contracts/YaxisToken.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,uint256 chainId,address verifyingContract)",
+    "line_no": 107,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "yaxis-project/yaxis-audit",
+    "path": "contracts/YaxisToken.sol",
+    "typehash_name": "DELEGATION_TYPEHASH",
+    "typehash_value": "Delegation(address delegatee,uint256 nonce,uint256 expiry)",
+    "line_no": 110,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Delegation\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "rarible/protocol-contracts",
+    "path": "projects/exchange-v2/contracts/libraries/LibOrder.sol",
+    "typehash_name": "ORDER_TYPEHASH",
+    "typehash_value": "Order(address maker,Asset makeAsset,address taker,Asset takeAsset,uint256 salt,uint256 start,uint256 end,bytes4 dataType,bytes data)Asset(AssetType assetType,uint256 value)AssetType(bytes4 assetClass,bytes data)",
+    "line_no": 15,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Order\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "sushiswap/sushiswap-settlement",
+    "path": "contracts/libraries/Orders.sol",
+    "typehash_name": "ORDER_TYPEHASH",
+    "typehash_value": "0x7c228c78bd055996a44b5046fb56fa7c28c66bce92d9dc584f742b2cd76a140f",
+    "line_no": 7,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "wyvernprotocol/wyvern-v3",
+    "path": "contracts/exchange/ExchangeCore.sol",
+    "typehash_name": "ORDER_TYPEHASH",
+    "typehash_value": "Order(address registry,address maker,address staticTarget,bytes4 staticSelector,bytes staticExtradata,uint256 maximumFill,uint256 listingTime,uint256 expirationTime,uint256 salt)",
+    "line_no": 64,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Order\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "parallel-finance/paraspace-core",
+    "path": "contracts/dependencies/blur-exchange/EIP712.sol",
+    "typehash_name": "EIP712DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)",
+    "line_no": 33,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "BootNodeDev/intents-framework",
+    "path": "solidity/src/Base7683.sol",
+    "typehash_name": "RESOLVED_CROSS_CHAIN_ORDER_TYPEHASH",
+    "typehash_value": "ResolvedCrossChainOrder(address user, uint64 originChainId, uint32 openDeadline, uint32 fillDeadline, Output[] maxSpent, Output[] minReceived, FillInstruction[] fillInstructions)Output(bytes32 token, uint256 amount, bytes32 recipient, uint64 chainId)FillInstruction(uint64 destinationChainId, bytes32 destinationSettler, bytes originData)",
+    "line_no": 36,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"ResolvedCrossChainOrder\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "airswap/airswap-protocols",
+    "path": "source/swap-erc20/contracts/SwapERC20.sol",
+    "typehash_name": "ORDER_TYPEHASH",
+    "typehash_value": "OrderERC20(uint256 nonce,uint256 expiry,address signerWallet,address signerToken,uint256 signerAmount,",
+    "line_no": 20,
+    "is_hex": false,
+    "validation": {
+      "is_valid": false,
+      "errors": [
+        {
+          "type": "PARSE_ERROR",
+          "details": "Cannot parse: \"OrderERC20(uint256 nonce,uint256 expiry,address signerWallet,address signerToken,uint256 signerAmount,\""
+        }
+      ]
+    }
+  },
+  {
+    "repo": "pendle-finance/pendle-core-v2-public",
+    "path": "contracts/limit/LimitRouterBase.sol",
+    "typehash_name": "LIMIT_ORDER_TYPEHASH",
+    "typehash_value": "Order(uint256 salt,uint256 expiry,uint256 nonce,uint8 orderType,address token,address YT,address maker,address receiver,uint256 makingAmount,uint256 lnImpliedRate,uint256 failSafeRate,bytes permit)",
+    "line_no": 25,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Order\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Phantom-Network/gm-contracts",
+    "path": "src/GreyMarketData.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,uint256 chainId,address verifyingContract)",
+    "line_no": 6,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Phantom-Network/gm-contracts",
+    "path": "src/GreyMarketData.sol",
+    "typehash_name": "CREATE_ORDER_TYPEHASH",
+    "typehash_value": "Create(bytes32 id,address buyer,address seller,address paymentToken,uint256 orderType,uint256 amount)",
+    "line_no": 11,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Create\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Phantom-Network/gm-contracts",
+    "path": "src/GreyMarketData.sol",
+    "typehash_name": "CLAIM_ORDER_TYPEHASH",
+    "typehash_value": "Claim(bytes32 id,address buyer,address seller,uint256 orderStatus)",
+    "line_no": 16,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Claim\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Phantom-Network/gm-contracts",
+    "path": "src/GreyMarketData.sol",
+    "typehash_name": "WITHDRAW_ORDER_TYPEHASH",
+    "typehash_value": "Withdraw(bytes32 id,address buyer,address seller,uint256 orderStatus)",
+    "line_no": 21,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Withdraw\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Phantom-Network/gm-contracts",
+    "path": "src/GreyMarketData.sol",
+    "typehash_name": "RELEASE_DISPUTED_ORDER_TYPEHASH",
+    "typehash_value": "Release(bytes32 id,address buyer,address seller,uint256 orderStatus,address winner)",
+    "line_no": 26,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Release\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "HarrierOnChain/Prediction-Market-Contracts",
+    "path": "src/exchange/mixins/Signing.sol",
+    "typehash_name": "ORDER_TYPEHASH",
+    "typehash_value": "Order(uint256 salt,address maker,address signer,address taker,uint256 tokenId,uint256 makerAmount,uint256 takerAmount,uint256 expiration,uint256 nonce,uint256 feeRateBps,uint8 side,uint8 signatureType)",
+    "line_no": 20,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Order\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "sirenmarkets/core",
+    "path": "contracts/swap/Light.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(",
+    "line_no": 21,
+    "is_hex": false,
+    "validation": {
+      "is_valid": false,
+      "errors": [
+        {
+          "type": "PARSE_ERROR",
+          "details": "Cannot parse: \"EIP712Domain(\""
+        }
+      ]
+    }
+  },
+  {
+    "repo": "sirenmarkets/core",
+    "path": "contracts/swap/Light.sol",
+    "typehash_name": "LIGHT_ORDER_TYPEHASH",
+    "typehash_value": "LightOrder(",
+    "line_no": 33,
+    "is_hex": false,
+    "validation": {
+      "is_valid": false,
+      "errors": [
+        {
+          "type": "PARSE_ERROR",
+          "details": "Cannot parse: \"LightOrder(\""
+        }
+      ]
+    }
+  },
+  {
+    "repo": "eff-kay/solidity-nicad",
+    "path": "data/smart_contracts/Types.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(",
+    "line_no": 54,
+    "is_hex": false,
+    "validation": {
+      "is_valid": false,
+      "errors": [
+        {
+          "type": "PARSE_ERROR",
+          "details": "Cannot parse: \"EIP712Domain(\""
+        }
+      ]
+    }
+  },
+  {
+    "repo": "eff-kay/solidity-nicad",
+    "path": "data/smart_contracts/Types.sol",
+    "typehash_name": "ORDER_TYPEHASH",
+    "typehash_value": "Order(",
+    "line_no": 62,
+    "is_hex": false,
+    "validation": {
+      "is_valid": false,
+      "errors": [
+        {
+          "type": "PARSE_ERROR",
+          "details": "Cannot parse: \"Order(\""
+        }
+      ]
+    }
+  },
+  {
+    "repo": "eff-kay/solidity-nicad",
+    "path": "data/smart_contracts/Types.sol",
+    "typehash_name": "PARTY_TYPEHASH",
+    "typehash_value": "Party(",
+    "line_no": 78,
+    "is_hex": false,
+    "validation": {
+      "is_valid": false,
+      "errors": [
+        {
+          "type": "PARSE_ERROR",
+          "details": "Cannot parse: \"Party(\""
+        }
+      ]
+    }
+  },
+  {
+    "repo": "sushiswap/shoyu",
+    "path": "contracts/libraries/Orders.sol",
+    "typehash_name": "ASK_TYPEHASH",
+    "typehash_value": "0x5fbc9a24e1532fa5245d1ec2dc5592849ae97ac5475f361b1a1f7a6e2ac9b2fd",
+    "line_no": 7,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "sushiswap/shoyu",
+    "path": "contracts/libraries/Orders.sol",
+    "typehash_name": "BID_TYPEHASH",
+    "typehash_value": "0xb98e1dc48988064e6dfb813618609d7da80a8841e5f277039788ac4b50d497b2",
+    "line_no": 9,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "ribbon-finance/ribbon-v2",
+    "path": "contracts/utils/Swap.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(",
+    "line_no": 32,
+    "is_hex": false,
+    "validation": {
+      "is_valid": false,
+      "errors": [
+        {
+          "type": "PARSE_ERROR",
+          "details": "Cannot parse: \"EIP712Domain(\""
+        }
+      ]
+    }
+  },
+  {
+    "repo": "ribbon-finance/ribbon-v2",
+    "path": "contracts/utils/Swap.sol",
+    "typehash_name": "BID_TYPEHASH",
+    "typehash_value": "Bid(",
+    "line_no": 44,
+    "is_hex": false,
+    "validation": {
+      "is_valid": false,
+      "errors": [
+        {
+          "type": "PARSE_ERROR",
+          "details": "Cannot parse: \"Bid(\""
+        }
+      ]
+    }
+  },
+  {
+    "repo": "lobstergrindset/tldr-research",
+    "path": "solidity_code/src/AuctionDeposits.sol",
+    "typehash_name": "WITHDRAW_BID_TYPEHASH",
+    "typehash_value": "WithdrawBid(address bidder,uint256 blockNumber,uint256 amount)",
+    "line_no": 27,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"WithdrawBid\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "windranger-io/auction-contracts",
+    "path": "contracts/Auction.sol",
+    "typehash_name": "BID_TYPEHASH",
+    "typehash_value": "Bid(uint256 amount,string contents,address tokenContract,string formattedAmount)",
+    "line_no": 107,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Bid\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "danfinlay/eip712-example",
+    "path": "Types.sol",
+    "typehash_name": "EIP712DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)",
+    "line_no": 12,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "danfinlay/eip712-example",
+    "path": "Types.sol",
+    "typehash_name": "BID_TYPEHASH",
+    "typehash_value": "Bid(string item,TokenVector offer)TokenVector(address token,uint256 amount)",
+    "line_no": 19,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Bid\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "danfinlay/eip712-example",
+    "path": "Types.sol",
+    "typehash_name": "TOKENVECTOR_TYPEHASH",
+    "typehash_value": "TokenVector(address token,uint256 amount)",
+    "line_no": 26,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"TokenVector\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "danfinlay/eip712-example",
+    "path": "Types.sol",
+    "typehash_name": "EIP712DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)",
+    "line_no": 114,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "danfinlay/eip712-example",
+    "path": "Types.sol",
+    "typehash_name": "BID_TYPEHASH",
+    "typehash_value": "Bid(string item,TokenVector offer)TokenVector(address token,uint256 amount)",
+    "line_no": 121,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Bid\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "danfinlay/eip712-example",
+    "path": "Types.sol",
+    "typehash_name": "TOKENVECTOR_TYPEHASH",
+    "typehash_value": "TokenVector(address token,uint256 amount)",
+    "line_no": 128,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"TokenVector\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "primev/mev-commit",
+    "path": "contracts/contracts/core/PreconfManager.sol",
+    "typehash_name": "EIP712_COMMITMENT_TYPEHASH",
+    "typehash_value": "OpenedCommitment(bytes32 bidHash,string signature,uint256 sharedKeyX,uint256 sharedKeyY)",
+    "line_no": 32,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"OpenedCommitment\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "primev/mev-commit",
+    "path": "contracts/contracts/core/PreconfManager.sol",
+    "typehash_name": "EIP712_BID_TYPEHASH",
+    "typehash_value": "PreConfBid(string txnHash,string revertingTxHashes,uint256 bidAmt,uint64 blockNumber,uint64 decayStartTimeStamp,uint64 decayEndTimeStamp,uint256 slashAmt,uint256 bidderPKx,uint256 bidderPKy,bytes bidOptions)",
+    "line_no": 38,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"PreConfBid\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "SegMint-Inc/segmint-core",
+    "path": "src/handlers/TypeHasher.sol",
+    "typehash_name": "_ROYALTIES_TYPEHASH",
+    "typehash_value": "0x2f5057decee872280b232f42dc21db20fd2f34148dcb1f26e39248197261978e",
+    "line_no": 13,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "SegMint-Inc/segmint-core",
+    "path": "src/handlers/TypeHasher.sol",
+    "typehash_name": "_ORDER_TYPEHASH",
+    "typehash_value": "0x181555209a4040dc9b2401944efa8ca3b593b5fc3981fa4b4c4996bcea6c727f",
+    "line_no": 16,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "SegMint-Inc/segmint-core",
+    "path": "src/handlers/TypeHasher.sol",
+    "typehash_name": "_BID_TYPEHASH",
+    "typehash_value": "0x06c6c02a5759b468552d3e3ce52a9399e1ab78fb9194e4e0fed6b8f57aa1afee",
+    "line_no": 19,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "datschill/PunksBidsSolidity",
+    "path": "src/lib/EIP712.sol",
+    "typehash_name": "BID_TYPEHASH",
+    "typehash_value": "Bid(address bidder,bool attributesCountEnabled,uint8 attributesCount,uint16 modulo,uint16 maxIndex,uint16[] indexes,uint16[] excludedIndexes,string baseType,string attributes,uint256 amount,uint256 listingTime,uint256 expirationTime,uint256 salt,uint256 nonce)",
+    "line_no": 19,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Bid\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "datschill/PunksBidsSolidity",
+    "path": "src/lib/EIP712.sol",
+    "typehash_name": "EIP712DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)",
+    "line_no": 23,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "networked-art/cryptopunks",
+    "path": "contracts/reference/Stash.sol",
+    "typehash_name": "_ORDER_TYPEHASH",
+    "typehash_value": "Order(uint16 numberOfUnits,uint80 pricePerUnit,address auction)",
+    "line_no": 112,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Order\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "networked-art/cryptopunks",
+    "path": "contracts/reference/Stash.sol",
+    "typehash_name": "_PUNK_BID_TYPEHASH",
+    "typehash_value": "PunkBid(Order order,uint256 accountNonce,uint256 bidNonce,uint256 expiration,bytes32 root)Order(uint16 numberOfUnits,uint80 pricePerUnit,address auction)",
+    "line_no": 114,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"PunkBid\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Ekam-Bitt/e-tender",
+    "path": "src/libraries/TenderConstants.sol",
+    "typehash_name": "BID_TYPEHASH",
+    "typehash_value": "Bid(uint256 amount,bytes32 salt,bytes32 metadataHash)",
+    "line_no": 5,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Bid\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "u2u-labs/layerg-marketplace-contracts-v3",
+    "path": "contracts/libraries/LibCollectionBid.sol",
+    "typehash_name": "COLLECTION_BID_TYPEHASH",
+    "typehash_value": "CollectionBid(address bidder,Asset makeAssetPerItem,address collectionAddress,uint256 maxQuantity,uint256 start,uint256 end,uint256 salt)Asset(uint8 assetType,address contractAddress,uint256 assetId,uint256 assetAmount)",
+    "line_no": 15,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"CollectionBid\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "windingtree/videre-contracts",
+    "path": "contracts/libraries/LibVidere.sol",
+    "typehash_name": "ERC20NATIVE_TYPEHASH",
+    "typehash_value": "ERC20Native(address gem,uint256 wad)');\n    bytes32 private constant BIDTERM_TYPEHASH = keccak256('BidTerm(bytes32 term,address impl,bytes txPayload)');\n    bytes32 private constant BIDOPTION_ITEM_TYPEHASH =\n        keccak256('BidOptionItem(bytes32 item,ERC20Native[] cost)ERC20Native(address gem,uint256 wad)');\n    bytes32 private constant BIDOPTION_TERM_TYPEHASH =\n        keccak256(\n            'BidOptionTerm(BidTerm term,ERC20Native[] cost)BidTerm(bytes32 term,address impl,bytes txPayload)ERC20Native(address gem,uint256 wad)'\n        );\n    bytes32 private constant BIDOPTIONS_TYPEHASH =\n        keccak256(\n            'BidOptions(BidOptionItem[] items,BidOptionTerm[] terms)BidOptionItem(bytes32 item,ERC20Native[] cost)BidOptionTerm(BidTerm term,ERC20Native[] cost)BidTerm(bytes32 term,address impl,bytes txPayload)ERC20Native(address gem,uint256 wad)'\n        );\n    bytes32 private constant BID_TYPEHASH =\n        keccak256(\n            'Bid(bytes32 salt,uint128 limit,uint128 expiry,bytes32 which,bytes32 params,bytes32[] items,BidTerm[] terms,BidOptions options,ERC20Native[] cost)BidOptionItem(bytes32 item,ERC20Native[] cost)BidOptionTerm(BidTerm term,ERC20Native[] cost)BidOptions(BidOptionItem[] items,BidOptionTerm[] terms)BidTerm(bytes32 term,address impl,bytes txPayload)ERC20Native(address gem,uint256 wad)'\n        );\n    bytes32 private constant STUB_STATE_TYPEHASH =\n        keccak256(\n            'StubState(bytes32 which,bytes32 params,bytes32[] items,BidTerm[] terms,ERC20Native cost)BidTerm(bytes32 term,address impl,bytes txPayload)ERC20Native(address gem,uint256 wad)'\n        );\n\n    // --- ERC20 Native messages\n    struct ERC20Native {\n        address gem;\n        uint256 wad;\n    }\n\n    function hash(ERC20Native memory a) internal pure returns (bytes32) {\n        return keccak256(abi.encode(ERC20NATIVE_TYPEHASH, a.gem, a.wad));\n    }\n\n    // arrays\n    function hash(ERC20Native[] memory a) internal pure returns (bytes32) {\n        bytes32[] memory hashes = new bytes32[](a.length);\n\n        // iterate through each ERC20Native and get hash\n        for (uint256 i = 0; i < a.length; i++) {\n            hashes[i] = hash(a[i]);\n        }\n\n        return keccak256(abi.encodePacked(hashes));\n    }\n\n    // --- BidTerm messages\n    struct BidTerm {\n        bytes32 term;\n        address impl;\n        bytes txPayload;\n    }\n\n    function hash(BidTerm memory a) internal pure returns (bytes32) {\n        return keccak256(abi.encode(BIDTERM_TYPEHASH, a.term, a.impl, keccak256(a.txPayload)));\n    }\n\n    // arrays\n    function hash(BidTerm[] memory a) internal pure returns (bytes32) {\n        bytes32[] memory hashes = new bytes32[](a.length);\n\n        // iterate through each ERC20BidTermNative and get hash\n        for (uint256 i = 0; i < a.length; i++) {\n            hashes[i] = hash(a[i]);\n        }\n\n        return keccak256(abi.encodePacked(hashes));\n    }\n\n    // --- BidOptionItem messages\n    struct BidOptionItem {\n        bytes32 item;\n        ERC20Native[] cost;\n    }\n\n    function hash(BidOptionItem memory a) internal pure returns (bytes32) {\n        return keccak256(abi.encode(BIDOPTION_ITEM_TYPEHASH, a.item, hash(a.cost)));\n    }\n\n    // arrays\n    function hash(BidOptionItem[] memory a) internal pure returns (bytes32) {\n        bytes32[] memory hashes = new bytes32[](a.length);\n\n        // iterate through each BidOptionItem and get hash\n        for (uint256 i = 0; i < a.length; i++) {\n            hashes[i] = hash(a[i]);\n        }\n\n        return keccak256(abi.encodePacked(hashes));\n    }\n\n    // --- BidOptionTerm messages\n    struct BidOptionTerm {\n        BidTerm term;\n        ERC20Native[] cost;\n    }\n\n    function hash(BidOptionTerm memory a) internal pure returns (bytes32) {\n        return keccak256(abi.encode(BIDOPTION_TERM_TYPEHASH, hash(a.term), hash(a.cost)));\n    }\n\n    // arrays\n    function hash(BidOptionTerm[] memory a) internal pure returns (bytes32) {\n        bytes32[] memory hashes = new bytes32[](a.length);\n\n        // iterate through each BidOptionTerm and get hash\n        for (uint256 i = 0; i < a.length; i++) {\n            hashes[i] = hash(a[i]);\n        }\n\n        return keccak256(abi.encodePacked(hashes));\n    }\n\n    // --- BidOptions message\n    struct BidOptions {\n        BidOptionItem[] items;\n        BidOptionTerm[] terms;\n    }\n\n    function hash(BidOptions memory a) internal pure returns (bytes32) {\n        return keccak256(abi.encode(BIDOPTIONS_TYPEHASH, hash(a.items), hash(a.terms)));\n    }\n\n    // --- Bid messge\n    struct Bid {\n        bytes32 salt;\n        uint128 limit;\n        uint128 expiry;\n        bytes32 which;\n        bytes32 params;\n        bytes32[] items;\n        BidTerm[] terms;\n        BidOptions options;\n        ERC20Native[] cost;\n    }\n\n    function hash(Bid memory a) internal pure returns (bytes32) {\n        return\n            keccak256(\n                abi.encode(\n                    BID_TYPEHASH,\n                    a.salt,\n                    a.limit,\n                    a.expiry,\n                    a.which,\n                    a.params,\n                    hash(a.items),\n                    hash(a.terms),\n                    hash(a.options),\n                    hash(a.cost)\n                )\n            );\n    }\n\n    // --- Stub state\n    struct StubState {\n        bytes32 which;\n        bytes32 params;\n        bytes32[] items;\n        BidTerm[] terms;\n        ERC20Native cost;\n    }\n\n    struct StubStorage {\n        bytes32 provider; // facility\n        bytes32 state; // eip712 signed hash of stub's state\n        uint256 step; // what step in the lifecycle the stub is at\n        uint256 timestamp; // when stub is created\n        mapping(address => bytes) terms; // term => 1/0 or payload\n    }\n\n    function hash(StubState memory a) internal pure returns (bytes32) {\n        return\n            keccak256(abi.encode(STUB_STATE_TYPEHASH, a.which, a.params, hash(a.items), hash(a.terms), hash(a.cost)));\n    }\n\n    // --- Utility hash functions\n    function hash(bytes32[] memory a) internal pure returns (bytes32) {\n        return keccak256(abi.encodePacked(a));\n    }\n\n    function hash(address[] memory a) internal pure returns (bytes32) {\n        return keccak256(abi.encodePacked(a));\n    }\n\n    function hash(uint256[] memory a) internal pure returns (bytes32) {\n        return keccak256(abi.encodePacked(a));\n    }\n\n    function hash(bytes[] memory a) internal pure returns (bytes32) {\n        bytes32[] memory hashes = new bytes32[](a.length);\n\n        // iterate through each BidOptionTerm and get hash\n        for (uint256 i = 0; i < a.length; i++) {\n            hashes[i] = keccak256(a[i]);\n        }\n\n        return keccak256(abi.encodePacked(hashes));\n    }\n\n    // --- Option processing functions\n\n    function addOptions(\n        bytes32[] memory currentItems,\n        BidOptionItem[] memory newItems,\n        ERC20Native memory currentCost\n    ) internal pure returns (bytes32[] memory items, ERC20Native memory cost) {\n        items = new bytes32[](currentItems.length + newItems.length);\n        cost = currentCost;\n\n        // add all the current items to the items array\n        for (uint256 i = 0; i < currentItems.length; i++) {\n            items[i] = currentItems[i];\n        }\n\n        // add new items to the items array and add cost\n        for (uint256 i = 0; i < newItems.length; i++) {\n            items[currentItems.length + i] = newItems[i].item;\n            cost.wad += wadCost(currentCost.gem, newItems[i].cost);\n        }\n    }\n\n    function addOptions(\n        BidTerm[] memory currentTerms,\n        BidOptionTerm[] memory newTerms,\n        ERC20Native memory currentCost\n    ) internal pure returns (BidTerm[] memory terms, ERC20Native memory cost) {\n        terms = new BidTerm[](currentTerms.length + newTerms.length);\n        cost = currentCost;\n\n        // add all the current terms to the terms array\n        for (uint256 i = 0; i < currentTerms.length; i++) {\n            terms[i] = currentTerms[i];\n        }\n\n        // add new terms to the terms array and add cost\n        for (uint256 i = 0; i < newTerms.length; i++) {\n            terms[currentTerms.length + i] = newTerms[i].term;\n            cost.wad += wadCost(currentCost.gem, newTerms[i].cost);\n        }\n    }\n\n    function wadCost(address gem, ERC20Native[] memory costs) internal pure returns (uint256 wad) {\n        uint256 found;\n        for (uint256 i = 0; i < costs.length; i++) {\n            if (costs[i].gem == gem) {\n                found = 1;\n                wad = costs[i].wad;\n                break;\n            }\n        }\n        require(found == 1, 'LibVidere/gem-not-found');\n    }\n\n    function gemCost(address gem, ERC20Native[] memory costs) internal pure returns (ERC20Native memory cost) {\n        uint256 found;\n        for (uint256 i = 0; i < costs.length; i++) {\n            if (costs[i].gem == gem) {\n                found = 1;\n                cost = costs[i];\n                break;\n            }\n        }\n        require(found == 1, 'LibVidere/gem-not-found",
+    "line_no": 10,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"ERC20Native\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "HKJL10201/smart-contract-data-collection",
+    "path": "smart_contracts/auction/025.CAR-contracts.contracts.Auction.sol",
+    "typehash_name": "BID_TYPEHASH",
+    "typehash_value": "Bid(uint256 amount,string contents,address tokenContract,string formattedAmount)",
+    "line_no": 107,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Bid\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "renaissxyz/renaissxyz-contracts",
+    "path": "src/OrderBook.sol",
+    "typehash_name": "EIP4494_PERMIT_TYPEHASH",
+    "typehash_value": "0xf545647804ae149c37d476ab2cfdbe1089b41916ab144f79326377246a049462",
+    "line_no": 67,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "renaissxyz/renaissxyz-contracts",
+    "path": "src/OrderBook.sol",
+    "typehash_name": "PERMIT2_TRANSFER_TYPEHASH",
+    "typehash_value": "0xe1042fb7954ff9d03d09f57940ce4462dbc73e3063f1e1fd0f0afac36bc49451",
+    "line_no": 71,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "renaissxyz/renaissxyz-contracts",
+    "path": "src/OrderBook.sol",
+    "typehash_name": "ASK_TYPEHASH",
+    "typehash_value": "0xca02aa5d9045779f01725b9928079e26afd9bf4b4d3f58345eb8a89d08808ddd",
+    "line_no": 76,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "renaissxyz/renaissxyz-contracts",
+    "path": "src/OrderBook.sol",
+    "typehash_name": "BID_TYPEHASH",
+    "typehash_value": "0x5e2573c176eaba1f8e817452c7374281f40a5db2061a279a52990ed22ac39610",
+    "line_no": 80,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "renaissxyz/renaissxyz-contracts",
+    "path": "src/OrderBook.sol",
+    "typehash_name": "TRADE_TYPEHASH",
+    "typehash_value": "0x170fff74098bbe4e1a978004d40848beab71e6ad2988861b82892fd6bc18e099",
+    "line_no": 84,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "ilkhangnd/dataset-vaegis",
+    "path": "generated/SWC-121_Auction_1768284796_313_vuln.sol",
+    "typehash_name": "DOMAIN_SEPARATOR_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)",
+    "line_no": 15,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "ilkhangnd/dataset-vaegis",
+    "path": "generated/SWC-121_Auction_1768284796_313_vuln.sol",
+    "typehash_name": "BID_TYPEHASH",
+    "typehash_value": "Bid(address bidder,uint256 amount,uint256 nonce)",
+    "line_no": 16,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Bid\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "shonendumm/EIP712-meta-transactions",
+    "path": "contracts/TokenExchange.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,uint256 chainId,address verifyingContract)",
+    "line_no": 31,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "shonendumm/EIP712-meta-transactions",
+    "path": "contracts/TokenExchange.sol",
+    "typehash_name": "DELEGATION_TYPEHASH",
+    "typehash_value": "Delegation(address delegatee,uint256 nonce,uint256 expiry)",
+    "line_no": 34,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Delegation\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "shonendumm/EIP712-meta-transactions",
+    "path": "contracts/TokenExchange.sol",
+    "typehash_name": "ORDER_TYPEHASH",
+    "typehash_value": "BuyOrder(address account,uint256 amount,uint256 bidPrice)",
+    "line_no": 35,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"BuyOrder\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "jaccard-swap/hardhat",
+    "path": "contracts/JaccardSwap.sol",
+    "typehash_name": "ERC20_PERMIT_TYPEHASH",
+    "typehash_value": "ERC20PermitData(address owner,address spender,uint256 value,uint256 deadline)",
+    "line_no": 81,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"ERC20PermitData\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "jaccard-swap/hardhat",
+    "path": "contracts/JaccardSwap.sol",
+    "typehash_name": "BID_TYPEHASH",
+    "typehash_value": "Bid(bytes4 salt,uint256 deadline,bytes32[5] targetMinHash,uint8 minMatches,ERC20PermitData permit)ERC20PermitData(address owner,address spender,uint256 value,uint256 deadline)",
+    "line_no": 86,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Bid\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "jaccard-swap/hardhat",
+    "path": "contracts/JaccardSwap.sol",
+    "typehash_name": "JACCARD_PERMIT_TYPEHASH",
+    "typehash_value": "JaccardERC1155Permit(address owner,address spender,uint256 tokenId,uint256 amount,uint256 deadline,bytes4 salt)",
+    "line_no": 90,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"JaccardERC1155Permit\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "jaccard-swap/hardhat",
+    "path": "contracts/JaccardSwap.sol",
+    "typehash_name": "AUCTION_TYPEHASH",
+    "typehash_value": "Auction(bytes4 salt,uint256 deadline,address nft,address token,uint256 reservePrice,JaccardERC1155Permit nftPermit,bytes nftPermitSignature)JaccardERC1155Permit(address owner,address spender,uint256 tokenId,uint256 amount,uint256 deadline,bytes4 salt)",
+    "line_no": 94,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Auction\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "SKKU-SecLab/SmartMark",
+    "path": "dataset/Solidity_codes_9324/0xf0e5c92cedd66c7985c354c35e2bc37e685b99da.sol",
+    "typehash_name": "DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(",
+    "line_no": 407,
+    "is_hex": false,
+    "validation": {
+      "is_valid": false,
+      "errors": [
+        {
+          "type": "PARSE_ERROR",
+          "details": "Cannot parse: \"EIP712Domain(\""
+        }
+      ]
+    }
+  },
+  {
+    "repo": "SKKU-SecLab/SmartMark",
+    "path": "dataset/Solidity_codes_9324/0xf0e5c92cedd66c7985c354c35e2bc37e685b99da.sol",
+    "typehash_name": "BID_TYPEHASH",
+    "typehash_value": "Bid(",
+    "line_no": 419,
+    "is_hex": false,
+    "validation": {
+      "is_valid": false,
+      "errors": [
+        {
+          "type": "PARSE_ERROR",
+          "details": "Cannot parse: \"Bid(\""
+        }
+      ]
+    }
+  },
+  {
+    "repo": "mosendo/gasless",
+    "path": "contracts/Gasless.sol",
+    "typehash_name": "SEND_TYPEHASH",
+    "typehash_value": "Send(address relayer,address to,uint256 value,uint256 fee,uint256 gasprice,uint256 nonce,uint256 deadline)",
+    "line_no": 29,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Send\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "mosendo/gasless",
+    "path": "contracts/Gasless.sol",
+    "typehash_name": "SWAP_TYPEHASH",
+    "typehash_value": "Swap(address relayer,uint256 dai_sold,uint256 min_eth,uint256 fee,uint256 gasprice,uint256 nonce,uint256 deadline)",
+    "line_no": 32,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Swap\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Dexalot/contracts",
+    "path": "contracts/DexalotRFQ.sol",
+    "typehash_name": "ORDER_TYPEHASH",
+    "typehash_value": "Order(uint256 nonceAndMeta,uint128 expiry,address makerAsset,address takerAsset,address maker,address taker,uint256 makerAmount,uint256 takerAmount)",
+    "line_no": 65,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Order\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Dexalot/contracts",
+    "path": "contracts/DexalotRFQ.sol",
+    "typehash_name": "XCHAIN_SWAP_TYPEHASH",
+    "typehash_value": "XChainSwap(bytes32 from,bytes32 to,bytes32 makerSymbol,bytes32 makerAsset,bytes32 takerAsset,uint256 makerAmount,uint256 takerAmount,uint96 nonce,uint32 expiry,uint32 destChainId,uint8 bridgeProvider)",
+    "line_no": 70,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"XChainSwap\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "smartbugs/smartbugs-wild",
+    "path": "contracts/0x5f1a08554f0dc0cf79852c564a10981ffbd7c8af.sol",
+    "typehash_name": "EIP712_DOMAIN_TYPEHASH",
+    "typehash_value": "0x8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f",
+    "line_no": 328,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "SolidityUniversity/smart-modules",
+    "path": "src/EIP712Swap.sol",
+    "typehash_name": "SWAP_TYPEHASH",
+    "typehash_value": "SwapRequest(address pool,address sender,address tokenIn,address tokenOut,uint256 amountIn,uint256 minAmountOut,uint256 nonce,uint256 deadline)",
+    "line_no": 14,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"SwapRequest\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "renardbebe/Smart-Contract-Benchmark-Suites",
+    "path": "dataset/UR/0xa64ad1e33ab07a2dcbeb0e599027d00e1d28e9cc.sol",
+    "typehash_name": "EIP712_DOMAIN_TYPEHASH",
+    "typehash_value": "0x8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f",
+    "line_no": 246,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "kiroboio/ki-eth-token",
+    "path": "contracts/SafeSwap.sol",
+    "typehash_name": "HIDDEN_SWAP_TYPEHASH",
+    "typehash_value": "0x0f11af065228fe4d4a82a264c46914620a3a99413bfee68f390bd6a3ba05e2c2",
+    "line_no": 32,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "kiroboio/ki-eth-token",
+    "path": "contracts/SafeSwap.sol",
+    "typehash_name": "HIDDEN_ERC721_SWAP_TYPEHASH",
+    "typehash_value": "0x22eb06b067ef6305a65d8334d41817cd2fb49f43ee331996ed20687c8152e5ed",
+    "line_no": 36,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "eugenix-io/gasless_contracts",
+    "path": "contracts/GasRouterV1.sol",
+    "typehash_name": "JUMPER_SWAP_TYPEHASH",
+    "typehash_value": "SwapWithoutFeesJumper(uint nonce,uint minAmount,address receiver,bytes32 transactionId)'\n            )\n        );\n\n    address private constant LifiDiamondProxyAddress = 0x1231DEB6f5749EF6cE6943a275A1D3E7486F4EaE;\n\n    struct SwapWithJumperGaslessParams {\n        bytes32 transactionId;\n        string integrator;\n        string referrer;\n        address payable receiver;\n        uint minAmount;\n        SwapData[] swapData;\n        uint nonce;\n        address userAddress;\n        bytes32 sigR;\n        bytes32 sigS;\n        uint8 sigV;\n    }\n   \n    function initialize () external initializer {\n        __Ownable_init();\n        EIP712_VERSION = '1';\n        DOMAIN_SEPARATOR = keccak256(\n            abi.encode(\n                keccak256(\n                    'EIP712Domain(string name,string version,address verifyingContract,bytes32 salt)'\n                ),\n                keccak256(bytes(name)),\n                keccak256(bytes(EIP712_VERSION)),\n                address(this),\n                bytes32(getChainId())\n            )\n        );\n\n        lifiDiamond = ILifiDiamond(LifiDiamondProxyAddress);\n    }\n\n    function getBalance() public view returns (uint256) {\n        return address(this).balance;\n    }\n\n    function transfer(address payable to, uint256 amount) public onlyOwner {\n        (bool success, ) = to.call{value: amount}('');\n        require(success);\n    }\n\n    function transferERC20(\n        address payable to,\n        uint256 amount,\n        address tokenAddress\n    ) public onlyOwner {\n        ERC20Upgradeable token = ERC20Upgradeable(tokenAddress);\n        require(token.transfer(to, amount), 'Failed to transfer ERC20 token');\n    }\n\n    function swapWithJumperGasless (SwapWithJumperGaslessParams memory params) external returns(uint) {\n\n        bytes32 digest = _getDigestJumper(\n            params.transactionId,\n            params.integrator,\n            params.referrer,\n            params.receiver,\n            params.minAmount,\n            params.swapData,\n            params.nonce\n        );\n\n        _verifyDigest(digest, params.userAddress, params.sigR, params.sigS, params.sigV, params.nonce);\n        uint amountOut = _swapWithJumperGaslessImplement(params);\n\n        return amountOut;\n    }\n\n    function _swapWithJumperGaslessImplement (SwapWithJumperGaslessParams memory params) internal returns(uint) {\n\n        // Check the from token and transfer the amountIn to this contract\n        IERC20Upgradeable token = IERC20Upgradeable(params.swapData[0].sendingAssetId);\n        token.safeTransferFrom(params.userAddress, address(this), params.swapData[0].fromAmount);\n\n        // Check whether Flint contract has given allowance or not\n        if (\n            token.allowance(address(this), LifiDiamondProxyAddress) <\n            params.swapData[0].fromAmount\n        ) {\n            token.safeApprove(\n                LifiDiamondProxyAddress,\n                0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff\n            );\n        }\n\n\n\n        // Check the initial balance of output token\n        IERC20Upgradeable tokenOut = IERC20Upgradeable(params.swapData[0].receivingAssetId);\n\n        uint userInitBalance = tokenOut.balanceOf(params.receiver);\n\n        // Execute this transaction to diamond jumper\n\n\n\n        lifiDiamond.executeSwap(\n            params.transactionId,\n            params.integrator,\n            params.referrer,\n            params.receiver,\n            params.minAmount,\n            params.swapData\n        );\n\n\n\n        uint userFinalBalance = tokenOut.balanceOf(params.receiver);\n\n        uint amountOut = userFinalBalance - userInitBalance;\n\n        return amountOut;\n    }\n\n    function _verifyDigest(\n        bytes32 digest,\n        address userAddress,\n        bytes32 sigR,\n        bytes32 sigS,\n        uint8 sigV,\n        uint nonce\n    ) internal {\n\n        address recAddress = ecrecover(digest, sigV, sigR, sigS);\n\n\n\n\n        require(\n            userAddress == recAddress,\n            '[SWAP WITHOUT FEES] Invalid signature'\n        );\n        require(\n            nonce == nonces[userAddress]++,\n            '[SWAP WITHOUT FEES] Invalid nonce'\n        );\n    }\n\n    function _getDigestJumper (\n        bytes32 transactionId,\n        string memory integrator,\n        string memory referrer,\n        address receiver,\n        uint minAmount,\n        SwapData[] memory swapData,\n        uint nonce\n    ) internal view returns(bytes32) {\n        return\n            keccak256(\n                abi.encodePacked(\n                    '\\x19\\x01",
+    "line_no": 42,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"SwapWithoutFeesJumper\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "balonblaugrana/Smart-Contracts-DApp",
+    "path": "Swap/lib/EIP712.sol",
+    "typehash_name": "EIP712DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)",
+    "line_no": 24,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "tintinweb/smart-contract-sanctuary-polygon",
+    "path": "contracts/mumbai/88/888a1e117b82dc2f9c2daecb671196df10de5bbb_DTTDSwap.sol",
+    "typehash_name": "SWAP_TYPEHASH",
+    "typehash_value": "0xe290609c8f553aa0c70e2b281e26afb435b47184686022e17fa2a505e19e51e2",
+    "line_no": 1101,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "tintinweb/smart-contract-sanctuary-polygon",
+    "path": "contracts/mumbai/88/888a1e117b82dc2f9c2daecb671196df10de5bbb_DTTDSwap.sol",
+    "typehash_name": "OFFER_TYPEHASH",
+    "typehash_value": "0xf825b6e9e2bed18c730b3d709a3e36506e06d746be0813d0e476e624d41759a8",
+    "line_no": 1112,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "tintinweb/smart-contract-sanctuary-polygon",
+    "path": "contracts/mumbai/88/888a1e117b82dc2f9c2daecb671196df10de5bbb_DTTDSwap.sol",
+    "typehash_name": "OFFERITEM_TYPEHASH",
+    "typehash_value": "0x8eca0abaaf13208f26a407164e441c3799b94efbfa2e91608e9c60aa9069302b",
+    "line_no": 1125,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "nathfred/eth-intent-swap",
+    "path": "packages/hardhat/contracts/IntentSwap.sol",
+    "typehash_name": "SWAP_TYPEHASH",
+    "typehash_value": "SwapIntent(address fromToken,address toToken,uint256 amountIn,uint256 minAmountOut,address recipient,uint256 deadline,uint256 nonce)",
+    "line_no": 62,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"SwapIntent\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "xf97/HuangGai",
+    "path": "injectedContractDataSet/preSentEther/0x5f1a08554f0dc0cf79852c564a10981ffbd7c8af_preSentEther.sol",
+    "typehash_name": "EIP712_DOMAIN_TYPEHASH",
+    "typehash_value": "0x8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f",
+    "line_no": 328,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "InPlusLab/ReentrancyStudy-Data",
+    "path": "deduplicated_smart_contracts/0x9980a69a80e3bce3113826acff8730d0183f04f4.sol",
+    "typehash_name": "HIDDEN_SWAP_TYPEHASH",
+    "typehash_value": "0x0f11af065228fe4d4a82a264c46914620a3a99413bfee68f390bd6a3ba05e2c2",
+    "line_no": 1084,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "InPlusLab/ReentrancyStudy-Data",
+    "path": "deduplicated_smart_contracts/0x9980a69a80e3bce3113826acff8730d0183f04f4.sol",
+    "typehash_name": "HIDDEN_ERC721_SWAP_TYPEHASH",
+    "typehash_value": "0x22eb06b067ef6305a65d8334d41817cd2fb49f43ee331996ed20687c8152e5ed",
+    "line_no": 1088,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "OrderlyNetwork/contract-evm",
+    "path": "src/library/SwapSignature.sol",
+    "typehash_name": "DELEGATE_SWAP_TYPEHASH",
+    "typehash_value": "DelegateSwap(uint256 swapNonce,uint256 chainId,bytes32 inTokenHash,uint256 inTokenAmount,address to,uint256 value,bytes swapCalldata)",
+    "line_no": 12,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"DelegateSwap\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "OrderlyNetwork/contract-evm",
+    "path": "src/library/SwapSignature.sol",
+    "typehash_name": "EIP712_DOMAIN_TYPEHASH",
+    "typehash_value": "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)",
+    "line_no": 17,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"EIP712Domain\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "youtpout/SecureSwap",
+    "path": "contracts/SecureRouter.sol",
+    "typehash_name": "SWAP_TYPEHASH",
+    "typehash_value": "0xb4adfbac3cb08c3c789df3219d832799bb62fa32be119e5539c01f0ee8885ce9",
+    "line_no": 29,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "SKKU-SecLab/SmartMark",
+    "path": "dataset/Solidity_codes_9324/0x09bbbd84c165b0cec3ec540d32e17c387242c6ea.sol",
+    "typehash_name": "ADDLIQUIDITY_TYPEHASH",
+    "typehash_value": "0x4d214baa73121bf1fd881822ff725e82a5194849fe9f33fa2cf93d3a8bcc1528",
+    "line_no": 1302,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "SKKU-SecLab/SmartMark",
+    "path": "dataset/Solidity_codes_9324/0x09bbbd84c165b0cec3ec540d32e17c387242c6ea.sol",
+    "typehash_name": "SWAP_TYPEHASH",
+    "typehash_value": "0x7f9ea4937fd3ee4bc72c788ef9ed621218765f5b35f26092eec44a8aac0b8c5b",
+    "line_no": 1303,
+    "is_hex": true,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "HEX_CONSTANT",
+          "details": "Pre-computed hex; need original signature"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "rajranjan0608/gasless-Uniswap",
+    "path": "contracts/UniswapV2Router01.sol",
+    "typehash_name": "SWAP_TYPEHASH",
+    "typehash_value": "Swap(address from,uint256 amount,address inputToken,address outputToken,address to,uint256 nonce,uint256 deadline)",
+    "line_no": 15,
+    "is_hex": false,
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "FUNC_ELSEWHERE",
+          "details": "\"Swap\" not in this file (parent contract?)"
+        }
+      ]
+    }
+  }
+]

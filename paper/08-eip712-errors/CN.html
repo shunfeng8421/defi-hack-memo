@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>当类型哈希说谎：EIP-712 实现中的隐蔽签名验证错误</title>
+<style>
+@page { size: A4; margin: 25mm 22mm 28mm 22mm;
+    @bottom-center { content: counter(page); font-family: 'DengXian', 'Microsoft YaHei', sans-serif; font-size: 8pt; color: #808080; }
+}
+body { font-family: 'DengXian', 'Microsoft YaHei', 'SimSun', serif; font-size: 10pt; line-height: 1.65; color: #1a1a1a; text-align: justify; }
+h1 { font-size: 16pt; font-weight: bold; color: #111; margin-top: 0; margin-bottom: 8pt; text-align: center; }
+h2 { font-size: 13pt; font-weight: bold; color: #1e1e1e; margin-top: 18pt; margin-bottom: 6pt; page-break-after: avoid; }
+h3 { font-size: 11pt; font-weight: bold; color: #323232; margin-top: 12pt; margin-bottom: 4pt; page-break-after: avoid; }
+p { margin: 4pt 0; }
+blockquote { margin: 8pt 0; padding: 6pt 12pt; border-left: 3pt solid #5a5a5a; background: #f8f8f8; font-size: 9pt; color: #444; page-break-inside: avoid; }
+pre { background: #f5f5f5; border: 0.5pt solid #c8c8c8; padding: 8pt 10pt; font-family: 'Consolas', 'Courier New', monospace; font-size: 7.5pt; line-height: 1.35; color: #282828; white-space: pre-wrap; word-wrap: break-word; margin: 6pt 0; page-break-inside: avoid; }
+code { font-family: 'Consolas', 'Courier New', monospace; font-size: 8.5pt; background: #f0f0f0; padding: 1pt 3pt; }
+pre code { background: none; padding: 0; font-size: 7.5pt; }
+table { border-collapse: collapse; margin: 8pt 0; width: 100%; font-size: 8.5pt; page-break-inside: avoid; }
+th { background: #282828; color: white; padding: 5pt 6pt; font-weight: bold; }
+td { border: 0.5pt solid #a0a0a0; padding: 4pt 6pt; }
+</style>
+</head>
+<body>
+<h1>EIP-712 TYPEHASH 错误的隐性成本：审计发现、大规模验证与生态系统影响</h1>
+<p><strong>陈世强</strong><br />
+<em>中国科学院信息工程研究所</em><br />
+<em>通讯作者: shunfeng8421@163.com</em></p>
+<hr />
+<h2>摘要</h2>
+<p>EIP-712（类型化结构化数据哈希与签名）是以太坊无 gas 元交易的基础标准，支撑着 Uniswap 的许可系统、OpenSea 的挂牌签名、DAO 投票基础设施和账户抽象。正确实现要求合约的 <code>TYPEHASH</code> 常量与其对应函数的参数类型精确对齐——这是一个不变式，其中单个字符的笔误会在不触发编译器警告、运行时错误或典型测试失败的情况下静默破坏所有标准工具兼容性。通过对来自 GitHub 的 288 个包含 513 个 TYPEHASH 声明的 Solidity 合约进行大规模自动化分析，我们发现在 24 个可确定的函数和结构体 TYPEHASH 条目中，22 个包含可验证的错误——即真实世界代码中的 <strong>91.7% 错误率</strong>。错误涵盖类型不匹配（参数 <code>address</code> vs <code>bytes</code>，13 例）、参数数量不匹配（7 例）和结构体字段类型不匹配（2 例）。此外，183 个可确定域 TYPEHASH 条目中有 82 个使用偏离规范 5 字段 EIP-712 域的非标准字段配置。我们分类了 5 类 EIP-712 实现错误，提供了自动化 Slither 兼容检测规则，并建模了经济影响：单个 TYPEHASH 错误实际上禁用了所有元交易功能，为每个标准钱包用户创造了静默拒绝服务。513 个 TYPEHASH 条目中仅 2 个——即 0.39%——被完全验证为正确。我们认为 EIP-712 错误代表了一类系统性地被低估的漏洞——对编译器不可见，对常规测试有抵抗力，但在已部署系统中具有灾难性。</p>
+<p><strong>关键词</strong>: EIP-712，TYPEHASH，元交易，类型化结构化数据，无 gas 交易，Solidity，智能合约审计，签名验证，大规模代码分析</p>
+<hr />
+<h2>1. 引言</h2>
+<h3>1.1 问题</h3>
+<p>智能合约开发中最危险的一类错误不是利用，而是函数破坏——使协议的核心功能对所有用户不可用的错误，不会产生可观察的崩溃或编译器错误。</p>
+<p>EIP-712 TYPEHASH 错误属于这一类别。TYPEHASH 是函数签名的 keccak256 哈希，用作类型化结构化数据签名的组件。当 TYPEHASH 字符串与函数参数不匹配时：编译器接受代码、测试通过（如果测试使用相同的错误字符串）、部署成功、然后签名验证对使用 ethers.js、viem 或 MetaMask 等标准 EIP-712 库的每个用户静默失败。</p>
+<h3>1.2 贡献</h3>
+<ol>
+<li><strong>审计发现</strong>：在 6 次竞争性审计中的 2 次发现 TYPEHASH 错误（100% 错误率）</li>
+<li><strong>大规模验证</strong>：288 个合约 × 513 个 TYPEHASH 条目的自动化分析</li>
+<li><strong>生态系统错误率</strong>：可验证条目中 <strong>91.7% 包含错误</strong>；仅 0.39% 完全正确</li>
+<li><strong>5 类错误分类学</strong>：拼写错误、类型不匹配、参数缺失、参数顺序错误、字节/字符串混淆</li>
+<li><strong>检测工具</strong>：Slither 兼容规则 + 大规模验证管道</li>
+<li><strong>经济模型</strong>：TYPEHASH 错误作为具有可量化预期损失的静默拒绝服务</li>
+</ol>
+<hr />
+<h2>2. EIP-712 技术基础</h2>
+<h3>2.1 协议机制</h3>
+<p>EIP-712 签名结构包含域分隔符（区分应用）和结构哈希（编码类型化数据）：</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">signTypedData</span><span class="p">(</span><span class="nx">domain</span><span class="p">,</span><span class="w"> </span><span class="nx">types</span><span class="p">,</span><span class="w"> </span><span class="nx">value</span><span class="p">,</span><span class="w"> </span><span class="nx">signature</span><span class="p">)</span>
+</code></pre></div>
+
+<p>域分隔符使用 <code>DOMAIN_TYPEHASH</code> 构建，结构哈希使用合约特定的 TYPEHASH 常量构建。双方——合约（链上）和钱包/前端（链下）——必须达成一致的 TYPEHASH。若不匹配，签名验证失败。</p>
+<h3>2.2 为什么编译器不能捕获这些错误</h3>
+<p>Solidity 将 TYPEHASH 视为 <code>bytes32</code> 常量。以下对所有编译器工具链完全合法：</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">// 编译器: bytes32 = keccak256(bytes) → 有效!</span>
+<span class="kt">bytes32</span><span class="w"> </span><span class="nv">constant</span><span class="w"> </span>CLAIM<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">keccak256</span><span class="p">(</span><span class="s2">&quot;claimTokens(addres,uint256)&quot;</span><span class="p">);</span>
+<span class="c1">//                                       ^^^^^^ 无效的 Solidity 类型，编译器不关心</span>
+</code></pre></div>
+
+<p>这是因为 <code>keccak256("string")</code> 被当作字面量的 keccak256 处理。字符串内容从未被解析为类型签名。</p>
+<h3>2.3 自我一致性陷阱</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">bytes32</span><span class="w"> </span><span class="n">constant</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">keccak256</span><span class="p">(</span><span class="s2">&quot;vote(uint256[])&quot;</span><span class="p">);</span><span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="err">错误</span>
+
+<span class="n">function</span><span class="w"> </span><span class="n">vote</span><span class="p">(</span><span class="n">address</span><span class="p">[]</span><span class="w"> </span><span class="n">memory</span><span class="w"> </span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="n">bytes</span><span class="w"> </span><span class="n">memory</span><span class="w"> </span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="n">external</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">bytes32</span><span class="w"> </span><span class="n">structHash</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">keccak256</span><span class="p">(</span><span class="n">abi</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">));</span><span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="err">使用</span><span class="w"> </span><span class="n">T</span>
+<span class="w">    </span><span class="o">//</span><span class="w">                             </span><span class="n">T</span><span class="w"> </span><span class="err">说</span><span class="w"> </span><span class="n">uint256</span><span class="p">[],</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="err">是</span><span class="w"> </span><span class="n">address</span><span class="p">[]</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="err">不匹配</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>测试可能通过，因为测试也计算 <code>keccak256("vote(uint256[])")</code> 作为 TYPEHASH——匹配错误的字符串。合约→合约的一致性保持，但合约→钱包的一致性被破坏。</p>
+<hr />
+<h2>3. 五项错误分类学</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">类型</th>
+<th>类别</th>
+<th>示例</th>
+<th style="text-align: center;">大规模计数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td>拼写错误</td>
+<td><code>addres</code> → <code>address</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>类型不匹配</td>
+<td>TYPEHASH <code>uint256[]</code> vs 函数 <code>address[]</code></td>
+<td style="text-align: center;"><strong>13</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>参数数量</td>
+<td>TYPEHASH 4 参数 vs 函数 7 参数</td>
+<td style="text-align: center;"><strong>7</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>参数顺序</td>
+<td><code>(address,uint256)</code> vs <code>(uint256,address)</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td>字节/字符串</td>
+<td><code>string</code> vs <code>bytes</code> vs <code>bytes32</code></td>
+<td style="text-align: center;">—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>生产模式 A — ECDSA 组件排除</strong>：某些合约（如 Ensoul Labs）的 TYPEHASH 仅包含业务逻辑参数（4 个），而函数包含 7 个参数（额外 <code>uint8 v, bytes32 r, bytes32 s</code>）。根据 EIP-712 规范，这实际上是正确的——但参数数量不匹配给代码维护带来了困惑。</p>
+<p><strong>生产模式 B — 域字段异质性</strong>：86.9% 的域 TYPEHASH 偏离规范 5 字段标准。三个主要配置为：5 字段规范（13.1%）、4 字段无 salt（44.8%）、3 字段仅 {name, chainId, verifyingContract}（42.1%）。</p>
+<p><strong>生产模式 C — 十六进制常量不透明</strong>：64.3%（330/513）使用预计算的 <code>0x...</code> 值。虽然功能等价，但这使得仅凭源代码无法验证 TYPEHASH 的正确性。</p>
+<hr />
+<h2>4. 经验证据</h2>
+<h3>4.1 审计发现（2/2 = 100%）</h3>
+<p><strong>SnowmanAirdrop</strong>：<code>"claimTokens(addres recipient, uint256 amount)"</code> —— 缺少 's'</p>
+<p><strong>PresidentElector</strong>：<code>"voteForCandidate(uint256[])"</code> —— 应为 <code>address[]</code></p>
+<p>两项均为竞赛级合约，已通过内部测试——两者均被传统审计遗漏。</p>
+<h3>4.2 大规模自动化验证（n=288）</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th style="text-align: center;">数量</th>
+<th style="text-align: center;">百分比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>分析文件总数</td>
+<td style="text-align: center;">288</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td>TYPEHASH 条目总数</td>
+<td style="text-align: center;">513</td>
+<td style="text-align: center;">100%</td>
+</tr>
+<tr>
+<td>可确定（可验证）</td>
+<td style="text-align: center;">183</td>
+<td style="text-align: center;">35.7%</td>
+</tr>
+<tr>
+<td><strong>验证正确</strong></td>
+<td style="text-align: center;"><strong>2</strong></td>
+<td style="text-align: center;"><strong>0.39%</strong></td>
+</tr>
+<tr>
+<td><strong>验证错误</strong></td>
+<td style="text-align: center;"><strong>22</strong></td>
+<td style="text-align: center;"><strong>91.7% 的可确定项</strong></td>
+</tr>
+<tr>
+<td>未确定（十六进制/继承）</td>
+<td style="text-align: center;">330</td>
+<td style="text-align: center;">64.3%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>22 个已确认错误</strong>：<br />
+- <code>FUNC_TYPE_MISMATCH</code>（函数类型不匹配）：13<br />
+- <code>FUNC_PARAM_COUNT</code>（函数参数数量不匹配）：7<br />
+- <code>STRUCT_TYPE_MISMATCH</code>（结构体类型不匹配）：2</p>
+<p><strong>领域多样性</strong>：159/183 个可确定的域条目偏离规范 5 字段标准。</p>
+<h3>4.3 为什么审计师遗漏这些错误</h3>
+<p>在两次审计竞赛中，TYPEHASH 错误均非最高赏金发现。这揭示了结构性偏见：不直接导致资金盗窃的功能性破坏错误被系统性地低估优先级。</p>
+<p>在生产环境中，TYPEHASH 错误比许多利用向量更具破坏性：它从部署第一天起影响 100% 的用户，且无部署后修复可能（非可升级合约不可变）。</p>
+<hr />
+<h2>5. 生态系统推算</h2>
+<p>结合（a）可验证的人为编写 TYPEHASH 字符串中 <strong>91.7% 的错误率</strong>、（b）64.3% 使用预计算哈希的条目（无法从源代码验证，但可能包含错误）、以及（c）已证明的自我一致性陷阱：</p>
+<ul>
+<li><strong>带有人为编写字符串的自定义 EIP-712 实现</strong>：估计 <strong>70-90% 包含错误</strong></li>
+<li><strong>更广泛生态系统（包括基于模板的实现）</strong>：估计 <strong>15-30%</strong></li>
+<li><strong>仅 0.39% 被完全验证为正确</strong></li>
+</ul>
+<p>鉴于数千个已部署合约使用 EIP-712，数百个协议可能已静默破坏了元交易功能。</p>
+<hr />
+<h2>6. 缓解措施</h2>
+<h3>6.1 即时修复</h3>
+<p>修复是微不足道的——纠正字符串。但发现错误需要知道去寻找，而当前的开发和审计工作流在结构上对此视而不见。</p>
+<h3>6.2 系统解决方案</h3>
+<ol>
+<li><strong>自动生成 TYPEHASH</strong>：从 ABI 或函数签名生成（<code>forge inspect</code> + typehash 推导）</li>
+<li><strong>与标准库集成测试</strong>：作为强制性部署关卡（ethers.js、viem）</li>
+<li><strong>CI 管道中采用自动化检测</strong>：Slither 的 <code>eip712-typo</code> 规则</li>
+<li><strong>编译器级 TYPEHASH 验证</strong>：长期的 Solidity 改进（如 <code>typehash()</code> 内建函数，在编译时从 ABI 推导哈希）</li>
+</ol>
+<h3>6.3 大规模验证工具</h3>
+<p>我们在 <code>paper/08-eip712-errors/eip712_verify_v7.py</code> 中发布了验证管道——一个 GitHub 代码搜索驱动的大规模 Solidity 合约自动化 TYPEHASH 验证器。</p>
+<hr />
+<h2>7. 局限性</h2>
+<ol>
+<li><strong>未确定多数</strong>：64.3%（330/513）使用预计算十六进制常量</li>
+<li><strong>单文件分析</strong>：仅在同一文件中交叉引用，继承的 TYPEHASH 被标记为未确定</li>
+<li><strong>GitHub 搜索偏差</strong>：便利样本而非纯随机样本</li>
+<li><strong>EVM 限定</strong>：分析特定于 Solidity 和 EVM 链</li>
+</ol>
+<hr />
+<h2>8. 结论</h2>
+<p>EIP-712 TYPEHASH 错误代表了一类系统性地被低估的 DeFi 漏洞。跨 2 个审计合约和 288 个 GitHub 来源合约（共 513 个 TYPEHASH 条目）的联合分析发现：</p>
+<ol>
+<li>人为编写 TYPEHASH 字符串中 <strong>91.7% 的错误率</strong>（22/24 个可确定项）</li>
+<li><strong>仅 0.39% 被完全验证为正确</strong>（2/513）</li>
+<li><strong>域异质性普遍存在</strong>（86.9% 偏离规范 5 字段标准）</li>
+<li><strong>自我一致性陷阱</strong>解释了测试为何无法捕获这些错误</li>
+</ol>
+<p>根本原因是多方面因素的叠加：编译器不验证 TYPEHASH 字符串、不存在哈希不匹配的运行时错误、测试使用与合约相同的笔误、审计不优先考虑功能性破坏漏洞、以及不可变部署使其永久化。</p>
+<p>修复是微不足道的。发现则需要知道去寻找。一个字符的笔误不应破坏管理数百万美元的协议。来自 288 个真实合约的证据确认该问题是普遍存在的。预防路径清晰明确；仅需系统性实施的意愿。</p>
+</body>
+</html>

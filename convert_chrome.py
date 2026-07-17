@@ -284,14 +284,29 @@ PAPERS = [
         "title": "Comprehensive Taxonomy of DeFi Attack Patterns",
     },
     {
+        "md": r"D:\ll\knowledge-base\10-security\paper\06-taxonomy\CN.md",
+        "pdf": r"D:\ll\knowledge-base\10-security\paper\06-taxonomy\CN.pdf",
+        "title": "DeFi 攻击模式综合分类法",
+    },
+    {
         "md": r"D:\ll\knowledge-base\10-security\paper\07-hardening-gradient\EN.md",
         "pdf": r"D:\ll\knowledge-base\10-security\paper\07-hardening-gradient\EN.pdf",
         "title": "The Hardening Gradient",
     },
     {
+        "md": r"D:\ll\knowledge-base\10-security\paper\07-hardening-gradient\CN.md",
+        "pdf": r"D:\ll\knowledge-base\10-security\paper\07-hardening-gradient\CN.pdf",
+        "title": "安全硬化梯度：DeFi 攻击防御时间分析",
+    },
+    {
         "md": r"D:\ll\knowledge-base\10-security\paper\08-eip712-errors\EN.md",
         "pdf": r"D:\ll\knowledge-base\10-security\paper\08-eip712-errors\EN.pdf",
         "title": "When Type Hashes Lie: EIP-712 Errors",
+    },
+    {
+        "md": r"D:\ll\knowledge-base\10-security\paper\08-eip712-errors\CN.md",
+        "pdf": r"D:\ll\knowledge-base\10-security\paper\08-eip712-errors\CN.pdf",
+        "title": "当类型哈希说谎：EIP-712 实现中的隐蔽签名验证错误",
     },
 ]
 

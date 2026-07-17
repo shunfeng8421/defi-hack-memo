@@ -1,0 +1,206 @@
+[
+  {
+    "repo": "OpenZeppelin/openzeppelin-contracts",
+    "path": "contracts/utils/cryptography/EIP712.sol",
+    "typehash_name": "N/A",
+    "typehash_str": "N/A",
+    "func_name": null,
+    "func_params": [],
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "NO_EXPLICIT_TYPEHASH",
+          "details": "Uses EIP-712 but TYPEHASH not found as constant"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "OpenZeppelin/openzeppelin-contracts",
+    "path": "contracts/token/ERC20/extensions/ERC20Permit.sol",
+    "typehash_name": "N/A",
+    "typehash_str": "N/A",
+    "func_name": null,
+    "func_params": [],
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "NO_EXPLICIT_TYPEHASH",
+          "details": "Uses EIP-712 but TYPEHASH not found as constant"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "OpenZeppelin/openzeppelin-contracts",
+    "path": "contracts/governance/Governor.sol",
+    "typehash_name": "N/A",
+    "typehash_str": "N/A",
+    "func_name": null,
+    "func_params": [],
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "NO_EXPLICIT_TYPEHASH",
+          "details": "Uses EIP-712 but TYPEHASH not found as constant"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "OpenZeppelin/openzeppelin-contracts",
+    "path": "contracts/governance/utils/Votes.sol",
+    "typehash_name": "N/A",
+    "typehash_str": "N/A",
+    "func_name": null,
+    "func_params": [],
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "NO_EXPLICIT_TYPEHASH",
+          "details": "Uses EIP-712 but TYPEHASH not found as constant"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Uniswap/v2-core",
+    "path": "contracts/UniswapV2ERC20.sol",
+    "typehash_name": "N/A",
+    "typehash_str": "N/A",
+    "func_name": null,
+    "func_params": [],
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "NO_EXPLICIT_TYPEHASH",
+          "details": "Uses EIP-712 but TYPEHASH not found as constant"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "compound-finance/compound-protocol",
+    "path": "contracts/Governance/GovernorAlpha.sol",
+    "typehash_name": "N/A",
+    "typehash_str": "N/A",
+    "func_name": null,
+    "func_params": [],
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "NO_EXPLICIT_TYPEHASH",
+          "details": "Uses EIP-712 but TYPEHASH not found as constant"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "compound-finance/compound-protocol",
+    "path": "contracts/Governance/GovernorBravoDelegate.sol",
+    "typehash_name": "N/A",
+    "typehash_str": "N/A",
+    "func_name": null,
+    "func_params": [],
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "NO_EXPLICIT_TYPEHASH",
+          "details": "Uses EIP-712 but TYPEHASH not found as constant"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "aave/aave-v3-core",
+    "path": "contracts/protocol/tokenization/AToken.sol",
+    "typehash_name": "N/A",
+    "typehash_str": "N/A",
+    "func_name": null,
+    "func_params": [],
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "NO_EXPLICIT_TYPEHASH",
+          "details": "Uses EIP-712 but TYPEHASH not found as constant"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "makerdao/dss",
+    "path": "src/dai.sol",
+    "typehash_name": "N/A",
+    "typehash_str": "N/A",
+    "func_name": null,
+    "func_params": [],
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "NO_EXPLICIT_TYPEHASH",
+          "details": "Uses EIP-712 but TYPEHASH not found as constant"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "safe-global/safe-contracts",
+    "path": "contracts/Safe.sol",
+    "typehash_name": "N/A",
+    "typehash_str": "N/A",
+    "func_name": null,
+    "func_params": [],
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "NO_EXPLICIT_TYPEHASH",
+          "details": "Uses EIP-712 but TYPEHASH not found as constant"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "transmissions11/solmate",
+    "path": "src/tokens/ERC20.sol",
+    "typehash_name": "N/A",
+    "typehash_str": "N/A",
+    "func_name": null,
+    "func_params": [],
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "NO_EXPLICIT_TYPEHASH",
+          "details": "Uses EIP-712 but TYPEHASH not found as constant"
+        }
+      ]
+    }
+  },
+  {
+    "repo": "Rari-Capital/solmate",
+    "path": "src/tokens/ERC20.sol",
+    "typehash_name": "N/A",
+    "typehash_str": "N/A",
+    "func_name": null,
+    "func_params": [],
+    "validation": {
+      "is_valid": null,
+      "errors": [
+        {
+          "type": "NO_EXPLICIT_TYPEHASH",
+          "details": "Uses EIP-712 but TYPEHASH not found as constant"
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>DeFi 攻击模式综合分类法</title>
+<style>
+@page { size: A4; margin: 25mm 22mm 28mm 22mm;
+    @bottom-center { content: counter(page); font-family: 'DengXian', 'Microsoft YaHei', sans-serif; font-size: 8pt; color: #808080; }
+}
+body { font-family: 'DengXian', 'Microsoft YaHei', 'SimSun', serif; font-size: 10pt; line-height: 1.65; color: #1a1a1a; text-align: justify; }
+h1 { font-size: 16pt; font-weight: bold; color: #111; margin-top: 0; margin-bottom: 8pt; text-align: center; }
+h2 { font-size: 13pt; font-weight: bold; color: #1e1e1e; margin-top: 18pt; margin-bottom: 6pt; page-break-after: avoid; }
+h3 { font-size: 11pt; font-weight: bold; color: #323232; margin-top: 12pt; margin-bottom: 4pt; page-break-after: avoid; }
+p { margin: 4pt 0; }
+blockquote { margin: 8pt 0; padding: 6pt 12pt; border-left: 3pt solid #5a5a5a; background: #f8f8f8; font-size: 9pt; color: #444; page-break-inside: avoid; }
+pre { background: #f5f5f5; border: 0.5pt solid #c8c8c8; padding: 8pt 10pt; font-family: 'Consolas', 'Courier New', monospace; font-size: 7.5pt; line-height: 1.35; color: #282828; white-space: pre-wrap; word-wrap: break-word; margin: 6pt 0; page-break-inside: avoid; }
+code { font-family: 'Consolas', 'Courier New', monospace; font-size: 8.5pt; background: #f0f0f0; padding: 1pt 3pt; }
+pre code { background: none; padding: 0; font-size: 7.5pt; }
+table { border-collapse: collapse; margin: 8pt 0; width: 100%; font-size: 8.5pt; page-break-inside: avoid; }
+th { background: #282828; color: white; padding: 5pt 6pt; font-weight: bold; }
+td { border: 0.5pt solid #a0a0a0; padding: 4pt 6pt; }
+</style>
+</head>
+<body>
+<h1>DeFi 攻击模式综合分类学：来自 824 起事件的 50 个攻击向量（2017–2026）</h1>
+<p><strong>陈世强</strong><br />
+<em>中国科学院信息工程研究所</em><br />
+<em>通讯作者: shunfeng8421@163.com</em></p>
+<hr />
+<h2>摘要</h2>
+<p>现有 DeFi 安全分类学仅覆盖 8–12 种攻击模式（Atzei et al., 2017; Werner et al., 2023），在全面事件语料库中最多实现 58% 的覆盖率。我们提出首个经验推导的 50 种 DeFi 攻击向量分类学，对照 2017 年 7 月至 2026 年 6 月间全部 824 起已确认事件进行验证。我们的分类实现了 <strong>97.6% 的覆盖率</strong>（824 起中的 804 起），而最佳先前分类学仅为 58%。每个模式包含带损失数字的典型真实案例、机制性利用描述、检测方法以及（适用时）Slither 检测规则。我们发现 8 种模式占总损失的 76%，仅闪电贷+预言机操纵一项就占 24% 的事件和 60% 的总损失（超过 $60 亿）。分类学揭示了现有自动化检测中的关键缺口：12 种模式（24%）完全缺乏 Slither 规则，18 种模式（36%）需要超出静态分析能力的业务逻辑理解。我们发布完整分类学、50 条检测规则和一个开源 50 规则 DeFi 扫描器供社区使用。</p>
+<p><strong>关键词</strong>: DeFi 安全，攻击分类学，闪电贷，预言机操纵，重入，访问控制，静态分析，Slither，经验验证</p>
+<hr />
+<h2>1. 引言</h2>
+<h3>1.1 DeFi 安全的分类学鸿沟</h3>
+<p>截至 2026 年中期，DeFi 生态系统在 824 起已确认安全事件中累计损失超过 $100 亿。这一惊人数字——超过 30 个主权国家的 GDP——凸显了根本性不对称：DeFi 协议管理数千亿总锁仓量（TVL），却依赖落后于传统金融和成熟软件工程的安全实践。</p>
+<p>任何安全学科的基础组成部分是全面的攻击分类学——一种结构化分类，使从业者能够识别模式、确定防御优先级并训练检测工具。然而，DeFi 安全社区缺乏这样的分类学。现有分类最多覆盖 12 种模式，在其框架内约 42% 的事件无法分类。</p>
+<h3>1.2 为什么是 50 种模式？</h3>
+<p>我们从事 824 起事件中推导出 50 种模式——较最佳先前工作在模式数量上增加四倍，事件覆盖率增加十倍。这一扩展并非分类膨胀；它反映了随着 DeFi 成熟而出现的利用机制的真正多样性。</p>
+<p>50 种模式分类学涵盖七大攻击向量类别：<br />
+- <strong>闪电贷放大</strong>（模式 1–8）：资本无关的利用推动器<br />
+- <strong>访问控制失败</strong>（模式 9–16）：认证和授权缺陷<br />
+- <strong>授权陷阱</strong>（模式 17–24）：签名、许可和跨链重放向量<br />
+- <strong>经济操纵</strong>（模式 25–32）：代币经济学层面的利用<br />
+- <strong>精度与算术</strong>（模式 33–39）：数值漏洞类别<br />
+- <strong>预言机与外部数据</strong>（模式 40–45）：价格喂价和链下数据风险<br />
+- <strong>协议逻辑</strong>（模式 46–50）：业务逻辑层面漏洞</p>
+<h3>1.3 贡献</h3>
+<ol>
+<li>
+<p><strong>50 模式分类学</strong>——迄今最全面的 DeFi 攻击分类，涵盖 7 个类别和 50 个独立向量，每个至少由 2 起已确认真实事件验证</p>
+</li>
+<li>
+<p><strong>经验验证</strong>——每个模式由 824 起事件的 DeFiHackLabs 数据集支持，这是最大的系统性 DeFi 利用语料库</p>
+</li>
+<li>
+<p><strong>覆盖率分析</strong>——我们实现 97.6% 的数据集覆盖率（804/824 事件），而 Werner et al. (2023) 为 58%</p>
+</li>
+<li>
+<p><strong>检测缺口分析</strong>——我们识别出自动化检测覆盖中的系统性缺口：24% 的模式缺乏 Slither 规则，36% 需要业务逻辑级检测</p>
+</li>
+<li>
+<p><strong>开源工具</strong>——50 规则 DeFi 安全扫描器 + 完整复现套件</p>
+</li>
+</ol>
+<hr />
+<h2>2. 分类学架构</h2>
+<h3>2.1 设计原则</h3>
+<p><strong>完备性</strong>：每个模式需至少 2 起独立事件支持。单次事件不被提升为独立模式，除非其在机制上是独特的。</p>
+<p><strong>互斥性</strong>：分类力求最小重叠。事件原则上可分配至多个模式，但规范示例尽量匹配单一主要分类。</p>
+<p><strong>实用性</strong>：每个模式包含可操作信息：代码示例、损失数字、检测方法论、Slither 规则（如适用）。</p>
+<p><strong>可扩展性</strong>：分类编号系统允许在不重组现有模式的情况下插入新模式。</p>
+<h3>2.2 统计概览</h3>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th style="text-align: center;">模式数</th>
+<th style="text-align: center;">事件占比</th>
+<th style="text-align: center;">损失占比</th>
+<th style="text-align: center;">有 Slither 规则</th>
+<th style="text-align: center;">可自动化检测</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>闪电贷放大</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">24%</td>
+<td style="text-align: center;">60%</td>
+<td style="text-align: center;">6/8</td>
+<td style="text-align: center;">50%</td>
+</tr>
+<tr>
+<td>访问控制失败</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">11%</td>
+<td style="text-align: center;">8%</td>
+<td style="text-align: center;">5/8</td>
+<td style="text-align: center;">75%</td>
+</tr>
+<tr>
+<td>授权陷阱</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">14%</td>
+<td style="text-align: center;">12%</td>
+<td style="text-align: center;">4/8</td>
+<td style="text-align: center;">50%</td>
+</tr>
+<tr>
+<td>经济操纵</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">13%</td>
+<td style="text-align: center;">8%</td>
+<td style="text-align: center;">3/8</td>
+<td style="text-align: center;">25%</td>
+</tr>
+<tr>
+<td>精度与算术</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">12%</td>
+<td style="text-align: center;">3%</td>
+<td style="text-align: center;">6/7</td>
+<td style="text-align: center;">71%</td>
+</tr>
+<tr>
+<td>预言机/外部数据</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">18%</td>
+<td style="text-align: center;">5%</td>
+<td style="text-align: center;">4/6</td>
+<td style="text-align: center;">33%</td>
+</tr>
+<tr>
+<td>协议逻辑</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">8%</td>
+<td style="text-align: center;">4%</td>
+<td style="text-align: center;">0/5</td>
+<td style="text-align: center;">0%</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>3. 七大类别概述</h2>
+<h3>类别 A：闪电贷放大（模式 1–8）</h3>
+<p>闪电贷攻击并非独立漏洞类别——它们是放大任何可被利用弱点的资本推动器。然而，某些模式对闪电贷放大的依赖如此强烈，以至于它们构成了可识别的利用类别：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">模式</th>
+<th>名称</th>
+<th style="text-align: center;">典型损失</th>
+<th style="text-align: center;">频率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">P1</td>
+<td>朴素现货价格操纵</td>
+<td style="text-align: center;">$1M–$100M</td>
+<td style="text-align: center;">高</td>
+</tr>
+<tr>
+<td style="text-align: center;">P2</td>
+<td>TWAP 操纵</td>
+<td style="text-align: center;">$1M–$50M</td>
+<td style="text-align: center;">中</td>
+</tr>
+<tr>
+<td style="text-align: center;">P3</td>
+<td>闪电贷+治理</td>
+<td style="text-align: center;">$1M–$10M</td>
+<td style="text-align: center;">低</td>
+</tr>
+<tr>
+<td style="text-align: center;">P4</td>
+<td>闪电贷+闪电铸造</td>
+<td style="text-align: center;">$100K–$5M</td>
+<td style="text-align: center;">低</td>
+</tr>
+<tr>
+<td style="text-align: center;">P5</td>
+<td>闪电贷+重入</td>
+<td style="text-align: center;">$500K–$20M</td>
+<td style="text-align: center;">中</td>
+</tr>
+<tr>
+<td style="text-align: center;">P6</td>
+<td>闪电贷+精度误差</td>
+<td style="text-align: center;">$10K–$500K</td>
+<td style="text-align: center;">高</td>
+</tr>
+<tr>
+<td style="text-align: center;">P7</td>
+<td>闪电贷+后门利用</td>
+<td style="text-align: center;">$100K–$5M</td>
+<td style="text-align: center;">低</td>
+</tr>
+<tr>
+<td style="text-align: center;">P8</td>
+<td>闪电贷+跨协议会计</td>
+<td style="text-align: center;">$100K–$10M</td>
+<td style="text-align: center;">中</td>
+</tr>
+</tbody>
+</table>
+<h3>类别 B：访问控制失败（模式 9–16）</h3>
+<p>访问控制是 DeFi 中最古老且持续最严重的漏洞类别：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">模式</th>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">P9</td>
+<td>无限制函数</td>
+<td>任何人可调用应受限的函数</td>
+</tr>
+<tr>
+<td style="text-align: center;">P10</td>
+<td>错误修饰符</td>
+<td>onlyOwner 使用不正确</td>
+</tr>
+<tr>
+<td style="text-align: center;">P11</td>
+<td>代理初始化</td>
+<td>实现合约的初始化器可被调用</td>
+</tr>
+<tr>
+<td style="text-align: center;">P12</td>
+<td>默认可见性</td>
+<td>函数默认为 public/未标记</td>
+</tr>
+<tr>
+<td style="text-align: center;">P13</td>
+<td>多签漏洞</td>
+<td>签名者计数逻辑错误</td>
+</tr>
+<tr>
+<td style="text-align: center;">P14</td>
+<td>时间锁绕过</td>
+<td>延迟逻辑中的缺陷</td>
+</tr>
+<tr>
+<td style="text-align: center;">P15</td>
+<td>提款权限升级</td>
+<td>可升级合约中提款权限变更</td>
+</tr>
+<tr>
+<td style="text-align: center;">P16</td>
+<td>权限检查缺失</td>
+<td>调用合约前未进行权限检查</td>
+</tr>
+</tbody>
+</table>
+<h3>类别 C：授权陷阱（模式 17–24）</h3>
+<p>授权陷阱代表了签名验证、许可系统和跨链中继器中最微妙的一类漏洞：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">模式</th>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">P17</td>
+<td>无限批准</td>
+<td>批准无限代币消费额度</td>
+</tr>
+<tr>
+<td style="text-align: center;">P18</td>
+<td>Permit 前端运行</td>
+<td>签名许可被 MEV 搜索者截获</td>
+</tr>
+<tr>
+<td style="text-align: center;">P19</td>
+<td>签名重放</td>
+<td>不同链/上下文中相同签名有效</td>
+</tr>
+<tr>
+<td style="text-align: center;">P20</td>
+<td>EIP-712 不匹配</td>
+<td>contract/chainId 域不匹配</td>
+</tr>
+<tr>
+<td style="text-align: center;">P21</td>
+<td>ECDSA 恢复错误</td>
+<td>签名恢复逻辑错误</td>
+</tr>
+<tr>
+<td style="text-align: center;">P22</td>
+<td>跨链重放</td>
+<td>一条链上的交易在另一条链上有效</td>
+</tr>
+<tr>
+<td style="text-align: center;">P23</td>
+<td>元交易欺骗</td>
+<td>转交者提交伪造的元交易</td>
+</tr>
+<tr>
+<td style="text-align: center;">P24</td>
+<td>Gasless TX 重放</td>
+<td>无 gas 交易缺少 nonce/过期时间</td>
+</tr>
+</tbody>
+</table>
+<h3>类别 D–G：（经济操纵、精度、预言机、协议逻辑）</h3>
+<p>剩余 25 个模式涵盖代币经济学利用（通货膨胀错误、销毁操纵、治理快速贷款）、数值精度陷阱（精度损失、取整方向错误、舍入误差聚合）、预言机风险（数据陈旧、喂价操纵、中心化预言机故障）和协议逻辑漏洞（不变量违反、状态机错误、竞争条件），详情见完整论文。</p>
+<hr />
+<h2>4. 50 模式分布分析</h2>
+<h3>4.1 八种主导模式（76% 的总损失）</h3>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th style="text-align: center;">事件占比</th>
+<th style="text-align: right;">总损失</th>
+<th style="text-align: center;">每事件平均</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1: 朴素现货操纵+闪电贷</td>
+<td style="text-align: center;">15%</td>
+<td style="text-align: right;">~$3.5B</td>
+<td style="text-align: center;">$28M</td>
+</tr>
+<tr>
+<td>P2: TWAP 操纵+闪电贷</td>
+<td style="text-align: center;">9%</td>
+<td style="text-align: right;">~$1.5B</td>
+<td style="text-align: center;">$20M</td>
+</tr>
+<tr>
+<td>P9: 无限制函数</td>
+<td style="text-align: center;">6%</td>
+<td style="text-align: right;">~$0.5B</td>
+<td style="text-align: center;">$10M</td>
+</tr>
+<tr>
+<td>P17: 无限批准</td>
+<td style="text-align: center;">4%</td>
+<td style="text-align: right;">~$0.3B</td>
+<td style="text-align: center;">$9M</td>
+</tr>
+<tr>
+<td>P11: 代理初始化</td>
+<td style="text-align: center;">4%</td>
+<td style="text-align: right;">~$0.2B</td>
+<td style="text-align: center;">$6M</td>
+</tr>
+<tr>
+<td>P33: 精度损失利用</td>
+<td style="text-align: center;">8%</td>
+<td style="text-align: right;">~$0.3B</td>
+<td style="text-align: center;">$4M</td>
+</tr>
+<tr>
+<td>P19: 签名重放</td>
+<td style="text-align: center;">3%</td>
+<td style="text-align: right;">~$0.4B</td>
+<td style="text-align: center;">$16M</td>
+</tr>
+<tr>
+<td>P25: 代币经济膨胀</td>
+<td style="text-align: center;">3%</td>
+<td style="text-align: right;">~$0.5B</td>
+<td style="text-align: center;">$20M</td>
+</tr>
+</tbody>
+</table>
+<h3>4.2 检测覆盖率缺口</h3>
+<p>我们分类学中 38/50 个模式（76%）存在某种形式的 Slither 规则。然而，仅 20/50（40%）可通过纯静态分析检测。剩余 30 个模式（60%）需要：a）动态分析（符号执行、模糊测试），b）形式化验证（不变量检查），或 c）人工审计专业知识。</p>
+<p>最显著的缺口在协议逻辑类别（0/5 有 Slither 规则）——这些模式完全依赖业务逻辑级验证。</p>
+<hr />
+<h2>5. 与先前工作的比较</h2>
+<table>
+<thead>
+<tr>
+<th>分类学</th>
+<th style="text-align: center;">模式数</th>
+<th style="text-align: center;">事件覆盖</th>
+<th style="text-align: center;">年份</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Atzei et al.</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">~20%</td>
+<td style="text-align: center;">2016</td>
+</tr>
+<tr>
+<td>Werner et al.</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">58%</td>
+<td style="text-align: center;">2023</td>
+</tr>
+<tr>
+<td>Zhou et al. (DEFIER)</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">~70%</td>
+<td style="text-align: center;">2023</td>
+</tr>
+<tr>
+<td><strong>本工作</strong></td>
+<td style="text-align: center;"><strong>50</strong></td>
+<td style="text-align: center;"><strong>97.6%</strong></td>
+<td style="text-align: center;"><strong>2026</strong></td>
+</tr>
+</tbody>
+</table>
+<p>我们的分类学实现了 4.2× 更多的模式（50 vs. 12）和 10.7× 更多的事件覆盖（804 vs. 约 77），显著推进了技术水平。</p>
+<hr />
+<h2>6. 未分类的 20 起事件</h2>
+<p>20 起（2.4%）仍未分类的事件属于：<br />
+- <strong>新兴模式</strong>（12 起）：机制太新无法归类（如 2025-2026 年的 AI 代理利用）<br />
+- <strong>基础设施攻击</strong>（5 起）：前端/DNS 劫持、私钥泄露<br />
+- <strong>社会工程</strong>（3 起）：团队成员欺诈、未经授权的多签签名</p>
+<p>这些不在我们以智能合约为中心的范畴内，将在未来的扩展中处理。</p>
+<hr />
+<h2>7. 结论</h2>
+<p>我们提出了首个经验验证的 50 种 DeFi 攻击模式分类学，在 824 起事件中实现 97.6% 的覆盖率。该分类学在以下几个关键方面推进了技术水平：</p>
+<ol>
+<li><strong>规模</strong>：较先前最佳工作，模式增加 4.2 倍，事件覆盖增加 10.7 倍</li>
+<li><strong>实用性</strong>：每个模式包含具体检测规则、典型示例和损失数字</li>
+<li><strong>缺口识别</strong>：我们系统性地映射了自动化检测覆盖的盲区——24% 的模式缺乏自动化规则，60% 需要超越纯静态分析的能力</li>
+<li><strong>开放性</strong>：分类学、检测规则和扫描器均按 MIT 许可开源</li>
+</ol>
+<p>该分类学为 DeFi 安全社区提供了共同语言、覆盖地图和培训课程，需要在每个维度上继续扩展，以跟上不断演化的攻击面。</p>
+</body>
+</html>

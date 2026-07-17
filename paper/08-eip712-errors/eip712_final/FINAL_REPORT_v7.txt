@@ -1,0 +1,924 @@
+
+======================================================================
+EIP-712 TYPEHASH ECOSYSTEM VALIDATION - FINAL REPORT
+======================================================================
+
+SAMPLING:
+  Files fetched from GitHub:     288
+  Total TYPEHASH entries:        513
+  Determinable entries:          183
+
+RESULTS:
+  [OK] Valid TYPEHASH:           2 (1.1%)
+  [ERR] Invalid TYPEHASH:        181 (98.9%)
+  [?] Undetermined:              330 (hex/inherited)
+
+  ** ECOSYSTEM ERROR RATE: 98.9% (n=183) **
+  
+  Error breakdown:
+    Function TYPEHASH errors:    30
+    Struct TYPEHASH errors:      69
+    Domain TYPEHASH errors:      82
+
+ERROR CATEGORIES:
+  [DOMAIN_TYPE_MISMATCH]: 106
+    * polux0/molochV3-modifications
+      TH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+      Domain field 2: TYPEHASH="uint256", Standard="string"
+    * polux0/molochV3-modifications
+      TH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+      Domain field 3: TYPEHASH="address", Standard="uint256"
+  [DOMAIN_FIELD_COUNT]: 82
+    * dapp-org/dappsys-v2
+      TH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+      Domain TYPEHASH has 4 fields, standard has 5
+    * thisisarchimedes/Archimedes_Finance
+      TH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+      Domain TYPEHASH has 4 fields, standard has 5
+  [STRUCT_FIELD_COUNT]: 69
+    * perpetual-protocol/perpetual-protocol
+      TH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+      TYPEHASH has 4 fields, struct has 0: TH=[string,string,uint256,address] Struct=[]
+    * perpetual-protocol/perpetual-protocol
+      TH: MetaTransaction(uint256 nonce,address from,address to,bytes functionSignature)
+      TYPEHASH has 4 fields, struct has 0: TH=[uint256,address,address,bytes] Struct=[]
+  [PARSE_ERROR]: 20
+    * ProjectOpenSea/seadrop
+      TH: SignedMint(
+      Cannot parse: "SignedMint("
+    * ProjectOpenSea/seadrop
+      TH: MintParams(
+      Cannot parse: "MintParams("
+  [FUNC_TYPE_MISMATCH]: 13
+    * Clankster/jackpot-game
+      TH: claim(address winner,uint256 amount)
+      Param 1: TYPEHASH="address", Func="bytes"
+    * jimjimvalkema/zktranswarp
+      TH: reMint(address _recipient,uint256 _amount,bytes _callData,bool _callCanFail,uint256 _callValue,bytes[] _encryptedTotalMi
+      Param 1: TYPEHASH="address", Func="uint256"
+  [FUNC_PARAM_COUNT]: 7
+    * Ensoul-Labs/ensoul-sbt-contract
+      TH: mintToBatchAddressBySignature(address[] toList,uint256 tokenId,uint256 amount,uint256 expiration)
+      TYPEHASH has 4 params, function has 7
+    * Ensoul-Labs/ensoul-sbt-contract
+      TH: mintBySignature(address to,uint256 tokenId,uint256 amount,uint256 expiration)
+      TYPEHASH has 4 params, function has 7
+  [STRUCT_TYPE_MISMATCH]: 2
+    * shafu0x/x402-contracts
+      TH: StreamIntent(address sender,address recipient,uint256 totalAmount,address token,bytes32 durationsHash,bool cancelable,bo
+      Field 1: TYPEHASH="address", Struct="bool"
+    * shafu0x/x402-contracts
+      TH: StreamIntent(address sender,address recipient,uint256 totalAmount,address token,bytes32 durationsHash,bool cancelable,bo
+      Field 2: TYPEHASH="address", Struct="bool"
+
+======================================================================
+ALL INVALID TYPEHASHES:
+======================================================================
+
+[ERR] dapp-org/dappsys-v2/src/token.sol (L97)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 4 fields, standard has 5
+
+[ERR] thisisarchimedes/Archimedes_Finance/zap.sol (L2692)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 4 fields, standard has 5
+
+[ERR] Morning-Star213/ERC20-Presale-Smart-Contract/contracts/ECT.sol (L19)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 4 fields, standard has 5
+
+[ERR] polux0/molochV3-modifications/src/LootERC20.sol (L21)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] pollumlabs/livn-contracts/claudio.sol (L794)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 4 fields, standard has 5
+
+[ERR] Snowfork/snowbridge/contracts/src/TokenLib.sol (L12)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 4 fields, standard has 5
+
+[ERR] perpetual-protocol/perpetual-protocol/src/MetaTxGateway.sol (L39)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> TYPEHASH has 4 fields, struct has 0: TH=[string,string,uint256,address] Struct=[]
+
+[ERR] perpetual-protocol/perpetual-protocol/src/MetaTxGateway.sol (L42)
+  TYPEHASH: MetaTransaction(uint256 nonce,address from,address to,bytes functionSignature)
+  -> TYPEHASH has 4 fields, struct has 0: TH=[uint256,address,address,bytes] Struct=[]
+
+[ERR] maticnetwork/pos-portal/flat/DummyERC20.sol (L371)
+  TYPEHASH: EIP712Domain(string name,string version,address verifyingContract,bytes32 salt)
+  -> TYPEHASH has 4 fields, struct has 0: TH=[string,string,address,bytes32] Struct=[]
+
+[ERR] maticnetwork/pos-portal/flat/DummyERC20.sol (L435)
+  TYPEHASH: MetaTransaction(uint256 nonce,address from,bytes functionSignature)
+  -> TYPEHASH has 3 fields, struct has 0: TH=[uint256,address,bytes] Struct=[]
+
+[ERR] keep3r-network/keep3r.network/contracts/Keep3r.sol (L349)
+  TYPEHASH: EIP712Domain(string name,uint chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] Fankouzu/my-sushiswap/contracts/SushiToken.sol (L47)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] gitcoinco/governance/contracts/GTC.sol (L56)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] goosedefi/goose-contracts/contracts/EggToken.sol (L35)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] meTokens/meTokens-core/contracts/libs/LibMeta.sol (L7)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 salt,address verifyingContract)
+  -> Domain TYPEHASH has 4 fields, standard has 5
+
+[ERR] cultdao-developer/cultdao/contracts/governance.sol (L50)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] lydiafinance/lydia-farm/contracts/LydToken.sol (L35)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] PaintSwap/paintswap-farm/contracts/BrushToken.sol (L51)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] andreykobal/opbnb-ai-nft-avatars/contracts/GameItems.sol (L48)
+  TYPEHASH: EIP712Domain(string name,string version,address verifyingContract,bytes32 salt)
+  -> TYPEHASH has 4 fields, struct has 0: TH=[string,string,address,bytes32] Struct=[]
+
+[ERR] andreykobal/opbnb-ai-nft-avatars/contracts/GameItems.sol (L102)
+  TYPEHASH: MetaTransaction(uint256 nonce,address from,bytes functionSignature)
+  -> TYPEHASH has 3 fields, struct has 0: TH=[uint256,address,bytes] Struct=[]
+
+[ERR] Anoncats/anoncats-contracts/contracts/Anoncats.sol (L90)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] rogerCapone/Yield-Aggregator/GSToken.sol (L25)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] solarteam/solarswap-contracts/contracts/SyrupBar.sol (L64)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] IXS-Finance/nft-metaverse/contracts/IxsNft.sol (L57)
+  TYPEHASH: EIP712Domain(string name,string version,address verifyingContract,bytes32 salt)
+  -> TYPEHASH has 4 fields, struct has 0: TH=[string,string,address,bytes32] Struct=[]
+
+[ERR] IXS-Finance/nft-metaverse/contracts/IxsNft.sol (L115)
+  TYPEHASH: MetaTransaction(uint256 nonce,address from,bytes functionSignature)
+  -> TYPEHASH has 3 fields, struct has 0: TH=[uint256,address,bytes] Struct=[]
+
+[ERR] iavl/contracts/others/GalaxyToken.sol (L515)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] GenesysNetwork/genesys-sc-flattened/GSYSToken.sol (L493)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] 2xdndefi/2xdn-farms/flattened/2XDNToken.sol (L523)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] ZepScope/ZepScope-Datasets/groundtruth/0.8.9/24.sol (L1981)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 4 fields, standard has 5
+
+[ERR] ZepScope/ZepScope-Datasets/groundtruth/0.8.9/24.sol (L3801)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] AstroFinanceAI/AstroFi-Smartcontract/AstroFi.sol (L751)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] phunguyen-s/Contracts_Extract/Contracts/AmpleCapital.sol (L341)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] phunguyen-s/Contracts_Extract/Contracts/BitFans.sol (L247)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] sajadkoroush/farm-tazor-2/contracts/TazToken.sol (L39)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] phunguyen-s/Contracts_Extract/Contracts/CurryChef.sol (L572)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] klend-lab/klend-protocol/contracts/Comp.sol (L39)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] sablier-labs/evm-monorepo/airdrops/src/libraries/SignatureHash.sol (L12)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] gitcoinco/governance/contracts/TokenDistributor.sol (L41)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> TYPEHASH has 4 fields, struct has 2: TH=[string,string,uint256,address] Struct=[string,string]
+
+[ERR] smartbugs/smartbugs-wild/contracts/0x06df142f76ae6efb9025779f58f1e109dce402f0.sol (L88)
+  TYPEHASH: Claim(string lottery,uint256 round,uint256 ticket,uint256 playerHash)
+  -> TYPEHASH has 4 fields, struct has 0: TH=[string,uint256,uint256,uint256] Struct=[]
+
+[ERR] smartbugs/smartbugs-wild/contracts/0x06df142f76ae6efb9025779f58f1e109dce402f0.sol (L89)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 4 fields, standard has 5
+
+[ERR] tintinweb/smart-contract-sanctuary-polygon/contracts/mumbai/f3/F3a2B781B9381295742B71034edEd3D7DEc8197a_Vault.sol (L19)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] quilt/utxo-relayer/contracts/Utxo.sol (L62)
+  TYPEHASH: Claim(uint256 input,uint256 gasprice,uint256[] deposits)
+  -> TYPEHASH has 3 fields, struct has 0: TH=[uint256,uint256,uint256[]] Struct=[]
+
+[ERR] quilt/utxo-relayer/contracts/Utxo.sol (L63)
+  TYPEHASH: Transfer(uint256 input0,uint256 input1,address destination,address change,uint256 amount,uint256 gasprice)
+  -> TYPEHASH has 6 fields, struct has 0: TH=[uint256,uint256,address,address,uint256,uint256] Struct=[]
+
+[ERR] NodleCode/rollup/src/envelope/EnvelopeLinks.sol (L123)
+  TYPEHASH: FeeAuthorization(address feePayer,address tokenAddress,uint8 contractType,uint256 amount,uint256 tokenId,address claimKey,address onBehalfOf,bool with
+  -> TYPEHASH has 14 fields, struct has 0: TH=[address,address,uint8,uint256,uint256,address,address,bool,address,uint40,uint256,uint256,bool,uint256] Struct=[]
+
+[ERR] uni-due-syssec/efcf-framework/data/smartbugs-top-1000-balance/0xaeb12b5ab62a49c14e72fb3ad2c0e809a9b446b3.sol (L89)
+  TYPEHASH: Claim(string lottery,uint256 round,uint256 ticket,uint256 playerHash)
+  -> TYPEHASH has 4 fields, struct has 0: TH=[string,uint256,uint256,uint256] Struct=[]
+
+[ERR] uni-due-syssec/efcf-framework/data/smartbugs-top-1000-balance/0xaeb12b5ab62a49c14e72fb3ad2c0e809a9b446b3.sol (L90)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 4 fields, standard has 5
+
+[ERR] drinkcoffee/representative-usage/src/hunters-on-chain/Claim.sol (L21)
+  TYPEHASH: EIP712Claim(uint256 amount,address wallet,uint48 gameId,uint256 nonce)
+  -> TYPEHASH has 4 fields, struct has 0: TH=[uint256,address,uint48,uint256] Struct=[]
+
+[ERR] SoulboundSecurity/soulbound-points/src/SoulBoundPoints.sol (L23)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 4 fields, standard has 5
+
+[ERR] Clankster/jackpot-game/contracts/JackpotGame.sol (L18)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 4 fields, standard has 5
+
+[ERR] Clankster/jackpot-game/contracts/JackpotGame.sol (L22)
+  TYPEHASH: claim(address winner,uint256 amount)
+  -> Param 1: TYPEHASH="address", Func="bytes"
+
+[ERR] InPlusLab/ReentrancyStudy-Data/deduplicated_smart_contracts/0x6874640cc849153cb3402d193c33c416972159ce.sol (L43)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] ProjectOpenSea/seadrop/src/SeaDrop.sol (L83)
+  TYPEHASH: SignedMint(
+  -> Cannot parse: "SignedMint("
+
+[ERR] ProjectOpenSea/seadrop/src/SeaDrop.sol (L104)
+  TYPEHASH: MintParams(
+  -> Cannot parse: "MintParams("
+
+[ERR] ProjectOpenSea/seadrop/src/SeaDrop.sol (L118)
+  TYPEHASH: EIP712Domain(
+  -> Cannot parse: "EIP712Domain("
+
+[ERR] multibit-repo/multibit/src/BRC20Factory.sol (L11)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 4 fields, standard has 5
+
+[ERR] Ensoul-Labs/ensoul-sbt-contract/contracts/v1/Ensoul.sol (L24)
+  TYPEHASH: mintToBatchAddressBySignature(address[] toList,uint256 tokenId,uint256 amount,uint256 expiration)
+  -> TYPEHASH has 4 params, function has 7
+
+[ERR] Ensoul-Labs/ensoul-sbt-contract/contracts/v1/Ensoul.sol (L27)
+  TYPEHASH: mintBySignature(address to,uint256 tokenId,uint256 amount,uint256 expiration)
+  -> TYPEHASH has 4 params, function has 7
+
+[ERR] Virentanti/nftmarketplace/contracts/Collection721.sol (L22)
+  TYPEHASH: mint(address to,uint256 tokenId)
+  -> TYPEHASH has 2 params, function has 3
+
+[ERR] Virentanti/nftmarketplace/contracts/Collection721.sol (L24)
+  TYPEHASH: batchMint(address[] to,uint256[] tokenIds)
+  -> TYPEHASH has 2 params, function has 3
+
+[ERR] Virentanti/nftmarketplace/contracts/Collection721.sol (L26)
+  TYPEHASH: disableMint()
+  -> TYPEHASH has 0 params, function has 1
+
+[ERR] tintinweb/smart-contract-sanctuary-polygon/contracts/mumbai/2b/2bB84e4dB53B46B1c7f4F8a64217e62cc41351B0_Gen2Trainer.sol (L52)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 4 fields, standard has 5
+
+[ERR] Spectral-Finance/scraped-sol-files/SCRAPED-SOLS/TestHelper.sol (L22)
+  TYPEHASH: SignedMint(
+  -> Cannot parse: "SignedMint("
+
+[ERR] Spectral-Finance/scraped-sol-files/SCRAPED-SOLS/TestHelper.sol (L43)
+  TYPEHASH: MintParams(
+  -> Cannot parse: "MintParams("
+
+[ERR] Spectral-Finance/scraped-sol-files/SCRAPED-SOLS/TestHelper.sol (L57)
+  TYPEHASH: EIP712Domain(
+  -> Cannot parse: "EIP712Domain("
+
+[ERR] codinghistorian/EIP712_batchMetatransaction/contracts/4_ReceiverV8.sol (L34)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> TYPEHASH has 4 fields, struct has 2: TH=[string,string,uint256,address] Struct=[string,string]
+
+[ERR] codinghistorian/EIP712_batchMetatransaction/contracts/4_ReceiverV8.sol (L38)
+  TYPEHASH: Mint(uint256 amount,address target,uint256 nonce)
+  -> TYPEHASH has 3 fields, struct has 0: TH=[uint256,address,uint256] Struct=[]
+
+[ERR] PlayFi-Labs/node-license-sale-contracts/contracts/PlayFiLicenseMint.sol (L26)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 4 fields, standard has 5
+
+[ERR] happybigmtn/bitchat-rust/contracts/evm/Bridge.sol (L14)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 4 fields, standard has 5
+
+[ERR] jimjimvalkema/zktranswarp/contracts/TransWarpToken.sol (L126)
+  TYPEHASH: reMint(address _recipient,uint256 _amount,bytes _callData,bool _callCanFail,uint256 _callValue,bytes[] _encryptedTotalMinted)
+  -> Param 1: TYPEHASH="address", Func="uint256"
+  -> Param 3: TYPEHASH="bytes", Func="uint256[]"
+  -> Param 4: TYPEHASH="bool", Func="uint256[]"
+  -> Param 5: TYPEHASH="uint256", Func="bytes"
+  -> Param 6: TYPEHASH="bytes[]", Func="SignatureInputs"
+
+[ERR] jimjimvalkema/zktranswarp/contracts/TransWarpToken.sol (L131)
+  TYPEHASH: reMintRelayer(address _recipient,uint256 _amount,bytes _callData,bool _callCanFail,uint256 _callValue,bytes[] _encryptedTotalMinted,FeeData _feeData)F
+  -> Param 1: TYPEHASH="address", Func="uint256"
+  -> Param 3: TYPEHASH="bytes", Func="uint256[]"
+  -> Param 4: TYPEHASH="bool", Func="uint256[]"
+  -> Param 5: TYPEHASH="uint256", Func="bytes"
+  -> Param 6: TYPEHASH="bytes[]", Func="SignatureInputs"
+
+[ERR] jimjimvalkema/zktranswarp/contracts/TransWarpToken.sol (L136)
+  TYPEHASH: FeeData(uint256 tokensPerEthPrice,uint256 maxFee,uint256 amountForRecipient,uint256 relayerBonus,uint256 estimatedGasCost,uint256 estimatedPriorityFee
+  -> TYPEHASH has 8 fields, struct has 0: TH=[uint256,uint256,uint256,uint256,uint256,uint256,address,address] Struct=[]
+
+[ERR] KREaTOR-Finance/EpicenterMarketplace/contracts/LazyMint.sol (L17)
+  TYPEHASH: MintRequest(address to,uint256 tokenId,string tokenURI,uint256 amount,uint256 nonce,uint256 deadline)
+  -> TYPEHASH has 6 fields, struct has 0: TH=[address,uint256,string,uint256,uint256,uint256] Struct=[]
+
+[ERR] InPlusLab/ReentrancyStudy-Data/deduplicated_smart_contracts/0x7c4d474bb7c274dde68c0e6e82bdfd81a2f8fa9f.sol (L25)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] smartbugs/smartbugs-wild/contracts/0xb106f18df9c547da65c7576d613246ff45bed516.sol (L50)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> TYPEHASH has 4 fields, struct has 2: TH=[string,string,uint256,address] Struct=[string,string]
+
+[ERR] kyscott18/ilrta/src/Permit3.sol (L80)
+  TYPEHASH: TransferDetails(address token,uint8 tokenType,uint32 functionSelector,bytes transferDetails)
+  -> TYPEHASH has 4 fields, struct has 0: TH=[address,uint8,uint32,bytes] Struct=[]
+
+[ERR] kyscott18/ilrta/src/Permit3.sol (L83)
+  TYPEHASH: TransferDetails(address token,uint256 amount)
+  -> TYPEHASH has 2 fields, struct has 0: TH=[address,uint256] Struct=[]
+
+[ERR] AmbireTech/code4rena/contracts/wallet/QuickAccManager.sol (L128)
+  TYPEHASH: Transfer(address tokenAddr,address to,uint256 value,uint256 fee,uint256 nonce)
+  -> TYPEHASH has 5 fields, struct has 0: TH=[address,address,uint256,uint256,uint256] Struct=[]
+
+[ERR] AmbireTech/code4rena/contracts/wallet/QuickAccManager.sol (L153)
+  TYPEHASH: Txn(string description,address to,uint256 value,bytes data)
+  -> TYPEHASH has 4 fields, struct has 0: TH=[string,address,uint256,bytes] Struct=[]
+
+[ERR] ZenGo-X/signature-simulation/implementation/src/MyToken/MyToken.sol (L15)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 4 fields, standard has 5
+
+[ERR] InPlusLab/ReentrancyStudy-Data/deduplicated_smart_contracts/0xaee5e78e45401628feaa5b345b8bdeb2cf11fe17.sol (L28)
+  TYPEHASH: EIP712Domain(string name,uint chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] bcnmy/biconomy-contracts/BicoTokenImplFlat.sol (L556)
+  TYPEHASH: EIP712Domain(string name,string version,address verifyingContract,bytes32 salt)
+  -> Domain TYPEHASH has 4 fields, standard has 5
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+  -> Domain field 4: TYPEHASH="bytes32", Standard="address"
+
+[ERR] Cyfrin/security-and-auditing-full-course-s23/eip712hashing.sol (L22)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> TYPEHASH has 4 fields, struct has 0: TH=[string,string,uint256,address] Struct=[]
+
+[ERR] Cyfrin/security-and-auditing-full-course-s23/eip712hashing.sol (L25)
+  TYPEHASH: Person(string name,address wallet)
+  -> TYPEHASH has 2 fields, struct has 0: TH=[string,address] Struct=[]
+
+[ERR] Cyfrin/security-and-auditing-full-course-s23/eip712hashing.sol (L27)
+  TYPEHASH: Mail(Person from,Person to,string contents)Person(string name,address wallet)
+  -> TYPEHASH has 3 fields, struct has 0: TH=[Person,Person,string] Struct=[]
+
+[ERR] LikemDzokoto/KudiFi-Contracts/src/kudifi.sol (L38)
+  TYPEHASH: Request(address from,address to,uint256 value,uint256 gas,uint256 nonce,bytes data)
+  -> TYPEHASH has 6 fields, struct has 0: TH=[address,address,uint256,uint256,uint256,bytes] Struct=[]
+
+[ERR] encorevault/EnCore/ENCORE.sol (L50)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] 1poolfinance/Strategy-on-Binance-Smart-Chain/1Pool.sol (L434)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] yfii/yvault/sushi/sushi.sol (L636)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] shafu0x/x402-contracts/src/Stream.sol (L31)
+  TYPEHASH: StreamIntent(address sender,address recipient,uint256 totalAmount,address token,bytes32 durationsHash,bool cancelable,bool transferable,uint256 validB
+  -> TYPEHASH has 10 fields, struct has 2: TH=[address,address,uint256,address,bytes32,bool,bool,uint256,uint256,bytes32] Struct=[bool,bool]
+  -> Field 1: TYPEHASH="address", Struct="bool"
+  -> Field 2: TYPEHASH="address", Struct="bool"
+
+[ERR] MetaMask/delegation-framework/src/utils/Constants.sol (L8)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 4 fields, standard has 5
+
+[ERR] VenusProtocol/venus-protocol/contracts/Tokens/XVS/XVS.sol (L40)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] agglayer/agglayer-contracts/contracts/mocks/Uni.sol (L166)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] Wardenswap/warden-farm/contracts/Tempest.sol (L68)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] MuskSwap/muskswap/contracts/MuskToken.sol (L56)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] Alium-Finance/alium-farm/contracts/AliumToken.sol (L30)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] kwikswap/Governance/contracts/Kwik.sol (L53)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] allinxproject/allinx-stake/contracts/token/Inx.sol (L136)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] cdyfng/pausable_contract/KswapLiquidityPool.sol (L710)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] Tivan-art/TivanToken/TVT.sol (L638)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] MakiSwap-Protocol/makiswap-protocol/flats/SoyBar_flat.sol (L509)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] MakiSwap-Protocol/makiswap-protocol/flats/SoyBar_flat.sol (L750)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] daedboi/morpheus_contracts/PILLS.sol (L260)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 4 fields, standard has 5
+
+[ERR] daedboi/morpheus_contracts/PILLS.sol (L471)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] Intrinsic-network/governance/contracts/Int.sol (L53)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] yaxis-project/yaxis-audit/contracts/YaxisToken.sol (L101)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] Auditchain/Staking/flat/Staking.sol (L962)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] Snowfork/BTRST-Contracts/contracts/BTRST.sol (L39)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] SpookySwap/spookyswap-xboo/contracts/BooMirrorWorld.sol (L95)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] iBitLabs/bitbtc-contracts/audit/token/BitANT.all.sol (L962)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 4 fields, standard has 5
+
+[ERR] SoulSwapFinance/soulswap-farms/flats/Outcaster_flat.sol (L257)
+  TYPEHASH: EIP712Domain(string name,uint chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] SoulSwapFinance/soulswap-farms/flats/Outcaster_flat.sol (L620)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] InvictusEmployee/Pancake-farm/contracts/SyrupBar.sol (L62)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] polycrystal/polycrystal-contracts/contracts/CrystalToken.sol (L39)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] rarible/protocol-contracts/projects/exchange-v2/contracts/libraries/LibOrder.sol (L15)
+  TYPEHASH: Order(address maker,Asset makeAsset,address taker,Asset takeAsset,uint256 salt,uint256 start,uint256 end,bytes4 dataType,bytes data)Asset(AssetType as
+  -> TYPEHASH has 9 fields, struct has 0: TH=[address,Asset,address,Asset,uint256,uint256,uint256,bytes4,bytes] Struct=[]
+
+[ERR] wyvernprotocol/wyvern-v3/contracts/exchange/ExchangeCore.sol (L57)
+  TYPEHASH: Order(address registry,address maker,address staticTarget,bytes4 staticSelector,bytes staticExtradata,uint256 maximumFill,uint256 listingTime,uint256 
+  -> TYPEHASH has 9 fields, struct has 0: TH=[address,address,address,bytes4,bytes,uint256,uint256,uint256,uint256] Struct=[]
+
+[ERR] parallel-finance/paraspace-core/contracts/dependencies/blur-exchange/EIP712.sol (L30)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> TYPEHASH has 4 fields, struct has 2: TH=[string,string,uint256,address] Struct=[string,string]
+
+[ERR] airswap/airswap-protocols/source/swap-erc20/contracts/SwapERC20.sol (L17)
+  TYPEHASH: OrderERC20(uint256 nonce,uint256 expiry,address signerWallet,address signerToken,uint256 signerAmount,
+  -> Cannot parse: "OrderERC20(uint256 nonce,uint256 expiry,address signerWallet,address signerToken"
+
+[ERR] Phantom-Network/gm-contracts/src/GreyMarketData.sol (L6)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] sirenmarkets/core/contracts/swap/Light.sol (L17)
+  TYPEHASH: EIP712Domain(
+  -> Cannot parse: "EIP712Domain("
+
+[ERR] sirenmarkets/core/contracts/swap/Light.sol (L29)
+  TYPEHASH: LightOrder(
+  -> Cannot parse: "LightOrder("
+
+[ERR] eff-kay/solidity-nicad/data/smart_contracts/Types.sol (L36)
+  TYPEHASH: EIP712Domain(
+  -> Cannot parse: "EIP712Domain("
+
+[ERR] eff-kay/solidity-nicad/data/smart_contracts/Types.sol (L44)
+  TYPEHASH: Order(
+  -> Cannot parse: "Order("
+
+[ERR] eff-kay/solidity-nicad/data/smart_contracts/Types.sol (L60)
+  TYPEHASH: Party(
+  -> Cannot parse: "Party("
+
+[ERR] dhedge/V2-Public/contracts/validators/odos/OdosLimitOrderTypeHashLib.sol (L78)
+  TYPEHASH: TokenPermissions(address token,uint256 amount)
+  -> TYPEHASH has 2 fields, struct has 0: TH=[address,uint256] Struct=[]
+
+[ERR] dhedge/V2-Public/contracts/validators/odos/OdosLimitOrderTypeHashLib.sol (L81)
+  TYPEHASH: TokenInfo(address tokenAddress,uint256 tokenAmount)
+  -> TYPEHASH has 2 fields, struct has 0: TH=[address,uint256] Struct=[]
+
+[ERR] dhedge/V2-Public/contracts/validators/odos/OdosLimitOrderTypeHashLib.sol (L84)
+  TYPEHASH: LimitOrder(
+  -> Cannot parse: "LimitOrder("
+
+[ERR] dhedge/V2-Public/contracts/validators/odos/OdosLimitOrderTypeHashLib.sol (L104)
+  TYPEHASH: PermitWitnessTransferFrom(TokenPermissions permitted,address spender,uint256 nonce,uint256 deadline,
+  -> Cannot parse: "PermitWitnessTransferFrom(TokenPermissions permitted,address spender,uint256 non"
+
+[ERR] dhedge/V2-Public/contracts/validators/odos/OdosLimitOrderTypeHashLib.sol (L114)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> TYPEHASH has 3 fields, struct has 0: TH=[string,uint256,address] Struct=[]
+
+[ERR] Bond-Protocol/bond-contracts/src/LimitOrders.sol (L58)
+  TYPEHASH: Order(uint256 marketId,address recipient,address referrer,uint256 amount,uint256 minAmountOut,uint256 maxFee,uint256 submitted,uint256 deadline,addres
+  -> TYPEHASH has 9 fields, struct has 0: TH=[uint256,address,address,uint256,uint256,uint256,uint256,uint256,address] Struct=[]
+
+[ERR] DistributedCollective/LimitOrder/contracts/libraries/MarginOrders.sol (L7)
+  TYPEHASH: Order(bytes32 loanId,uint256 leverageAmount,address loanTokenAddress,uint256 loanTokenSent,uint256 collateralTokenSent,address collateralTokenAddress,
+  -> TYPEHASH has 11 fields, struct has 0: TH=[bytes32,uint256,address,uint256,uint256,address,address,uint256,bytes32,uint256,uint256] Struct=[]
+
+[ERR] depthfinance/contract/depth.otc/DepthOtcV2.sol (L39)
+  TYPEHASH: EIP712Domain(
+  -> Cannot parse: "EIP712Domain("
+
+[ERR] depthfinance/contract/depth.otc/DepthOtcV2.sol (L50)
+  TYPEHASH: OtcOrder(
+  -> Cannot parse: "OtcOrder("
+
+[ERR] fullstack-development/blockchain-wiki/DeFi/dex-aggregators/contracts/AggregationRouterV5.sol (L2352)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 4 fields, standard has 5
+
+[ERR] ribbon-finance/ribbon-v2/contracts/utils/Swap.sol (L32)
+  TYPEHASH: EIP712Domain(
+  -> Cannot parse: "EIP712Domain("
+
+[ERR] ribbon-finance/ribbon-v2/contracts/utils/Swap.sol (L44)
+  TYPEHASH: Bid(
+  -> Cannot parse: "Bid("
+
+[ERR] danfinlay/eip712-example/Types.sol (L12)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> TYPEHASH has 4 fields, struct has 0: TH=[string,string,uint256,address] Struct=[]
+
+[ERR] danfinlay/eip712-example/Types.sol (L19)
+  TYPEHASH: Bid(string item,TokenVector offer)TokenVector(address token,uint256 amount)
+  -> TYPEHASH has 2 fields, struct has 0: TH=[string,TokenVector] Struct=[]
+
+[ERR] danfinlay/eip712-example/Types.sol (L26)
+  TYPEHASH: TokenVector(address token,uint256 amount)
+  -> TYPEHASH has 2 fields, struct has 0: TH=[address,uint256] Struct=[]
+
+[ERR] danfinlay/eip712-example/Types.sol (L110)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> TYPEHASH has 4 fields, struct has 0: TH=[string,string,uint256,address] Struct=[]
+
+[ERR] danfinlay/eip712-example/Types.sol (L117)
+  TYPEHASH: Bid(string item,TokenVector offer)TokenVector(address token,uint256 amount)
+  -> TYPEHASH has 2 fields, struct has 0: TH=[string,TokenVector] Struct=[]
+
+[ERR] danfinlay/eip712-example/Types.sol (L124)
+  TYPEHASH: TokenVector(address token,uint256 amount)
+  -> TYPEHASH has 2 fields, struct has 0: TH=[address,uint256] Struct=[]
+
+[ERR] datschill/PunksBidsSolidity/src/lib/EIP712.sol (L20)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> TYPEHASH has 4 fields, struct has 0: TH=[string,string,uint256,address] Struct=[]
+
+[ERR] u2u-labs/layerg-marketplace-contracts-v3/contracts/libraries/LibCollectionBid.sol (L11)
+  TYPEHASH: CollectionBid(address bidder,Asset makeAssetPerItem,address collectionAddress,uint256 maxQuantity,uint256 start,uint256 end,uint256 salt)Asset(uint8 a
+  -> TYPEHASH has 7 fields, struct has 0: TH=[address,Asset,address,uint256,uint256,uint256,uint256] Struct=[]
+
+[ERR] windingtree/videre-contracts/contracts/libraries/LibVidere.sol (L10)
+  TYPEHASH: ERC20Native(address gem,uint256 wad)
+  -> TYPEHASH has 2 fields, struct has 0: TH=[address,uint256] Struct=[]
+
+[ERR] windingtree/videre-contracts/contracts/libraries/LibVidere.sol (L11)
+  TYPEHASH: BidTerm(bytes32 term,address impl,bytes txPayload)
+  -> TYPEHASH has 3 fields, struct has 0: TH=[bytes32,address,bytes] Struct=[]
+
+[ERR] windingtree/videre-contracts/contracts/libraries/LibVidere.sol (L12)
+  TYPEHASH: BidOptionItem(bytes32 item,ERC20Native[] cost)ERC20Native(address gem,uint256 wad)
+  -> TYPEHASH has 2 fields, struct has 0: TH=[bytes32,ERC20Native[]] Struct=[]
+
+[ERR] windingtree/videre-contracts/contracts/libraries/LibVidere.sol (L14)
+  TYPEHASH: BidOptionTerm(BidTerm term,ERC20Native[] cost)BidTerm(bytes32 term,address impl,bytes txPayload)ERC20Native(address gem,uint256 wad)
+  -> TYPEHASH has 2 fields, struct has 0: TH=[BidTerm,ERC20Native[]] Struct=[]
+
+[ERR] windingtree/videre-contracts/contracts/libraries/LibVidere.sol (L18)
+  TYPEHASH: BidOptions(BidOptionItem[] items,BidOptionTerm[] terms)BidOptionItem(bytes32 item,ERC20Native[] cost)BidOptionTerm(BidTerm term,ERC20Native[] cost)Bid
+  -> TYPEHASH has 2 fields, struct has 0: TH=[BidOptionItem[],BidOptionTerm[]] Struct=[]
+
+[ERR] windingtree/videre-contracts/contracts/libraries/LibVidere.sol (L22)
+  TYPEHASH: Bid(bytes32 salt,uint128 limit,uint128 expiry,bytes32 which,bytes32 params,bytes32[] items,BidTerm[] terms,BidOptions options,ERC20Native[] cost)BidOp
+  -> TYPEHASH has 9 fields, struct has 0: TH=[bytes32,uint128,uint128,bytes32,bytes32,bytes32[],BidTerm[],BidOptions,ERC20Native[]] Struct=[]
+
+[ERR] windingtree/videre-contracts/contracts/libraries/LibVidere.sol (L26)
+  TYPEHASH: StubState(bytes32 which,bytes32 params,bytes32[] items,BidTerm[] terms,ERC20Native cost)BidTerm(bytes32 term,address impl,bytes txPayload)ERC20Native(
+  -> TYPEHASH has 5 fields, struct has 0: TH=[bytes32,bytes32,bytes32[],BidTerm[],ERC20Native] Struct=[]
+
+[ERR] ilkhangnd/dataset-vaegis/generated/SWC-121_Auction_1768284796_313_vuln.sol (L13)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 4 fields, standard has 5
+
+[ERR] shonendumm/EIP712-meta-transactions/contracts/TokenExchange.sol (L31)
+  TYPEHASH: EIP712Domain(string name,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 3 fields, standard has 5
+  -> Domain field 2: TYPEHASH="uint256", Standard="string"
+  -> Domain field 3: TYPEHASH="address", Standard="uint256"
+
+[ERR] shonendumm/EIP712-meta-transactions/contracts/TokenExchange.sol (L35)
+  TYPEHASH: BuyOrder(address account,uint256 amount,uint256 bidPrice)
+  -> TYPEHASH has 3 fields, struct has 0: TH=[address,uint256,uint256] Struct=[]
+
+[ERR] jaccard-swap/hardhat/contracts/JaccardSwap.sol (L81)
+  TYPEHASH: ERC20PermitData(address owner,address spender,uint256 value,uint256 deadline)
+  -> TYPEHASH has 4 fields, struct has 0: TH=[address,address,uint256,uint256] Struct=[]
+
+[ERR] jaccard-swap/hardhat/contracts/JaccardSwap.sol (L86)
+  TYPEHASH: Bid(bytes4 salt,uint256 deadline,bytes32[5] targetMinHash,uint8 minMatches,ERC20PermitData permit)ERC20PermitData(address owner,address spender,uint25
+  -> TYPEHASH has 5 fields, struct has 0: TH=[bytes4,uint256,bytes32[5],uint8,ERC20PermitData] Struct=[]
+
+[ERR] jaccard-swap/hardhat/contracts/JaccardSwap.sol (L90)
+  TYPEHASH: JaccardERC1155Permit(address owner,address spender,uint256 tokenId,uint256 amount,uint256 deadline,bytes4 salt)
+  -> TYPEHASH has 6 fields, struct has 0: TH=[address,address,uint256,uint256,uint256,bytes4] Struct=[]
+
+[ERR] jaccard-swap/hardhat/contracts/JaccardSwap.sol (L94)
+  TYPEHASH: Auction(bytes4 salt,uint256 deadline,address nft,address token,uint256 reservePrice,JaccardERC1155Permit nftPermit,bytes nftPermitSignature)JaccardERC
+  -> TYPEHASH has 7 fields, struct has 0: TH=[bytes4,uint256,address,address,uint256,JaccardERC1155Permit,bytes] Struct=[]
+
+[ERR] SKKU-SecLab/SmartMark/dataset/Solidity_codes_9324/0xf0e5c92cedd66c7985c354c35e2bc37e685b99da.sol (L407)
+  TYPEHASH: EIP712Domain(
+  -> Cannot parse: "EIP712Domain("
+
+[ERR] SKKU-SecLab/SmartMark/dataset/Solidity_codes_9324/0xf0e5c92cedd66c7985c354c35e2bc37e685b99da.sol (L419)
+  TYPEHASH: Bid(
+  -> Cannot parse: "Bid("
+
+[ERR] Endemic-NFT/ENDEMIC/contracts/exchange/mixins/auction/EndemicReserveAuction.sol (L19)
+  TYPEHASH: ReserveAuction(uint256 orderNonce,uint256 price,address nftContract,uint256 tokenId,address paymentErc20TokenAddress,uint256 makerFeePercentage,uint25
+  -> TYPEHASH has 11 fields, struct has 0: TH=[uint256,uint256,address,uint256,address,uint256,uint256,uint256,address,uint256,address] Struct=[]
+
+[ERR] Jiashuo-Zhang/CryptoScan/Dataset/SourceCode/NOIZDStaking_0x4456ae02ea5534ced3a151e41a715bba685a7cab.sol (L1100)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 4 fields, standard has 5
+
+[ERR] Jiashuo-Zhang/CryptoScan/Dataset/SourceCode/NOIZDStaking_0x4456ae02ea5534ced3a151e41a715bba685a7cab.sol (L1300)
+  TYPEHASH: Withdrawal(uint256 amount,uint256 deadline,uint nonce,address staker)
+  -> TYPEHASH has 4 fields, struct has 0: TH=[uint256,uint256,uint,address] Struct=[]
+
+[ERR] Jiashuo-Zhang/CryptoScan/Dataset/SourceCode/NOIZDStaking_0x4456ae02ea5534ced3a151e41a715bba685a7cab.sol (L1303)
+  TYPEHASH: Bid(uint256 listing,address staker,address target,uint256 amount)
+  -> TYPEHASH has 4 fields, struct has 0: TH=[uint256,address,address,uint256] Struct=[]
+
+[ERR] Jiashuo-Zhang/CryptoScan/Dataset/SourceCode/HexagonMarketplace_0xee4b7c58fc330a5818c6211658f6b1898d44c9d4.sol (L753)
+  TYPEHASH: AcceptBid(address contractAddress,uint256 tokenId,address userAddress,uint256 pricePerItem,uint256 quantity,uint256 expiry,uint256 nonce)
+  -> TYPEHASH has 7 params, function has 1
+  -> Param 1: TYPEHASH="address", Func="Signature"
+
+[ERR] Jiashuo-Zhang/CryptoScan/Dataset/SourceCode/HexagonMarketplace_0xee4b7c58fc330a5818c6211658f6b1898d44c9d4.sol (L757)
+  TYPEHASH: AcceptListing(address contractAddress,uint256 tokenId,address userAddress,uint256 pricePerItem,uint256 quantity,uint256 expiry,uint256 nonce)
+  -> TYPEHASH has 7 params, function has 1
+  -> Param 1: TYPEHASH="address", Func="Signature"
+
+[ERR] RobertShuttleworth/solidity-blockchains-dataset/pol-contracts/0x5e10698eea38a84ba3ad84994d7c5dde73041585/contracts_library_LibOrder.sol (L24)
+  TYPEHASH: Bid(address to,uint256 amount,address currency,uint256 quantity,address tokenAddress,uint256 tokenId)
+  -> TYPEHASH has 6 fields, struct has 0: TH=[address,uint256,address,uint256,address,uint256] Struct=[]
+
+[ERR] RobertShuttleworth/solidity-blockchains-dataset/pol-contracts/0x7382f2f8b21113bd73a0d32229e65baa1b946f5c/contracts_library_LibOrder.sol (L24)
+  TYPEHASH: Bid(address to,uint256 amount,address currency,uint256 quantity,address tokenAddress,uint256 tokenId)
+  -> TYPEHASH has 6 fields, struct has 0: TH=[address,uint256,address,uint256,address,uint256] Struct=[]
+
+[ERR] giacomofi/SmarthER/mainnet/fe/FeD6ef3A2Fd1e3b229280e5cB5650D88792D9573_ClubrareMarketplace.sol (L1718)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 4 fields, standard has 5
+
+[ERR] giacomofi/SmarthER/mainnet/c2/c253e5ad03d07720ccece79393084dfc1bd6c64c_ClubrareMarketplace.sol (L1814)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 4 fields, standard has 5
+
+[ERR] jeffchen006/nft-empirical-study/contracts/mainnet/8e/8EBAa08EF3b4C0B1c3e34922167a70dB1D121698_Auction.sol (L352)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 4 fields, standard has 5
+
+[ERR] balonblaugrana/Smart-Contracts-DApp/Swap/lib/EIP712.sol (L21)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> TYPEHASH has 4 fields, struct has 2: TH=[string,string,uint256,address] Struct=[string,string]
+
+[ERR] nathfred/eth-intent-swap/packages/hardhat/contracts/IntentSwap.sol (L62)
+  TYPEHASH: SwapIntent(address fromToken,address toToken,uint256 amountIn,uint256 minAmountOut,address recipient,uint256 deadline,uint256 nonce)
+  -> TYPEHASH has 7 fields, struct has 0: TH=[address,address,uint256,uint256,address,uint256,uint256] Struct=[]
+
+[ERR] OrderlyNetwork/contract-evm/src/library/SwapSignature.sol (L17)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 4 fields, standard has 5
+
+[ERR] shreyashkhare22/Dexavault/contracts/MainnetRFQ.sol (L49)
+  TYPEHASH: Order(uint256 nonceAndMeta,uint128 expiry,address makerAsset,address takerAsset,address maker,address taker,uint256 makerAmount,uint256 takerAmount)
+  -> TYPEHASH has 8 fields, struct has 0: TH=[uint256,uint128,address,address,address,address,uint256,uint256] Struct=[]
+
+[ERR] shreyashkhare22/Dexavault/contracts/MainnetRFQ.sol (L54)
+  TYPEHASH: XChainSwap(bytes32 from,bytes32 to,bytes32 makerSymbol,bytes32 makerAsset,bytes32 takerAsset,uint256 makerAmount,uint256 takerAmount,uint96 nonce,uint
+  -> TYPEHASH has 11 fields, struct has 0: TH=[bytes32,bytes32,bytes32,bytes32,bytes32,uint256,uint256,uint96,uint32,uint32,uint8] Struct=[]
+
+[ERR] Jiashuo-Zhang/CryptoScan/Dataset/SourceCode/Vault_0x683e3a251905c9cea39710dd6bcf9b68ece94763.sol (L233)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 4 fields, standard has 5
+
+[ERR] Jiashuo-Zhang/CryptoScan/Dataset/SourceCode/Vault_0x683e3a251905c9cea39710dd6bcf9b68ece94763.sol (L1774)
+  TYPEHASH: Input(address fromTokenAddress,address toTokenAddress,uint256 amount,uint256 gasFee,address userAddress,bytes32 txHash)
+  -> TYPEHASH has 6 fields, struct has 0: TH=[address,address,uint256,uint256,address,bytes32] Struct=[]
+
+[ERR] Jiashuo-Zhang/CryptoScan/Dataset/SourceCode/Vault_0xcfa43890eb4108c2ed731b52b2434b53929073e8.sol (L233)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 4 fields, standard has 5
+
+[ERR] Jiashuo-Zhang/CryptoScan/Dataset/SourceCode/Vault_0xcfa43890eb4108c2ed731b52b2434b53929073e8.sol (L1929)
+  TYPEHASH: Input(address fromTokenAddress,address toTokenAddress,uint256 amount,uint256 gasFee,address userAddress,bytes32 txHash)
+  -> TYPEHASH has 6 fields, struct has 0: TH=[address,address,uint256,uint256,address,bytes32] Struct=[]
+
+[ERR] giacomofi/SmarthER/mainnet/bb/bBe9d2206843Ba657A5CA84E3D02cDDFFd7Ea858_Vault.sol (L233)
+  TYPEHASH: EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)
+  -> Domain TYPEHASH has 4 fields, standard has 5
+
+[ERR] giacomofi/SmarthER/mainnet/bb/bBe9d2206843Ba657A5CA84E3D02cDDFFd7Ea858_Vault.sol (L1682)
+  TYPEHASH: Input(address fromTokenAddress,address toTokenAddress,uint256 amount,uint256 gasFee,address userAddress,bytes32 txHash,uint256 minOut)
+  -> TYPEHASH has 7 fields, struct has 0: TH=[address,address,uint256,uint256,address,bytes32,uint256] Struct=[]
+
+======================================================================
+VALID TYPEHASHES:
+======================================================================
+[OK] BSN-Spartan/Meta-Transaction: _TYPEHASH = "metaTransferFrom(address from,address to,uint256 amount,uint256 nonce,uint256 de"
+[OK] Rohannaa2m12/NurJama_AII: _TYPEHASH_EIP712DOMAIN = "EIP712Domain(string name,string version,uint256 chainId,address verifyingContrac"

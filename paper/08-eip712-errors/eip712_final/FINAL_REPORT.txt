@@ -1,0 +1,88 @@
+
+======================================================================
+EIP-712 TYPEHASH ECOSYSTEM VALIDATION REPORT
+======================================================================
+
+SAMPLING:
+  Files fetched:              190
+  TYPEHASH entries analyzed:  305
+
+RESULTS:
+  Valid:           1 (6.2% of determinable)
+  Invalid:         15 (93.8%)
+  Undetermined:    289
+
+** ERROR RATE: 93.8% (n=16 determinable entries) **
+
+ERROR CATEGORIES:
+  [PARSE_ERROR]: 10
+  [PARAM_COUNT]: 5
+
+======================================================================
+INVALID DETAILS:
+======================================================================
+
+[ERR] Ensoul-Labs/ensoul-sbt-contract/contracts/v1/Ensoul.sol (L24)
+  mintToBatchAddressBySignature(address[] toList,uint256 tokenId,uint256 amount,uint256 expiration)
+  -> TYPEHASH=4 params, Func=7 params
+
+[ERR] Ensoul-Labs/ensoul-sbt-contract/contracts/v1/Ensoul.sol (L27)
+  mintBySignature(address to,uint256 tokenId,uint256 amount,uint256 expiration)
+  -> TYPEHASH=4 params, Func=7 params
+
+[ERR] Virentanti/nftmarketplace/contracts/Collection721.sol (L27)
+  mint(address to,uint256 tokenId)
+  -> TYPEHASH=2 params, Func=3 params
+
+[ERR] Virentanti/nftmarketplace/contracts/Collection721.sol (L29)
+  batchMint(address[] to,uint256[] tokenIds)
+  -> TYPEHASH=2 params, Func=3 params
+
+[ERR] Virentanti/nftmarketplace/contracts/Collection721.sol (L31)
+  disableMint()
+  -> TYPEHASH=0 params, Func=1 params
+
+[ERR] airswap/airswap-protocols/source/swap-erc20/contracts/SwapERC20.sol (L20)
+  OrderERC20(uint256 nonce,uint256 expiry,address signerWallet,address signerToken,uint256 signerAmount,
+  -> Cannot parse: "OrderERC20(uint256 nonce,uint256 expiry,address signerWallet,address signerToken,uint256 signerAmount,"
+
+[ERR] sirenmarkets/core/contracts/swap/Light.sol (L21)
+  EIP712Domain(
+  -> Cannot parse: "EIP712Domain("
+
+[ERR] sirenmarkets/core/contracts/swap/Light.sol (L33)
+  LightOrder(
+  -> Cannot parse: "LightOrder("
+
+[ERR] eff-kay/solidity-nicad/data/smart_contracts/Types.sol (L54)
+  EIP712Domain(
+  -> Cannot parse: "EIP712Domain("
+
+[ERR] eff-kay/solidity-nicad/data/smart_contracts/Types.sol (L62)
+  Order(
+  -> Cannot parse: "Order("
+
+[ERR] eff-kay/solidity-nicad/data/smart_contracts/Types.sol (L78)
+  Party(
+  -> Cannot parse: "Party("
+
+[ERR] ribbon-finance/ribbon-v2/contracts/utils/Swap.sol (L32)
+  EIP712Domain(
+  -> Cannot parse: "EIP712Domain("
+
+[ERR] ribbon-finance/ribbon-v2/contracts/utils/Swap.sol (L44)
+  Bid(
+  -> Cannot parse: "Bid("
+
+[ERR] SKKU-SecLab/SmartMark/dataset/Solidity_codes_9324/0xf0e5c92cedd66c7985c354c35e2bc37e685b99da.sol (L407)
+  EIP712Domain(
+  -> Cannot parse: "EIP712Domain("
+
+[ERR] SKKU-SecLab/SmartMark/dataset/Solidity_codes_9324/0xf0e5c92cedd66c7985c354c35e2bc37e685b99da.sol (L419)
+  Bid(
+  -> Cannot parse: "Bid("
+
+======================================================================
+VALID SAMPLE:
+======================================================================
+[OK] BSN-Spartan/Meta-Transaction: metaTransferFrom(address from,address to,uint256 amount,uint256 nonce,uint256 deadline,uint8 v,bytes32 r,bytes32 s)
