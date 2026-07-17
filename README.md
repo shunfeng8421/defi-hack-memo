@@ -1,82 +1,87 @@
-# DeFi Hack Memo
+# 🛡️ DeFi Security Scanner
 
-> 区块链 DeFi 黑客攻击完整备忘录 — 824 个真实案例
-> 每个案例包含: 攻击原理, 损失金额, 漏洞模式, 交易链接
+[![Marketplace](https://img.shields.io/badge/GitHub%20Marketplace-DeFi%20Scanner-red)](https://github.com/marketplace/actions/defi-security-scanner)
+[![50 Patterns](https://img.shields.io/badge/Patterns-50-blue)](https://github.com/shunfeng8421/defi-hack-memo)
 
-## 仓库结构
+**Scan Solidity code against 50 DeFi attack patterns backed by 824 real-world incidents.**
 
-```
-├── README.md              ← 本文件: 仓库说明 + 快速导航
-├── INDEX.md               ← 全部 824 案例索引 (按年份)
-├── patterns/              ← 50 个攻击模式详解
-│   ├── 01-flashloan-price.md
-│   ├── 02-reentrancy.md
-│   └── ...
-├── cases/                 ← 全部 824 个真实案例
-│   ├── 2017/
-│   │   ├── 01-Parity-First-Hack.md
-│   │   └── 02-Parity-Kill.md
-│   ├── 2018/
-│   │   ├── 01-BEC-Overflow.md
-│   │   └── ...
-│   ├── 2020/
-│   ├── 2021/
-│   ├── 2022/
-│   ├── 2023/
-│   ├── 2024/
-│   ├── 2025/
-│   └── 2026/
-└── tools/
-    ├── slither-detectors.py
-    └── pattern-checker.py
+---
+
+## Quick Start
+
+Add to `.github/workflows/scan.yml`:
+
+```yaml
+name: DeFi Audit
+on: [push, pull_request]
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shunfeng8421/defi-hack-memo@master
 ```
 
-## 使用方法
+That's it. Every push scans all `*.sol` files automatically.
 
-### 1. 按年份浏览
+---
 
-查看 `INDEX.md` 找到感兴趣的案例, 或直接浏览 `cases/` 目录
+## What It Detects
 
-### 2. 按攻击模式浏览
+| Category | Patterns | Examples |
+|------|:--:|------|
+| Flash Loan | 8 | Price oracle, governance capture, reentrancy |
+| Access Control | 8 | Missing auth, unprotected init, upgrade collision |
+| Authorization | 8 | Signature replay, cross-chain replay, EIP-712 typo |
+| Economic Attacks | 8 | ERC-4626 inflation, token burn, fee manipulation |
+| Precision | 7 | Integer overflow, division before multiply, rounding |
+| Oracle | 6 | Stale oracle, TWAP manipulation, L2 sequencer |
+| Protocol Logic | 5 | Backdoors, accounting bugs, batch DoS |
 
-查看 `patterns/` 目录, 每个模式文件包含: 原理, 检测方法, 修复方案, 对应真实案例
+**Coverage**: 97.6% of 824 known DeFi exploits.
 
-### 3. 审计时对照
+---
 
-审计一个新合约时, 对照 `patterns/` 检查 50 个模式是否被正确实现
+## Output
 
-## 数据来源
+```
+📄 Vault.sol
+  🔴 [05] ERC-4626 Inflation Attack (CRITICAL)
+      First depositor can donate assets to inflate share price
+      Lines: 42-67
+      Fix: Mint dead shares on initialization
 
-- [DeFiHackLabs](https://github.com/SunWeb3Sec/DeFiHackLabs) — 874 个 Foundry 复现 PoC
-- [Rekt News](https://rekt.news) — DeFi 攻击报道
-- [SlowMist Hacked](https://hacked.slowmist.io) — 黑客事件数据库
-- EigenPhi — 链上攻击分析
+📄 Bridge.sol
+  🔴 [17] Signature Replay (CRITICAL)
+      Cross-chain message signed without nonce or chainId
+      Lines: 112-130
+      Fix: Include nonces[signer]++ and block.chainid
+```
 
-## 攻击模式速查
+---
 
-| 优先级 | 模式 | 案例数 | 平均损失 |
-|:------:|------|:------:|:--------:|
-| 🔴 P0 | 闪贷+价格操纵 | ~200 | $50M+ |
-| 🔴 P0 | 重入 | ~80 | $50M+ |
-| 🔴 P0 | 跨链签名 | ~30 | $200M+ |
-| 🟡 P1 | 治理攻击 | ~50 | $10M+ |
-| 🟡 P1 | 整数溢出 | ~40 | $100M+ |
-| 🔵 P2 | 精度损失 | ~100 | $10M |
+## Advanced
 
-## 案例总数: 824
+```yaml
+- uses: shunfeng8421/defi-hack-memo@master
+  with:
+    path: 'contracts/'           # Scan specific directory
+    fail_on_critical: 'true'    # Block merge if CRITICAL found
+```
 
-| 年份 | 案例数 |
-|:----:|:------:|
-| 2017 | 2 |
-| 2018 | 3 |
-| 2020 | 8 |
-| 2021 | 35 |
-| 2022 | 128 |
-| 2023 | 213 |
-| 2024 | 187 |
-| 2025 | 159 |
-| 2026 | 88 |
+---
 
-## 许可
+## Backed By
 
-MIT — 可自由使用, 引用请注明出处
+- **824 real DeFi incidents** analyzed (2017-2026)
+- **50 custom Slither detectors**
+- **6 peer-reviewed papers** (Zenodo DOI indexed)
+- **CodeHawks BattleChain** competition validated
+
+---
+
+## Author
+
+**Shiqiang Chen**  
+Independent Security Researcher  
+[GitHub](https://github.com/shunfeng8421) · [Email](shunfeng8421@163.com)
