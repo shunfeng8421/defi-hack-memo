@@ -1033,9 +1033,9 @@
       "type": "hack",
       "name": "Uranium",
       "year": 2021,
-      "loss": "$50M",
+      "loss": "0M",
       "connects_to": [
-        "defi-flashloan-oracle"
+        "defi-amm-manipulation"
       ]
     },
     "defi-sonne": {
@@ -1543,6 +1543,23 @@
         "defi-erc4626-inflation"
       ],
       "pattern_id": 47
+    },
+    "concept-risk-index": {
+      "type": "knowledge",
+      "name": "DeFi Risk Index",
+      "connects_to": [
+        "paper-decade-analysis"
+      ],
+      "description": "Loss/TVL: 3.33%→2.33% (2020-2025)"
+    },
+    "defi-teamfinance": {
+      "type": "hack",
+      "name": "TeamFinance",
+      "year": 2022,
+      "loss": "5.8M",
+      "connects_to": [
+        "defi-governance"
+      ]
     }
   },
   "edges": [
