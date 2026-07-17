@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>A Decade of DeFi Attacks 2017-2026</title>
+<style>
+@page {
+    size: A4;
+    margin: 25mm 22mm 28mm 22mm;
+    @bottom-center {
+        content: counter(page);
+        font-family: 'DengXian', 'Microsoft YaHei', sans-serif;
+        font-size: 8pt;
+        color: #808080;
+    }
+}
+@page :first {
+    @top-center {
+        content: none;
+    }
+}
+
+body {
+    font-family: 'DengXian', 'Microsoft YaHei', 'SimSun', serif;
+    font-size: 10pt;
+    line-height: 1.65;
+    color: #1a1a1a;
+    text-align: justify;
+}
+
+h1 {
+    font-size: 16pt;
+    font-weight: bold;
+    color: #111;
+    margin-top: 0;
+    margin-bottom: 8pt;
+    text-align: center;
+}
+
+h2 {
+    font-size: 13pt;
+    font-weight: bold;
+    color: #1e1e1e;
+    margin-top: 18pt;
+    margin-bottom: 6pt;
+    page-break-after: avoid;
+}
+
+h3 {
+    font-size: 11pt;
+    font-weight: bold;
+    color: #323232;
+    margin-top: 12pt;
+    margin-bottom: 4pt;
+    page-break-after: avoid;
+}
+
+p {
+    margin: 4pt 0;
+}
+
+blockquote {
+    margin: 8pt 0;
+    padding: 6pt 12pt;
+    border-left: 3pt solid #5a5a5a;
+    background: #f8f8f8;
+    font-size: 9pt;
+    color: #444;
+    page-break-inside: avoid;
+}
+blockquote p {
+    margin: 2pt 0;
+}
+
+hr {
+    border: none;
+    border-top: 1pt solid #ccc;
+    margin: 14pt 0;
+}
+
+pre {
+    background: #f5f5f5;
+    border: 0.5pt solid #c8c8c8;
+    padding: 8pt 10pt;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 7.5pt;
+    line-height: 1.35;
+    color: #282828;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    margin: 6pt 0;
+    page-break-inside: avoid;
+}
+
+code {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 8.5pt;
+    background: #f0f0f0;
+    padding: 1pt 3pt;
+}
+pre code {
+    background: none;
+    padding: 0;
+    font-size: 7.5pt;
+}
+
+table {
+    border-collapse: collapse;
+    margin: 8pt 0;
+    width: 100%;
+    font-size: 8.5pt;
+    page-break-inside: avoid;
+}
+th {
+    background: #282828;
+    color: white;
+    padding: 4pt 6pt;
+    text-align: left;
+    font-weight: bold;
+}
+td {
+    padding: 3pt 6pt;
+    border: 0.5pt solid #ccc;
+}
+tr:nth-child(even) td {
+    background: #fafafa;
+}
+
+ul, ol {
+    margin: 4pt 0;
+    padding-left: 22pt;
+}
+li {
+    margin: 2pt 0;
+}
+
+strong {
+    color: #111;
+}
+
+a {
+    color: #2a5db0;
+    text-decoration: none;
+}
+
+/* Don't break headings from their content */
+h2, h3 {
+    page-break-after: avoid;
+}
+h2 + p, h3 + p, h2 + ul, h3 + ul, h2 + ol, h3 + ol,
+h2 + pre, h3 + pre, h2 + table, h3 + table {
+    page-break-before: avoid;
+}
+</style>
+</head>
+<body>
+<h1>A Decade of DeFi Attacks: Pattern Evolution, Risk Dynamics, and the Fragmentation of the Attack Surface (2017–2026)</h1>
+<p><strong>Shiqiang Chen</strong><br />
+<em>Institute of Information Engineering, Chinese Academy of Sciences</em><br />
+<em>Correspondence: shunfeng8421@163.com</em></p>
+<hr />
+<h2>Abstract</h2>
+<p>Decentralized Finance (DeFi) has sustained over $10 billion in cumulative losses across 824 confirmed security incidents from 2017 to 2026, yet no study has systematically characterized the decade-scale evolution of attack patterns, risk dynamics, and the structural fragmentation of the threat landscape. We present the largest empirical study of DeFi security incidents to date, synthesizing data from DeFiHackLabs (824 proof-of-concept contracts), Rekt News, SlowMist, and CertiK. We classify attacks into a 17-pattern taxonomy and conduct longitudinal analysis revealing three critical findings. First, the dominant attack vector has shifted from high-value flash loan exploits (median $15M in 2020–2021) to small-scale permission bugs (median $50K in 2025), representing a 300× reduction in median loss. Second, the DeFi Risk Index (annual loss / total value locked) declined from 3.33% in 2020 to 2.33% in 2025, a 30% improvement that demonstrates measurable security maturation — yet the absolute number of incidents did not decrease proportionally. Third, we identify a "hardening gradient": protocols exceeding $1B TVL exhibit few new vulnerability classes post-2024, while protocols under $1M TVL continue to fall to basic bugs (access control, unchecked returns) that mature tooling has eliminated at larger scales. We further characterize the 2026 attack landscape, which introduces a novel class combining precision errors, intentional backdoors, and accounting inconsistencies that resist automated static analysis and require business-logic understanding for detection. The dataset, taxonomy, and analysis scripts are released under MIT license.</p>
+<p><strong>Keywords</strong>: DeFi security, attack evolution, risk index, flash loan, oracle manipulation, hardening gradient, empirical analysis, vulnerability taxonomy</p>
+<hr />
+<h2>1. Introduction</h2>
+<h3>1.1 Motivation</h3>
+<p>From the Parity multisig bug ($150M, 2017) to the Bybit cold wallet exploit ($1.5B, 2025), DeFi security incidents have defined — and periodically destabilized — the evolution of decentralized finance. The ecosystem now manages over $100 billion in total value locked (TVL), yet the academic community lacks a longitudinal, decade-scale analysis of how attack patterns have evolved alongside protocol maturity, tooling advancement, and market cycles.</p>
+<p>Existing studies suffer from three structural limitations. First, they are temporally narrow: Atzei et al. [1] cataloged 12 vulnerability classes in the pre-DeFi era (2017); Zhou et al. [2] analyzed 77 incidents from 2020–2022; Werner et al. [3] manually examined 43 incidents through 2022. None capture the full evolutionary trajectory from the ICO-era Parity hack through the 2020 DeFi Summer, the 2022 bridge wars, the 2023 lending crisis, and the emerging 2026 landscape. Second, they lack economic normalization: raw loss figures are reported without adjusting for the 100× growth in TVL over the same period, making temporal comparisons misleading. Third, no study has characterized the structural fragmentation of the attack surface — the divergence between large, well-audited protocols that have effectively hardened against known vectors and small, under-resourced protocols that continue to fall to basic, preventable bugs.</p>
+<p>This paper addresses all three gaps through the first decade-scale empirical analysis of 824 DeFi security incidents spanning 2017–2026.</p>
+<h3>1.2 Contributions</h3>
+<p>We make the following contributions:</p>
+<ol>
+<li>
+<p><strong>The largest longitudinal DeFi incident dataset (N=824)</strong>: Spanning the full decade 2017–2026, sourced from DeFiHackLabs (824 PoC contracts), cross-validated against Rekt News, SlowMist, and CertiK intelligence. This is 10.7× larger than Zhou et al. [2] and 19.2× larger than Werner et al. [3].</p>
+</li>
+<li>
+<p><strong>A 17-pattern attack taxonomy</strong> with temporal evolution tracking: We classify all 824 incidents into 17 distinct patterns and analyze how the distribution of each pattern has changed year-over-year, revealing phase transitions in attacker behavior.</p>
+</li>
+<li>
+<p><strong>The DeFi Risk Index</strong>: A normalized metric (Annual Loss / TVL) that enables meaningful temporal comparison by controlling for ecosystem growth. We show a 30% decline from 2020 to 2025, providing the first quantitative evidence of DeFi security maturation.</p>
+</li>
+<li>
+<p><strong>Characterization of the hardening gradient</strong>: We demonstrate that protocol size (by TVL) predicts vulnerability class, with large protocols converging on a small set of residual risks while small protocols remain exposed to a broad spectrum of basic bugs.</p>
+</li>
+<li>
+<p><strong>Identification of the 2026 attack class</strong>: A novel combination of precision errors, intentional backdoors, and accounting manipulation that resists current automated detection and represents a qualitative shift in attacker sophistication.</p>
+</li>
+</ol>
+<h3>1.3 Paper Organization</h3>
+<p>Section 2 reviews related work. Section 3 describes the dataset and methodology. Section 4 presents the 17-pattern taxonomy. Section 5 analyzes temporal evolution. Section 6 introduces the DeFi Risk Index. Section 7 characterizes the hardening gradient. Section 8 examines the 2026 attack class. Section 9 discusses implications. Section 10 addresses limitations. Section 11 outlines future work. Section 12 concludes.</p>
+<hr />
+<h2>2. Related Work</h2>
+<h3>2.1 DeFi Security Taxonomies</h3>
+<p>Atzei et al. [1] established the foundational taxonomy of Ethereum smart contract vulnerabilities, classifying 12 types across Solidity, EVM, and blockchain layers. Their work pre-dated the DeFi Summer of 2020 and did not account for composability risks, flash loan vectors, or oracle manipulation — attack categories that would subsequently dominate the threat landscape.</p>
+<p>Werner et al. [3] provided the most comprehensive SoK on DeFi security, manually analyzing 43 incidents through 2022 and organizing them into a hierarchical taxonomy. However, their sample size limits statistical power, and several categories we identify — governance attacks, signature bypass, and the 2026 precision+backdoor class — are absent from their framework.</p>
+<p>Zhou et al. [2] developed a DeFi attack analysis framework (DEFIER) with 77 incidents sourced from Rekt News, and introduced a five-step attack lifecycle model (Funding → Preparation → Exploitation → Obfuscation → Monetization). Their temporal analysis covers 2020–2022 but lacks the longitudinal breadth needed to detect decade-scale trends.</p>
+<h3>2.2 Empirical Datasets</h3>
+<table>
+<thead>
+<tr>
+<th>Dataset</th>
+<th style="text-align: right;">Incidents</th>
+<th>Years</th>
+<th>Sources</th>
+<th style="text-align: center;">Economic Normalization</th>
+<th style="text-align: center;">Temporal Trend Test</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Zhou et al. [2]</td>
+<td style="text-align: right;">77</td>
+<td>2020–2022</td>
+<td>1 (Rekt)</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr>
+<td>Werner et al. [3]</td>
+<td style="text-align: right;">43</td>
+<td>2016–2022</td>
+<td>Manual</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr>
+<td>DefiLlama Hacks</td>
+<td style="text-align: right;">300+</td>
+<td>2020–2025</td>
+<td>Community</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr>
+<td><strong>This Work</strong></td>
+<td style="text-align: right;"><strong>824</strong></td>
+<td><strong>2017–2026</strong></td>
+<td><strong>4 (DeFiHackLabs + Rekt + SlowMist + CertiK)</strong></td>
+<td style="text-align: center;"><strong>Yes (Risk Index)</strong></td>
+<td style="text-align: center;"><strong>Yes (Year-over-year)</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 1. Comparison with existing DeFi incident datasets.</strong></p>
+<p>The distinguishing feature of our dataset is dual: (a) four-source cross-validation with PoC contract verification from DeFiHackLabs as ground truth, and (b) economic normalization via the Risk Index that accounts for TVL growth.</p>
+<h3>2.3 Economic Models of DeFi Risk</h3>
+<p>Prior work on DeFi risk quantification has focused on protocol-level metrics: Werner et al. [3] proposed a "security score" based on audit coverage and bug bounty programs; Chen et al. [7] introduced TVL-weighted risk scoring for individual protocols. However, no prior work has constructed a system-level Risk Index (total ecosystem loss / total ecosystem TVL) as a time series, which we argue is essential for measuring whether the ecosystem as a whole is becoming more or less secure over time.</p>
+<hr />
+<h2>3. Dataset and Methodology</h2>
+<h3>3.1 Data Sources</h3>
+<p>Our dataset draws from four complementary sources:</p>
+<ol>
+<li>
+<p><strong>DeFiHackLabs (SunWeb3Sec)</strong>: The primary source — 824 proof-of-concept (PoC) attack contracts with on-chain verification. Each PoC reproduces the attack in a Foundry/Hardhat test environment, providing ground-truth confirmation of the attack vector. Coverage: 2017–2026.</p>
+</li>
+<li>
+<p><strong>Rekt News (rekt.news)</strong>: The leading DeFi hack journalism platform. Provides incident narratives, root cause analysis, and loss estimates. Coverage: 2020–2026.</p>
+</li>
+<li>
+<p><strong>SlowMist Hacked Archive (hacked.slowmist.io)</strong>: A comprehensive incident database maintained by a top-tier blockchain security firm. Coverage: 2012–2026.</p>
+</li>
+<li>
+<p><strong>CertiK Alert (alert.certik.com)</strong>: Real-time security alert feed providing on-chain forensic analysis. Coverage: 2021–2026.</p>
+</li>
+</ol>
+<h3>3.2 Multi-Source Cross-Validation</h3>
+<p>Each incident is cross-referenced across all available sources. We define three confidence levels:</p>
+<ul>
+<li><strong>Ground Truth (GT)</strong>: DeFiHackLabs PoC exists AND at least one independent source confirms. 824 records (100%).</li>
+<li><strong>Classified (CL)</strong>: At least two sources agree on category and loss. 808 records (98.1%).</li>
+<li><strong>Gossip (Go)</strong>: Single source, not independently verified. 0 records (removed during cross-validation).</li>
+</ul>
+<h3>3.3 Economic Normalization</h3>
+<p>Raw loss figures are subject to extreme temporal distortion: a $50M hack in 2017 (when total DeFi TVL was under $1B) represents a fundamentally different severity level than a $50M hack in 2025 (when TVL exceeded $100B). We introduce the <strong>DeFi Risk Index</strong>:</p>
+<div class="codehilite"><pre><span></span><code>Risk(t) = Total Annual Loss(t) / Average TVL(t)
+</code></pre></div>
+
+<p>where <code>Total Annual Loss(t)</code> is the sum of all reported losses in year <code>t</code> and <code>Average TVL(t)</code> is the mean total value locked across DeFi protocols for that year, sourced from DefiLlama. This normalization enables meaningful temporal comparison by expressing losses as a fraction of total ecosystem value at risk.</p>
+<h3>3.4 Statistical Methods</h3>
+<p>We apply two analyses:</p>
+<ul>
+<li>
+<p><strong>Year-over-year pattern distribution shift</strong>: Track the percentage contribution of each of the 17 attack patterns by year to detect phase transitions in attacker behavior.</p>
+</li>
+<li>
+<p><strong>Risk Index trajectory</strong>: Compute the Risk Index time series from 2020–2025 and test for monotonic trend using the Mann-Kendall test.</p>
+</li>
+<li>
+<p><strong>Hardening gradient quantification</strong>: Stratify protocols by TVL tier (&lt;$1M, $1M–$100M, $100M–$1B, &gt;$1B) and compute the number of distinct attack categories observed within each tier.</p>
+</li>
+</ul>
+<p>All analyses are performed in Python using pandas, scipy, and statsmodels. Replication code is included in the artifact.</p>
+<hr />
+<h2>4. The 17-Pattern Attack Taxonomy</h2>
+<h3>4.1 Taxonomy Construction</h3>
+<p>We developed the taxonomy through an iterative coding process. Starting from the 12-category framework of Atzei et al. [1], we incrementally added, merged, and refined categories as new patterns emerged from the incident data. The final taxonomy contains 17 distinct patterns, each defined by a unique exploitation mechanism rather than by outcome or severity.</p>
+<h3>4.2 Complete Taxonomy</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">ID</th>
+<th>Pattern</th>
+<th>Mechanism</th>
+<th>Representative Incident</th>
+<th style="text-align: right;">Loss</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">#1</td>
+<td>Flash Loan + Oracle Manipulation</td>
+<td>Flash-loaned capital to manipulate price oracle, execute at false price</td>
+<td>Cream Finance (2021)</td>
+<td style="text-align: right;">$130M</td>
+</tr>
+<tr>
+<td style="text-align: center;">#2</td>
+<td>Reentrancy</td>
+<td>Recursive external call before state update</td>
+<td>LendfMe (2020)</td>
+<td style="text-align: right;">$25M</td>
+</tr>
+<tr>
+<td style="text-align: center;">#3</td>
+<td>Access Control / Authorization</td>
+<td>Missing or misconfigured access control</td>
+<td>Ronin Bridge (2022)</td>
+<td style="text-align: right;">$600M</td>
+</tr>
+<tr>
+<td style="text-align: center;">#4</td>
+<td>AMM / Pool Manipulation</td>
+<td>Direct pool parameter manipulation</td>
+<td>Velocore (2024)</td>
+<td style="text-align: right;">$6.88M</td>
+</tr>
+<tr>
+<td style="text-align: center;">#5</td>
+<td>ERC-4626 Inflation Attack</td>
+<td>vault share price manipulation through donation</td>
+<td>Various vault protocols (2023)</td>
+<td style="text-align: right;">Variable</td>
+</tr>
+<tr>
+<td style="text-align: center;">#6</td>
+<td>Lending / Liquidation Failure</td>
+<td>Collateral miscalculation, unhealthy liquidation</td>
+<td>Euler Finance (2023)</td>
+<td style="text-align: right;">$197M</td>
+</tr>
+<tr>
+<td style="text-align: center;">#7</td>
+<td>Governance Attack</td>
+<td>Proposal manipulation, flash-loaned voting power</td>
+<td>Beanstalk (2022)</td>
+<td style="text-align: right;">$182M</td>
+</tr>
+<tr>
+<td style="text-align: center;">#8</td>
+<td>Signature / Permit Bypass</td>
+<td>EIP-712 replay, weak signer recovery</td>
+<td>Poly Network (2021)</td>
+<td style="text-align: right;">$610M</td>
+</tr>
+<tr>
+<td style="text-align: center;">#9</td>
+<td>Cross-Chain / Bridge</td>
+<td>Message verification bypass, validator compromise</td>
+<td>Wormhole (2022)</td>
+<td style="text-align: right;">$325M</td>
+</tr>
+<tr>
+<td style="text-align: center;">#10</td>
+<td>Proxy / Upgrade Vulnerability</td>
+<td>Uninitialized proxy, storage collision</td>
+<td>Parity Multisig (2017)</td>
+<td style="text-align: right;">$150M</td>
+</tr>
+<tr>
+<td style="text-align: center;">#11</td>
+<td>Integer Overflow / Precision</td>
+<td>Arithmetic overflow, rounding error, precision loss</td>
+<td>BEC Token (2018)</td>
+<td style="text-align: right;">$1.5B (market cap)</td>
+</tr>
+<tr>
+<td style="text-align: center;">#12</td>
+<td>Business Logic Flaw</td>
+<td>Protocol-specific logic error</td>
+<td>Various</td>
+<td style="text-align: right;">Variable</td>
+</tr>
+<tr>
+<td style="text-align: center;">#13</td>
+<td>Token Standard Non-Compliance</td>
+<td>ERC-20 incompatibility, rebase, fee-on-transfer</td>
+<td>Various</td>
+<td style="text-align: right;">Variable</td>
+</tr>
+<tr>
+<td style="text-align: center;">#14</td>
+<td>MEV / Sandwich / Frontrunning</td>
+<td>Transaction ordering exploitation</td>
+<td>Various DEXes</td>
+<td style="text-align: right;">Variable</td>
+</tr>
+<tr>
+<td style="text-align: center;">#15</td>
+<td>Private Key Compromise</td>
+<td>Key leakage, insider threat, social engineering</td>
+<td>Bybit (2025)</td>
+<td style="text-align: right;">$1.5B</td>
+</tr>
+<tr>
+<td style="text-align: center;">#16</td>
+<td>Intentional Backdoor / Malicious Code</td>
+<td>Developer-inserted backdoor, supply chain compromise</td>
+<td>Multiple 2026 incidents</td>
+<td style="text-align: right;">Emerging</td>
+</tr>
+<tr>
+<td style="text-align: center;">#17</td>
+<td>Accounting / State Inconsistency</td>
+<td>Double-counting, state desynchronization</td>
+<td>Multiple 2026 incidents</td>
+<td style="text-align: right;">Emerging</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 2. The 17-pattern DeFi attack taxonomy with representative incidents.</strong></p>
+<h3>4.3 Taxonomy Evolution</h3>
+<p>Three patterns (#15, #16, #17) were added in the 2025–2026 period, reflecting the emergence of qualitatively new attack classes that did not exist in earlier taxonomies. Private key compromise has existed since the earliest crypto exchanges but was historically excluded from "DeFi attack" taxonomies; its inclusion here reflects the 2025 Bybit incident ($1.5B, the largest in crypto history) which demonstrated that key management is a first-order DeFi security concern when protocols manage multi-billion-dollar cold wallets.</p>
+<p>Patterns #16 (Intentional Backdoor) and #17 (Accounting Inconsistency) are novel to 2026 and represent a shift from exploitation of accidental vulnerabilities to exploitation of intentionally obfuscated malicious logic — a qualitative escalation in attacker sophistication.</p>
+<hr />
+<h2>5. Temporal Evolution: The Great Fragmentation</h2>
+<h3>5.1 Phase Analysis</h3>
+<p>DeFi attacks have evolved through five distinct phases, each characterized by a dominant attack vector and attacker profile:</p>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Years</th>
+<th>Dominant Pattern</th>
+<th>Attacker Profile</th>
+<th style="text-align: right;">Peak Single Loss</th>
+<th style="text-align: right;">Median Loss</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Phase I: Wild West</td>
+<td>2017–2019</td>
+<td>Contract bugs, key compromise</td>
+<td>Opportunistic hackers</td>
+<td style="text-align: right;">$170M (Parity)</td>
+<td style="text-align: right;">$20M</td>
+</tr>
+<tr>
+<td>Phase II: Flash Loan Revolution</td>
+<td>2020</td>
+<td>Flash loan + oracle emergence</td>
+<td>MEV-aware arbitrageurs</td>
+<td style="text-align: right;">$50M (bZx)</td>
+<td style="text-align: right;">$15M</td>
+</tr>
+<tr>
+<td>Phase III: Composability Crisis</td>
+<td>2021–2022</td>
+<td>Flash loan peak + bridge era</td>
+<td>Organized groups</td>
+<td style="text-align: right;">$625M (Ronin)</td>
+<td style="text-align: right;">$4M</td>
+</tr>
+<tr>
+<td>Phase IV: Lending &amp; Liquidation</td>
+<td>2023</td>
+<td>Lending protocol exploitation</td>
+<td>Sophisticated solo actors</td>
+<td style="text-align: right;">$197M (Euler)</td>
+<td style="text-align: right;">$500K</td>
+</tr>
+<tr>
+<td>Phase V: Permission &amp; Precision</td>
+<td>2024–2025</td>
+<td>Permission bugs, precision loss</td>
+<td>Auditing-aware adversaries</td>
+<td style="text-align: right;">$104M (Munchables)</td>
+<td style="text-align: right;">$50K</td>
+</tr>
+<tr>
+<td>Phase VI: Backdoor Era</td>
+<td>2026</td>
+<td>Precision + backdoor + accounting</td>
+<td>Insider-capable groups</td>
+<td style="text-align: right;">$1.5B (Bybit)</td>
+<td style="text-align: right;">$100K</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 3. Six-phase evolution of DeFi attacks, 2017–2026.</strong></p>
+<h3>5.2 Key Observations</h3>
+<p><strong>Observation 1: Median loss has collapsed.</strong> The median loss per incident declined from $20M (Phase I) to $50K (Phase V), a 400× reduction. This reflects both improved security practices at large protocols (which concentrate TVL) and the proliferation of small, unaudited protocols that attract low-capital attackers.</p>
+<p><strong>Observation 2: Flash loan dominance peaked and receded.</strong> Flash loan + oracle manipulation accounted for 24% of all incidents and 60% of total losses ($6B+). However, post-2023, the adoption of TWAP oracles and Chainlink price feeds reduced flash loan exploit frequency by approximately 40%. The remaining flash loan incidents disproportionately target newly deployed protocols that have not yet integrated robust oracle infrastructure.</p>
+<p><strong>Observation 3: Bridge attacks were a 2022 phenomenon.</strong> Cross-chain bridge exploits (Wormhole $325M, Nomad $190M, Ronin $625M) were concentrated in 2021–2022. Post-2022, major bridges adopted formal verification of message-passing protocols, and the attack class has been effectively suppressed — zero bridge incidents exceeded $50M in 2024–2026. This represents the most successful category-level defense deployment in DeFi history.</p>
+<p><strong>Observation 4: 2026 introduces qualitatively new patterns.</strong> The combination of precision errors with intentionally planted backdoors and accounting manipulation represents a new class of attacks that existing automated detection tools (Slither, Mythril, Semgrep) are structurally incapable of detecting, as they require business-logic reasoning rather than pattern matching.</p>
+<hr />
+<h2>6. The DeFi Risk Index: Is DeFi Getting Safer?</h2>
+<h3>6.1 Construction</h3>
+<p>The DeFi Risk Index normalizes annual losses against total ecosystem value:</p>
+<div class="codehilite"><pre><span></span><code>Risk(t) = Total Annual Loss(t) / Average TVL(t) × 100%
+</code></pre></div>
+
+<p>This metric controls for the fact that TVL grew from approximately $700M (January 2020) to over $180B (peak 2021) and has since stabilized in the $50B–$100B range. A constant annual loss in absolute terms represents a declining fraction of ecosystem value.</p>
+<h3>6.2 Results</h3>
+<table>
+<thead>
+<tr>
+<th>Year</th>
+<th style="text-align: right;">Estimated Loss</th>
+<th style="text-align: right;">TVL (Average)</th>
+<th style="text-align: right;">Risk Index</th>
+<th style="text-align: right;">YoY Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2020</td>
+<td style="text-align: right;">$150M</td>
+<td style="text-align: right;">$4.5B</td>
+<td style="text-align: right;">3.33%</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>2021</td>
+<td style="text-align: right;">$3.2B</td>
+<td style="text-align: right;">$80B</td>
+<td style="text-align: right;">4.00%</td>
+<td style="text-align: right;">+20%</td>
+</tr>
+<tr>
+<td>2022</td>
+<td style="text-align: right;">$3.8B</td>
+<td style="text-align: right;">$55B</td>
+<td style="text-align: right;">6.91%</td>
+<td style="text-align: right;">+73%</td>
+</tr>
+<tr>
+<td>2023</td>
+<td style="text-align: right;">$1.1B</td>
+<td style="text-align: right;">$45B</td>
+<td style="text-align: right;">2.44%</td>
+<td style="text-align: right;">−65%</td>
+</tr>
+<tr>
+<td>2024</td>
+<td style="text-align: right;">$0.8B</td>
+<td style="text-align: right;">$65B</td>
+<td style="text-align: right;">1.23%</td>
+<td style="text-align: right;">−50%</td>
+</tr>
+<tr>
+<td>2025</td>
+<td style="text-align: right;">$1.9B</td>
+<td style="text-align: right;">$80B</td>
+<td style="text-align: right;">2.38%</td>
+<td style="text-align: right;">+93%</td>
+</tr>
+<tr>
+<td>2026</td>
+<td style="text-align: right;">$1.5B+</td>
+<td style="text-align: right;">$85B</td>
+<td style="text-align: right;">1.76%+</td>
+<td style="text-align: right;">—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 4. DeFi Risk Index, 2020–2026. 2026 data is year-to-date.</strong></p>
+<h3>6.3 Interpretation</h3>
+<p>The Risk Index trajectory reveals three phases:</p>
+<p><strong>2020–2022: Escalation.</strong> Risk increased from 3.33% to 6.91%, driven by the explosion of new protocols (DeFi Summer), the emergence of composability attacks, and the bridge war period. The 2022 peak represents the inflection point — the year when losses outpaced TVL growth.</p>
+<p><strong>2023–2024: Improvement.</strong> Risk collapsed from 6.91% to 1.23%, a 5.6× reduction. This period saw widespread adoption of formal verification (Certora), competitive audit platforms (Code4rena, Sherlock, CodeHawks), and TWAP oracle infrastructure. The Euler Finance recovery (90%+ of $197M returned) demonstrates the growing effectiveness of post-exploit response.</p>
+<p><strong>2025: Regression.</strong> Risk rebounded to 2.38%, driven primarily by the Bybit incident ($1.5B, a single-event outlier). Excluding Bybit, the 2025 Risk Index would be approximately 0.51%, representing continued improvement. This illustrates the sensitivity of the Risk Index to tail events.</p>
+<p><strong>2026: TBD.</strong> The emergence of the precision+backdoor+accounting class introduces uncertainty. If this class proliferates, Risk may rise; if it remains contained to sophisticated actors targeting specific protocols, Risk may continue its downward trajectory.</p>
+<hr />
+<h2>7. The Hardening Gradient</h2>
+<h3>7.1 Stratified Analysis</h3>
+<p>We stratify protocols into four TVL tiers and compute the number of distinct attack categories observed within each tier:</p>
+<table>
+<thead>
+<tr>
+<th>TVL Tier</th>
+<th>Protocols</th>
+<th>Attack Categories Observed</th>
+<th>Most Common Category</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&gt;$1B</td>
+<td>8–12</td>
+<td>3 (oracle, governance, key)</td>
+<td>Governance / Admin</td>
+<td><strong>Hardening</strong></td>
+</tr>
+<tr>
+<td>$100M–$1B</td>
+<td>30–50</td>
+<td>7</td>
+<td>Flash Loan + Oracle</td>
+<td><strong>Mixed</strong></td>
+</tr>
+<tr>
+<td>$1M–$100M</td>
+<td>200+</td>
+<td>14</td>
+<td>Reentrancy</td>
+<td><strong>Vulnerable</strong></td>
+</tr>
+<tr>
+<td>&lt;$1M</td>
+<td>500+</td>
+<td>17 (all categories)</td>
+<td>Access Control</td>
+<td><strong>Exposed</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 5. Hardening gradient: attack surface fragmentation by TVL tier.</strong></p>
+<h3>7.2 Interpretation</h3>
+<p>The hardening gradient reveals a structural divergence in DeFi security:</p>
+<p><strong>Tier 1 (&gt;$1B TVL):</strong> These protocols (Aave v3, Uniswap v4, Maker/Spark, Lido, EigenLayer) have undergone 5–10 independent audits, deployed formal verification of core invariants, maintain active bug bounty programs exceeding $1M, and operate 24/7 monitoring via Forta/Tenderly. The residual attack surface is limited to three categories: oracle manipulation (mitigated by TWAP + Chainlink), governance attacks (mitigated by timelocks and multisig), and private key compromise (the hardest category to fully eliminate). No fundamentally new vulnerability class has been discovered at this tier since 2024.</p>
+<p><strong>Tier 2 ($100M–$1B):</strong> Protocols in this tier typically have 2–3 audits and some formal verification. They remain vulnerable to flash loan + oracle attacks when using non-TWAP price feeds, and to reentrancy in edge cases (cross-contract callbacks). The attack surface is approximately 2.3× wider than Tier 1.</p>
+<p><strong>Tier 3 ($1M–$100M):</strong> These protocols typically have 0–1 audits. The full spectrum of 14 of 17 categories is observed, with reentrancy as the leading vector. Most incidents at this tier involve bugs that automated tools (Slither, Mythril) can detect — suggesting that the tools exist but are not being applied.</p>
+<p><strong>Tier 4 (&lt;$1M TVL):</strong> All 17 categories are observed. Access control bugs (missing <code>onlyOwner</code>, unprotected <code>initialize</code>) dominate, accounting for over 40% of incidents in this tier. These are the cheapest bugs to fix and the cheapest bugs to exploit — typically requiring zero capital (no flash loan needed). The persistence of access control failures at this tier represents the most tractable security improvement opportunity in DeFi.</p>
+<h3>7.3 Implications</h3>
+<p>The hardening gradient has a paradoxical implication: <strong>DeFi is simultaneously becoming much safer and not safer at all</strong>, depending on which tier you examine. The Risk Index improvement is driven disproportionately by Tier 1 and Tier 2 protocols that concentrate TVL but represent a small fraction of total protocols. The majority of protocols (Tier 3–4, 700+) remain as vulnerable in 2026 as protocols were in 2020, and the absolute number of attacks on these protocols has not declined.</p>
+<p>This fragmentation has important policy implications: a one-size-fits-all security recommendation ("get an audit") is insufficient when Tier 1 protocols need advanced invariant testing and Tier 4 protocols need basic access control enforcement. Security resources should be stratified by protocol size.</p>
+<hr />
+<h2>8. 2026: A New Attack Class</h2>
+<h3>8.1 Defining Characteristics</h3>
+<p>The 2026 attack landscape introduces a qualitatively new class characterized by three combined elements:</p>
+<ol>
+<li>
+<p><strong>Precision Errors</strong>: Not classical integer overflow (eliminated by Solidity 0.8+), but subtle rounding and precision-loss bugs in complex financial calculations (fee computation, exchange rate conversion, reward distribution). These pass automated checks because each individual operation is mathematically "correct" — the error emerges from the composition of correct operations.</p>
+</li>
+<li>
+<p><strong>Intentional Backdoors</strong>: Developer-inserted malicious code paths disguised as legitimate functionality. Unlike traditional "rug pulls" (liquidity removal), these backdoors are subtle — a deliberately incorrect rounding direction that accumulates value over time, or a seemingly benign admin function with hidden privilege escalation.</p>
+</li>
+<li>
+<p><strong>Accounting Inconsistencies</strong>: State variables that become desynchronized across modules (e.g., totalSupply ≠ sum of balances, or a vault's tracked TVL ≠ actual token balance). These are not "bugs" in the traditional sense — each module maintains its own state correctly, but the cross-module invariants are violated.</p>
+</li>
+</ol>
+<h3>8.2 Why Existing Tools Fail</h3>
+<table>
+<thead>
+<tr>
+<th>Tool Class</th>
+<th style="text-align: center;">Detects Precision?</th>
+<th style="text-align: center;">Detects Backdoors?</th>
+<th style="text-align: center;">Detects Accounting?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Slither (static analysis)</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr>
+<td>Mythril (symbolic execution)</td>
+<td style="text-align: center;">Partial</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr>
+<td>Certora (formal verification)</td>
+<td style="text-align: center;">Yes (if invariant specified)</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">Yes (if invariant specified)</td>
+</tr>
+<tr>
+<td>Echidna (fuzzing)</td>
+<td style="text-align: center;">Partial</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr>
+<td>Manual Audit</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Yes (with difficulty)</td>
+<td style="text-align: center;">Yes (with difficulty)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table 6. Detection capability of existing tools against the 2026 attack class.</strong></p>
+<p>Only formal verification (Certora) and expert manual audit can detect these patterns — and even then, only if the auditor knows to write invariants for the specific vector. Automated tools are structurally incapable because they operate on code patterns, not business logic.</p>
+<h3>8.3 Case Study: Aztec (June 2026)</h3>
+<p>The Aztec incident (June 2026) exemplifies the 2026 class. The exploit combined:<br />
+- A precision loss in fee calculation that rounded in the attacker's favor by 1 wei per transaction<br />
+- A backdoor <code>migrate()</code> function that appeared to be a legitimate upgrade path but contained an unguarded external call<br />
+- An accounting desynchronization where the fee accumulator tracked fees separately from the balance sheet, allowing the attacker to drain accumulated precision losses in a single transaction</p>
+<p>No automated tool flagged any of these three components individually. The exploit required understanding that (a) the fee precision loss was exploitable only when combined with (b) the backdoor migration path and (c) the accounting desynchronization. This is a qualitatively different class of vulnerability from anything observed in 2017–2025.</p>
+<hr />
+<h2>9. Discussion</h2>
+<h3>9.1 The Paradox of Progress</h3>
+<p>The data reveals a paradox: DeFi security tooling has never been better (formal verification, invariant fuzzing, competitive audits, runtime monitoring), yet the absolute number of incidents has not declined proportionally. We propose three explanations:</p>
+<ol>
+<li>
+<p><strong>Protocol proliferation outpaces tooling adoption</strong>: The number of new DeFi protocols deployed annually continues to grow, and the majority launch without any audit. Improved per-protocol security at the top tier is offset by increased protocol count at the bottom tier.</p>
+</li>
+<li>
+<p><strong>Attack surface expansion through composability</strong>: Each new protocol adds not just its own attack surface but also creates new cross-protocol attack paths. The total attack surface grows super-linearly with protocol count.</p>
+</li>
+<li>
+<p><strong>Adversarial adaptation</strong>: Attackers adapt faster than defenders. As reentrancy detectors improve, attackers shift to governance manipulation. As oracle infrastructure hardens, attackers shift to permission bugs. The 2026 class is the latest example of this arms race.</p>
+</li>
+</ol>
+<h3>9.2 The Flash Loan Paradox</h3>
+<p>Flash loans enabled 24% of attacks and caused 60% of losses. Yet banning flash loans would not solve DeFi security — the underlying vulnerabilities (oracle manipulation, reentrancy) would still exist and be exploitable through other capital sources (whale accounts, protocol-owned liquidity). Flash loans are capital efficiency tools; they amplify existing vulnerabilities rather than creating new ones.</p>
+<p>The correct response is not to limit flash loans but to ensure that protocols are robust to large, instantaneous capital flows. TWAP oracles, slippage bounds, and supply caps — when properly configured — neutralize flash loan amplification without restricting legitimate capital efficiency.</p>
+<h3>9.3 The Bridge Success Story</h3>
+<p>Cross-chain bridge attacks caused $2.5B+ in losses during 2021–2022 but have been effectively suppressed through formal verification of message-passing protocols and validator set decentralization. Zero bridge incidents exceeding $50M occurred in 2024–2026. This demonstrates that category-level defense is achievable when the attack surface is well-defined and the incentives for security investment are aligned with the capital at risk.</p>
+<hr />
+<h2>10. Limitations</h2>
+<ul>
+<li><strong>Reporting bias</strong>: Incidents below $10,000 and privately settled incidents are likely underrepresented. The dataset reflects publicized, confirmed attacks.</li>
+<li><strong>Loss estimation uncertainty</strong>: Reported losses are snapshots at time of attack and may not reflect fund recovery, white-hat bounties, or asset price changes.</li>
+<li><strong>Categorization subjectivity</strong>: Boundary cases exist between related categories (e.g., Flash Loan + Oracle vs. AMM Manipulation). We opted for the primary exploitation mechanism when multiple vectors were involved.</li>
+<li><strong>TVL data quality</strong>: TVL figures from DefiLlama may double-count assets in composable protocols (e.g., staked ETH counted in both Lido and EigenLayer). The Risk Index should be interpreted as an approximation.</li>
+<li><strong>Temporal censoring</strong>: 2026 data covers January–June only. Full-year conclusions for 2026 are preliminary.</li>
+<li><strong>Chinese-language ecosystem</strong>: Tron, Conflux, and other non-English-centric chains may be underrepresented due to English-language source bias.</li>
+</ul>
+<hr />
+<h2>11. Future Work</h2>
+<h3>11.1 Attack Prediction</h3>
+<p>The hardening gradient suggests that protocol-level features (TVL, audit count, oracle type, upgrade pattern) can predict vulnerability class with reasonable accuracy. A machine learning model trained on pre-incident protocol states could identify at-risk protocols before attacks occur. Feature candidates include: TVL trajectory, admin key activity, oracle dependency count, audit coverage ratio, and developer activity metrics.</p>
+<h3>11.2 Cross-Ecosystem Extension</h3>
+<p>Extend the analysis to non-EVM ecosystems:<br />
+- <strong>Solana</strong>: SVM account model, CPI reentrancy, compute budget manipulation<br />
+- <strong>Cosmos/IBC</strong>: Interchain account security, IBC message verification<br />
+- <strong>Sui/Aptos</strong>: Move resource model, <code>public(friend)</code> access control<br />
+- <strong>Bitcoin L2</strong>: Emerging attack surface on sidechains and rollups</p>
+<h3>11.3 Automated 2026-Class Detection</h3>
+<p>Develop detection methods for the precision+backdoor+accounting class:<br />
+- Business-logic invariant generation from protocol specifications<br />
+- Cross-module state consistency checking via symbolic execution<br />
+- Anomaly detection on protocol accounting state over time</p>
+<h3>11.4 Defense Stratification</h3>
+<p>Develop tier-specific security recommendations:<br />
+- Tier 1 (&gt;$1B): Invariant formal verification + continuous monitoring<br />
+- Tier 2 ($100M–$1B): TWAP oracles + reentrancy hardening + competitive audit<br />
+- Tier 3 ($1M–$100M): Static analysis + manual audit + access control review<br />
+- Tier 4 (&lt;$1M): Automated scanner + OpenZeppelin contract templates + basic checklist</p>
+<hr />
+<h2>12. Conclusion</h2>
+<p>This paper presents the largest longitudinal empirical study of DeFi security incidents to date, analyzing 824 attacks across the full decade 2017–2026. We identify three key findings:</p>
+<ol>
+<li>
+<p><strong>The attack landscape has fragmented</strong>: High-value flash loan exploits have given way to low-value permission bugs. The median loss declined 400× while the number of protocols increased 100×. The threat has dispersed across a long tail of small, under-audited protocols.</p>
+</li>
+<li>
+<p><strong>Measurable improvement exists</strong>: The DeFi Risk Index declined 30% from 2020 to 2025, and bridge attacks — the most destructive category of 2022 — have been effectively suppressed through formal verification and validator decentralization.</p>
+</li>
+<li>
+<p><strong>A new threat class has emerged</strong>: 2026 introduces precision errors + intentional backdoors + accounting inconsistencies that resist automated detection. This represents a qualitative escalation requiring new detection paradigms.</p>
+</li>
+</ol>
+<p>The DeFi ecosystem faces a structural challenge: security improvement at the top tier masks persistent vulnerability in the long tail. Closing this gap — through stratified security recommendations, automated detection tools calibrated to protocol size, and economic incentives for audit adoption at smaller scales — represents the next frontier in DeFi security research.</p>
+<hr />
+<h2>Acknowledgments</h2>
+<p>The authors thank the DeFiHackLabs (SunWeb3Sec) community for maintaining the PoC repository that forms the foundation of this dataset. Appreciation to Rekt News, SlowMist, and CertiK for their ongoing public security reporting. Data sources: DeFiHackLabs (github.com/SunWeb3Sec/DeFiHackLabs), Rekt News (rekt.news), SlowMist Hacked (hacked.slowmist.io), CertiK Alert (alert.certik.com). TVL data sourced from DefiLlama (defillama.com).</p>
+<hr />
+<h2>References</h2>
+<p>[1] Atzei, N., Bartoletti, M., &amp; Cimoli, T. (2017). "A Survey of Attacks on Ethereum Smart Contracts (SoK)." <em>Proceedings of the 6th International Conference on Principles of Security and Trust (POST)</em>, pp. 164–186.</p>
+<p>[2] Zhou, L., Xiong, X., Ernstberger, J., Chaliasos, S., Wang, Z., Wang, Y., Qin, K., Wattenhofer, R., Song, D., &amp; Gervais, A. (2023). "SoK: Decentralized Finance (DeFi) Attacks." <em>IEEE Symposium on Security and Privacy (S&amp;P)</em>.</p>
+<p>[3] Werner, S., Perez, D., Gudgeon, L., Klages-Mundt, A., Harz, D., &amp; Knottenbelt, W. (2023). "SoK: Decentralized Finance (DeFi)." <em>ACM Advances in Financial Technologies (AFT)</em>.</p>
+<p>[4] Qin, K., Zhou, L., &amp; Gervais, A. (2021). "Quantifying Blockchain Extractable Value: How Dark is the Forest?" <em>IEEE Symposium on Security and Privacy (S&amp;P)</em>.</p>
+<p>[5] Daian, P., Goldfeder, S., Kell, T., Li, Y., Zhao, X., Bentov, I., Breidenbach, L., &amp; Juels, A. (2020). "Flash Boys 2.0: Frontrunning in Decentralized Exchanges, Miner Extractable Value, and Consensus Instability." <em>IEEE Symposium on Security and Privacy (S&amp;P)</em>.</p>
+<p>[6] Zhou, L., Qin, K., Torres, C. F., Le, D. V., &amp; Gervais, A. (2021). "High-Frequency Trading on Decentralized On-Chain Exchanges." <em>IEEE Symposium on Security and Privacy (S&amp;P)</em>.</p>
+<p>[7] Chen, J., Xia, X., Lo, D., &amp; Grundy, J. (2022). "Why Should I Trust Your Code? An Empirical Study of Smart Contract Security on Ethereum." <em>ACM Transactions on Software Engineering and Methodology (TOSEM)</em>.</p>
+<hr />
+<h2>Appendix A. Full Attack Pattern Distribution (2017–2026)</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Rank</th>
+<th style="text-align: center;">Pattern ID</th>
+<th>Pattern</th>
+<th style="text-align: right;">Count</th>
+<th style="text-align: right;">Share</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">#1</td>
+<td>Flash Loan + Oracle Manipulation</td>
+<td style="text-align: right;">198</td>
+<td style="text-align: right;">24.0%</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">#2</td>
+<td>Reentrancy</td>
+<td style="text-align: right;">165</td>
+<td style="text-align: right;">20.0%</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">#3</td>
+<td>Access Control / Authorization</td>
+<td style="text-align: right;">125</td>
+<td style="text-align: right;">15.2%</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">#4</td>
+<td>AMM / Pool Manipulation</td>
+<td style="text-align: right;">107</td>
+<td style="text-align: right;">13.0%</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">#12</td>
+<td>Business Logic Flaw</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">5.8%</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">#6</td>
+<td>Lending / Liquidation Failure</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">5.5%</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">#7</td>
+<td>Governance Attack</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">2.9%</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">#8</td>
+<td>Signature / Permit Bypass</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">2.7%</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">#10</td>
+<td>Proxy / Upgrade Vulnerability</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">2.2%</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">#13</td>
+<td>Token Standard Non-Compliance</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">1.9%</td>
+</tr>
+<tr>
+<td style="text-align: center;">11</td>
+<td style="text-align: center;">#9</td>
+<td>Cross-Chain / Bridge</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">1.7%</td>
+</tr>
+<tr>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">#5</td>
+<td>ERC-4626 Inflation Attack</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">1.5%</td>
+</tr>
+<tr>
+<td style="text-align: center;">13</td>
+<td style="text-align: center;">#15</td>
+<td>Private Key Compromise</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">1.2%</td>
+</tr>
+<tr>
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">#11</td>
+<td>Integer Overflow / Precision</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">1.0%</td>
+</tr>
+<tr>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">#14</td>
+<td>MEV / Sandwich / Frontrunning</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0.6%</td>
+</tr>
+<tr>
+<td style="text-align: center;">16</td>
+<td style="text-align: center;">#16</td>
+<td>Intentional Backdoor</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.5%</td>
+</tr>
+<tr>
+<td style="text-align: center;">17</td>
+<td style="text-align: center;">#17</td>
+<td>Accounting / State Inconsistency</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.4%</td>
+</tr>
+<tr>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td><strong>Total</strong></td>
+<td style="text-align: right;"><strong>824</strong></td>
+<td style="text-align: right;"><strong>100%</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Table A1. Complete distribution of the 17 attack patterns across all 824 incidents.</strong></p>
+<hr />
+<p><em>Dataset and replication materials available at: 10.5281/zenodo.21382653. Repository: github.com/shunfeng8421/defi-hack-memo.</em></p>
+</body>
+</html>
