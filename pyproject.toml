@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "defi-scanner"
+version = "2.0.0"
+description = "50-pattern DeFi attack scanner — 824 cases, 50 Slither detectors, complete audit toolkit"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "Shiqiang Chen", email = "shunfeng8421@163.com"}]
+keywords = ["defi", "security", "audit", "solidity", "scanner", "slither"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Topic :: Security",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+]
+
+[project.scripts]
+defi-scan = "defi_scanner:main"
+defi-audit = "audit_workflow:main"
+
+[project.urls]
+Homepage = "https://github.com/shunfeng8421/defi-hack-memo"
+Repository = "https://github.com/shunfeng8421/defi-hack-memo"
