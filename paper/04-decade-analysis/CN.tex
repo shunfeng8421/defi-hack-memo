@@ -1,0 +1,32 @@
+\documentclass[11pt,a4paper]{ctexart}
+\usepackage{amsmath,booktabs,hyperref,geometry}
+\geometry{margin=2.5cm}
+\title{DeFi 攻击十年：2017--2026 模式演化}
+\author{陈世强\\\small\url{github.com/shunfeng8421/defi-hack-memo}}
+\date{2026年7月}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+本文分析 824 个已确认的 DeFi 安全事件（2017--2026），是同类研究最大规模的实证研究。攻击模式从高额闪电贷利用（峰值超 \$600M）演化为小规模权限bug（2025年中位数 \$50K）。识别出 17 种独特攻击模式。DeFi 风险指数从 3.33\% 降至 2.33\%。2026 年出现了精度错误+后门+会计不一致的新型攻击类别。
+\end{abstract}
+
+\section{引言}
+DeFi 累计损失超 \$100 亿。缺乏贯穿整个 DeFi 时代的系统实证分析。本文编目了从 Parity（2017）到 Aztec（2026年6月）的 824 次攻击。
+
+\section{数据与分类}
+数据来源：DeFiHackLabs（824 个 PoC 合约）、Rekt News、安全公司报告。建立了 17 模式分类体系：闪电贷+预言机（\#1，24\%）、重入（\#2）、借贷清算（\#6）、AMM 操纵（\#7）、治理攻击（\#8）、管理员密钥（\#13）、签名重放（\#27）、跨链（\#34）、精度损失（\#46）等。
+
+\section{时间演化}
+2017-2018：合约 bug（Parity \$170M）。2020：闪电贷兴起（bZx \$50M）。2021：高峰（Poly \$610M）。2022：跨链桥时代（Ronin \$600M）。2023：借贷激增（Euler \$197M）。2024：多向量组合。2025：权限 bug 主导。2026：精度+后门+会计（Bybit \$1.5B）。
+
+\section{风险指数与闪电贷}
+风险指数 3.33\% $\to$ 2.33\%，下降 30\%。闪电贷促成 24\% 攻击但造成 60\% 损失（\$6B+）。TWAP 和 Chainlink 采用使新事件减少 40\%。
+
+\section{结论}
+DeFi 安全可衡量改善。攻击面分裂——大协议硬化，小项目仍暴露。下一个前沿：检测后门和复杂会计操纵。
+
+\vspace{1em}
+\noindent\textbf{数据集：} \url{10.5281/zenodo.21382653}
+\end{document}

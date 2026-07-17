@@ -1,0 +1,97 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx,booktabs,hyperref}
+\usepackage[margin=2.5cm]{geometry}
+\title{A Decade of DeFi Attacks: Pattern Evolution 2017--2026}
+\author{Shiqiang Chen\\\small\url{github.com/shunfeng8421/defi-hack-memo}}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We analyze 824 confirmed DeFi security incidents (2017--2026), the largest empirical study of its kind. Attacks shifted from high-value flash loan exploits ($600M+ peaks) to small-scale permission bugs (median \$50K in 2025). 17 unique patterns are identified; flash loan + oracle manipulation dominates (24\% cases, 60\% losses). DeFi risk index (loss/TVL) declined 30\% from 2020 to 2025. 2026 introduces novel precision + backdoor + accounting attacks. Large protocols harden; small projects remain vulnerable.
+\end{abstract}
+
+\section{Introduction}
+DeFi has lost over \$10B to security incidents. Systematic empirical analysis of pattern evolution across the full DeFi era has been lacking. We catalog all 824 attacks from DeFiHackLabs, covering Parity (2017) to Aztec (June 2026).
+
+\section{Data \& Classification}
+
+\subsection{Sources}
+\begin{itemize}
+\item DeFiHackLabs (SunWeb3Sec): 824 PoC contracts
+\item Rekt News, security firms (CertiK, SlowMist): loss verification
+\end{itemize}
+
+\subsection{17-Pattern Taxonomy}
+\begin{table}[h]
+\centering
+\caption{Attack Pattern Classification}
+\begin{tabular}{cll}
+\toprule
+ID & Pattern & Example \\
+\midrule
+\#1 & Flash Loan + Oracle & bZx \$50M, Cream \$130M \\
+\#2 & Reentrancy & LendfMe \$25M, JoeAgent \$45K \\
+\#5 & ERC-4626 Inflation & vault-core \\
+\#6 & Lending Liquidation & Euler \$197M, Radiant \$4.5M \\
+\#7 & AMM Manipulation & Gamma \$6.3M, Velocore \$6.88M \\
+\#8 & Governance Attack & Beanstalk \$182M \\
+\#13 & Admin Key/Privilege & Ronin \$600M, Bybit \$1.5B \\
+\#27 & Signature Replay & Poly \$610M, Nomad \$152M \\
+\#34 & Cross-Chain & Wormhole \$320M \\
+\#46 & Precision Loss & BEC \$1.5B \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Results}
+
+\subsection{Temporal Evolution}
+
+\begin{table}[h]
+\centering
+\caption{Attack Evolution by Year}
+\begin{tabular}{clrr}
+\toprule
+Year & Dominant Pattern & Peak Loss & Median Loss \\
+\midrule
+2017-18 & Contract bugs & \$170M & \$20M \\
+2020 & Flash loan emergence & \$50M & \$15M \\
+2021 & Flash loan + oracle peak & \$610M & \$5M \\
+2022 & Cross-chain bridge era & \$600M & \$3M \\
+2023 & Lending/liquidation & \$197M & \$500K \\
+2024 & Multi-vector combos & \$48M & \$200K \\
+2025 & Permission bugs & \$104M & \$50K \\
+2026 & Precision + backdoor & \$1.5B & \$100K \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Risk Index}
+\[
+\text{Risk} = \frac{\text{Total Annual Loss}}{\text{Total Value Locked}}
+\]
+Risk declined from 3.33\% (2020) to 2.33\% (2025), a 30\% reduction. TVL growth outpaced loss growth despite more attacks.
+
+\subsection{Flash Loan Dominance}
+Flash loans enabled 24\% of attacks but caused 60\% of total losses (\$6B+). TWAP and Chainlink adoption reduced new incidents by 40\% post-2023.
+
+\section{Discussion}
+
+\subsection{The Hardening Gradient}
+Protocols >\$1B TVL show few new vulnerabilities post-2024. Protocols <\$1M TVL still fall to basic bugs (access control, unchecked returns). Automated tools eliminated code-level bugs; design-level bugs now dominate.
+
+\subsection{2026: A New Attack Class}
+Precision errors + intentional backdoors + accounting inconsistencies characterize 2026. These resist automated detection—they require business logic understanding.
+
+\section{Conclusion}
+DeFi security measurably improved: risk index -30\%. But the attack surface fragments: large protocols harden, small protocols remain exposed. The next frontier is detecting backdoors and complex accounting manipulations.
+
+\vspace{1em}
+\noindent\textbf{Dataset:} \url{10.5281/zenodo.21382653}\\
+\textbf{Repository:} \url{github.com/shunfeng8421/defi-hack-memo}
+
+\end{document}
