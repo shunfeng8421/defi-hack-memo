@@ -288,6 +288,11 @@ PAPERS = [
         "pdf": r"D:\ll\knowledge-base\10-security\paper\07-hardening-gradient\EN.pdf",
         "title": "The Hardening Gradient",
     },
+    {
+        "md": r"D:\ll\knowledge-base\10-security\paper\08-eip712-errors\EN.md",
+        "pdf": r"D:\ll\knowledge-base\10-security\paper\08-eip712-errors\EN.pdf",
+        "title": "When Type Hashes Lie: EIP-712 Errors",
+    },
 ]
 
 if __name__ == "__main__":
