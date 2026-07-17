@@ -283,6 +283,11 @@ PAPERS = [
         "pdf": r"D:\ll\knowledge-base\10-security\paper\06-taxonomy\EN.pdf",
         "title": "Comprehensive Taxonomy of DeFi Attack Patterns",
     },
+    {
+        "md": r"D:\ll\knowledge-base\10-security\paper\07-hardening-gradient\EN.md",
+        "pdf": r"D:\ll\knowledge-base\10-security\paper\07-hardening-gradient\EN.pdf",
+        "title": "The Hardening Gradient",
+    },
 ]
 
 if __name__ == "__main__":
