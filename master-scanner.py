@@ -29,20 +29,18 @@ def run_scanner(name: str, info: dict, target: str) -> dict:
         result["error"] = str(e)
         return result
     
-    # Parse output for stats
     text = output.stdout + output.stderr
+    # Extract counts from text output
     for line in text.split('\n'):
-        if 'Total' in line and 'findings' in line and not 'AI Agent' in line:
-            import re
-            m = re.search(r'(\d+)', line)
-            if m: result["findings"] = int(m.group(1))
-        if 'Files scanned' in line or 'file' in line.lower() and 'Scanned' in text:
+        if 'files' in line.lower() and 'Scanned' in text and 'file' in line.lower():
             m = re.search(r'(\d+)', line)
             if m: result["files"] = int(m.group(1))
     
-    # Count severity from output
-    result["critical"] = text.count("CRITICAL")  # rough estimate
-    result["high"] = text.count("HIGH")
+    # Count findings from severity icons
+    result["critical"] = text.count("🔴") 
+    result["high"] = text.count("🟠")
+    result["medium"] = text.count("🟡")
+    result["findings"] = result["critical"] + result["high"] + result["medium"] + text.count("🔵")
     
     return result
 
