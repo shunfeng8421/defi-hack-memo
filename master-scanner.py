@@ -17,6 +17,7 @@ SCANNERS = {
 
 def run_scanner(name: str, info: dict, target: str) -> dict:
     """Run a scanner and parse its JSON output."""
+    import re
     result = {"name": info["name"], "findings": 0, "files": 0, "critical": 0, "high": 0}
     
     try:
