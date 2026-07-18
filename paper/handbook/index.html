@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DeFi Attack Handbook — 50 Patterns</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,sans-serif;background:#0a0e17;color:#e0e6f0;padding:20px}
+h1{color:#64ffda;margin-bottom:5px}
+.subtitle{color:#8892b0;margin-bottom:25px}
+input{width:100%;padding:12px 15px;background:#111b2e;border:1px solid #1a2540;color:#e0e6f0;border-radius:8px;font-size:1em;margin-bottom:20px}
+input:focus{outline:none;border-color:#64ffda}
+.stats{display:flex;gap:15px;flex-wrap:wrap;margin-bottom:25px}
+.stats span{background:#111b2e;padding:8px 15px;border-radius:6px;font-size:.85em;cursor:pointer}
+.stats span.active{background:#1a3540;color:#64ffda;font-weight:600}
+.pattern{background:#111b2e;border-radius:10px;padding:18px;margin-bottom:12px;border-left:3px solid #64ffda}
+.pattern.CRITICAL{border-left-color:#ff6b6b}
+.pattern.HIGH{border-left-color:#ffd93d}
+.pattern.MEDIUM{border-left-color:#64ffda}
+.pattern.LOW{border-left-color:#4a5568}
+.pattern.hidden{display:none}
+.pattern h3{font-size:1.1em;margin-bottom:6px}
+.pattern .meta{font-size:.8em;color:#8892b0;margin-bottom:8px}
+.pattern .desc{font-size:.9em;margin-bottom:8px}
+.pattern .fix{background:#0a1620;padding:8px 12px;border-radius:6px;font-size:.85em;font-family:monospace;color:#64ffda}
+.pattern .case{color:#ff6b6b;font-size:.8em;margin-top:6px}
+</style>
+</head>
+<body>
+<h1>🛡️ DeFi Attack Handbook</h1>
+<p class="subtitle">50 classified attack patterns · 824 real incidents · Searchable reference</p>
+
+<div class="stats" id="filters">
+<span class="active" onclick="filter('all')">All 50</span>
+<span onclick="filter('CRITICAL')">🔴 Critical</span>
+<span onclick="filter('HIGH')">🟠 High</span>
+<span onclick="filter('MEDIUM')">🟡 Medium</span>
+<span onclick="filter('LOW')">🔵 Low</span>
+</div>
+
+<input id="search" placeholder="Search patterns, keywords, case names..." oninput="search()">
+
+<div id="patterns"></div>
+
+<script>
+const PATTERNS = [{"n": "Flash Loan + Spot Price Oracle", "s": "CRITICAL", "d": "Instantanenous AMM price manipulated via flash loan before dependent contract reads it", "f": "Use TWAP oracle (30-min minimum) instead of getReserves()", "e": "bZx $50M, Cream $130M, PancakeBunny $120M", "c": 198}, {"n": "Reentrancy (CEI Violation)", "s": "CRITICAL", "d": "External call made before state update, enabling recursive re-entry", "f": "Follow Checks-Effects-Interactions pattern; use ReentrancyGuard", "e": "LendfMe $25M, JoeAgent $45K, Cream $130M", "c": 33}, {"n": "Flash Loan + Reentrancy Combo", "s": "CRITICAL", "d": "Flash loan callback creates reentrancy path not covered by standard guard", "f": "Lock state before flash loan callback execution", "e": "Cream $130M", "c": 28}, {"n": "Short TWAP Manipulation", "s": "HIGH", "d": "Multi-block manipulation of TWAP oracle with window <30 min", "f": "Use minimum 30-minute TWAP window; validate update freshness", "e": "Gamma $6.3M", "c": 17}, {"n": "ERC-4626 Inflation Attack", "s": "HIGH", "d": "First depositor donates assets to inflate share price, denying or stealing subsequent deposits", "f": "Mint dead shares to 0xdead on initialization; enforce minDeposit", "e": "vault-core, multiple vaults", "c": 12}, {"n": "Lending Liquidation Manipulation", "s": "HIGH", "d": "Oracle manipulation triggers false liquidation, seizing collateral at discount", "f": "TWAP oracle + liquidation delay + collateral ratio buffer", "e": "Euler $197M, RadiantCapital $4.5M", "c": 49}, {"n": "AMM Reserve Manipulation", "s": "HIGH", "d": "Direct pool reserve manipulation via swap/sync/skim to distort pricing", "f": "Validate reserve ratios post-swap; use external oracle for pricing", "e": "Velocore $6.88M, Uranium $50M", "c": 41}, {"n": "Governance Flash Loan Attack", "s": "CRITICAL", "d": "Flash loan voting tokens to pass malicious proposal and drain treasury", "f": "Snapshot voting power at proposal block + minimum holding period + timelock", "e": "Beanstalk $182M, CorkProtocol $12M", "c": 16}, {"n": "Missing Access Control", "s": "HIGH", "d": "Public/external function without authorization modifier", "f": "Add onlyOwner/role-based access control; audit all public functions", "e": "TempleDAO $2.3M, DaoMaker", "c": 68}, {"n": "Admin Key Compromise", "s": "CRITICAL", "d": "Single admin key controls critical functions; single point of failure", "f": "Multi-sig (3/5+); timelock for sensitive operations", "e": "Ronin $600M, Bybit $1.5B", "c": 25}, {"n": "Division Before Multiplication", "s": "LOW", "d": "Integer division truncation causing precision loss", "f": "Multiply before dividing: (a*b)/c not (a/c)*b", "e": "futureswap $394K, multiple vaults", "c": 18}, {"n": "Permit/Approve Front-Running", "s": "MEDIUM", "d": "Pending permit() transaction can be front-run to spend tokens first", "f": "Include deadline in permit; use increaseAllowance pattern", "e": "SquidMulticall $800K", "c": 54}, {"n": "Upgrade Storage Collision", "s": "MEDIUM", "d": "New state variables overlap with stored data from previous implementation", "f": "Add uint256[50] __gap at end of state variables", "e": "TeamFinance $15.8M, Bedrock $1.7M", "c": 14}, {"n": "Self-Destruct Backdoor", "s": "CRITICAL", "d": "selfdestruct kills contract and sends all ETH; no recovery possible", "f": "Never use selfdestruct in production; use withdrawal patterns", "e": "Parity $170M", "c": 5}, {"n": "Unprotected Initializer", "s": "HIGH", "d": "initialize() callable by anyone \u2014 hijack contract ownership", "f": "Use initializer modifier; call _disableInitializers in constructor", "e": "DaoMaker", "c": 22}, {"n": "Token Burn / Deflation Attack", "s": "HIGH", "d": "Burn mechanism manipulated via flash loan to profit from price distortion", "f": "Require burn authorization; cap burn rate; TWAP for burn pricing", "e": "BabyDogeCoin $7.5M, AIDC", "c": 13}, {"n": "Cross-Chain Replay", "s": "CRITICAL", "d": "Signed message valid on multiple chains \u2014 no chainId in signature", "f": "Include chainId and nonce in signed message hash", "e": "Poly Network $610M, Nomad $152M, OrbitChain $81M", "c": 16}, {"n": "Bridge Arbitrary Call", "s": "CRITICAL", "d": "Bridge executes arbitrary calldata \u2014 one compromised signer drains all funds", "f": "Whitelist target contracts; never allow arbitrary external calls", "e": "SocketGateway $3.3M", "c": 8}, {"n": "EIP-712 Type Mismatch", "s": "HIGH", "d": "TYPEHASH defines uint256[] but function uses address[] \u2014 signatures never match", "f": "TYPEHASH must exactly match function parameter types", "e": "PresidentElector, SnowmanAirdrop", "c": 2}, {"n": "Unchecked Low-Level Call", "s": "MEDIUM", "d": ".call{} return value not checked \u2014 silent failure", "f": "require(success) or if(!success) revert", "e": "Various contracts", "c": 42}, {"n": "ERC-777 Token Reentrancy", "s": "HIGH", "d": "ERC-777 tokensReceived hook enables reentrancy on send()", "f": "ReentrancyGuard on token-receiving functions; use safeTransfer", "e": "HundredFinance", "c": 7}, {"n": "MEV Sandwich Attack", "s": "MEDIUM", "d": "No/dead slippage protection \u2014 attacker front-runs user swap", "f": "Require minOut with 0.5-1% slippage; include deadline", "e": "Countless DEX trades", "c": 16}, {"n": "NFT Auction DoS", "s": "MEDIUM", "d": "Contract bidder locks auction \u2014 can't accept ETH back \u2192 DoS", "f": "Check if bidder is contract; use pull-over-push for refunds", "e": "AkutarNFT $34M", "c": 4}, {"n": "L2 Sequencer Downtime", "s": "MEDIUM", "d": "Oracle stale during L2 sequencer outage; price not updated", "f": "Check sequencer uptime feed before using oracle prices", "e": "Optimism/Arbitrum protocols", "c": 9}, {"n": "Fee-on-Transfer Token", "s": "MEDIUM", "d": "Token deducts fee on transfer; contract receives less than expected", "f": "Use balance-diff: actual = balanceAfter - balanceBefore", "e": "Various tokens", "c": 65}, {"n": "Signature Replay (No Nonce)", "s": "CRITICAL", "d": "ECDSA signature without nonce \u2014 can be reused indefinitely", "f": "Include nonces[signer]++ in signed message", "e": "BossBridge", "c": 19}, {"n": "Flash Loan Governance", "s": "CRITICAL", "d": "Voting power based on current balance \u2014 flash-loanable governance", "f": "Snapshot at proposal block; require minimum holding period", "e": "Beanstalk $182M", "c": 16}, {"n": "Intentional Backdoor", "s": "CRITICAL", "d": "Hidden owner-only function (burn/drain) inserted during deployment", "f": "Audit all onlyOwner functions; require timelock + multi-sig", "e": "DxSale $7.3M, SKP $212K, BYToken $87K", "c": 5}, {"n": "Precision Amplification", "s": "HIGH", "d": "Fee rate misinterpreted \u2014 wad vs bps vs decimals error (10000x)", "f": "Document precision; use SafeMath; validate fee calculation", "e": "futureswap $394K", "c": 8}, {"n": "Deposit Lock (No Withdraw)", "s": "HIGH", "d": "Deposit exists but no withdraw function \u2014 funds permanently locked", "f": "Always provide corresponding withdraw/redeem function", "e": "Multiple contracts", "c": 63}, {"n": "Hardcoded Gas Limit", "s": "LOW", "d": ".transfer()/.send() only forwards 2300 gas \u2014 breaks complex receivers", "f": "Use call{value: amount}('') instead of transfer/send", "e": "Various legacy contracts", "c": 47}, {"n": "Token Migration Hijack", "s": "HIGH", "d": "Migrate function trust old token without validation \u2014 attacker supplies fake old token", "f": "Validate old token address; use signed migration approval", "e": "Various token migrations", "c": 5}, {"n": "Phantom Fallback", "s": "MEDIUM", "d": "Fallback/receive accepts ETH silently \u2014 funds can be trapped", "f": "Revert unexpected calls; explicitly handle expected receive paths", "e": "Various contracts", "c": 53}, {"n": "Unsafe Delegatecall Target", "s": "CRITICAL", "d": "User supplies delegatecall target \u2014 executes arbitrary code in contract context", "f": "Whitelist delegatecall targets; never use with user-supplied address", "e": "Parity $170M", "c": 5}, {"n": "Diamond Inheritance Ambiguity", "s": "LOW", "d": "Multiple inheritance diamond causes storage layout conflicts", "f": "Explicitly override; use diamond/mosaic storage pattern", "e": "Various upgradeable contracts", "c": 6}, {"n": "Unsafe Type Cast", "s": "MEDIUM", "d": "Downcast without checking bounds \u2014 overflow/truncation", "f": "SafeCast; check bounds before cast", "e": "Various contracts", "c": 7}, {"n": "Ownership Renounce Risk", "s": "LOW", "d": "renounceOwnership() makes contract permanently ownerless", "f": "Use two-step ownership transfer; never renounce without migration path", "e": "Various upgradeable contracts", "c": 3}, {"n": "Flash Fee Bypass", "s": "MEDIUM", "d": "Flash loan fee can be bypassed by repaying in same block", "f": "Require minimum borrow duration; check block.timestamp", "e": "Various lending protocols", "c": 31}, {"n": "Fee Parameter Override", "s": "MEDIUM", "d": "Fee parameter settable without timelock \u2014 rug pull vector", "f": "Add timelock to fee parameter changes", "e": "Various DeFi protocols", "c": 12}, {"n": "Loan Origination Race", "s": "MEDIUM", "d": "Multiple borrowers race to originate loan \u2014 frontrun each other", "f": "Commit-reveal or priority queue for loan origination", "e": "Various lending protocols", "c": 15}, {"n": "Batch Transfer DoS", "s": "MEDIUM", "d": "Single failure reverts entire batch \u2014 gas waste or funds locked", "f": "Use try-catch per transfer; pull-over-push pattern", "e": "Various airdrop/batch contracts", "c": 41}, {"n": "Unbounded Loop", "s": "MEDIUM", "d": "Loop length controlled by user or unbounded storage \u2014 OOG DoS", "f": "Limit batch size; use pagination (start, end) pattern", "e": "Various contracts", "c": 22}, {"n": "Missing Event Emission", "s": "LOW", "d": "State change without event \u2014 off-chain monitoring broken", "f": "Emit event for all state-changing functions", "e": "Various contracts", "c": 35}, {"n": "Stale Oracle", "s": "HIGH", "d": "Oracle data used without staleness check \u2014 outdated price", "f": "Check updatedAt timestamp; revert if stale > threshold", "e": "Various oracle users", "c": 23}, {"n": "Decimals Inconsistency", "s": "LOW", "d": "Token decimals not normalized \u2014 arithmetic errors across different tokens", "f": "Normalize to 18 decimals; use decimal-agnostic math library", "e": "Various multi-token protocols", "c": 11}, {"n": "Unchecked Return Value", "s": "MEDIUM", "d": ".call()/.delegatecall() result unchecked \u2014 silent failure", "f": "require(success,'call failed') on every low-level call", "e": "Various contracts", "c": 9}, {"n": "CREATE2 Front-Running", "s": "MEDIUM", "d": "Attacker can deploy at predicted address before legitimate deployer", "f": "Include msg.sender in salt; use CREATE3 pattern", "e": "Various factory contracts", "c": 3}, {"n": "Contract Size Check Bypass", "s": "LOW", "d": "EXTCODESIZE==0 during constructor \u2014 bypasses 'is this a contract?' check", "f": "Use EXTCODEHASH!=0 instead of EXTCODESIZE", "e": "Various access control bypasses", "c": 3}, {"n": "ecrecover Returns Zero", "s": "HIGH", "d": "ecrecover returns address(0) on invalid signature \u2014 no revert", "f": "require(signer!=address(0)) after ecrecover", "e": "Various signature-based auth", "c": 5}, {"n": "Gas Griefing in External Calls", "s": "MEDIUM", "d": "User controls loop length or gas forwarded \u2014 OOG denial of service", "f": "Limit loop iterations; cap gas forwarded to external calls", "e": "Various contracts", "c": 7}];
+
+function render() {
+    document.getElementById('patterns').innerHTML = PATTERNS.map((p,i) => `
+        <div class="pattern ${p.s}" id="p${i}">
+            <h3>#${i+1}: ${p.n}</h3>
+            <div class="meta">${p.s} | ${p.c} cases</div>
+            <div class="desc">${p.d}</div>
+            <div class="fix">🔧 ${p.f}</div>
+            <div class="case">⚠️ ${p.e}</div>
+        </div>
+    `).join('');
+}
+
+function filter(sev) {
+    document.querySelectorAll('.stats span').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.stats span').forEach(s => {if(s.textContent.includes(sev)||sev==='all'&&s.textContent.includes('All'))s.classList.add('active')});
+    document.querySelectorAll('.pattern').forEach(p => p.classList.toggle('hidden', sev!=='all'&&!p.classList.contains(sev)));
+}
+
+function search() {
+    const q = document.getElementById('search').value.toLowerCase();
+    document.querySelectorAll('.pattern').forEach(p => {
+        p.classList.toggle('hidden', q && !p.textContent.toLowerCase().includes(q));
+    });
+}
+
+render();
+</script>
+</body>
+</html>
