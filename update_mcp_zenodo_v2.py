@@ -1,7 +1,8 @@
+import os
 """Update MCP Taxonomy Zenodo record to v2.0.0."""
 import json, requests
 
-TOKEN = "3dMUkBYgFJRhuDygUbA5CONFZAcYzdxcWAVZgOEwjQMzaliayQZF2vD0uTQc"
+TOKEN = os.environ.get("ZENODO_TOKEN", "")
 BASE = "https://zenodo.org/api"
 HEADERS = {"Authorization": f"Bearer {TOKEN}"}
 

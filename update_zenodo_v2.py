@@ -1,7 +1,8 @@
+import os
 """Update DEFIHACK-824 Zenodo record to v2.0.0 with expanded paper."""
 import json, time, requests
 
-TOKEN = "3dMUkBYgFJRhuDygUbA5CONFZAcYzdxcWAVZgOEwjQMzaliayQZF2vD0uTQc"
+TOKEN = os.environ.get("ZENODO_TOKEN", "")
 BASE = "https://zenodo.org/api"
 HEADERS = {"Authorization": f"Bearer {TOKEN}", "Content-Type": "application/json"}
 

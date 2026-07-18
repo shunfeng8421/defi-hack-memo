@@ -4,7 +4,7 @@ from urllib.request import urlretrieve
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-TOKEN = "3dMUkBYgFJRhuDygUbA5CONFZAcYzdxcWAVZgOEwjQMzaliayQZF2vD0uTQc"
+TOKEN = os.environ.get("ZENODO_TOKEN", "")
 BASE = "https://zenodo.org/api"
 HEADERS = {"Authorization": f"Bearer {TOKEN}", "Content-Type": "application/json"}
 DEP_ID = "21382533"

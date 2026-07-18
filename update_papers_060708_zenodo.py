@@ -2,7 +2,7 @@
 """Update Papers 06, 07, 08 on Zenodo with Chinese versions and expanded content."""
 import json, os, requests
 
-TOKEN = "3dMUkBYgFJRhuDygUbA5CONFZAcYzdxcWAVZgOEwjQMzaliayQZF2vD0uTQc"
+TOKEN = os.environ.get("ZENODO_TOKEN", "")
 BASE = "https://zenodo.org/api"
 HEADERS_JSON = {"Authorization": "Bearer %s" % TOKEN, "Content-Type": "application/json"}
 
