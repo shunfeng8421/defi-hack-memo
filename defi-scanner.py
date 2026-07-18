@@ -381,7 +381,8 @@ class DeFiScanner:
                 lines.append(f"      Fix: {f['fix']}")
         
         lines.append(f"\n{'=' * 60}")
-        lines.append(f"Scanned with 26 detection rules (covering 26/50 DeFi patterns)")
+        lines.append(f"Scanned with 50 detection rules (covering 50 DeFi patterns)")
+        lines.append(f"  Flash Loan Suite: 8 patterns (Spot/TWAP/Governance/Lend/Burn/Bridge/Precision/Backdoor)")
         return '\n'.join(lines)
 
 
