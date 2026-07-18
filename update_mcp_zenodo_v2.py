@@ -30,7 +30,7 @@ print(f"Uploaded PDF ({len(pdf_data)/1024:.1f} KB)")
 # 4. Metadata
 meta = {
     "title": "An Empirical Study of Model Context Protocol (MCP) Server Security: Taxonomy, Large-Scale Scanning, and Defense Framework",
-    "creators": [{"name": "Shiqiang Chen", "affiliation": "Institute of Information Engineering, Chinese Academy of Sciences"}],
+    "creators": [{"name": "Shiqiang Chen", "affiliation": "Independent Researcher"}],
     "description": (
         "Expanded to a 10-page full academic paper. Six attack surfaces, large-scale scan of 620 MCP packages "
         "using 46 custom Semgrep rules, five-level defense maturity framework, and 91-node MCP security knowledge graph. "

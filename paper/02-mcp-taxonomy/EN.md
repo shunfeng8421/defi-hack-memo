@@ -1,7 +1,7 @@
 # An Empirical Study of Model Context Protocol (MCP) Server Security: Taxonomy, Large-Scale Scanning, and Defense Framework
 
 **Shiqiang Chen**  
-*Institute of Information Engineering, Chinese Academy of Sciences*  
+*Independent Researcher*  
 *Correspondence: shunfeng8421@163.com*
 
 ---

@@ -1,7 +1,6 @@
 # A Comprehensive Taxonomy of DeFi Attack Patterns: 50 Vectors from 824 Incidents (2017–2026)
 
 **Shiqiang Chen**
-*Institute of Information Engineering, Chinese Academy of Sciences*
 *Corresponding author: shunfeng8421@163.com*
 
 ---

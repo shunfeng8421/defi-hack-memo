@@ -1,7 +1,7 @@
 # Evolving Threats, Shifting Patterns: A Multi-Source Verified Dataset and Statistical Analysis of 823 DeFi Security Incidents (2017–2026)
 
 **Shiqiang Chen**  
-*Institute of Information Engineering, Chinese Academy of Sciences*  
+*Independent Researcher*  
 *Correspondence: shunfeng8421@163.com*
 
 ---

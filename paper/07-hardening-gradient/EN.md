@@ -1,7 +1,6 @@
 # The Hardening Gradient: How DeFi Security Inequality Is Reshaping the Attack Surface (2017–2026)
 
 **Shiqiang Chen**
-*Institute of Information Engineering, Chinese Academy of Sciences*
 *July 2026*
 
 ---

@@ -1,7 +1,6 @@
 # When Type Hashes Lie: EIP-712 Implementation Errors in DeFi — Evidence from Competitive Audits and Ecosystem-Wide Implications
 
 **Shiqiang Chen**
-*Institute of Information Engineering, Chinese Academy of Sciences*
 *July 2026*
 
 ---

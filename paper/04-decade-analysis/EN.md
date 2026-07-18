@@ -1,7 +1,7 @@
 # A Decade of DeFi Attacks: Pattern Evolution, Risk Dynamics, and the Fragmentation of the Attack Surface (2017–2026)
 
 **Shiqiang Chen**
-*Institute of Information Engineering, Chinese Academy of Sciences*
+*Independent Researcher*
 *Correspondence: shunfeng8421@163.com*
 
 ---

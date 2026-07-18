@@ -61,7 +61,7 @@ print(f"    Uploaded: {len(pdf_data)/1024:.1f} KB")
 print("\n[4] Updating metadata...")
 meta = {
     "title": "Prompt Injection is Not an AI Problem: Why MCP Tool Hardening Matters",
-    "creators": [{"name": "Shiqiang Chen", "affiliation": "Institute of Information Engineering, Chinese Academy of Sciences"}],
+    "creators": [{"name": "Shiqiang Chen", "affiliation": "Independent Researcher"}],
     "description": (
         "Expanded from 3-page experiment report to a 9-page full academic paper. "
         "Includes comprehensive experimental design with 6 injection techniques across 3 defense configurations, "

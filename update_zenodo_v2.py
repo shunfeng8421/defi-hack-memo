@@ -65,7 +65,7 @@ print("\n5. Updating metadata...")
 metadata = {
     "title": "Evolving Threats, Shifting Patterns: A Multi-Source Verified Dataset and Statistical Analysis of 823 DeFi Security Incidents (2017-2026)",
     "creators": [
-        {"name": "Shiqiang Chen", "affiliation": "Institute of Information Engineering, Chinese Academy of Sciences"}
+        {"name": "Shiqiang Chen", "affiliation": "Independent Researcher"}
     ],
     "description": (
         "Decentralized Finance (DeFi) has suffered over $5 billion in cumulative losses from security incidents, "

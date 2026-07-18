@@ -1,6 +1,6 @@
 # Peer Review Submission Strategy — Papers 04, 06, 07
 
-*Prepared: 2026-07-17 | Author: Shiqiang Chen (IIE, CAS)*
+*Prepared: 2026-07-17 | Author: Shiqiang Chen (Independent Researcher)*
 
 ---
 
@@ -93,7 +93,7 @@ MIT license.
 
 Sincerely,
 Shiqiang Chen
-Institute of Information Engineering, Chinese Academy of Sciences
+Independent Researcher
 ```
 
 ### 3.2 Paper 06 — Taxonomy (ACM Computing Surveys)

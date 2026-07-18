@@ -157,7 +157,7 @@ class PaperPDF(FPDF):
         self.ln(8)
         self.set_font(self.normal_font, "", 9)
         self.set_text_color(120,120,120)
-        self.cell(self.pw, 6, "Institute of Information Engineering, Chinese Academy of Sciences", align="C")
+        self.cell(self.pw, 6, "Independent Researcher", align="C")
         self.ln(6)
         self.cell(self.pw, 6, "shunfeng8421@163.com  |  July 2026  |  cs.CR", align="C")
         self.ln(10)

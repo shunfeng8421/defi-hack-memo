@@ -1,7 +1,6 @@
 # When Agents Trade: A Comprehensive Taxonomy of the AI Agent × DeFi Attack Surface
 
 **Shiqiang Chen**
-*Institute of Information Engineering, Chinese Academy of Sciences*
 *Correspondence: shunfeng8421@163.com*
 
 ---

@@ -3,7 +3,7 @@
 **Assessor**: Independent Review
 **Date**: July 17, 2026
 **Classification**: Internal Assessment — Not for Publication
-**Subject**: Eight-paper research program by Shiqiang Chen (Institute of Information Engineering, Chinese Academy of Sciences)
+**Subject**: Eight-paper research program by Shiqiang Chen (Independent Researcher)
 
 ---
 

@@ -1,7 +1,6 @@
 # Flash Loan Attacks: A Decade of Evolution, Defense, and the Rise of Post-Oracle Exploits (2017–2026)
 
 **Shiqiang Chen**
-*Institute of Information Engineering, Chinese Academy of Sciences*
 *Correspondence: shunfeng8421@163.com*
 
 ---
