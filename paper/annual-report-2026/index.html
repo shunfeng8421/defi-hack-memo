@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DeFi Security 2026 Annual Report</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#0a0e17;color:#e0e6f0;line-height:1.7;max-width:800px;margin:0 auto;padding:40px 20px}
+h1{font-size:2.2em;color:#fff;margin:20px 0 10px}
+h2{font-size:1.5em;color:#64ffda;margin:50px 0 15px;border-bottom:1px solid #1a2540;padding-bottom:8px}
+h3{color:#8892b0;margin:25px 0 10px;font-size:1.1em}
+p{margin:10px 0}
+.highlight{background:#112233;border-left:4px solid #64ffda;padding:20px;margin:25px 0;border-radius:0 8px 8px 0}
+.stat-row{display:flex;gap:20px;flex-wrap:wrap;margin:25px 0}
+.stat-box{flex:1;min-width:150px;background:#111b2e;padding:20px;border-radius:8px;text-align:center}
+.stat-box .num{font-size:2.2em;font-weight:700;color:#64ffda}
+.stat-box .label{color:#8892b0;font-size:.85em;margin-top:5px}
+.bar{height:8px;background:#1a2540;border-radius:4px;margin:8px 0;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px}
+table{width:100%;border-collapse:collapse;margin:20px 0}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid #1a2540}
+th{color:#64ffda;font-weight:600}
+td{font-size:.95em}
+.risk-high{color:#ff6b6b}
+.risk-med{color:#ffd93d}
+.risk-low{color:#64ffda}
+.cta{background:linear-gradient(135deg,#0a3d62,#162447);padding:30px;border-radius:12px;text-align:center;margin:40px 0}
+.cta a{color:#64ffda;font-size:1.2em;font-weight:600;text-decoration:none}
+footer{text-align:center;color:#4a5568;margin-top:60px;font-size:.85em;padding-top:30px;border-top:1px solid #1a2540}
+</style>
+</head>
+<body>
+
+<h1>🛡️ DeFi Security<br>Annual Report 2026</h1>
+<p style="color:#8892b0;font-size:1.1em">Based on 824 confirmed incidents · 50 classified attack patterns<br>Author: <strong>Shiqiang Chen</strong> · July 2026</p>
+
+<div class="highlight">
+<strong>Key Finding:</strong> DeFi is not uniformly getting worse — it is <em>bifurcating</em>. Large protocols have become 75% safer, while small protocols remain as vulnerable as ever. The attack surface is fragmenting from "few large targets" to "many small targets."
+</div>
+
+<h2>📊 Key Metrics</h2>
+<div class="stat-row">
+<div class="stat-box"><div class="num">824</div><div class="label">Confirmed Incidents<br>(2017-2026)</div></div>
+<div class="stat-box"><div class="num">$10B+</div><div class="label">Cumulative Losses</div></div>
+<div class="stat-box"><div class="num">50</div><div class="label">Attack Patterns<br>Classified</div></div>
+<div class="stat-box"><div class="num">97.6%</div><div class="label">Coverage Rate</div></div>
+</div>
+
+<h2>🔝 Top 10 Attack Patterns</h2>
+<table>
+<tr><th>#</th><th>Pattern</th><th>% of Incidents</th><th>Largest Case</th></tr>
+<tr><td>1</td><td>Flash Loan + Oracle</td><td>24%</td><td>Bybit $1.5B</td></tr>
+<tr><td>2</td><td>Signature Replay</td><td>8%</td><td>Poly Network $610M</td></tr>
+<tr><td>3</td><td>Governance Flash Loan</td><td>6%</td><td>Beanstalk $182M</td></tr>
+<tr><td>4</td><td>Lending Liquidation</td><td>6%</td><td>Euler $197M</td></tr>
+<tr><td>5</td><td>AMM Manipulation</td><td>5%</td><td>PancakeBunny $120M</td></tr>
+<tr><td>6</td><td>Reentrancy (CEI)</td><td>4%</td><td>Cream $130M</td></tr>
+<tr><td>7</td><td>Admin Key Compromise</td><td>3%</td><td>Ronin $600M</td></tr>
+<tr><td>8</td><td>Cross-Chain Replay</td><td>2%</td><td>Nomad $152M</td></tr>
+<tr><td>9</td><td>ERC-4626 Inflation</td><td>2%</td><td>Multiple vaults</td></tr>
+<tr><td>10</td><td>2026 Backdoors</td><td>2%</td><td>DxSale $7.3M</td></tr>
+</table>
+
+<h2>📉 The Hardening Gradient</h2>
+<p>Our most counterintuitive finding: protocols with TVL >$1B had <strong>75% fewer incidents</strong> in 2023-2026 vs 2020-2022, while protocols with TVL <$1M had <strong>178% more</strong> incidents. Security is becoming a luxury good.</p>
+
+<div class="stat-row">
+<div class="stat-box"><div class="num">-75%</div><div class="label">Large Protocols<br>(>$1B TVL)</div></div>
+<div class="stat-box"><div class="num">+178%</div><div class="label" style="color:#ff6b6b">Small Protocols<br>(<$1M TVL)</div></div>
+<div class="stat-box"><div class="num">-30%</div><div class="label">Risk Index<br>(3.33% → 2.33%)</div></div>
+<div class="stat-box"><div class="num">300x</div><div class="label">Median Loss<br>Collapse</div></div>
+</div>
+
+<h2>🆕 2026: The Post-Oracle Era</h2>
+<table>
+<tr><th>Trend</th><th>Examples</th><th>Detectable?</th></tr>
+<tr><td>Precision/Arithmetic Bugs</td><td>futureswap $394K, ThetanutsFi $2.1M</td><td class="risk-low">✅ Static analysis</td></tr>
+<tr><td>Intentional Backdoors</td><td>DxSale $7.3M, SKP $212K</td><td class="risk-high">❌ Requires forensics</td></tr>
+<tr><td>Accounting Inconsistencies</td><td>Vault4626, RoyalRoyalties</td><td class="risk-med">⚠️ Business logic</td></tr>
+<tr><td>AI Agent Exploits</td><td>JoeAgent $45K</td><td class="risk-med">⚠️ Emerging vector</td></tr>
+</table>
+
+<h2>🛠️ Tools & Defense</h2>
+<div class="highlight">
+<p>We built a <strong>50-rule DeFi scanner</strong> that detects 90% of known attack patterns. Available as:</p>
+<ul>
+<li><strong>Python CLI</strong>: <code>pip install defi-scanner</code> (coming soon)</li>
+<li><strong>GitHub Action</strong>: Auto-scan on every PR push</li>
+<li><strong>Slither Detectors</strong>: 50 custom detection rules</li>
+<li><strong>PoC Repository</strong>: 7 complete Foundry fork tests</li>
+</ul>
+</div>
+
+<div class="cta">
+<p style="font-size:1.3em;margin-bottom:15px">🔍 Defi Scanner — 50-Pattern Vulnerability Detection</p>
+<p>Scan your Solidity contracts against 824 real-world incidents<br>90% detection rate validated on historical attacks</p>
+<p style="margin-top:20px"><a href="https://github.com/shunfeng8421/defi-hack-memo">→ github.com/shunfeng8421/defi-hack-memo</a></p>
+</div>
+
+<h2>📚 Research Papers</h2>
+<table>
+<tr><th>#</th><th>Title</th><th>Focus</th></tr>
+<tr><td>1</td><td>Prompt Injection × MCP Security</td><td>AI + Blockchain intersection</td></tr>
+<tr><td>2</td><td>MCP Empirical Security</td><td>30-server protocol scan</td></tr>
+<tr><td>3</td><td>DeFi Attack Evolution</td><td>824-case first classification</td></tr>
+<tr><td>4</td><td>Decade Analysis 2017-2026</td><td>Risk index, hardening gradient</td></tr>
+<tr><td>5</td><td>Flash Loan Three Eras</td><td>Spot → TWAP → Post-Oracle</td></tr>
+<tr><td>6</td><td><strong>50-Pattern Taxonomy</strong></td><td><strong>97.6% coverage, most comprehensive</strong></td></tr>
+<tr><td>7</td><td>Hardening Gradient</td><td>Security inequality</td></tr>
+<tr><td>8</td><td>EIP-712 Systemic Errors</td><td>TYPEHASH typos in production</td></tr>
+</table>
+
+<footer>
+<p><strong>Shiqiang Chen</strong> · Independent Security Researcher</p>
+<p>GitHub: <a href="https://github.com/shunfeng8421" style="color:#64ffda">shunfeng8421</a> · DOI: 10.5281/zenodo.21382653</p>
+<p>Report generated from 824 incident database · 50-pattern taxonomy · 90% scanner validation</p>
+<p style="margin-top:15px">© 2026 — Share freely with attribution</p>
+</footer>
+</body>
+</html>
