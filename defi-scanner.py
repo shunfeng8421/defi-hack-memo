@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """
-DeFi 50-Pattern Automated Scanner
-Scans Solidity code against all 50 DeFi attack patterns.
+DeFi 50 + Solana 8 = 58-Pattern Automated Scanner
+Scans Solidity (.sol) + Rust/Anchor (.rs) code against all 58 attack patterns.
 Author: Shiqiang Chen — July 2026
 """
 import os, re, json, sys
 from collections import defaultdict
 
 # ============================================================
-# 50 DeFi Attack Patterns — Detection Rules
+# 50 DeFi + 8 Solana Attack Patterns
 # ============================================================
 PATTERNS = {
     # === Flash Loan Based ===
@@ -290,6 +290,15 @@ PATTERNS = {
     48: {"name":"Loan Origination Race","severity":"HIGH","regex":[r'borrow.*price|loan.*price.*before'],"keyword":["borrow","price","collateral","checkBefore"],"description":"Price checked before collateral transferred","fix":"Update collateral first, then check price"},
     49: {"name":"Batch Transfer DoS","severity":"MEDIUM","regex":[r'for.*transfer|batch.*transfer.*for'],"keyword":["batch","for(","transfer(","loop"],"description":"One failing transfer reverts entire batch","fix":"Use try-catch or pull-over-push pattern"},
     50: {"name":"Unbounded Loop","severity":"MEDIUM","regex":[r'for.*\.length(?!.*max)'],"keyword":["for(",".length","array","loop"],"description":"Loop without max iterations can exceed gas limit","fix":"Add max iterations or paginated processing"},
+    # === Solana/Anchor (51-58) ===
+    51: {"name":"Solana Missing Signer","severity":"CRITICAL","regex":[r'pub fn'],"keyword":["AccountInfo","signer"],"description":"Solana instruction without signer check — anyone can call","fix":"Add #[account(signer)] attribute"},
+    52: {"name":"Solana PDA Collision","severity":"HIGH","regex":[r'find_program_address'],"keyword":["PDA","seeds","bump"],"description":"PDA seeds without unique identifier — collision risk","fix":"Include user pubkey + unique nonce in seeds"},
+    53: {"name":"Solana CPI Missing Signer Seeds","severity":"HIGH","regex":[r'CpiContext::new'],"keyword":["CpiContext","invoke_signed","signer_seeds"],"description":"CPI call without proper signer seeds","fix":"Pass signer_seeds for PDA authority"},
+    54: {"name":"Solana Unchecked Account Data","severity":"HIGH","regex":[r'try_borrow_mut_data'],"keyword":["AccountInfo","deserialize"],"description":"Account data used without Anchor validation","fix":"Use #[account] macro for type safety"},
+    55: {"name":"Solana Slot as Time Source","severity":"MEDIUM","regex":[r'.slot'],"keyword":["Clock::get","slot","unix_timestamp"],"description":"Using slot as time source — non-deterministic","fix":"Use Clock::get()?.unix_timestamp instead of .slot"},
+    56: {"name":"Solana HasOne Missing","severity":"HIGH","regex":[r'#\[derive\(Accounts\)'],"keyword":["has_one","belongs_to","owner"],"description":"Account struct without ownership constraint","fix":"Add #[account(has_one = owner)]"},
+    57: {"name":"Solana Unchecked Arithmetic","severity":"MEDIUM","regex":[r'\+=|\-='],"keyword":["checked_add","saturating_add","overflow"],"description":"No overflow protection on arithmetic","fix":"Use checked_add/checked_sub or saturating variants"},
+    58: {"name":"Solana Token CPI Unvalidated","severity":"HIGH","regex":[r'token::transfer|spl_token'],"keyword":["token::transfer","spl_token","validate"],"description":"Token CPI without prior account validation","fix":"Verify token account ownership + mint before CPI"},
 }
 
 
@@ -354,7 +363,7 @@ class DeFiScanner:
     def scan_directory(self):
         for dirpath, _, filenames in os.walk(self.target_dir):
             for fn in filenames:
-                if fn.endswith('.sol'):
+                if fn.endswith('.sol') or fn.endswith('.rs'):
                     self.scan_file(os.path.join(dirpath, fn))
 
     def generate_report(self):
