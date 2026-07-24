@@ -44,7 +44,7 @@ if __name__ == "__main__":
         sys.exit(1)
     
     name = sys.argv[1]
-    passed = [int(v) for v in sys.argv[2].split(",")] if len(sys.argv) > 2 else []
+    passed = [int(v) for v in sys.argv[2].split(",") if v.strip()] if len(sys.argv) > 2 and sys.argv[2].strip() else []
     check(name, passed)
 
 # Self-test
