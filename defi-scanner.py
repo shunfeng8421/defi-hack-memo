@@ -109,10 +109,10 @@ PATTERNS = {
     12: {
         "name": "Missing Access Control",
         "severity": "HIGH",
-        "regex": [r'function\s+\w+.*public.*transfer', r'function\s+\w+.*public.*mint'],
-        "keyword": ["onlyOwner", "require(msg.sender", "access", "role"],
-        "description": "Sensitive function lacks access control modifier",
-        "fix": "Add onlyOwner or role-based access control"
+        "regex": [r'function\s+\w+\s*\([^)]*\)\s*(?:public|external)(?!.*\bonly\w+\b)(?!.*\brequire\b)(?!.*\baccess\b)(?!.*\brole\b)', r'function\s+\w+.*set\w+\s*\(.*\)\s*(?:public|external)(?!.*onlyOwner)'],
+        "keyword": ["function", "public", "!onlyOwner", "!onlyAdmin", "!require(msg.sender", "!accessControl"],
+        "description": "Public/external function without any access control — likely unintended",
+        "fix": "Add onlyOwner, role-based, or ACL access control"
     },
     13: {
         "name": "Admin Key / Privilege Escalation",
@@ -171,9 +171,9 @@ PATTERNS = {
     19: {
         "name": "Cross-Chain Replay",
         "severity": "CRITICAL",
-        "regex": [r'ECDSA\.recover.*!chainid|recover.*!chainId'],
-        "keyword": ["bridge", "cross", "chain", "layerzero", "wormhole"],
-        "description": "Signed message valid on all chains — replayable",
+        "regex": [r'keccak256\(.*(?!.*chainId)', r'ECDSA\.recover.*(?!.*chainId)'],
+        "keyword": ["keccak256", "!chainId", "!block.chainid"],
+        "description": "Crypto hash/signature without chainId — replayable across chains. False on legit bridges.",
         "fix": "Include chainId and nonce in signed message"
     },
     20: {
@@ -274,9 +274,9 @@ PATTERNS = {
     32: {"name":"TWAP Window Too Short","severity":"MEDIUM","regex":[r'consult\(.*0\)',r'TWAP.*10.*minute'],"keyword":["TWAP","consult","cumulativePrice"],"description":"Short TWAP window still manipulable","fix":"Use minimum 30-minute TWAP window"},
     33: {"name":"Stale Oracle","severity":"HIGH","regex":[r'latestRoundData\(\)(?!.*updatedAt)'],"keyword":["latestRoundData","updatedAt","staleness","sequencer"],"description":"Oracle data used without staleness check","fix":"Check updatedAt timestamp; revert if stale"},
     34: {"name":"Flash Loan Governance Attack","severity":"CRITICAL","regex":[r'getVotes',r'governance.*flash'],"keyword":["governance","propose","vote","quorum","snapshot"],"description":"Voting power based on current balance (manipulable via flash loan)","fix":"Snapshot voting power at block of proposal creation"},
-    35: {"name":"Intentional Backdoor","severity":"CRITICAL","regex":[r'onlyOwner.*(?:burn|destroy|drain|withdrawAll)'],"keyword":["ownerBurn"],"description":"Owner burn/destroy on same line — potential backdoor","fix":"Require timelock + multi-sig for critical owner functions"},
+    35: {"name":"Intentional Backdoor","severity":"CRITICAL","regex":[r'onlyOwner.*(?:burn|destroy|drain|withdrawAll|selfdestruct)'],"keyword":["onlyOwner","burn","selfdestruct"],"description":"Owner can burn/destroy/selfdestruct — potential backdoor","fix":"Require timelock + multi-sig for critical owner functions"},
     36: {"name":"Precision Amplification via Fee/Decimal Error","severity":"HIGH","regex":[r'fee.*\\*.*10000|fee.*bps.*1e18'],"keyword":["feeRateWad","basisPoints","feePrecision","dpScale"],"description":"Fee rate misinterpreted — wad vs basis points vs decimals","fix":"Document and validate fee precision; use SafeMath"},
-    37: {"name":"Deposit Lock","severity":"HIGH","regex":[],"keyword":["deposit","!withdraw","!redeem","!claim"],"description":"Deposit without any withdraw/redeem/claim path","fix":"Always provide a withdraw function"},
+    37: {"name":"Deposit Lock","severity":"HIGH","regex":[r'(?i)function\s+deposit',r'(?i)(?:(?!function\s+(withdraw|redeem|claim|exit)).)*'],"keyword":["function deposit","!function withdraw","!function redeem"],"description":"Deposit function exists but no withdraw/redeem/claim in entire file","fix":"Always provide a withdraw function"},
     38: {"name":"Hardcoded Gas Limit","severity":"LOW","regex":[r'\.transfer\(|\.send\('],"keyword":[".transfer(",".send(","2300"],"description":"transfer() only forwards 2300 gas — breaks complex receivers","fix":"Use call{value: amount}(\"\") instead of transfer/send"},
     39: {"name":"Token Migration Hijack","severity":"HIGH","regex":[r'migrate.*burn\(|migrate.*transfer\(.*msg'],"keyword":["migrate","migration","oldToken","newToken"],"description":"Token migration can be hijacked if old token not validated","fix":"Validate old token address is trusted"},
     40: {"name":"Phantom Fallback","severity":"MEDIUM","regex":[r'fallback\(\).*payable.*\{',r'fallback.*external'],"keyword":["fallback","receive","payable"],"description":"Fallback accepts any call silently — can lock funds","fix":"Revert or explicitly handle expected calls only"},
