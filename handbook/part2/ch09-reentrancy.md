@@ -1,192 +1,238 @@
 # Chapter 9: Reentrancy & Callbacks
 
-*"The most famous bug in blockchain history is 20 lines of code that anyone can write and nobody can fix after deployment."*
+*"The most famous bug in blockchain history was not a cryptographic flaw. It was a function calling a function calling the same function."*
 
 ---
 
 ## The DAO: June 17, 2016
 
-At 3:34 AM UTC, an unknown attacker began draining ETH from The DAO — a decentralized venture fund holding 12.7 million ETH, approximately $150 million at the time. Over the next several hours, 3.6 million ETH flowed into a child DAO controlled by the attacker.
+At 03:34 UTC on June 17, 2016, an anonymous address began interacting with The DAO—a decentralized venture fund that had raised 12.7 million ETH in the largest crowdfunding campaign in history. The interactions were not typical investments. They were withdrawals. Over and over again.
 
-The Ethereum community watched in real time as the largest crowdfunded project in history was systematically emptied. There was nothing anyone could do. The code was immutable. The attack was a single function, called recursively, exploiting a one-line ordering mistake.
+The DAO's smart contract contained a `splitDAO()` function that allowed investors to withdraw their funds and create a child DAO. The function followed this sequence:
 
-The DAO hack was not the first reentrancy attack — the concept predates Ethereum. But it was the attack that taught an entire generation of developers a lesson they would never forget: **never make an external call before updating your state.**
+1. Check the user's balance
+2. Transfer ETH to the user
+3. Update the user's balance to zero
 
-The Ethereum community's response was the most controversial decision in blockchain history: a hard fork to reverse the theft. The chain that refused to fork — where the attacker kept the money — became Ethereum Classic. The chain that forked became the Ethereum we know today.
+Step 2 made an external call to the user's address. If the user was a contract, the contract's `receive()` function was triggered. And inside that `receive()` function, the attacker called `splitDAO()` again.
+
+Step 3—setting the balance to zero—had not executed yet from the first call. The second `splitDAO()` saw the original balance. It transferred ETH again. The attacker's `receive()` called `splitDAO()` again. And again. And again.
+
+By 04:00, 3.6 million ETH—approximately $50 million at the time, $150 million at peak—had been drained into a child DAO controlled by the attacker. The Ethereum community watched in real time as the entire premise of decentralized autonomous organizations was systematically dismantled by a recursive function call.
+
+### The Fork
+
+The Ethereum community faced an impossible choice. Allow the theft to stand, violating the implicit social contract that code is not law when code is clearly broken. Or hard fork the chain to reverse the theft, violating the explicit promise that blockchain transactions are immutable.
+
+After weeks of debate, the community chose to fork. The chain that rolled back the theft became Ethereum. The chain that refused—where the attacker kept the money under the philosophy of "code is law"—became Ethereum Classic.
+
+Both chains exist today. Both philosophies have their adherents. The DAO hack is not just a technical vulnerability. It is the founding trauma of the entire smart contract security discipline. Every Solidity developer who has written `balances[msg.sender] = 0` before `msg.sender.call{value: amount}("")` is following a lesson taught by a recursive function call on June 17, 2016.
 
 ---
 
-## What Is Reentrancy?
+## The Mechanism of Reentrancy
 
-Reentrancy occurs when a contract makes an external call to another contract, and that contract calls back into the original contract before the original contract has finished updating its state.
+Reentrancy occurs when a contract makes an external call before updating its own state, and the external contract calls back into the original contract before the state update completes.
 
-The simplest example:
+The vulnerable pattern:
 
 ```solidity
-contract VulnerableVault {
-    mapping(address => uint256) public balances;
+function withdraw() external {
+    uint256 amount = balances[msg.sender];     // Step 1: Read state
     
-    function withdraw() external {
-        uint256 amount = balances[msg.sender];
-        
-        // ❌ External call BEFORE state update
-        (bool success,) = msg.sender.call{value: amount}("");
-        require(success);
-        
-        // State updated AFTER external call — too late!
-        balances[msg.sender] = 0;
-    }
+    (bool ok,) = msg.sender.call{value: amount}("");  // Step 2: External call
+    require(ok);
+    
+    balances[msg.sender] = 0;                  // Step 3: Update state
+    // ⬆ This hasn't executed when the reentrant call arrives
 }
 ```
 
 The attacker's contract:
 
 ```solidity
-contract Attacker {
-    VulnerableVault public vault;
-    
-    function attack() external payable {
-        vault.deposit{value: 1 ether}();
-        vault.withdraw();  // Triggers reentrancy
-    }
-    
-    receive() external payable {
-        if (address(vault).balance >= 1 ether) {
-            vault.withdraw();  // Re-enter before balance is set to 0!
-        }
+receive() external payable {
+    if (address(vault).balance >= 1 ether) {
+        vault.withdraw();  // Re-enter before Step 3 executes
     }
 }
 ```
 
-Execution trace:
+The execution trace:
 
-1. `attacker.attack()` → deposits 1 ETH → calls `vault.withdraw()`
-2. `vault.withdraw()` reads `balances[attacker] = 1 ETH` → sends 1 ETH to attacker
-3. `attacker.receive()` fires → checks vault still has funds → calls `vault.withdraw()` AGAIN
-4. `vault.withdraw()` reads `balances[attacker] = 1 ETH` (still hasn't been updated!) → sends another 1 ETH
-5. Repeat until the vault is empty
-6. Finally, all recursive calls unwind, `balances[attacker] = 0` is set, but the vault is already drained
+```
+vault.withdraw()                    [balances = 10 ETH]
+  → msg.sender.call{value: 10}     [sends 10 ETH]
+    → attacker.receive() fires
+      → vault.withdraw()            [balances STILL = 10 ETH]
+        → msg.sender.call{value: 10} [sends another 10 ETH]
+          → attacker.receive() fires
+            → vault.withdraw()       [balances STILL = 10 ETH]
+              → ... (continues until vault is empty)
+        
+        balances[attacker] = 0       [finally executes, but too late]
+      balances[attacker] = 0
+    balances[attacker] = 0
+```
+
+Each recursive call sees the original balance because the update (`balances[msg.sender] = 0`) has not executed for any of the prior calls yet. The stack unwinds from the deepest recursion first, setting the balance to zero for each level—but by then, the funds have already been transferred multiple times.
 
 ---
 
 ## The CEI Pattern: Checks-Effects-Interactions
 
-The universal defense against reentrancy:
+The universal defense against reentrancy is the CEI pattern:
 
 ```solidity
 function withdraw() external {
     uint256 amount = balances[msg.sender];
     
-    // 1. CHECKS: Verify conditions
+    // 1. CHECKS: Verify all preconditions
     require(amount > 0, "No balance");
+    require(amount <= address(this).balance, "Insufficient vault");
     
-    // 2. EFFECTS: Update state BEFORE external calls
+    // 2. EFFECTS: Update all state BEFORE any external call
     balances[msg.sender] = 0;
+    totalDeposits -= amount;
     
     // 3. INTERACTIONS: Make external calls LAST
-    (bool success,) = msg.sender.call{value: amount}("");
-    require(success);
+    (bool ok,) = msg.sender.call{value: amount}("");
+    require(ok);
 }
 ```
 
-If the attacker's `receive()` re-enters `withdraw()` after step 2, `balances[msg.sender]` is already 0. The re-entrant call hits the `require(amount > 0)` check and reverts. The attack fails.
+If the attacker's `receive()` re-enters `withdraw()` after Step 2, `balances[msg.sender]` is already zero. The re-entrant call fails at the `require(amount > 0)` check. The attack is neutralized before it begins.
+
+CEI is not a suggestion. It is a law. Every Solidity developer who violates it—regardless of how "safe" the specific violation appears—is inviting The DAO.
 
 ---
 
 ## Modern Reentrancy: ERC-777 Callbacks
 
-The classic reentrancy pattern is well-known and well-defended. Modern reentrancy attacks exploit callbacks that developers don't know exist.
+The classic reentrancy pattern is well-known and well-defended. Modern reentrancy attacks exploit callbacks that developers do not realize exist.
 
-ERC-777 tokens call a `tokensReceived()` callback on the recipient during every transfer. If your protocol transfers ERC-777 tokens and then updates state, the callback can re-enter your protocol.
+ERC-777 is a token standard that improves on ERC-20 by adding a `tokensReceived()` callback hook. Every transfer of an ERC-777 token calls `tokensReceived()` on the recipient. If the recipient is a smart contract, the contract's code executes during the transfer—before the transfer function has returned.
 
 ```solidity
 // ❌ VULNERABLE: ERC-777 transfer triggers callback
 function deposit(uint256 amount) external {
-    token.transferFrom(msg.sender, address(this), amount);
-    // token.transferFrom() → tokensReceived() callback on THIS contract
+    erc777Token.send(msg.sender, address(this), amount, "");
+    // send() → tokensReceived() callback on THIS contract
     // Callback can re-enter deposit() before balance is updated!
     balances[msg.sender] += amount;
 }
 ```
 
-The attack works exactly like the classic pattern, but the entry point is hidden inside a token standard that looks innocent.
+The attack is identical to the classic pattern, but the entry point is hidden inside a token standard. The developer looked at `deposit()` and saw no external call. They were wrong—the call is inside the token's `send()` function.
+
+ERC-1155 has a similar mechanism. Both standards were designed to improve user experience. Both inadvertently created reentrancy vectors that developers who learned "make external calls last" did not realize they were making.
 
 ### The Fix
 
 ```solidity
+// ✅ SAFE: Balances updated before transfer
 function deposit(uint256 amount) external {
-    uint256 before = token.balanceOf(address(this));
-    token.transferFrom(msg.sender, address(this), amount);  // May callback
-    uint256 afterBalance = token.balanceOf(address(this));
-    balances[msg.sender] += (afterBalance - before);  // Uses actual received
+    balances[msg.sender] += amount;  // Effect first
+    erc777Token.send(msg.sender, address(this), amount, "");  // Interaction last
+    // If callback re-enters, balances[msg.sender] already updated
 }
 ```
 
-By using balance deltas instead of the stated amount, the attack is neutralized. Even if the callback re-enters, the balance difference reflects reality.
+Or use balance deltas:
+
+```solidity
+function deposit(uint256 amount) external {
+    uint256 before = erc777Token.balanceOf(address(this));
+    erc777Token.send(msg.sender, address(this), amount, "");
+    uint256 received = erc777Token.balanceOf(address(this)) - before;
+    balances[msg.sender] += received;  // Credits actual received, not stated amount
+}
+```
 
 ---
 
 ## Cross-Function Reentrancy
 
-A contract may have `withdrawA()` and `withdrawB()` that both protect against reentrancy individually, but share state that makes them vulnerable when called together:
+Each function may individually follow CEI, but two functions that share state can create a cross-function reentrancy path.
 
 ```solidity
-function withdrawA() external {
-    require(balanceA[msg.sender] > 0);
-    balanceA[msg.sender] = 0;
-    msg.sender.call{value: amount}("");  // Re-enters
+function withdrawETH() external {
+    uint256 amount = ethBalances[msg.sender];
+    require(amount > 0);
+    ethBalances[msg.sender] = 0;
+    (bool ok,) = msg.sender.call{value: amount}("");  // External call
+    require(ok);
 }
 
-function withdrawB() external {
-    require(balanceB[msg.sender] > 0);
-    balanceB[msg.sender] = 0;
-    msg.sender.call{value: amount}("");  // Called from withdrawA's re-entry
+function withdrawToken() external {
+    uint256 amount = tokenBalances[msg.sender];
+    require(amount > 0);
+    tokenBalances[msg.sender] = 0;
+    token.transfer(msg.sender, amount);  // Another external call
 }
 ```
 
-Each function individually follows CEI. But the attacker calls `withdrawA()` → `receive()` → `withdrawB()` → drains both balances. The `balances[msg.sender]` for `withdrawA` was set to 0, but `withdrawB` reads a different mapping.
+Individually, both functions are safe. But the attacker can:
+
+1. Call `withdrawETH()` → send ETH → `receive()` fires
+2. Inside `receive()`, call `withdrawToken()` → tokens transferred
+3. Both balances read the original values before being set to zero
 
 ### The Fix
 
-Use a single reentrancy guard for the entire contract:
+A single reentrancy guard protects the entire contract:
 
 ```solidity
 modifier nonReentrant() {
-    require(!locked, "Reentrant call");
-    locked = true;
+    require(!_locked, "Reentrant call");
+    _locked = true;
     _;
-    locked = false;
+    _locked = false;
 }
+
+function withdrawETH() external nonReentrant { ... }
+function withdrawToken() external nonReentrant { ... }
 ```
 
-OpenZeppelin's `ReentrancyGuard` provides this out of the box.
+OpenZeppelin's `ReentrancyGuard` provides this modifier. Apply it to every external function that modifies state, not just the ones you think are vulnerable.
 
 ---
 
 ## Read-Only Reentrancy
 
-Not all reentrancy extracts funds. Some reentrancies exploit the fact that the contract's state is temporarily inconsistent during the external call.
+Not all reentrancy extracts funds directly. Some exploits read temporarily inconsistent state to make decisions that profit the attacker elsewhere.
+
+A contract updates `totalDeposits` before emitting an event, but makes an external call between the two:
 
 ```solidity
 function deposit() external payable {
-    totalDeposits += msg.value;  
-    msg.sender.call("");          // External call with inconsistent state
-    emit Deposited(msg.sender, msg.value);  // Event emitted after
+    totalDeposits += msg.value;              // State updated
+    msg.sender.call("");                     // External call — state inconsistent
+    emit Deposited(msg.sender, msg.value);    // Event not yet emitted
 }
 ```
 
-During the external call, `totalDeposits` has been updated but the `Deposited` event has not been emitted. An attacker monitoring events might miss the deposit. A contract reading `totalDeposits` during this window sees an intermediate state.
+During the external call, `totalDeposits` reflects the new deposit, but the `Deposited` event has not been emitted. A monitoring system that relies on events will miss this deposit. A second contract that reads `totalDeposits` during this window sees a value that does not match the event history.
 
-This class is harder to exploit but has been used in sophisticated MEV and oracle manipulation attacks.
+This is harder to exploit but has been used in sophisticated MEV and cross-contract attack chains where multiple protocols are manipulated simultaneously.
 
 ---
 
 ## The Reentrancy Checklist
 
-1. **Does every external call happen AFTER all state updates?** If not, it must.
-2. **Does the contract interact with ERC-777, ERC-1155, or ERC-721 tokens?** These all have callbacks during transfer.
-3. **Does the contract have multiple functions that share state?** Cross-function reentrancy can bypass single-function CEI.
-4. **Is `ReentrancyGuard` applied to every external function?** Not just the ones you think are vulnerable.
+1. **Every external call happens after all state updates.** No exceptions. Even "read-only" calls.
+2. **Every ERC-777 and ERC-1155 interaction treats `send()` and `safeTransferFrom()` as external calls.** They are.
+3. **Every contract uses `ReentrancyGuard` on all state-modifying external functions.** Not just the ones with `call{}`.
+4. **Multi-function state sharing is protected by a single lock.** Cross-function reentrancy bypasses per-function CEI.
+5. **Read-only functions that expose temporarily inconsistent state are documented as potentially unreliable.** Or better, eliminated.
+
+---
+
+## Connection to Other Chapters
+
+- **Ch4 (Flash Loans)**: Flash-loaned funds amplify reentrancy attacks. The CREAM $130M exploit combined flash loan capital with reentrancy to drain lending pools.
+- **Ch7 (Token Economics)**: ERC-777 and fee-on-transfer tokens introduce hidden callbacks that create reentrancy vectors. Token integration is security integration.
+- **Ch11 (Precision)**: Read-only reentrancy exploits precision mismatches in temporarily inconsistent state. The precision of the inconsistency determines the profitability of the exploit.
 
 ---
 
