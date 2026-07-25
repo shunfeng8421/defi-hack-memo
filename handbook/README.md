@@ -1,90 +1,132 @@
 # DeFi Security Handbook
 
-## 105 Attack Patterns Across 17 Domains
+> **A Field Manual for Smart Contract Security Researchers**
+> 66 Attack Patterns. 24 Chapters. 12 Domains. 824 Real-World Exploit Reports Analyzed.
 
-**Author**: Shiqiang Chen · Independent Security Researcher
-**Repository**: github.com/shunfeng8421/defi-hack-memo
-**Status**: First Edition · July 2026
-
----
-
-## About This Book
-
-This handbook is the result of systematically analyzing 824 DeFi exploit reports spanning from 2017 to 2026. Every attack pattern has been verified against real-world protocol losses totaling over $1.05 billion. Every pattern has an executable Foundry test that anyone can run, verify, and learn from.
-
-This is not an academic paper. This is a field manual for security researchers, auditors, and protocol developers who need to understand what breaks and why.
+**Author**: Shiqiang Chen (陈世强)
+**Status**: ✅ Complete (24/24 chapters)
+**Test Suite**: 105 Foundry fork tests | **Scanner**: 58 automated patterns
 
 ---
 
-## Table of Contents
+## 序言
 
-### Part I: Foundations
-1. [Why DeFi Keeps Breaking](part1/ch01-why-defi-breaks.md)
-2. [The Security Researcher's Toolkit](part1/ch02-toolkit.md)
-3. [How to Read an Exploit Report](part1/ch03-reading-exploits.md)
+2021年3月，PancakeBunny被盗走600万美元。攻击者没有找合约漏洞。没有绕过权限检查。没有破解私钥。他只做了三件事：借一笔闪电贷，砸进一个交易对，然后取走所有钱。整个攻击持续了七秒钟。
 
-### Part II: The 50 Core DeFi Patterns
-4. Flash Loan Attacks (Patterns 1-4)
-5. Oracle Manipulation (Patterns 5-8)
-6. Access Control Failures (Patterns 9-14)
-7. Token Economics (Patterns 15-18)
-8. Cross-Chain Vulnerabilities (Patterns 19-22)
-9. Reentrancy & Callbacks (Patterns 23-27)
-10. Initialization & Upgrades (Patterns 28-32)
-11. Precision & Arithmetic (Patterns 33-36)
-12. DoS & Griefing (Patterns 37-42)
-13. Gas & Storage (Patterns 43-48)
-14. Governance & Admin (Patterns 49-50)
+当时我在想一个问题：**为什么一个审计过的协议，会被如此简单的方法攻破？**
 
-### Part III: Solana Security (Patterns 51-58)
-15. Account Model Vulnerabilities
-16. CPI & PDA Attacks
+答案不是代码有bug。代码逻辑完全正确。`getReserves()`返回的是真实的储备量，除法运算精确到小数点后18位，转账没有越权。问题在于：**代码逻辑正确的边界，不等于真实世界的安全边界。** 在测试环境里，没有人能操纵价格，所以这个函数是安全的。在主网上，有人可以，所以这个函数是致命的。
 
-### Part IV: Domain Extensions (Patterns 59-105)
-17. Bridge Security
-18. Proxy Upgrade Attacks
-19. MEV & Frontrunning
-20. Governance Exploits
-21. Lending Protocol Attacks
-22. DEX Concentrated Liquidity
-23. DePIN Physical-Layer Attacks
-24. ZK Circuit Vulnerabilities
-25. RWA Tokenization Risks
-26. GameFi Economics
-27. AI Agent Security
-28. NFT Protocol Attacks
-29. Stablecoin Design Flaws
-30. Wallet Infrastructure
-31. Privacy Protocol Weaknesses
-32. Yield Aggregator Pitfalls
+这个洞察驱动了本书的写作。DeFi安全的本质问题不是代码质量——Solana的Move、以太坊的Solidity，语言的差异远不如思维模型的差异重要。本质问题是：**攻击者和开发者看到的不是同一个系统。** 开发者看到的是自己写的合约。攻击者看到的是整个生态——包括你的合约、Uniswap的流动性、Chainlink的更新间隔、跨链桥的验证逻辑、用户的交易习惯、Gas拍卖的博弈均衡。你把门锁在屋子里，他从不走门。
 
-### Part V: Defense
-33. Building a Security Scanner
-34. Writing Effective Tests
-35. Incident Response Checklist
+过去五年，我分析了824份DeFi攻击报告。我发现一个规律：**大多数漏洞不是新颖的。它们是已知模式的变形。** 闪电贷+现货价格预言机、跨链消息重放、未验证的oracle返回值、初始化函数无保护——这些模式反复出现，每次换一个协议名字，每次多几个受害者。
 
-### Appendices
-- A: Complete Pattern Reference (105 patterns)
-- B: Real-World Loss Database ($1.05B across 100 incidents)
-- C: Foundry Test Suite Quick Start
-- D: Scanner Configuration Guide
+所以这本书的做法不同。不是按照漏洞类型分类，而是按照攻击模式分类。每个模式都配真实的案例、真实的代码、真实的修复方案，以及在主网上可以跑通的Foundry分叉测试。你不是在读理论，你是在看犯罪现场还原。
+
+这本书也不是一本中立的教科书。它有立场：**安全知识应该是免费的。** 顶级协议的审计预算动辄百万美元，但那些最需要安全知识的——早期项目方、个人开发者、Web3创业者——反而最缺乏获取渠道。硬化梯度（第一章）讲的就是这个悖论：越大的协议越安全，越小的协议越危险，而DeFi的创新恰恰来自后者。
+
+如果你是一个审计师，这本书应该成为你的随身清单。如果你是一个协议开发者，第一章值得你反复读——它解释的不是你的代码为什么会有bug，而是你的协议为什么会被选中成为目标。如果你是一个安全研究员，第二十二章的扫描器和第二十三章的测试框架可以省你三个月的时间。
+
+这本书不保证你读完就能发现所有的漏洞。它只保证一件事：**读完以后，你不会再对任何一份审计报告上的"Low Risk"掉以轻心。**
+
+2026年7月，深圳
+
+---
+
+## What This Book Is
+
+This is a **field manual**, not a textbook. It assumes you can read Solidity and understand basic DeFi primitives. It focuses on what breaks, how it breaks, why it was allowed to break, and how to prevent it from breaking again.
+
+Every vulnerability pattern includes:
+- **The Attack**: Real-world case with dollar amount
+- **The Code**: Vulnerable Solidity + the fix
+- **The Why**: Root cause analysis — why did this ship to production?
+- **The Check**: Scanner detection logic for automated finding
 
 ---
 
 ## How to Use This Book
 
-**If you're an auditor**: Start with Part II. Run the Foundry tests. Every pattern has code you can copy into your audit checklist.
+**If you are an auditor**: Read Part I for the mental model, then use Part II as a checklist on every engagement.
 
-**If you're a developer**: Read the chapter that matches your protocol type. The "Fix" section in every pattern tells you exactly what to change.
+**If you are a protocol developer**: Read Chapter 1 to understand why your protocol will be attacked, then read every chapter that matches your architecture.
 
-**If you're a researcher**: The appendices are your data. 824 incidents, 105 patterns, 100 confirmed findings with dollar amounts.
-
----
-
-## License
-
-CC BY 4.0 — Free to share, adapt, and use. Attribution required.
+**If you are a security researcher**: Read front to back. The patterns compound.
 
 ---
 
-*"Security is not a feature. It is the absence of known vulnerabilities, continuously verified."*
+## Table of Contents
+
+### Part I: Foundations (Chapters 1-3)
+
+| Ch | Title | Status |
+|:--:|-------|:------:|
+| 1 | [Why DeFi Keeps Breaking](part1/ch01-why-defi-breaks.md) | ✅ |
+| 2 | [The Security Researcher's Toolkit](part1/ch02-toolkit.md) | ✅ |
+| 3 | [How to Read an Exploit Report](part1/ch03-reading-exploits.md) | ✅ |
+
+### Part II: 37 Core EVM Patterns (Chapters 4-12)
+
+| Ch | Title | Patterns | Status |
+|:--:|-------|:--------:|:------:|
+| 4 | [Flash Loan Attacks](part2/ch04-flash-loans.md) | #1-3 | ✅ |
+| 5 | [Oracle Manipulation](part2/ch05-oracle-manipulation.md) | #4-8 | ✅ |
+| 6 | [Access Control Failures](part2/ch06-access-control.md) | #9-12 | ✅ |
+| 7 | [Token Economics Attacks](part2/ch07-token-economics.md) | #13-16 | ✅ |
+| 8 | [Cross-Chain Vulnerabilities](part2/ch08-cross-chain.md) | #17-20 | ✅ |
+| 9 | [Reentrancy & Callback Attacks](part2/ch09-reentrancy.md) | #21-24 | ✅ |
+| 10 | [Initialization & Upgrade Attacks](part2/ch10-initialization.md) | #25-28 | ✅ |
+| 11 | [Precision, Arithmetic & Gas](part2/ch11-precision-gas.md) | #29-33 | ✅ |
+| 12 | [Governance & Admin Attacks](part2/ch12-governance.md) | #34-37 | ✅ |
+
+### Part III: Solana Security (Chapter 13)
+
+| Ch | Title | Patterns | Status |
+|:--:|-------|:--------:|:------:|
+| 13 | [The Account Model Attack Surface](part3/ch13-solana.md) | #51-56 | ✅ |
+
+### Part IV: Domain Extensions (Chapters 14-21)
+
+| Ch | Title | Patterns | Status |
+|:--:|-------|:--------:|:------:|
+| 14 | [MEV & Front-Running](part4/ch14-mev-frontrunning.md) | #38-42 | ✅ |
+| 15 | [Lending Protocol Attacks](part4/ch15-lending-protocol-attacks.md) | #43-46 | ✅ |
+| 16 | [DEX Concentrated Liquidity](part4/ch16-dex-concentrated-liquidity.md) | #47-49 | ✅ |
+| 17 | [DePIN Physical-Layer Attacks](part4/ch17-depin-physical-layer.md) | #50-53 | ✅ |
+| 18 | [ZK Circuit Vulnerabilities](part4/ch18-zk-circuit.md) | #54-57 | ✅ |
+| 19 | [RWA Tokenization Risks](part4/ch19-rwa-tokenization.md) | #58-60 | ✅ |
+| 20 | [GameFi Economic Attacks](part4/ch20-gamefi-economics.md) | #61-63 | ✅ |
+| 21 | [AI Agent Security](part4/ch21-ai-agent-security.md) | #64-66 | ✅ |
+
+### Part V: Defense (Chapters 22-24)
+
+| Ch | Title | Status |
+|:--:|-------|:------:|
+| 22 | [Building a Security Scanner](part5/ch22-security-scanner.md) | ✅ |
+| 23 | [Writing Effective Fork Tests](part5/ch23-writing-effective-tests.md) | ✅ |
+| 24 | [Incident Response Checklist](part5/ch24-incident-response.md) | ✅ |
+
+### Appendices
+
+| App | Title |
+|:---:|-------|
+| A | [Complete Pattern Reference](appendix/A-complete-pattern-reference.md) |
+| B | [Real-World Loss Database](appendix/B-real-world-loss-database.md) |
+| C | [Foundry Test Suite Quick Start](appendix/C-foundry-test-suite.md) |
+| D | [Scanner Configuration Guide](appendix/D-scanner-configuration.md) |
+
+---
+
+## Design Principles
+
+1. **Every pattern is backed by a real case.** No hypotheticals. Every vulnerability description includes at least one protocol that lost real money.
+
+2. **Every pattern has three parts**: Vulnerability Code → Attack Description → Fix. You should be able to use this as an audit checklist.
+
+3. **Root cause comes first.** "What happened" is easy. "Why it was allowed to happen" is the question that separates junior researchers from senior ones.
+
+4. **The scanner is a teaching tool.** The 66-pattern scanner isn't meant to replace human auditors. It's meant to demonstrate what automated detection can and cannot do.
+
+---
+
+*Last updated: 2026-07-25*
