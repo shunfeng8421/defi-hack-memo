@@ -1,100 +1,110 @@
-# Chapter 12: Governance & Admin Attacks
+# Chapter 12: Governance Attacks
 
-*"Democracy works when votes are expensive. Flash loans made votes free."*
+*"Democracy works when votes are expensive. Flash loans made them free."*
 
 ---
 
-## The Beanstalk Exploit
+## The Beanstalk Exploit: April 17, 2022
 
-On April 17, 2022, at 07:24 UTC, an attacker submitted a governance proposal to the Beanstalk protocol. The proposal was a single transaction: transfer all protocol funds — $182 million worth of assets, including $76 million in the protocol's own BEAN token — to an address controlled by the attacker.
+At 07:24 UTC on April 17, 2022, an attacker submitted a governance proposal to the Beanstalk protocol. The proposal was elegantly simple: transfer all protocol funds to an address controlled by the proposer.
 
-The attacker did not own enough BEAN tokens to pass a governance vote. BEAN had a market cap of approximately $100 million. To acquire 67% of the voting power — the threshold to pass any proposal — an attacker would need to buy $67 million worth of tokens on the open market, driving the price up as they accumulated.
+The attacker did not own enough BEAN tokens to pass the vote. BEAN had a market capitalization of approximately $100 million. To acquire 67% of the voting power—the threshold required by Beanstalk's governance—an attacker would need to buy $67 million worth of tokens on the open market, driving the price up with each purchase. Traditional governance assumed this cost of corruption was prohibitively high.
 
-Or they could borrow them.
+But the attacker did not buy the tokens. They borrowed them.
 
-The attacker borrowed 350 million BEAN tokens — approximately 75% of the total supply — from Aave, for a fee of approximately $3,000. With this voting power, they submitted and passed the emergency proposal. By the time the transaction confirmed, $182 million had been transferred. The entire governance process — proposal, vote, execution — took 13 seconds.
+A single transaction borrowed 350 million BEAN tokens—75% of the total supply—from Aave's lending pool. The fee for this loan was approximately $3,000. Now holding a supermajority of voting power, the attacker:
 
-Beanstalk is not a governance failure. It is a governance design failure. The protocol assumed that voting power was expensive to acquire. Flash loans made it free. The governance mechanism was working exactly as designed when it processed a valid proposal supported by a supermajority of token holders. The design was wrong.
+1. Submitted an emergency governance proposal to transfer all protocol funds
+2. Voted "yes" with 350 million BEAN tokens
+3. Called the execution function
+
+Thirteen seconds elapsed from the first function call to the final transfer. The Beanstalk treasury—$76 million in BEAN, $106 million in other assets, $182 million total—was transferred to the attacker in a single atomic transaction. The flash loan was repaid. The attacker's profit was approximately $76 million after accounting for the BEAN tokens that became worthless when the protocol collapsed.
+
+The Beanstalk exploit was not a governance hack. It was a governance design failure. Every mechanism worked exactly as intended. The voting process was fair. The proposal was legitimate. The execution was authorized. The protocol did what it was designed to do when a supermajority of token holders voted to transfer the treasury. The problem was that "token holder" and "person with a long-term interest in the protocol's success" were no longer the same thing.
+
+### The Aftermath
+
+Beanstalk did not recover. The BEAN token lost 99% of its value. The protocol's code still exists on-chain—it was not hacked—but the economic trust that sustained it was destroyed. Users who had deposited funds into Beanstalk's liquidity pools received nothing. There was no insurance fund, no bailout, no Ronin-style reimbursement from a well-capitalized parent company.
+
+The lesson Beanstalk taught the industry is that governance cannot be retrofitted onto a token that already trades on lending markets. If your governance token can be flash-loaned, your governance can be flash-loaned. The cost of corruption is not the market cap of the token. It is the flash loan fee.
 
 ---
 
 ## The Governance Attack Surface
 
-Governance attacks exploit the gap between *who should have power* and *who actually has power.* The gap exists because:
+Governance is not a single vulnerability pattern. It is a category of attack surfaces that arise from the gap between who *should* control a protocol and who *actually* controls it:
 
-1. **Token-weighted voting** assumes that token holders are aligned with the protocol's long-term interests. Flash loans allow non-holders to acquire voting power temporarily.
-2. **Delegation** assumes that delegates act in the best interest of those who delegated to them. Delegates can be compromised, bribed, or simply negligent.
-3. **Timelocks** assume that the community has time to react to malicious proposals. Attackers can front-run the execution after the timelock expires.
-4. **Multi-sigs** assume that N-of-M is a meaningful threshold. If M parties share infrastructure or trust, N-of-M becomes 1-of-1.
+1. **Token-weighted voting**: Assumes token holders are aligned with long-term protocol health. Flash loans break this assumption by making token holding zero-commitment.
+
+2. **Delegation**: Assumes delegates act in the interest of those who delegated to them. Delegates can be compromised, bribed, or simply negligent.
+
+3. **Timelocks**: Assume the community has time to review and exit before execution. Attackers can front-run the execution after the timelock expires.
+
+4. **Multi-sigs**: Assume N-of-M means distributed trust. If the signers share infrastructure, employer, or jurisdiction, N-of-M collapses to 1-of-1.
 
 ---
 
-## Pattern #30: Flash Loan Governance Attack
+## Pattern #31: Flash Loan Governance Attack
 
 **Severity**: CRITICAL
 **Real case**: Beanstalk $182M
 
 ### The Attack
 
-1. **Identify**: Find a protocol where governance decisions are made by token-weighted voting, and the governance token is available on a lending market.
-2. **Borrow**: Flash loan a supermajority of the governance token (67%+ for most DAOs).
-3. **Propose**: Submit a governance proposal that transfers all protocol funds to the attacker.
-4. **Vote**: Use the borrowed tokens to vote "yes" on the proposal.
-5. **Execute**: Call the execution function — wait until any timelock expires if necessary.
-6. **Repay**: Repay the flash loan. The proposal passes, the funds are transferred, and the tokens are returned.
-7. **Result**: $182 million transferred. 13 seconds elapsed. $3,000 cost.
+The complete attack sequence:
 
-### Why Timelocks Are Not Enough
+1. **Identify** a protocol where governance uses token-weighted voting, and the governance token is available on a lending market (Aave, Compound, or a DEX with flash swap support).
+2. **Borrow** a supermajority of the governance token via flash loan. Most protocols require 50%+ to pass a proposal. Beanstalk required 67%.
+3. **Propose** a governance action that transfers protocol funds or upgrades the implementation to a malicious version.
+4. **Vote** with the borrowed tokens. The voting contract checks `balanceOf(attacker) >= quorum`. The flash-loaned balance satisfies the check.
+5. **Execute** immediately if there is no timelock. If there is a timelock, wait and execute when it expires. The flash loan can be repaid after the vote because only the vote requires the tokens.
+6. **Repay** the flash loan and keep the proceeds.
 
-Many protocols believed that a governance timelock would prevent flash loan attacks. The logic: a proposal must be queued for 48 hours before execution. The attacker cannot hold the flash loan for 48 hours.
+The entire attack costs gas plus the flash loan fee. For Beanstalk, that was approximately $3,000 against a $182 million return.
 
-This is correct but insufficient. The attacker does not need to hold the loan through the timelock. They need to hold it through the *vote.* Once the proposal passes the vote, the attacker can repay the flash loan. The proposal sits in the timelock. When the timelock expires, the attacker executes it with their own funds.
+### Why Timelocks Are Insufficient
 
-The timelock only delays the attack. It does not prevent it.
+A common defense: "we have a 48-hour timelock, so flash loan governance attacks are impossible." The attacker cannot hold a flash loan for 48 hours.
+
+This is correct but incomplete. The attacker needs the tokens for the *vote*, not the execution. Once the proposal passes, the attacker repays the flash loan. The proposal sits in the timelock. When the timelock expires, the attacker submits the execution transaction.
+
+The timelock only delays the attack. It does not prevent it. For the timelock to work, the community must detect the malicious proposal and exit before execution. This requires:
+- Active monitoring of all governance proposals
+- Understanding of what each proposal does
+- Willingness to withdraw funds before the proposal executes
+
+Most DeFi users do none of these things.
 
 ### The Fix: Voting Power Snapshots
 
-Voting power must be snapshotted at the time of proposal creation, not at the time of voting:
+Voting power must reflect token holdings at the time of proposal creation, not at the time of voting:
 
 ```solidity
-// ❌ VULNERABLE: Current balance
+// ❌ VULNERABLE: Current balance determines voting power
 function getVotes(address account) public view returns (uint256) {
-    return token.balanceOf(account);  // Flash loan inflates this
+    return token.balanceOf(account);
+    // Flash loan inflates this to pass any vote
 }
 
-// ✅ SAFE: Snapshot at proposal creation time
+// ✅ SAFE: Historical balance at snapshot
 function getVotes(address account, uint256 proposalId) public view returns (uint256) {
-    return votes[account][proposalSnapshot[proposalId]];  // Historical balance
+    return votes[account][proposalSnapshot[proposalId]];
+    // Snapshot was taken when proposal was created
+    // Tokens acquired after creation have zero voting power
 }
 ```
 
-The snapshot records every holder's balance at the block when the proposal was created. Tokens acquired after that block have no voting power on this proposal. A flash loan taken after the proposal exists is useless.
+For the snapshot to work:
+1. The proposal creator must hold the required voting power BEFORE creating the proposal
+2. The snapshot is taken at proposal creation time
+3. Subsequent token acquisitions do not affect voting power on existing proposals
 
----
+This means the attacker must hold the tokens before the proposal exists, which requires either:
+- Actually buying the tokens (real cost of corruption)
+- Having advance knowledge that a proposal will be created (impossible if proposal creation is permissionless)
+- Creating the proposal themselves while holding the tokens
 
-## Pattern #31: Multi-Sig Social Engineering
-
-**Severity**: HIGH
-**Real case**: Ronin Bridge $625M
-
-### The Attack
-
-The Ronin Bridge validator set was 5-of-9. Five validators were controlled by Sky Mavis (the developer). Four were external. The attacker did not break any cryptographic keys. They did not find a bug in the validator contract.
-
-They socially engineered one Sky Mavis employee to approve a malicious validator set change. With five keys — the four Sky Mavis keys plus the compromised external key — the attacker authorized the withdrawal of $625 million.
-
-### The Fix
-
-No amount of code can prevent social engineering. But code can limit the blast radius:
-
-```solidity
-// ✅ BLAST RADIUS LIMITS
-uint256 public constant MAX_SINGLE_WITHDRAWAL = 1000 ether;  // Per-transaction cap
-uint256 public constant DAILY_WITHDRAWAL_LIMIT = 10000 ether;  // 24h rolling cap
-uint256 public constant WITHDRAWAL_COOLDOWN = 1 hours;  // Between withdrawals
-```
-
-Even if an attacker compromises the validator set, they cannot drain the entire bridge in one transaction. The daily limit caps the damage. The cooldown provides time to react. The per-transaction cap forces the attacker to submit many transactions — increasing the chance of detection.
+The last case is still possible—the attacker can acquire tokens, create a proposal, and sell the tokens. But this imposes a real cost: the tokens must be held between acquisition and proposal creation, and selling them after may move the market. The flash loan attack is closed.
 
 ---
 
@@ -104,24 +114,24 @@ Even if an attacker compromises the validator set, they cannot drain the entire 
 
 ### The Attack
 
-A governance proposal passes the vote and enters a 48-hour timelock. During the timelock, the community can review the proposal and exit if it is malicious.
+A malicious proposal passes the vote and enters a 48-hour timelock. The community has 48 hours to review and exit. The attacker waits.
 
-But the attacker waits. At exactly T+48 hours, they submit the execution transaction with maximum gas priority. Nobody else can get a transaction confirmed in the same block. The malicious proposal executes before any user can withdraw.
+At exactly T+48 hours, the attacker submits the execution transaction with maximum gas priority. The transaction confirms in the next block. No user can withdraw their funds between the timelock expiring and the execution confirming.
 
 ### The Fix
 
 The execution window should be a range, not a point:
 
 ```solidity
-// ✅ SAFE: Execution window with maximum delay
 function execute(uint256 proposalId) external {
-    require(block.timestamp >= proposalTimelock[proposalId], "Too early");
-    require(block.timestamp <= proposalTimelock[proposalId] + 24 hours, "Expired");
-    // If nobody executes within 24 hours of the timelock expiring, the proposal fails.
+    require(block.timestamp >= timelock[proposalId], "Too early");
+    require(block.timestamp <= timelock[proposalId] + 24 hours, "Expired");
+    // If not executed within 24 hours of the timelock expiring, the proposal fails.
+    _execute(proposalId);
 }
 ```
 
-This prevents the attacker from waiting indefinitely for a favorable block. It also prevents the attacker from executing in a single block that nobody else can compete in — other users can submit execution transactions too.
+This prevents the attacker from waiting indefinitely for a favorable block. It also creates a 24-hour window where anyone—including users who want to exit—can submit the execution transaction. The attacker cannot monopolize the execution slot.
 
 ---
 
@@ -131,93 +141,57 @@ This prevents the attacker from waiting indefinitely for a favorable block. It a
 
 ### The Vulnerability
 
-A protocol advertises itself as "governed by the community" or "fully decentralized." The contract contains a function that only the deployer can call — and that function can drain all funds.
+A protocol advertises "community governance" but retains a single-key emergency function:
 
 ```solidity
 function emergencyWithdraw(address token) external onlyOwner {
     IERC20(token).transfer(owner, IERC20(token).balanceOf(address(this)));
-    // Looks like an emergency function. Is an invitation to steal.
 }
 ```
 
-This pattern is more common than the industry admits. Protocols that market themselves as decentralized while retaining a single-key emergency function are deceiving their users.
+This function is the governance equivalent of a backdoor. The developer explains it as "necessary for emergencies." The attacker sees it as "one key from total control."
 
 ### The Fix
 
-If the emergency function must exist, it must be transparent:
+If emergency functions must exist, they must match the claimed governance structure:
 
 ```solidity
-function emergencyWithdraw(address token) external onlyEmergencyDAO {
-    emit EmergencyWithdrawal(token, msg.sender, amount);
-    IERC20(token).transfer(emergencyTreasury, amount);
+function emergencyWithdraw(address token, uint256 maxAmount) external onlyEmergencyDAO {
+    require(maxAmount <= totalValueLocked * 5 / 100, "Maximum 5%");
+    require(block.timestamp >= lastEmergency + 7 days, "Weekly limit");
+    lastEmergency = block.timestamp;
+    IERC20(token).transfer(treasury, maxAmount);
 }
 ```
 
-The function must be controlled by a governance process — not a single key. The function's existence must be documented. Users must know that the protocol reserves the right to move their funds in an emergency.
+The emergency function is now governed by the DAO, not a single key. The blast radius is proportional—5% per week, not 100% per transaction. The protocol can still respond to emergencies without creating a single point of failure.
 
 ---
 
-## Part II Summary: The 50 Core DeFi Patterns
+## The Governance Checklist
 
-### Flash Loans (Ch4)
-1. Spot Price Oracle — CRITICAL
-2. CEI/Reentrancy — CRITICAL
-3. Flash + Reentrancy Combo — CRITICAL
-4. TWAP Multi-Block — HIGH
-
-### Oracle Manipulation (Ch5)
-5. ERC-4626 Inflation — CRITICAL
-6. Uniswap V2 Oracle — CRITICAL
-7. Chainlink Stale — HIGH
-8. Self-Reported Oracle — CRITICAL
-
-### Access Control (Ch6)
-9. Missing Access Control — HIGH
-10. Admin Privilege — HIGH
-11. Unprotected Selfdestruct — CRITICAL
-12. Delegatecall to User — CRITICAL
-
-### Token Economics (Ch7)
-13. Fee-on-Transfer — HIGH
-14. Rebase Token — HIGH
-15. Mint/Burn Asymmetry — MEDIUM
-16. Permit Without Nonce — MEDIUM
-
-### Cross-Chain (Ch8)
-17. Cross-Chain Replay — CRITICAL
-18. Bridge Arbitrary Call — CRITICAL
-19. Message Verification Bypass — CRITICAL
-20. Validator Collusion — CRITICAL
-
-### Reentrancy (Ch9)
-21. Classic Reentrancy — CRITICAL
-22. ERC-777 Callback — HIGH
-23. Cross-Function — HIGH
-24. Read-Only Reentrancy — MEDIUM
-
-### Initialization (Ch10)
-25. Unprotected Initializer — HIGH
-26. Storage Collision — CRITICAL
-27. Beacon Proxy Swap — HIGH
-28. CREATE2 Re-deploy — HIGH
-
-### Precision & Gas (Ch11)
-29. Precision Loss — MEDIUM
-30. Unsafe Downcast — MEDIUM
-31. Hardcoded Gas — LOW
-32. Unbounded Loop — MEDIUM
-33. Phantom Fallback — MEDIUM
-
-### Governance (Ch12)
-34. Flash Loan Governance — CRITICAL
-35. Multi-Sig Social Engineering — HIGH
-36. Timelock Front-Run — HIGH
-37. Hidden Backdoor — CRITICAL
+1. **Voting power is snapshotted at proposal creation time.** Current balances are never used directly.
+2. **Governance tokens that can be flash-loaned have additional safeguards.** Minimum holding period, quadratic voting, or absolute vote caps.
+3. **Timelocks have a bounded execution window.** Proposals expire if not executed promptly, preventing indefinite waiting.
+4. **Multi-sigs require organizational diversity.** N-of-M is not sufficient if signers share employers or jurisdictions.
+5. **Emergency functions are governed by the same process they claim to serve.** No single-key backdoors, no matter how "emergency" the function.
 
 ---
 
-**38 patterns covered. 12 more patterns cover MEV, sandwich attacks, and front-running — patterns 39-50 — to be detailed in the Domain Extensions section.**
+## Connection to Other Chapters
+
+- **Ch4 (Flash Loans)**: The Beanstalk attack could not exist without flash loans. This is the most dangerous cross-chapter combination in the entire book. Flash loans + governance = instant protocol takeover.
+- **Ch6 (Access Control)**: Governance is access control at the organizational level. Multi-sig social engineering (Ronin) is access control failure applied to humans instead of code.
+- **Ch8 (Cross-Chain)**: Bridge validators are a governance structure. Validator centralization is governance centralization.
 
 ---
 
-*Next: Part III — Solana Security (Patterns 51-58)*
+## Part II Summary
+
+Part II has covered 37 patterns across 10 chapters, from flash loans to governance attacks. Every pattern has been validated against real-world exploits totaling billions of dollars in losses. Every pattern has a specific, actionable fix.
+
+Part III shifts focus to a different execution environment entirely: Solana. The vulnerabilities are different. The defenses are different. The lesson is the same: **understand what your platform assumes, because attackers will violate every assumption they can find.**
+
+---
+
+*Next: Part III — Solana Security*
