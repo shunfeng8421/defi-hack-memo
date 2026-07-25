@@ -1,0 +1,59 @@
+# DeFi Security Scanner — GitHub Action
+# Runs on every PR: scans Solidity/Rust for 58 vulnerability patterns
+# Author: Shiqiang Chen · July 2026
+
+name: "🔍 DeFi Security Scan"
+description: "Scan contracts for 58 known DeFi/Solana vulnerability patterns"
+
+branding:
+  icon: "shield"
+  color: "red"
+
+inputs:
+  path:
+    description: "Path to scan"
+    required: false
+    default: "."
+  fail_on:
+    description: "Fail threshold (CRITICAL | HIGH | NEVER)"
+    required: false
+    default: "CRITICAL"
+
+outputs:
+  total:
+    description: "Total findings"
+    value: ${{ steps.scan.outputs.total }}
+  critical:
+    description: "CRITICAL count"
+    value: ${{ steps.scan.outputs.critical }}
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v4
+      with:
+        repository: shunfeng8421/defi-hack-memo
+        path: .defi-scanner
+        sparse-checkout: defi-scanner.py
+
+    - uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+
+    - name: "Run scan"
+      id: scan
+      shell: bash
+      env:
+        SCAN_PATH: ${{ inputs.path }}
+        FAIL_ON: ${{ inputs.fail_on }}
+      run: |
+        python .defi-scanner/defi-scanner.py "$SCAN_PATH" 2>&1 | tee scan-output.txt
+        TOTAL=$(grep -c "Findings:" scan-output.txt || echo "0")
+        CRIT=$(grep -c "🔴" scan-output.txt || echo "0")
+        echo "total=$TOTAL" >> $GITHUB_OUTPUT
+        echo "critical=$CRIT" >> $GITHUB_OUTPUT
+        echo "📊 $TOTAL findings ($CRIT critical)"
+        if [ "$FAIL_ON" = "CRITICAL" ] && [ "$CRIT" -gt 0 ]; then
+          echo "❌ Failing: CRITICAL findings detected"
+          exit 1
+        fi
