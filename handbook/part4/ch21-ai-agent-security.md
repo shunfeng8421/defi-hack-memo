@@ -100,4 +100,22 @@ Output scanning: every AI-generated code block is scanned for injection patterns
 
 ---
 
+## The Deepest Lesson
+
+AI agents invert the security model of every previous chapter. In DeFi, the attacker is external—they find a bug in your code. In AI security, the attacker speaks the same language as the user—they convince the model, not the code. The model is the attack surface. The model cannot be patched.
+
+The AASS standard exists because this insight has not been internalized by the industry. Protocols that deploy AI agents with financial capabilities are repeating the mistakes of 2016—giving an untrusted entity (a language model) access to funds, assuming it will behave correctly because it was instructed to. The DAO taught us to never trust external calls. AI agents teach us to never trust model outputs.
+
+If you take one thing from this chapter: **every tool your AI agent can call must validate its own inputs, independently of what the model asked for.** The model is not the authority. The code is.
+
+## The AI Agent Security Checklist
+
+1. **Every tool enforces its own security constraints.** Never rely on the model to follow instructions.
+2. **Financial transactions above a threshold require human-in-the-loop approval.**
+3. **AI-generated code is scanned for injection patterns before execution.**
+4. **Tool allowlists prevent the model from calling dangerous functions it was never meant to access.**
+5. **MCP server responses are validated for content type, size, and origin before being trusted.**
+
+---
+
 *Next: Part V — Defense*
