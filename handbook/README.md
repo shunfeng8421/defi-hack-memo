@@ -1,7 +1,7 @@
 # DeFi Security Handbook
 
 > **A Field Manual for Smart Contract Security Researchers**
-> 66 Attack Patterns. 24 Chapters. 12 Domains. 824 Real-World Exploit Reports Analyzed.
+> 66 Attack Patterns. 24 Chapters. 12 Domains. 58 Automated Detection Rules. 824 Real-World Exploit Reports Analyzed.
 
 **Author**: Shiqiang Chen (陈世强)
 **Status**: ✅ Complete (24/24 chapters)
@@ -30,6 +30,30 @@
 这本书不保证你读完就能发现所有的漏洞。它只保证一件事：**读完以后，你不会再对任何一份审计报告上的"Low Risk"掉以轻心。**
 
 2026年7月，深圳
+
+---
+
+## Preface
+
+In March 2021, PancakeBunny lost $6 million. The attacker found no contract bug. No permission bypass. No stolen private key. He did three things: took a flash loan, dumped it into a liquidity pool, and withdrew everything. The entire attack lasted seven seconds.
+
+At the time, I kept asking myself: **how could an audited protocol be broken so simply?**
+
+The answer was not a code bug. The logic was flawless. `getReserves()` returned real reserves. The division was precise to 18 decimal places. The transfer had no permission error. The problem was: **the boundary where code is logically correct is not the boundary where the system is secure.** In a test environment, no one could manipulate the price, so the function was safe. On mainnet, someone could, so the function was fatal.
+
+This insight drives the entire book. The essence of DeFi security is not code quality—Solana's Move, Ethereum's Solidity, the language matters far less than the mental model. The real issue is: **attackers and developers see different systems.** The developer sees their own contract. The attacker sees the entire ecosystem—your contract, Uniswap's liquidity, Chainlink's update intervals, cross-chain bridge verification, user trading patterns, gas auction equilibria. You lock the door inside the house. He never comes through the door.
+
+Over five years, I analyzed 824 DeFi exploit reports. One pattern emerged: **most vulnerabilities are not novel. They are variations of known patterns.** Flash loan + spot price oracle. Cross-chain message replay. Unverified oracle returns. Unprotected initializer functions. These patterns repeat, each time with a different protocol name, each time with more victims.
+
+This book takes a different approach. It classifies by attack pattern, not vulnerability type. Every pattern comes with a real case, real code, a real fix, and a Foundry fork test that runs on mainnet state. You are not reading theory. You are reading crime scene reconstructions.
+
+This book is also not neutral. It has a position: **security knowledge should be free.** Top protocols spend millions on audits, but those who need security knowledge most—early-stage teams, independent developers, Web3 founders—have the least access. The hardening gradient (Chapter 1) describes precisely this paradox: larger protocols become more secure, smaller protocols become more dangerous, and DeFi innovation comes from the latter.
+
+If you are an auditor, this book should be your field checklist. If you are a protocol developer, Chapter 1 is worth reading repeatedly—it explains not why your code has bugs, but why your protocol will be chosen as a target. If you are a security researcher, Chapter 22's scanner and Chapter 23's testing framework will save you three months of work.
+
+This book does not guarantee you will find every vulnerability. It guarantees one thing: **after reading it, you will never again dismiss a "Low Risk" finding on an audit report.**
+
+July 2026, Shenzhen
 
 ---
 
@@ -125,7 +149,7 @@ Every vulnerability pattern includes:
 
 3. **Root cause comes first.** "What happened" is easy. "Why it was allowed to happen" is the question that separates junior researchers from senior ones.
 
-4. **The scanner is a teaching tool.** The 66-pattern scanner isn't meant to replace human auditors. It's meant to demonstrate what automated detection can and cannot do.
+4. **The scanner is a teaching tool.** The 66-pattern classification maps to 58 automated detection rules in the companion scanner (`defi-scanner.py`). Some attack classes (MEV, social engineering, consensus-layer attacks) resist automated detection and require the manual methodology described in their respective chapters.
 
 ---
 
