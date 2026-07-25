@@ -6,166 +6,154 @@
 
 ## The PolyNetwork Lesson
 
-On August 10, 2021, an attacker discovered that a function on the PolyNetwork bridge contract — a function that transferred custody of cross-chain assets — had no access control. No `onlyOwner`. No `require(msg.sender == admin)`. No signature verification.
+On August 10, 2021, an anonymous security researcher—or attacker, depending on who you ask—discovered something extraordinary. The PolyNetwork bridge, a cross-chain protocol holding $610 million in user assets, had a function that transferred custody of those assets between chains. This function did exactly what it was designed to do. What it was not designed to do was let anyone call it.
 
-The function was designed to be called by the protocol's admin to move funds between chains. But because nobody had added an access control check, *anyone* could call it.
+The function lacked an access control modifier. No `onlyOwner`. No `require(msg.sender == admin)`. No signature verification. The developer had intended to add one—the function name suggested restricted access—but in the rush to deploy, the modifier was never added.
 
-The attacker called it. They transferred $610 million worth of assets to addresses they controlled.
+The researcher called the function. They transferred $610 million to addresses they controlled. The entire exploit was a single transaction containing a single function call that should have been impossible.
 
-$610 million. One missing `onlyOwner`.
+The money was eventually returned after a surreal negotiation conducted through Ethereum transaction messages. The researcher claimed they wanted to "expose the vulnerability" and "teach a lesson." The lesson was clear: **access control is not a feature you add after testing. It is the default expectation that every state-changing function must satisfy before it can be called secure.**
 
-The story had an unusual ending. The attacker returned the funds after a negotiation with the PolyNetwork team, claiming they wanted to "expose the vulnerability" rather than steal the money. But the lesson stands: **access control is not a feature you add. It is the default state that every function must opt out of.**
+---
+
+## Why Access Control Breaks
+
+Access control appears simple. A modifier like `onlyOwner` is one line of Solidity. How can one line cause $610 million in losses?
+
+Because access control is not about the modifier. It is about the assumptions that come before it:
+
+1. **Assumption of uniqueness**: The developer assumes the function will only be called by "the right person." They never consider that "the wrong person" might find it.
+
+2. **Assumption of visibility**: The developer assumes internal functions are invisible. In blockchain, every byte of bytecode is public. `private` means "not callable through the ABI"—not "not callable."
+
+3. **Assumption of sequencing**: The developer assumes initialization happens once, at deployment time, in a controlled environment. On-chain, anyone can call any public function at any time.
+
+These assumptions survive because traditional software development teaches them as truths. Access control in a web application means checking a session cookie. If the cookie is missing, the request is rejected. The worst case is a 403 error. In a smart contract, the worst case is PolyNetwork.
 
 ---
 
 ## Pattern #8: Missing Access Control
 
 **Severity**: HIGH
-**Real cases**: PolyNetwork $610M, numerous smaller incidents
+**Real case**: PolyNetwork $610M
 
 ### The Vulnerability
 
-A function performs a privileged operation — transferring funds, upgrading the implementation, changing protocol parameters — without checking who is calling it.
+A function performs a privileged operation without verifying that the caller is authorized:
 
 ```solidity
 // ❌ VULNERABLE: Anyone can upgrade the contract
-function upgrade(address newImplementation) external {
+function upgradeTo(address newImplementation) external {
     _upgradeTo(newImplementation);
+    // No onlyOwner. No onlyRole. No require.
+    // Anyone who finds this function owns every proxy.
 }
 ```
 
-This is the simplest vulnerability in DeFi. It requires no exploit path, no manipulation, no flash loan. It requires only that someone finds the function.
+The function looks correct. It compiles. It does exactly what the name promises. The vulnerability is invisible in the code—it is the absence of something that should be there.
 
-### Why It Happens
+### The Attack
 
-Missing access control is almost never a coding error. It is a process error. The developer intended to add access control. They wrote the function, planned to add the modifier later, and shipped the contract before adding it.
+1. Attacker reviews the contract's ABI (publicly visible on Etherscan)
+2. Attacker finds a function named `upgradeTo` or `setAdmin` or `changeFee` with no modifier
+3. Attacker calls the function with their own address as the parameter
+4. The contract executes. The attacker is now the admin.
+5. As admin, the attacker upgrades to a malicious implementation or transfers all funds
 
-This is why static analysis tools like Slither flag every public function without a modifier. The tool doesn't know that a function is "supposed to be public." It only knows that it *can be called by anyone.*
+No flash loan. No oracle manipulation. No reentrancy. Just a function that anyone can call.
 
 ### The Fix
 
 ```solidity
-// ✅ SAFE: Access control via modifier
-function upgrade(address newImplementation) external onlyOwner {
+// ✅ SAFE: Access control via OpenZeppelin Ownable
+function upgradeTo(address newImplementation) external onlyOwner {
     _upgradeTo(newImplementation);
 }
 
-modifier onlyOwner() {
-    require(msg.sender == owner, "Not owner");
-    _;
-}
-```
-
-Or for more granular control:
-
-```solidity
-function upgrade(address newImplementation) external onlyRole(UPGRADER_ROLE) {
+// Or granular role-based access control:
+function upgradeTo(address newImplementation) external onlyRole(UPGRADER_ROLE) {
     _upgradeTo(newImplementation);
 }
 ```
+
+More fundamentally: every state-changing function must have an explicit access control declaration. Linters like Slither flag every external function without a modifier. Treat every flag as a potential PolyNetwork.
 
 ---
 
-## Pattern #9: Admin Key Privilege Escalation
+## Pattern #9: Single Admin Key
 
 **Severity**: HIGH
 **Real case**: Ronin Bridge $625M
 
-Having an admin key is not a vulnerability. Having an admin key without a timelock, without multi-sig, and without monitoring — that is a vulnerability.
+### The Vulnerability
 
-### The Attack
+A protocol's entire security depends on a single private key. If that key is compromised—through phishing, malware, social engineering, or insider threat—the protocol is compromised.
 
-The Ronin Bridge used a 5-of-9 validator multi-sig to authorize cross-chain withdrawals. The attacker compromised five validator keys through a combination of social engineering and credential theft. Because there was no timelock on withdrawals — validators could authorize and execute in the same transaction — the attacker drained $625 million before anyone could react.
+Ronin Bridge used a 5-of-9 validator multi-sig. On paper, this is secure: 5 separate parties must collude. In reality, Sky Mavis controlled 4 of the 9 validators directly and had been delegated authority over a fifth. When the attacker compromised Sky Mavis's infrastructure, they gained control of 5 validators—enough to authorize any withdrawal.
 
-### The Design Principle
-
-Every privileged operation must have a delay between authorization and execution:
-
-```solidity
-// ❌ VULNERABLE: Instant upgrade
-function upgrade(address impl) external onlyOwner {
-    _upgradeTo(impl);  // Immediately executes
-}
-
-// ✅ SAFE: Timelocked upgrade
-function scheduleUpgrade(address impl) external onlyOwner {
-    scheduledExecution[keccak256(abi.encode(impl))] = block.timestamp + 48 hours;
-}
-
-function executeUpgrade(address impl) external {
-    require(block.timestamp >= scheduledExecution[keccak256(abi.encode(impl))]);
-    _upgradeTo(impl);
-}
-```
-
-The timelock serves a second purpose beyond preventing instant attacks: it gives users time to exit. If a malicious upgrade is scheduled, users have 48 hours to withdraw their funds before the upgrade executes. This is the principle of "no surprises" — users should never wake up to find the protocol they trusted has changed without warning.
-
----
-
-## Pattern #10: Unprotected Selfdestruct
-
-**Severity**: CRITICAL
-
-The `selfdestruct` opcode deletes a contract's code and sends its balance to a specified address. If a contract has a `selfdestruct` function with inadequate access control, the entire protocol's funds can be permanently destroyed.
-
-```solidity
-// ❌ VULNERABLE
-function kill() external onlyOwner {  // Single key!
-    selfdestruct(payable(msg.sender));
-}
-```
+The $625 million loss was not a failure of cryptography. It was a failure of organizational structure. The multi-sig was a single point of failure disguised as distributed trust.
 
 ### The Fix
 
-Never use `selfdestruct` in upgradeable contracts. For non-upgradeable contracts, require multi-sig and timelock:
+True multi-sig requires organizational diversity:
 
 ```solidity
-// ✅ SAFE: Requires multi-sig + timelock + community notification
-function initiateKill() external onlyMultisig {
-    killScheduledAt = block.timestamp;
-    emit KillScheduled(48 hours);
-}
+// ❌ VULNERABLE: Multi-sig with centralization
+require(signatures.length >= 5);
+// Sky Mavis controls 4 validators + 1 delegated = 5 total
 
-function executeKill() external onlyMultisig {
-    require(block.timestamp >= killScheduledAt + 48 hours);
-    selfdestruct(payable(treasury));
-}
+// ✅ SAFE: Multi-sig with diversity requirements
+require(signatures.length >= 6);
+require(uniqueOrganizations(signers) >= 4);  // At least 4 separate orgs
+require(uniqueJurisdictions(signers) >= 3);  // At least 3 legal jurisdictions
 ```
+
+For protocols that cannot achieve organizational diversity, add blast radius limits:
+
+```solidity
+uint256 public constant MAX_SINGLE_WITHDRAWAL = 1000 ether;    // Per-tx cap
+uint256 public constant DAILY_WITHDRAWAL_LIMIT = 10000 ether;  // 24h cap
+uint256 public constant WITHDRAWAL_COOLDOWN = 1 hours;          // Between txns
+```
+
+Even if all validators are compromised, the attacker can only drain $10,000 ETH per day. This gives the community time to detect and respond.
 
 ---
 
-## Pattern #11: Delegatecall to User-Controlled Address
+## Pattern #10: Delegatecall to User-Controlled Address
 
 **Severity**: CRITICAL
 **Real case**: Parity Wallet $150M freeze (2017)
 
-`delegatecall` executes code from another contract in the context of the calling contract. It preserves `msg.sender`, `msg.value`, and — most importantly — storage access.
+### The Vulnerability
 
-If the target address of a `delegatecall` is user-supplied, the user can provide a contract that modifies any storage slot of the calling contract.
+`delegatecall` executes another contract's code in the calling contract's context—preserving `msg.sender`, `msg.value`, and, critically, storage access. If the target address is user-supplied, the user can execute arbitrary code that modifies any storage slot.
 
 ```solidity
-// ❌ VULNERABLE: User controls the delegatecall target
+// ❌ VULNERABLE: User controls the delegate target
 function execute(address target, bytes calldata data) external {
     (bool success,) = target.delegatecall(data);
+    // The target contract can read/write ALL storage of THIS contract
     require(success);
 }
 ```
 
-### The Parity Wallet Incident
+### The Parity Incident
 
-The Parity multi-sig wallet used a library contract for its implementation. The library was not initialized with an owner. An attacker called `initWallet()` on the library — setting themselves as the owner — then called `kill()` to `selfdestruct` the library. Every wallet that depended on that library was permanently frozen because the library's code was deleted from the chain.
+The Parity multi-sig wallet used a shared library contract as its implementation. An attacker noticed the library was not initialized. They called `initWallet()` on the library—making themselves the owner—then called `kill()` to `selfdestruct` the library.
 
-$150 million worth of ETH remains frozen to this day.
+Every wallet that delegated to this library was now pointing to an address with no code. All wallet functions reverted. $150 million worth of ETH remains frozen in these wallets to this day.
 
 ### The Fix
 
-The address used in `delegatecall` must be stored in the contract's own storage and set through a timelocked, multi-sig process:
+The implementation address must be stored in the contract's own storage and set through a timelocked governance process:
 
 ```solidity
-// ✅ SAFE: Implementation address stored in contract storage
+// ✅ SAFE: Implementation address in storage, not user-supplied
 address public implementation;
 
-function setImplementation(address impl) external onlyTimelock {
+function setImplementation(address impl) external onlyGovernance {
+    require(block.timestamp >= scheduled[impl], "Timelock not expired");
     implementation = impl;
 }
 
@@ -185,60 +173,71 @@ fallback() external payable {
 
 ---
 
-## Pattern #12: Hidden Owner Backdoor
+## Pattern #11: Hidden Owner Backdoor
 
 **Severity**: CRITICAL
 
-Some protocols implement "emergency" functions that grant the owner unlimited power. These functions are often hidden behind innocuous names:
+### The Vulnerability
+
+A protocol advertises "decentralized governance" but retains a single-key emergency function:
 
 ```solidity
-function emergencyWithdraw(address token, uint256 amount) external onlyOwner {
-    IERC20(token).transfer(owner, amount);  // Drains any token
-}
-
-function setFee(uint256 newFee) external onlyOwner {
-    fee = newFee;  // Can be set to 100%
+function emergencyWithdraw(address token) external onlyOwner {
+    IERC20(token).transfer(owner, IERC20(token).balanceOf(address(this)));
+    // "Emergency" — or backdoor?
 }
 ```
 
-The existence of these functions means that any single-key compromise results in total loss. The functions may be legitimate — emergency withdrawal is a real operational need — but their existence without adequate safeguards creates a backdoor.
+This function exists because the developers are afraid of something going wrong. The irony is that the function itself is the most likely thing to go wrong.
 
 ### The Fix
 
-Emergency functions must have proportional restrictions:
+If emergency functions must exist, they must be proportional to the emergency:
 
 ```solidity
-// ✅ SAFE: Emergency withdrawal with limits
-function emergencyWithdraw(address token, uint256 amount) external onlyMultisig {
-    require(amount <= totalValue * 10 / 100, "Max 10% emergency");  // Cap
-    require(block.timestamp >= lastEmergency + 7 days, "Cooldown");  // Rate limit
-    lastEmergency = block.timestamp;
-    IERC20(token).transfer(treasury, amount);
+function emergencyPause() external onlyMultisig {
+    // Pause is low-risk: no funds move, just halts operations
+    _pause();
+}
+
+function emergencyWithdraw(address token, uint256 maxAmount) external onlyGovernance {
+    // Withdrawal is high-risk: funds move
+    require(maxAmount <= totalValueLocked * 5 / 100, "Max 5%");
+    require(block.timestamp >= lastWithdrawal + 7 days, "Weekly limit");
+    lastWithdrawal = block.timestamp;
+    IERC20(token).transfer(treasury, maxAmount);
 }
 ```
-
----
-
-## The Access Control Detector
-
-| Pattern | Name | Detection |
-|:--:|------|------|
-| 8 | Missing Access | Public + sensitive + no modifier |
-| 9 | Admin Privilege | Single key + no timelock |
-| 10 | Selfdestruct | `selfdestruct` + single key |
-| 11 | Delegatecall | Delegatecall + user address |
-| 12 | Hidden Backdoor | Owner + drain + no timelock |
 
 ---
 
 ## The Access Control Checklist
 
-Before deploying:
+1. **Every external function has an explicit access modifier.** If Slither flags it, fix it. Do not suppress the warning.
+2. **Multi-sig requires organizational diversity.** Not just N-of-M. N-of-M where signers are in different companies, countries, and legal systems.
+3. **Upgrade functions have a minimum 48-hour timelock.** No exception. If your protocol needs instant upgrades, your protocol design is wrong.
+4. **delegatecall targets are never user-supplied.** The implementation address is stored in contract storage and governed by timelocked multi-sig.
+5. **Emergency functions have proportional blast radius.** Pause: low bar. Withdraw funds: very high bar.
 
-1. **Every state-changing function**: Who can call it? Document the answer.
-2. **Every `onlyOwner` function**: Is there a timelock? Is it multi-sig?
-3. **Every emergency function**: What limits its blast radius?
-4. **Every upgrade function**: What notification do users receive?
+---
+
+## Connection to Other Chapters
+
+- **Ch4 (Flash Loans)**: Flash-loaned governance tokens can bypass access control on governance votes. The Beanstalk $182M attack combined flash loans (Ch4, Pattern #6) with governance access control failure (this chapter, Pattern #8).
+- **Ch10 (Initialization)**: Unprotected initializers—where anyone can call `initialize()` on an implementation contract—are a specialized form of missing access control. See Ch10, Pattern #21.
+- **Ch8 (Cross-Chain)**: Bridge validator centralization (Ronin) is access control failure at the organizational level. See Ch8, Pattern #20.
+
+---
+
+## The Deeper Pattern
+
+Every access control failure in this chapter shares a common thread: the developer assumed the attacker would play by the rules. PolyNetwork assumed nobody would find the unprotected function. Ronin assumed a five-of-nine multi-sig was sufficient. Parity assumed nobody could call `initWallet()` on a library contract.
+
+Security is not about making the rules harder to break. It is about assuming the rules are already broken and building defenses accordingly. If an attacker has your admin key, can they drain the protocol? If an attacker can call any function, which functions destroy value? These are the questions access control must answer—not "how do we stop people from calling this," but "what happens when the wrong person calls this."
+
+The hardening gradient applies here too. Large protocols have faced these failures and lived to tell about them. Small protocols that repeat the same mistakes will not get the same second chance. PolyNetwork recovered because the attacker returned the funds. Ronin recovered because Sky Mavis had the reserves to reimburse users. Your protocol will not have either luxury.
+
+Access control is the foundation. Every other defense in this book—oracle validation, reentrancy guards, flash loan resistance—assumes that the functions these defenses protect are called by authorized users. If access control fails, every other defense is irrelevant.
 
 ---
 
