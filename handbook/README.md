@@ -1,7 +1,7 @@
 # DeFi Security Handbook
 
 > **A Field Manual for Smart Contract Security Researchers**
-> 66 Attack Patterns. 24 Chapters. 12 Domains. 58 Automated Detection Rules. 824 Real-World Exploit Reports Analyzed.
+> 100 Attack Patterns. 24 Chapters. 20 Domains. 58 Automated Detection Rules. 824 Real-World Exploit Reports Analyzed.
 
 **Author**: Shiqiang Chen (陈世强)
 **Status**: ✅ Complete (24/24 chapters)
