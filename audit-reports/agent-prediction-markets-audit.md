@@ -1,77 +1,84 @@
-# Agent Prediction Markets — AI Agent × Oracle Security Audit
+# Agent Prediction Markets — Full Professional Audit
 
-**Auditor**: Shiqiang Chen | **Date**: July 18, 2026  
-**Project**: agent-prediction-markets-base | **Contracts**: 8 files
-
-## Executive Summary
-
-AI agents create and resolve prediction markets. The oracle resolution system allows trusted agents to vote on outcomes — but reputation can be gamed, and the owner has ultimate override.
-
-| # | Finding | Severity | AI Attack Vector |
-|:--:|------|:--:|------|
-| 1 | Owner bypasses oracle trust — centralized resolution | 🔴 CRITICAL | Vector #4: MCP MITM |
-| 2 | Reputation-weighted voting can be gamed | 🟠 HIGH | Vector #7: Context Poisoning |
-| 3 | Auto-vote for high-reputation proposers | 🟡 MEDIUM | Vector #6: Collusion |
-
-## Finding 1: Owner Can Bypass Oracle Trust
-
-**Line**: 91
-
-```solidity
-require(trustedOracles[msg.sender] || msg.sender == owner(), "Not trusted oracle");
-```
-
-### Description
-The contract owner can propose AND finalize any market resolution without being a trusted oracle. This means a single compromised key = all prediction markets can be controlled.
-
-### AI Agent Impact
-This is our **Vector #4 (MCP MITM)** in the worst case. If the MCP server that the owner's AI uses is compromised, the attacker can:
-1. Place large bets on prediction markets
-2. Use owner key to resolve markets in their favor
-3. Profit from all agent-predicted outcomes
+**Protocol**: Agent Prediction Markets (Base chain)  
+**Contracts**: 5 core — 2,028 lines total  
+**Auditor**: Shiqiang Chen · July 2026  
 
 ---
 
-## Finding 2: Reputation Gaming
+## Overall Score: 4.5/10 — Multiple Centralization Vectors
 
-**Lines**: 159, 203-213
+---
+
+## Finding #1: adminResolve Backdoor (🔴 CRITICAL)
+
+**File**: OracleResolver.sol:245-269
+**Attack**: Owner can unilaterally resolve ANY market regardless of votes.
+
+```solidity
+function adminResolve(uint256 marketId, uint256 outcomeId)
+    external onlyOwner nonReentrant
+{
+    resolution.status = ResolutionStatus.Finalized;
+    resolution.finalized = true;
+    // ... notify market factory ...
+}
+```
+
+This function has NO requirement that the market is disputed. It can be called on any market at any time. The "decentralized oracle voting system" is a front for owner-controlled outcomes.
+
+**Fix**: Restrict `adminResolve` to only disputed markets (`resolution.status == ResolutionStatus.Disputed`).
+
+---
+
+## Finding #2: Reputation Manipulation (🔴 HIGH)
+
+**File**: OracleResolver.sol:329-334 + 138-140
+
+The owner can:
+1. Call `setOracleReputation(ownerAddress, 100)` 
+2. Call `proposeResolution()` — auto-votes with full weight
+3. Win every single vote unilaterally
+
+**Attack flow**: Same address has both `owner` role AND `trustedOracle` status (constructor at line 103-104). The owner can max out their own reputation and auto-win every resolution.
+
+**Fix**: Prevent owner from being a trusted oracle. Separate the roles.
+
+---
+
+## Finding #3: Trivial Dispute Bond (🟠 MEDIUM)
+
+**File**: OracleResolver.sol:54
+**Bond**: 0.0001 ETH ($0.25)
+
+An attacker can spend $25 to dispute 100 resolutions, grinding the entire system to a halt and forcing `adminResolve()` invocation on every single one.
+
+**Fix**: Scale dispute bond with market size. `bond = max(0.1 ether, market.totalBets / 100)`.
+
+---
+
+## Finding #4: Vote Weight Asymmetry (🟠 MEDIUM)
+
+**File**: OracleResolver.sol:159
 
 ```solidity
 uint256 weight = trustedOracles[msg.sender] ? oracleReputation[msg.sender] : 1;
-// ...
-if (resolution.passed) { oracleReputation[proposer] += 10; }
-else { oracleReputation[proposer] = oracleReputation[proposer] > 10 ? oracleReputation[proposer] - 10 : 0; }
 ```
 
-### Description
-An AI agent can build reputation by correctly resolving small, predictable markets (e.g., "will ETH be above $0?" → always true). After accumulating high reputation, use it to swing a high-value market.
-
-### Attack Path
-```
-Week 1-4: AI Agent resolves 50 trivial markets → reputation = 500
-Week 5: AI Agent proposes resolution on \$50K market → weight = 500
-Other oracles have weight = 1-10 → AI agent wins → market resolves in attacker's favor
-```
+Normal users get weight=1. Oracles get reputation-weighted votes (up to 100x). This creates a small oligarchy that dominates all voting, making the system effectively permissioned despite appearing permissionless.
 
 ---
 
-## Finding 3: Auto-Vote Enables Collusion
+## Comparison: Prediction Market Audit Scores
 
-**Line**: 137 — "If proposer is high reputation oracle, auto-vote"
-
-Two high-reputation agents can collude:
-```
-Agent A: proposes → auto-vote passes
-Agent B: proposes reciprocal → auto-vote passes
-Both: maintain/boost each other's reputation
-```
+| Protocol | Overall | Oracle Decentralization | Centralization Risk |
+|------|:--:|:--:|:--:|
+| Agent Prediction Markets | 4.5/10 | ❌ 2/10 | Owner can override everything |
+| Polymarket | 7/10 | Manually resolved | No admin override |
+| Augur | 8/10 | Decentralized disputes | REP-weighted |
 
 ---
 
-## Summary
+## Recommendation
 
-This is the **first AI Agent prediction market** we've audited. The oracle resolution system — while having formal votes and dispute mechanisms — inherits the classic "who watches the watchers" problem that all AI-automated governance faces.
-
-**3 projects audited | 9 findings | All 8 AI Agent attack vectors validated**
-
-*Filed under: AI Agent × DeFi Security Research*
+Add a `TIMELOCKED_ADMIN` role. All `adminResolve` calls must go through the Kleidi-style timelock (7-day delay). This doesn't eliminate the centralization risk but creates a transparency window where users can exit before admin actions take effect.
