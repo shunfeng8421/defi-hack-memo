@@ -49,9 +49,16 @@ Mixin Kernel 是一个分布式数字资产账本，组合了四种技术：
 
 ## 2. 安全分析
 
-### 2.1 🟡 TEE 代码位置
+### 2.1 🔴 TEE 信任模型未验证
 
-Kernel README 说 TEE "not integrated into this repository"——但 TEE 代码在 MobileCoin 依赖中 (2,873 行 Rust SGX Enclave)。Mixin kernel 不直接导入 MobileCoin——TEE 通过独立进程与 Kernel 通信，而非直接链接。这降低了攻击面（进程隔离），但也意味着 TEE 与 Kernel 之间的通信接口本身可能成为攻击向量。
+Kernel README 说 "The Trusted Execution Environment design is not integrated into this repository."
+
+**实际发现**:
+1. Mixin Kernel (`mixin/crypto/`) 全部是纯软件 Ed25519 实现——无 SGX 调用
+2. MobileCoin SGX enclave (2,873 行 Rust) 存在但 Mixin Kernel 不导入它
+3. 集体签名 (`cosi.go`) 完全在软件中运行
+
+**结论**: TEE 要么是独立的闭源二进制文件, 要么是尚未实现的设计目标。当前 Kernel 的密钥操作均在无硬件保护的软件中执行。这使 7/10 的评级可能需要下调。
 
 ### 2.2 🟠 节点加入过渡期风险
 
