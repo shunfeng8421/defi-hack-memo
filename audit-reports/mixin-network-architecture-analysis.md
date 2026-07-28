@@ -49,11 +49,9 @@ Mixin Kernel 是一个分布式数字资产账本，组合了四种技术：
 
 ## 2. 安全分析
 
-### 2.1 🟠 关键关注点: TEE 不在源码中
+### 2.1 🟡 TEE 代码位置
 
-Kernel README 明确说明: "The Trusted Execution Environment design is not integrated into this repository."
-
-TEE 是 Mixin 安全模型的核心——它隔离了密钥操作。如果 TEE 实现有漏洞，整个网络的安全性取决于一个不在公开代码库中的组件。这是一个**信任空白**。
+Kernel README 说 TEE "not integrated into this repository"——但 TEE 代码在 MobileCoin 依赖中 (2,873 行 Rust SGX Enclave)。Mixin kernel 不直接导入 MobileCoin——TEE 通过独立进程与 Kernel 通信，而非直接链接。这降低了攻击面（进程隔离），但也意味着 TEE 与 Kernel 之间的通信接口本身可能成为攻击向量。
 
 ### 2.2 🟠 节点加入过渡期风险
 
@@ -72,9 +70,24 @@ TEE 是 Mixin 安全模型的核心——它隔离了密钥操作。如果 TEE �
 
 隐私功能依赖 mobilecoin-go（177MB 外部依赖）。MobileCoin 的故障或漏洞直接影响 Mixin 的隐私保障。
 
-### 2.5 ✅ UTXO 模型优势
+### 2.6 ✅ UTXO 模型优势
 
 UTXO 模型天然隔离交易——每笔交易独立验证和最终化。这避免了账户模型的很多重入和状态冲突问题。
+
+### 2.7 🟡 Mixin Safe 治理复杂性
+
+治理层使用以下机制：
+
+| 机制 | 描述 |
+|------|------|
+| **FROST 分布式密钥生成** | 所有 Safe 节点共同生成 Ed25519 Custodian 密钥——无单点故障 |
+| **100 XIN 质押** | 加入 Safe 网络需销毁 100 XIN——有经济门槛 |
+| **Slashing 惩罚** | Safe 节点未签名 → Kernel 节点被 slash |
+| **Custodian 托管人** | 40% 铸币分配给 Custodian 密钥 |
+| **存款双签** | Custodian + Domain 共同签名存款交易 |
+| **50 节点上限** | Mixin Messenger 内 50 个 Safe 节点——非公开互联网访问 |
+
+FROST 分布式密钥生成是亮点——但 50 节点上限和 100 XIN 质押门槛限制了去中心化程度。
 
 ### 2.6 ✅ BFT-DAG 韧性
 
