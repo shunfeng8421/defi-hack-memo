@@ -1,7 +1,7 @@
 # DeFi Hack Memo — 完整案例索引
 
 
-总数: 824 个案例
+总数: 851 个案例
 
 - [2017] [Parity_first_hack](cases/2017/Parity_first_hack.md) — $153,037 ETH (~
 - [2017] [Parity_kill](cases/2017/Parity_kill.md) — $N/A
@@ -51,6 +51,8 @@
 - [2021] [bEarn](cases/2021/bEarn.md) — $11M
 - [2021] [dodo_flashloan](cases/2021/dodo_flashloan.md) — $N/A
 - [2021] [xWin](cases/2021/xWin.md) — $N/A
+- [2021] [Chainswap1](cases/2021/Chainswap1.md) — ~$N/A
+- [2021] [Chainswap2](cases/2021/Chainswap2.md) — ~$N/A
 - [2022] [AES](cases/2022/AES.md) — $N/A
 - [2022] [ANCH](cases/2022/ANCH.md) — $N/A
 - [2022] [APC](cases/2022/APC.md) — $N/A
@@ -179,6 +181,9 @@
 - [2022] [ZoomproFinance](cases/2022/ZoomproFinance.md) — $N/A
 - [2022] [cftoken](cases/2022/cftoken.md) — $N/A
 - [2022] [deus](cases/2022/deus.md) — $N/A
+- [2022] [Circle1](cases/2022/Circle1.md) — ~$50.5K
+- [2022] [Circle2](cases/2022/Circle2.md) — ~$151.6K
+- [2022] [XST2](cases/2022/XST2.md) — ~$N/A
 - [2023] [0vix](cases/2023/0vix.md) — $~@2M US
 - [2023] [0x0DEX](cases/2023/0x0DEX.md) — $~
 - [2023] [3913](cases/2023/3913.md) — $~31,354 USD
@@ -392,6 +397,8 @@
 - [2023] [safeMoon](cases/2023/safeMoon.md) — $N/A
 - [2023] [silo_finance](cases/2023/silo_finance.md) — $N/A
 - [2023] [uniclyNFT](cases/2023/uniclyNFT.md) — $1 NFT (ID: 4689)
+- [2023] [CurveCrvUSD1](cases/2023/CurveCrvUSD1.md) — ~$41M USD
+- [2023] [CurveCrvUSD2](cases/2023/CurveCrvUSD2.md) — ~$41M USD
 - [2024] [ADC](cases/2024/ADC.md) — $~20 ETH
 - [2024] [AIRBTC](cases/2024/AIRBTC.md) — $
 - [2024] [AIZPTToken](cases/2024/AIZPTToken.md) — $34.88 BNB (~
@@ -579,6 +586,10 @@
 - [2024] [unverified_766a](cases/2024/unverified_766a.md) — $100 USD
 - [2024] [unverified_a89f](cases/2024/unverified_a89f.md) — $
 - [2024] [vETH](cases/2024/vETH.md) — $447k
+- [2024] [AAVERepayAdapter](cases/2024/AAVERepayAdapter.md) — ~56,000 USD
+- [2024] [unverified_16d0](cases/2024/unverified_16d0.md) — $329
+- [2024] [CompoundFork](cases/2024/CompoundFork.md) — ~$1M
+- [2024] [PolterFinance](cases/2024/PolterFinance.md) — ~$7M
 - [2025] [0x8d2e](cases/2025/0x8d2e.md) — $40k USDC
 - [2025] [0xf340](cases/2025/0xf340.md) — $4k USD
 - [2025] [98Token](cases/2025/98Token.md) — $N/A
@@ -738,6 +749,7 @@
 - [2025] [unverified_de7c](cases/2025/unverified_de7c.md) — $980.32 USDC
 - [2025] [wKeyDAO](cases/2025/wKeyDAO.md) — $~767 US
 - [2025] [yETH](cases/2025/yETH.md) — $9M USD
+- [2025] [SorraStaking](cases/2025/SorraStaking.md) — ~$N/A
 - [2026] [AIDC](cases/2026/AIDC.md) — $~220.13 WBNB
 - [2026] [AISOTHPresale](cases/2026/AISOTHPresale.md) — $30,314.76 USDT
 - [2026] [AROS](cases/2026/AROS.md) — $~
@@ -826,4 +838,19 @@
 - [2026] [unverified_1304](cases/2026/unverified_1304.md) — $85,730 USDC
 - [2026] [unverified_237d](cases/2026/unverified_237d.md) — $0.28 ETH
 - [2026] [unverified_a152](cases/2026/unverified_a152.md) — $229,030.97 USDT
+- [2026] [CompoundProvider](cases/2026/CompoundProvider.md) — ~$774,943 USDC
+- [2026] [CrowdRingCircle](cases/2026/CrowdRingCircle.md) — ~$N/A
+- [2026] [ExchangeIssuance](cases/2026/ExchangeIssuance.md) — ~$9.6K USD
+- [2026] [LULA](cases/2026/LULA.md) — ~$578K USDT
+- [2026] [LienFinance](cases/2026/LienFinance.md) — ~$542,144 USDC
+- [2026] [LumiFinance](cases/2026/LumiFinance.md) — ~$N/A
+- [2026] [NFTAuctionMarketplace](cases/2026/NFTAuctionMarketplace.md) — ~$N/A
+- [2026] [PerpetualProtocol](cases/2026/PerpetualProtocol.md) — ~$N/A
+- [2026] [ProToken](cases/2026/ProToken.md) — ~$605K USDT
+- [2026] [ProjektRewardVault](cases/2026/ProjektRewardVault.md) — ~301.7 ETH
+- [2026] [RWT](cases/2026/RWT.md) — ~$118,000 USDT
+- [2026] [Sodium](cases/2026/Sodium.md) — ~$N/A
+- [2026] [UnprotectedArbBot](cases/2026/UnprotectedArbBot.md) — ~16.623 WETH
+- [2026] [AztecEscapeHatch2](cases/2026/AztecEscapeHatch2.md) — N/A
+- [2026] [SKP_Token2](cases/2026/SKP_Token2.md) — ~$N/A
 - [test] [IUNMI_db27](cases/test/IUNMI_db27.md) — $4.7K USD
