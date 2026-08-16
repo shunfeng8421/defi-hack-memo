@@ -1,3 +1,10 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![DeFi Security](https://img.shields.io/badge/DeFi-Security%20Research-blue)](https://github.com/shunfeng8421/defi-hack-memo)
+[![Papers](https://img.shields.io/badge/Papers-9-green)](paper/)
+[![Audit Reports](https://img.shields.io/badge/Audit%20Reports-42-orange)](audit-reports/)
+[![PoC Exploits](https://img.shields.io/badge/PoC%20Exploits-21-red)](exploits/)
+[![CVE](https://img.shields.io/badge/CVE-38%20Findings-purple)](cve/)
+
 # 10-security — DeFi 安全研究知识库
 
 > **Shiqiang Chen | shunfeng8421 | 38 安全发现 | 9 论文 | 58 检测规则**
